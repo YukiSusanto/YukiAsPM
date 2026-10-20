@@ -90,7 +90,10 @@ function pastArchiveElapsed(){
 
 function pastMessageRow(node){
   const include=Array.isArray(node.include)?node.include:[],exclude=Array.isArray(node.exclude)?node.exclude:[];
-  return '<tr><td class="past-col-time">'+escapeText(node.time||'—')+'</td><td>'+escapeText(node.action||'私信1v1')+'</td><td class="past-col-tags">'+(include.length?'<small class="tag-logic-badge">'+(node.includeLogic==='and'?'且':'或')+'</small>'+include.map(t=>tag(t,'success')).join(''):'—')+'</td><td class="past-col-tags">'+(exclude.length?'<small class="tag-logic-badge">'+(node.excludeLogic==='and'?'且':'或')+'</small>'+exclude.map(t=>tag(t,'warning')).join(''):'—')+'</td><td><div class="past-message-text">'+escapeText(node.text||'—')+'</div></td><td>'+Number(node.materialCount||0)+'</td><td class="past-col-sent">'+(Number.isFinite(node.actualSent)?pastNumber(node.actualSent)+'人':'—')+'</td></tr>';
+  const groups=Array.isArray(node.groups)?node.groups:[];
+  const groupNote=groups.length?'<small class="past-group-note">目标群聊：'+escapeText(groups.map(g=>g.name).join('、'))+'</small>':'';
+  const newName=node.newGroupName?'<small class="past-group-note">新群名称：'+escapeText(node.newGroupName)+'</small>':'';
+  return '<tr><td class="past-col-time">'+escapeText(node.time||'—')+'</td><td>'+escapeText(communityLabel(node.action))+'</td><td class="past-col-tags">'+(include.length?'<small class="tag-logic-badge">'+(node.includeLogic==='and'?'且':'或')+'</small>'+include.map(t=>tag(t,'success')).join(''):'—')+'</td><td class="past-col-tags">'+(exclude.length?'<small class="tag-logic-badge">'+(node.excludeLogic==='and'?'且':'或')+'</small>'+exclude.map(t=>tag(t,'warning')).join(''):'—')+'</td><td><div class="past-message-text">'+escapeText(communityContentTitle(node)||'—')+'</div>'+groupNote+newName+'</td><td>'+communityMaterialCell(node)+'</td><td class="past-col-sent">'+(Number.isFinite(node.actualSent)?pastNumber(node.actualSent)+'人':'—')+'</td></tr>';
 }
 /* Inner level: one time node (W-D) per collapsible block, collapsed by default. */
 function pastNodeMarkup(group){

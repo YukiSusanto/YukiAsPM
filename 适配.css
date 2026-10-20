@@ -146,3 +146,88 @@ body{--replica-side-width:210px;padding-top:48px}.replica-header{position:fixed;
 @media(max-width:1000px){.fixed-period-context .fixed-scope-row{gap:8px;margin-bottom:4px}}
 
 
+
+/* ===== 社群动作：发送动作扩展与表单动态联动（需求 1） ===== */
+.opt-action-hint{font-size:12px;color:#909399;line-height:1.6;margin-top:6px}
+.opt-action-alert{display:flex;gap:8px;align-items:flex-start;border-radius:4px;padding:10px 12px;font-size:12px;line-height:1.6;margin-bottom:10px;box-sizing:border-box}
+.opt-action-alert.warning{background:#fdf6ec;border:1px solid #faecd8;color:#b88230}
+.opt-action-alert.info{background:#ecf5ff;border:1px solid #d9ecff;color:#4a6f9b}
+.opt-action-alert>span:first-child{flex:none}
+.opt-group-picker{border:1px dashed #d9e1ec;border-radius:6px;padding:12px;margin-bottom:12px;background:#fbfdff}
+.opt-group-picker-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.opt-group-picker-head strong{font-size:13px;color:#303133}
+.opt-group-required{color:#f56c6c;font-size:11px;font-weight:600;margin-left:6px}
+.opt-group-picker-head .opt-group-pick-btn{margin:0}
+.opt-group-selected{display:flex;flex-wrap:wrap;gap:8px;align-items:center;min-height:26px}
+.opt-group-chip{display:inline-flex;align-items:center;gap:6px;background:#eef5ff;border:1px solid #d5e5fb;border-radius:14px;padding:4px 10px;font-size:12px;color:#33608f;max-width:100%}
+.opt-group-chip>span:nth-child(2){overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.opt-group-chip button{border:0;background:none;color:#7d97bc;cursor:pointer;font-size:14px;line-height:1;padding:0}
+.opt-group-chip button:hover{color:#f56c6c}
+.opt-group-chip button:disabled{color:#c0c4cc;cursor:not-allowed}
+.opt-group-empty-hint{font-size:12px;color:#c0c4cc}
+.opt-group-icon{display:inline-flex;width:16px;height:16px;align-items:center;justify-content:center;flex:none;color:#409eff}
+.opt-group-var-hint{display:block;font-size:11px;color:#909399;margin-top:8px;line-height:1.6}
+.opt-group-var-hint code{background:#f2f4f7;border-radius:3px;padding:0 3px}
+.opt-group-search{margin-bottom:10px}
+.opt-group-search .local-input{width:100%}
+.opt-group-list{max-height:42vh;overflow:auto;border:1px solid #ebeef5;border-radius:4px}
+.opt-group-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid #f2f4f7;cursor:pointer}
+.opt-group-row:last-child{border-bottom:0}
+.opt-group-row:hover{background:#f5f9ff}
+.opt-group-row input{margin:0;flex:none}
+.opt-group-main{display:flex;flex-direction:column;gap:2px;min-width:0}
+.opt-group-main strong{font-size:13px;color:#303133;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.opt-group-main small{font-size:11px;color:#909399}
+.opt-group-badge{font-size:10px;color:#409eff;border:1px solid #d9ecff;background:#ecf5ff;border-radius:3px;padding:0 4px;margin-left:6px;font-weight:400}
+.opt-group-empty-tip{margin-top:10px;font-size:12px}
+.opt-group-picker-count{margin-top:10px;font-size:12px}
+.opt-group-modal .el-dialog{--el-dialog-width:560px!important}
+.opt-new-group-item .opt-group-presets{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.opt-new-group-item .opt-group-presets button{margin:0;font-size:12px}
+.opt-field-hint{display:block;font-size:12px;color:#909399;line-height:1.7;margin-top:8px}
+.opt-material-limit{font-size:11px;color:#e6a23c;line-height:1.6;padding:0 2px 8px}
+.opt-material-limit.opt-muted{color:#909399;padding:6px 0 0}
+.material-type-shortcuts button.is-community-locked{opacity:.45;cursor:not-allowed}
+.opt-danger-box{background:#fef0f0;border:1px solid #fde2e2;border-radius:4px;padding:12px 14px;font-size:13px;line-height:1.9;color:#c45656;margin-bottom:14px}
+.opt-danger-box strong{display:block;margin-bottom:6px;font-size:14px}
+.opt-danger-box b{color:#f56c6c}
+.opt-danger-confirm .local-input{width:100%;box-sizing:border-box}
+.message-action-tag{font-size:12px;white-space:nowrap}
+.message-action-tag.is-community{color:#409eff}
+.message-action-tag.is-danger{color:#f56c6c;font-weight:600}
+.message-action-tag.is-silent{color:#7d8da3}
+.message-action-tag.is-private{color:#606266}
+.opt-estimate.is-group{color:#409eff}
+.opt-estimate.is-empty{color:#c0c4cc;font-weight:400}
+.past-group-note{display:block;font-size:11px;color:#909399;line-height:1.6;margin-top:4px}
+.message-list-table col:nth-child(3){width:98px!important}
+.message-list-table col:nth-child(7){width:112px!important}
+
+/* 社群动作：建群产品线 */
+.opt-product-lines{display:grid;gap:8px;margin-top:4px}
+.opt-product-line-head{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:#606266}
+.opt-product-line-head .el-button{margin:0;height:auto;padding:0;font-size:12px}
+.opt-product-line{display:flex;align-items:flex-start;gap:10px;border:1px solid #e4e7ed;border-radius:6px;padding:10px 12px;cursor:pointer;background:#fbfdff}
+.opt-product-line:hover{border-color:#c6dcf7;background:#f5f9ff}
+.opt-product-line input{margin:3px 0 0;flex:none}
+.opt-product-line>span{display:flex;flex-direction:column;gap:3px;min-width:0}
+.opt-product-line strong{font-size:13px;color:#303133;font-weight:500}
+.opt-product-line small{font-size:11px;color:#909399;line-height:1.5}
+
+/* 社群动作：自动建群清单 */
+.opt-build-list{display:block}
+.opt-build-note{margin:0 0 10px;font-size:12px;line-height:1.7;color:#5b718a;background:#f5f9ff;border:1px solid #dbe9fb;border-radius:4px;padding:9px 12px}
+.opt-build-note b{color:#33608f;font-weight:600}
+.opt-build-table{width:100%;border-collapse:collapse;font-size:12px;color:#606266}
+.opt-build-table th{background:#f5f7fa;color:#303133;text-align:left;font-weight:500;padding:8px 10px;border-bottom:1px solid #ebeef5;white-space:nowrap}
+.opt-build-table td{padding:8px 10px;border-bottom:1px solid #f2f4f7;vertical-align:middle}
+.opt-build-table tr:last-child td{border-bottom:0}
+.opt-build-product strong{display:block;color:#303133;font-weight:500}
+.opt-build-product small{display:block;color:#909399;font-size:11px;margin-top:2px}
+.opt-build-name{color:#33608f;min-width:170px}
+.opt-build-count{white-space:nowrap;color:#409eff;font-weight:500}
+.opt-build-count.is-over{color:#e6a23c}
+.opt-build-count em{display:block;font-style:normal;font-size:11px;color:#f56c6c;margin-top:2px}
+.opt-build-empty{border:1px dashed #e4e7ed;border-radius:4px;padding:18px;text-align:center;color:#909399;font-size:12px}
+.opt-build-tip{margin:8px 0 0;font-size:11px;color:#909399;line-height:1.6}
+.message-text.is-empty{color:#c0c4cc}
