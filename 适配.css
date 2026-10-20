@@ -231,3 +231,101 @@ body{--replica-side-width:210px;padding-top:48px}.replica-header{position:fixed;
 .opt-build-empty{border:1px dashed #e4e7ed;border-radius:4px;padding:18px;text-align:center;color:#909399;font-size:12px}
 .opt-build-tip{margin:8px 0 0;font-size:11px;color:#909399;line-height:1.6}
 .message-text.is-empty{color:#c0c4cc}
+
+/* 社群动作：发送动作两级下拉（自定义面板） */
+.opt-action-wrap{position:relative;width:100%;max-width:300px}
+.opt-action-native{display:none!important}
+.opt-action-trigger{display:flex;align-items:center;gap:8px;width:100%;box-sizing:border-box;height:32px;padding:0 10px;border:1px solid #dcdfe6;border-radius:4px;background:#fff;cursor:pointer;font:inherit;font-size:13px;color:#606266;text-align:left;transition:border-color .15s}
+.opt-action-trigger:hover{border-color:#c0c4cc}
+.opt-action-trigger:focus-visible{outline:none;border-color:#409eff}
+.opt-action-trigger[disabled]{background:#f5f7fa;color:#a8abb2;cursor:not-allowed}
+.opt-action-trigger-icon{display:inline-flex;align-items:center;color:#909399;flex:none}
+.opt-action-trigger-label{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500;color:#303133}
+.opt-action-trigger-caret{color:#c0c4cc;flex:none;display:inline-flex;align-items:center}
+.opt-action-trigger.is-community .opt-action-trigger-icon{color:#409eff}
+.opt-action-trigger.is-danger .opt-action-trigger-icon,.opt-action-trigger.is-danger .opt-action-trigger-label{color:#f56c6c}
+.opt-action-menu{position:fixed;z-index:3000;background:#fff;border:1px solid #e4e7ed;border-radius:6px;box-shadow:0 6px 20px #0000001f;padding:6px;max-height:60vh;overflow:auto;box-sizing:border-box}
+.opt-action-group-label{font-size:11px;color:#909399;padding:7px 10px 4px;line-height:1.2}
+.opt-action-group-label:not(:first-child){margin-top:2px;border-top:1px solid #f2f4f7;padding-top:9px}
+.opt-action-item{display:flex;align-items:flex-start;gap:9px;width:100%;border:0;background:none;border-radius:4px;padding:8px 10px;cursor:pointer;text-align:left;font:inherit}
+.opt-action-item:hover{background:#f5f9ff}
+.opt-action-item.is-active{background:#ecf5ff}
+.opt-action-item-icon{display:inline-flex;align-items:center;margin-top:1px;color:#909399;flex:none}
+.opt-action-item.is-danger .opt-action-item-icon{color:#f56c6c}
+.opt-action-item.is-active .opt-action-item-icon{color:#409eff}
+.opt-action-item-text{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.opt-action-item-text strong{font-size:13px;font-weight:500;color:#303133;line-height:1.4}
+.opt-action-item:hover .opt-action-item-text strong,.opt-action-item.is-active .opt-action-item-text strong{color:#409eff}
+.opt-action-item.is-danger .opt-action-item-text strong{color:#c45656}
+.opt-action-item-text small{font-size:11px;color:#909399;line-height:1.4}
+.opt-action-item-check{margin-left:auto;color:#409eff;font-size:13px;opacity:0;flex:none;line-height:1.6}
+.opt-action-item.is-active .opt-action-item-check{opacity:1}
+
+/* 社群动作：发送动作面板收窄 + 列内容圆滑截断 */
+.opt-action-menu{max-height:52vh}
+.opt-action-group-label{font-size:10.5px;padding:5px 8px 3px}
+.opt-action-group-label:not(:first-child){padding-top:7px}
+.opt-action-item{gap:7px;padding:6px 8px}
+.opt-action-item-icon svg{width:14px;height:14px}
+.opt-action-item-text strong{font-size:12.5px;line-height:1.35}
+.opt-action-item-text small{font-size:10.5px;line-height:1.35}
+.opt-action-item-check{font-size:12px}
+.opt-action-trigger{height:30px;font-size:12.5px;padding:0 9px}
+.opt-estimate.is-group{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.message-list-table col:nth-child(7){width:132px!important}
+
+/* ===================== 界面美化：滚动条 / 分页 / 长表单 ===================== */
+/* 1. 统一细滚动条 */
+*{scrollbar-width:thin;scrollbar-color:#ccd4e0 transparent}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#d3dae6;border-radius:9px;border:2px solid transparent;background-clip:content-box}
+::-webkit-scrollbar-thumb:hover{background:#b3bfd1;background-clip:content-box}
+::-webkit-scrollbar-corner{background:transparent}
+/* 2. 滚动容器边缘阴影（滚动时才出现） */
+.is-scroll-top{box-shadow:inset 0 10px 8px -10px rgba(15,35,70,.16)}
+.is-scroll-bottom{box-shadow:inset 0 -10px 8px -10px rgba(15,35,70,.16)}
+.is-scroll-top.is-scroll-bottom{box-shadow:inset 0 10px 8px -10px rgba(15,35,70,.16),inset 0 -10px 8px -10px rgba(15,35,70,.16)}
+/* 3. 吸顶表头在滚动后加投影 */
+.message-list-table-wrap.is-scroll-top .message-list-table thead th,
+.asset-list-host.is-scroll-top .asset-list-table thead th,
+.message-list-table-wrap.is-scroll-top .message-list-table thead{box-shadow:0 2px 6px rgba(15,35,70,.08)}
+/* 4. 滚动区域留出滚动条位置，避免内容贴边 */
+.message-list-table-wrap,.asset-list-host,.asset-group-list,.time-nav-list{padding-right:2px}
+/* 5. 分页条统一为浅色页脚 */
+.asset-pagination,.message-pagination,.sop-pagination{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:8px 12px;margin:0;background:#fafbfd;border-top:1px solid #eef1f6;font-size:12px;color:#7b8496;line-height:1.6}
+.message-pagination .page-info,.sop-pagination .page-info{display:flex;align-items:center;gap:8px;min-width:0}
+.message-page-size{color:#8a94a6;font-size:11px;background:#eef1f6;border-radius:3px;padding:1px 7px;white-space:nowrap}
+.message-pagination button,.sop-pagination button{background:#fff;border:1px solid #e0e5ec;border-radius:5px;padding:4px 11px;color:#5a6472;font-size:12px;cursor:pointer;transition:border-color .15s,color .15s,background .15s}
+.message-pagination button:hover:not(:disabled),.sop-pagination button:hover:not(:disabled){border-color:#a9c9f5;color:#409eff;background:#f5f9ff}
+.message-pagination button:disabled,.sop-pagination button:disabled{color:#c0c4cc;background:#f7f8fa;border-color:#eef0f3;cursor:not-allowed;opacity:1}
+.asset-page-controls{display:flex;align-items:center;gap:4px}
+.asset-page-controls>button{height:26px;min-width:26px;padding:0 7px;border:1px solid #e0e5ec;background:#fff;border-radius:5px;color:#5a6472;font-size:12px;cursor:pointer;transition:border-color .15s,color .15s,background .15s}
+.asset-page-controls>button:hover:not(:disabled):not(.active){border-color:#a9c9f5;color:#409eff;background:#f5f9ff}
+.asset-page-controls>button.active{background:#409eff;border-color:#409eff;color:#fff;font-weight:500}
+.asset-page-controls>button:disabled{background:#f7f8fa;color:#c0c4cc;border-color:#eef0f3;cursor:not-allowed}
+.asset-page-total,.asset-page-ellipsis{color:#8a94a6}
+/* 6. 长配置弹窗：标题分隔线 + 操作栏吸底 */
+.opt-editor-modal .el-dialog__header{border-bottom:1px solid #f0f2f5;padding-bottom:12px}
+.opt-editor-modal .el-dialog__body{padding-bottom:0}
+.opt-editor-modal .el-form-item{margin-bottom:16px}
+.opt-editor-modal .form-grid .el-form-item{margin-bottom:12px}
+.opt-editor-modal .editor-actions{position:sticky;bottom:0;z-index:2;margin-top:6px;padding:12px 0 10px;background:#fff;border-top:1px solid #eef1f6;box-shadow:0 -8px 14px -14px rgba(15,35,70,.35)}
+.opt-editor-modal .editor-actions .el-button{margin:0 8px 0 0}
+/* 7. 弹窗内部滚动区更柔和 */
+.opt-editor-modal .el-dialog__body{scrollbar-gutter:stable}
+.asset-picker-modal .asset-list-host,.opt-group-list{scrollbar-gutter:stable}
+/* 8. 素材库/分组树滚动区轻质感 */
+.asset-group-list{padding-bottom:6px}
+.past-page-host{scrollbar-gutter:stable}
+
+/* 9. 消息分页条结构（左信息 / 右页码） */
+.message-pagination .page-info,.sop-pagination .page-info{display:flex;align-items:center;gap:8px;min-width:0;flex-wrap:wrap}
+.message-pagination .page-count{color:#5a6472;font-weight:500}
+.message-pagination .page-index{color:#8a94a6}
+.message-pagination .page-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.message-pagination .asset-page-controls{gap:4px}
+
+/* 10. 改群名：新群名称输入框拉满一行、去掉说明小字 */
+.opt-new-group-item .opt-new-group-input{width:100%;box-sizing:border-box;max-width:none}
+.opt-new-group-item .opt-new-group-input:focus{outline:none;border-color:#409eff;box-shadow:0 0 0 2px rgba(64,158,255,.12)}
