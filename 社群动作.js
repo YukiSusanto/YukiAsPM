@@ -93,8 +93,6 @@ function communityNeedsText(id) { const a = communityNormalizeAction(id); return
 function communityNeedsAudience(id) { const a = communityNormalizeAction(id); return a === 'pm' || a === 'create_group'; }
 /* 建群先用添加好友时间框定客户总范围，因此好友时间对建群同样生效。 */
 function communityNeedsFriendTime(id) { const a = communityNormalizeAction(id); return a === 'pm' || a === 'create_group'; }
-/* 只有私信与建群估算人数；社群发送类与群改名、解散群聊不展示人数/群数。 */
-function communityNeedsEstimate(id) { const a = communityNormalizeAction(id); return a === 'pm' || a === 'create_group'; }
 function communityNeedsNewGroupName(id) { return communityNormalizeAction(id) === 'rename_group'; }
 function communityNeedsBuildList(id) { return communityNormalizeAction(id) === 'create_group'; }
 function communityActionTone(id) {
@@ -115,35 +113,6 @@ function communityContentTitle(node) {
 }
 /* 往期数据/详情里的素材列：静默动作没有素材。 */
 function communityMaterialCell(node) { return communityNeedsText(node && node.action) ? String(Number(node.materialCount || 0)) : '—'; }
-/* 列表列宽有限：群聊动作只显示简短的「产品名群」，完整群名放在悬停提示里。 */
-function communityGroupShortName(group) {
-  const product = String((group && group.product) || '').trim();
-  if (product && product !== '通用') return product + '群';
-  const name = String((group && group.name) || '');
-  return name.replace(/^雪梨老师/, '').replace(/(打卡群|学习群)$/, '群') || '群聊';
-}
-function communityGroupCellText(node) {
-  const list = communityGroupList(node);
-  if (!list.length) return '';
-  const short = list.map(communityGroupShortName);
-  if (short.length === 1) return short[0];
-  if (short.length === 2) return short.join('、');
-  return short[0] + ' 等' + short.length + '个群';
-}
-function communityEstimateCell(node) {
-  const id = communityNormalizeAction(node && node.action);
-  if (id === 'pm') return '<span class="opt-estimate" title="基于演示客户数据估算">' + communityEstimate(node).total + '人</span>';
-  if (id === 'create_group') {
-    const fixed = Array.isArray(node && node.buildGroups) ? node.buildGroups : communityBuildStats(node).groups;
-    const matched = Number.isFinite(node && node.buildMatched) ? node.buildMatched : communityBuildStats(node).matched;
-    const tip = (fixed.length ? '将建群：' + fixed.map(g => g.name + '（' + g.count + '人）').join('、') : '当前范围内没有可建群的产品线') + ' · 单群上限 ' + COMMUNITY_GROUP_MEMBER_LIMIT + ' 人';
-    return '<span class="opt-estimate" title="' + escapeText(tip) + '">' + matched + '人</span>';
-  }
-  /* 社群发送类、改群名、解散群聊：展示触发的群聊（简称） */
-  const list = communityGroupList(node), short = communityGroupCellText(node);
-  if (!short) return '<span class="opt-estimate is-empty" title="未选择目标群聊">—</span>';
-  return '<span class="opt-estimate is-group" title="' + escapeText(list.map(g => g.name).join('、')) + '">' + escapeText(short) + '</span>';
-}
 
 /* 演示用企微群列表：覆盖需求文档里的四条产品线，另含第二群与通用群，便于验证搜索与多选。 */
 function communityDemoGroups() {
@@ -168,7 +137,7 @@ function communityPickerModal(m, ctx) {
   if (!box) return;
   box.classList.add('opt-group-modal');
   const body = box.querySelector('.el-dialog__body');
-  body.innerHTML = '<p class="opt-muted">' + (single ? '该动作只能选择 1 个群聊。' : '可选择一个或多个目标群聊。') + '群名称会作为变量 <code>{{group_name}}</code> 写入该消息节点，发送时精准定向到所选群。演示群列表由接口返回，正式版对接企微群列表。</p><div class="opt-group-search"><input class="local-input" aria-label="搜索群聊名称" placeholder="搜索群名称或产品线"></div><div class="opt-group-list" role="group" aria-label="群聊列表"></div><div class="opt-group-empty-tip opt-muted" hidden>没有匹配的群聊</div><div class="opt-group-picker-count opt-muted">已选 0个群</div>';
+  body.innerHTML = '<p class="opt-muted">' + (single ? '该动作只能选择 1 个群聊。' : '可选择一个或多个目标群聊。') + '发送时精准定向到所选群；演示群列表由接口返回，正式版对接企微群列表。</p><div class="opt-group-search"><input class="local-input" aria-label="搜索群聊名称" placeholder="搜索群名称或产品线"></div><div class="opt-group-list" role="group" aria-label="群聊列表"></div><div class="opt-group-empty-tip opt-muted" hidden>没有匹配的群聊</div><div class="opt-group-picker-count opt-muted">已选 0个群</div>';
   const list = body.querySelector('.opt-group-list');
   const search = body.querySelector('[aria-label="搜索群聊名称"]');
   const emptyTip = body.querySelector('.opt-group-empty-tip');
@@ -233,33 +202,17 @@ function communityRenderBuildPreview(m, stats) {
   if (ctx.newGroupHint) ctx.newGroupHint.textContent = stats.groups.length ? '将自动建立 ' + stats.groups.length + ' 个产品群，创建后可在群管理查看。' : '';
 }
 
-/* 预计触发人数 的口径随动作切换。 */
+/* 预计触发人数/群聊已整体移除（改由任务发送情况界面承载）；
+   这里只保留「自动建群清单」的实时刷新，它属于建群动作本身的配置结果。 */
 updateEstimate = function (m) {
-  const box = m.querySelector('.opt-draft-estimate');
-  if (!box) return;
-  const action = draft.action;
-  if (action === 'pm') {
-    const e = communityEstimate(draft);
-    const invalid = draft.friendStart && draft.friendEnd && draft.friendStart > draft.friendEnd;
-    box.innerHTML = invalid ? '<span class="opt-error">开始日期不能晚于结束日期</span>' : '<span>预计触发人数 <strong>' + e.total + '人</strong></span><span>添加好友时间筛选后 ' + e.base + '人 · 演示估算</span>';
-    return;
-  }
-  if (communityIsGroupSend(action)) {
-    /* 社群发送只看群聊，不展示人数/群数估算 */
-    box.innerHTML = '';
-    return;
-  }
-  if (action === 'create_group') {
-    const e = communityEstimate(draft);
-    const stats = communityBuildStats(draft);
-    const invalid = draft.friendStart && draft.friendEnd && draft.friendStart > draft.friendEnd;
-    const unmatched = e.total - stats.matched;
-    box.innerHTML = invalid ? '<span class="opt-error">开始日期不能晚于结束日期</span>'
-      : '<span>预计拉群人数 <strong>' + stats.matched + '人</strong></span><span>范围内客户 ' + e.total + ' 人' + (unmatched > 0 ? ' · ' + unmatched + ' 人未带产品线标签不入群' : '') + ' · 演示估算</span>';
-    communityRenderBuildPreview(m, stats);
-    return;
-  }
-  box.innerHTML = '';
+  if (draft.action === 'create_group') communityRenderBuildPreview(m);
+};
+
+/* 预估盒子移除后，原链路（renderAudience 末尾的判断）不再触发刷新，这里补一次 */
+const communityRenderAudienceBefore = renderAudience;
+renderAudience = function (m) {
+  communityRenderAudienceBefore(m);
+  try { updateEstimate(m); } catch (e) { /* 忽略 */ }
 };
 
 function communityApplyEditorLayout(m, ctx, readOnly) {
@@ -272,7 +225,6 @@ function communityApplyEditorLayout(m, ctx, readOnly) {
   m.querySelectorAll('.audience-section').forEach(s => { s.style.display = showTags ? '' : 'none'; });
   m.querySelectorAll('.opt-tag-hint').forEach(s => { s.style.display = showTags ? '' : 'none'; });
   if (ctx.friend) ctx.friend.style.display = communityNeedsFriendTime(action) ? '' : 'none';
-  if (ctx.estimate) ctx.estimate.style.display = communityNeedsEstimate(action) ? '' : 'none';
   if (ctx.composer) ctx.composer.style.display = communityNeedsText(action) ? '' : 'none';
   if (ctx.composerItem) ctx.composerItem.style.display = communityNeedsText(action) ? '' : 'none';
   ctx.atAll.style.display = action === 'group_at_all' ? '' : 'none';
@@ -306,7 +258,6 @@ function communityApplyEditorLayout(m, ctx, readOnly) {
     ctx.textarea.placeholder = notice ? '请输入群公告内容，支持变量；超出 ' + COMMUNITY_NOTICE_MAX + ' 字的部分将被截断' : '请输入节点话术，可保留变量占位符';
     try { if (typeof ctx.textarea.oninput === 'function') ctx.textarea.oninput(); } catch (e) { /* 字数计数器缺失时忽略 */ }
   }
-  if (ctx.groupVar) ctx.groupVar.style.display = communityNeedsGroup(action) ? '' : 'none';
   communitySyncTrigger(ctx);
   updateEstimate(m);
 }
@@ -433,7 +384,7 @@ editNode = function (i, readOnly = false) {
   if (!audienceItem || !audience) return;
   const picker = document.createElement('div');
   picker.className = 'opt-group-picker';
-  picker.innerHTML = '<div class="opt-group-picker-head"><span><strong>目标群聊</strong><span class="opt-group-required">必填</span></span><button type="button" class="el-button el-button--small opt-group-pick-btn">选择群聊</button></div><div class="opt-group-selected"></div><small class="opt-group-var-hint">群名称将作为变量 <code>{{group_name}}</code> 随消息下发，执行时精准定向到所选群。</small>';
+  picker.innerHTML = '<div class="opt-group-picker-head"><span><strong>目标群聊</strong><span class="opt-group-required">必填</span></span><button type="button" class="el-button el-button--small opt-group-pick-btn">选择群聊</button></div><div class="opt-group-selected"></div>';
   audience.prepend(picker);
   ctx.picker = picker;
   ctx.groupSelected = picker.querySelector('.opt-group-selected');
@@ -441,7 +392,9 @@ editNode = function (i, readOnly = false) {
   ctx.groupPickBtn.onclick = () => { if (!readOnly) communityPickerModal(m, ctx); };
   ctx.audienceLabel = audienceItem.querySelector('.el-form-item__label');
   ctx.friend = m.querySelector('.opt-friend-time');
+  /* 「预计触发人数／群聊」整块移除（编辑与详情都不再展示），改由任务发送情况界面查看 */
   ctx.estimate = m.querySelector('.opt-draft-estimate');
+  if (ctx.estimate) { ctx.estimate.remove(); ctx.estimate = null; }
   /* 静默动作说明放在“发送人群”上方，话术/素材区整体隐藏时仍然可见 */
   const actionNote = document.createElement('div');
   actionNote.className = 'opt-action-alert info opt-action-note';
@@ -478,22 +431,6 @@ editNode = function (i, readOnly = false) {
     const makeAlert = (cls, html) => { const el = document.createElement('div'); el.className = 'opt-action-alert ' + cls; el.innerHTML = html; composer.insertBefore(el, composer.firstElementChild); return el; };
     ctx.atAll = makeAlert('warning', '<span>⚠</span><span><strong>注意：</strong>该动作将@群内所有成员，会触发强提醒，请谨慎使用。</span>');
     ctx.notice = makeAlert('info', '<span>ⓘ</span><span><strong>群公告字数限制：</strong>超出 ' + COMMUNITY_NOTICE_MAX + ' 字的部分将被截断。</span>');
-    const shortcuts = composer.querySelector('.variable-shortcuts');
-    if (shortcuts) {
-      const groupVar = document.createElement('button');
-      groupVar.type = 'button';
-      groupVar.className = 'el-button el-button--primary el-button--small is-plain opt-group-var';
-      groupVar.textContent = '群名称';
-      groupVar.title = '插入 {{group_name}}，发送时替换为所选群名称';
-      groupVar.onclick = () => {
-        if (readOnly || !ctx.textarea) return;
-        ctx.textarea.setRangeText('{{group_name}}', ctx.textarea.selectionStart, ctx.textarea.selectionEnd, 'end');
-        if (typeof ctx.textarea.oninput === 'function') ctx.textarea.oninput();
-        ctx.textarea.focus();
-      };
-      shortcuts.append(groupVar);
-      ctx.groupVar = groupVar;
-    }
   }
   select.onchange = () => {
     if (readOnly) return;
@@ -503,7 +440,7 @@ editNode = function (i, readOnly = false) {
   };
   communityApplyEditorLayout(m, ctx, readOnly);
   if (readOnly) {
-    m.querySelectorAll('.opt-group-picker button,.opt-new-group-item input,.opt-new-group-item button,.opt-group-var').forEach(el => { el.disabled = true; });
+    m.querySelectorAll('.opt-group-picker button,.opt-new-group-item input,.opt-new-group-item button').forEach(el => { el.disabled = true; });
     ctx.trigger.disabled = true;
     return;
   }
@@ -555,11 +492,6 @@ renderMessages = function (group) {
   communityRenderMessagesBefore(group);
   const table = root.querySelector('.message-list-table');
   if (!table) return;
-  const heads = table.querySelectorAll('thead th');
-  if (heads[6]) {
-    heads[6].textContent = '预计触发人群/群聊';
-    heads[6].title = '私信1v1 与建群显示预计触发人数；社群发送、改群名与解散群聊显示触发的群聊（产品名群，悬停看全名）';
-  }
   const all = orderedMessages(group), pager = messagePaging(group);
   table.querySelectorAll('tbody tr[data-index]').forEach(row => {
     const node = all[(pager.page - 1) * pager.pageSize + Number(row.dataset.index)];
@@ -567,7 +499,7 @@ renderMessages = function (group) {
     const cells = row.children;
     if (cells[2]) cells[2].innerHTML = '<span class="message-action-tag ' + communityActionTone(node.action) + '">' + escapeText(communityLabel(node.action)) + '</span>';
     if (cells[5]) { const title = communityContentTitle(node) || '—'; cells[5].innerHTML = '<div class="message-text' + (title === '—' ? ' is-empty' : '') + '" title="' + escapeText(title) + '">' + escapeText(title) + '</div>'; }
-    if (cells[6]) cells[6].innerHTML = communityEstimateCell(node);
-    if (cells[8]) cells[8].textContent = communityNeedsText(node.action) ? String(node.materialCount || 0) : '—';
+    /* 「预计触发人群/群聊」列已移除（由任务发送情况界面承载），这里只处理素材列 */
+    if (cells[7]) cells[7].textContent = communityNeedsText(node.action) ? String(node.materialCount || 0) : '—';
   });
 };

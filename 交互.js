@@ -1,3 +1,4 @@
+const initialPrototypeHash=location.hash;
 /* Standalone local replica. No production API calls. */
 const root=document.getElementById('replica'), dialogs=document.getElementById('dialogs');
 const parse=s=>{const t=document.createElement('template');t.innerHTML=s;return t.content;};
