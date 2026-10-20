@@ -1,0 +1,46 @@
+name: Publish prototype collection
+
+on:
+  push:
+    branches: [stubborn-sop, social-chat-sop]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out publishing tools
+        uses: actions/checkout@v4
+      - name: Check out fixed SOP
+        uses: actions/checkout@v4
+        with:
+          ref: stubborn-sop
+          path: .sources/stubborn-sop
+      - name: Check out community SOP
+        uses: actions/checkout@v4
+        with:
+          ref: social-chat-sop
+          path: .sources/social-chat-sop
+      - name: Assemble both prototypes
+        run: python3 .github/scripts/build_pages.py .sources _site
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Deploy site
+        id: deployment
+        uses: actions/deploy-pages@v4
