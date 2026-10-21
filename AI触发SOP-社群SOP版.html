@@ -1357,7 +1357,7 @@ try { if (typeof render === 'function') render(); } catch (e) { /* 忽略 */ }
   if (typeof materialKinds === 'object') reorder(materialKinds, kindOrder);
 })();
 
-function videoChannelGroups() { return (product.materialGroups || []).filter(g => g.kind === 'videochannel'); }
+function videoChannelGroups() { return flattenedFolders(); }
 function videoChannelLinkTail(link) {
   const clean = String(link || '').split(/[?#]/)[0];
   return (clean.split('/').filter(Boolean).pop() || '').slice(0, 24);
@@ -1368,9 +1368,9 @@ function openVideoChannelUpload(targetGroup, onUploaded) {
   const fixedGroup = targetGroup && targetGroup !== 'all' && groups.some(g => g.id === targetGroup) ? targetGroup : null;
   const groupField = fixedGroup
     ? '<div class="asset-upload-destination">上传到：<strong>' + escapeText(folderPath(fixedGroup)) + '</strong></div>'
-    : field('放入分组', '<select class="local-select" aria-label="视频号素材分组">' + (groups.length
+    : field('放入文件夹', '<select class="local-select" aria-label="视频号素材分组">' + (groups.length
       ? groups.map(g => '<option value="' + escapeText(g.id) + '">' + escapeText(folderPath(g.id)) + '</option>').join('')
-      : '<option value="">视频号未分组</option>') + '</select>');
+      : '<option value="">未分组</option>') + '</select>');
   const body = '<p class="opt-muted">视频号素材通过链接下发，不需要上传文件；素材ID由后端生成。</p>'
     + field('原始链接', '<input class="local-input" aria-label="视频号原始链接" placeholder="请输入视频号动态原始链接">')
     + groupField
@@ -1382,7 +1382,7 @@ function openVideoChannelUpload(targetGroup, onUploaded) {
       return feedback('请填写原始链接');
     }
     const groupSelect = modal.querySelector('[aria-label="视频号素材分组"]');
-    const groupId = fixedGroup || (groupSelect && groupSelect.value) || 'ungrouped-videochannel';
+    const groupId = fixedGroup || (groupSelect && groupSelect.value) || simpleUngroupedId();
     const tail = videoChannelLinkTail(link);
     const name = '视频号素材' + (tail ? ' · ' + tail : '');
     const asset = {
@@ -2234,6 +2234,29 @@ materialLibrary = function (editor, initialType) {
         if (groupSelect) groupSelect.dispatchEvent(new Event('change'));
       });
     };
+  }
+  const refreshUploadedVideo = ids => {
+    if (!m.isConnected) return;
+    const asset = product.materials.find(a => a.id === ids[0]);
+    if (groupSelect && asset) groupSelect.value = asset.groupId;
+    const search = m.querySelector('[aria-label="搜索引用素材"]');
+    if (search) { search.value = ''; search.dispatchEvent(new Event('input')); }
+    if (groupSelect) groupSelect.dispatchEvent(new Event('change'));
+    const format = m.querySelector('[aria-label="引用素材文件格式"]');
+    if (format) { format.value = 'all'; format.dispatchEvent(new Event('change')); }
+    document.body.style.overflow = 'hidden';
+  };
+  const host = upload && upload.parentElement;
+  if (host && !m.querySelector('.asset-picker-video-upload')) {
+    const video = document.createElement('button');
+    video.type = 'button';
+    video.className = 'el-button is-plain asset-picker-video-upload';
+    video.textContent = '上传视频号素材';
+    video.onclick = () => openVideoChannelUpload(
+      groupSelect && groupSelect.value !== 'all' ? groupSelect.value : null,
+      refreshUploadedVideo
+    );
+    host.append(video);
   }
 };
 

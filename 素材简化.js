@@ -340,6 +340,29 @@ materialLibrary = function (editor, initialType) {
       });
     };
   }
+  const refreshUploadedVideo = ids => {
+    if (!m.isConnected) return;
+    const asset = product.materials.find(a => a.id === ids[0]);
+    if (groupSelect && asset) groupSelect.value = asset.groupId;
+    const search = m.querySelector('[aria-label="搜索引用素材"]');
+    if (search) { search.value = ''; search.dispatchEvent(new Event('input')); }
+    if (groupSelect) groupSelect.dispatchEvent(new Event('change'));
+    const format = m.querySelector('[aria-label="引用素材文件格式"]');
+    if (format) { format.value = 'all'; format.dispatchEvent(new Event('change')); }
+    document.body.style.overflow = 'hidden';
+  };
+  const host = upload && upload.parentElement;
+  if (host && !m.querySelector('.asset-picker-video-upload')) {
+    const video = document.createElement('button');
+    video.type = 'button';
+    video.className = 'el-button is-plain asset-picker-video-upload';
+    video.textContent = '上传视频号素材';
+    video.onclick = () => openVideoChannelUpload(
+      groupSelect && groupSelect.value !== 'all' ? groupSelect.value : null,
+      refreshUploadedVideo
+    );
+    host.append(video);
+  }
 };
 
 /* 消息节点：不再有独立「素材库」按钮，改为点「暂未引用素材」或列表下方「添加」来引用 */

@@ -12,7 +12,7 @@
   if (typeof materialKinds === 'object') reorder(materialKinds, kindOrder);
 })();
 
-function videoChannelGroups() { return (product.materialGroups || []).filter(g => g.kind === 'videochannel'); }
+function videoChannelGroups() { return flattenedFolders(); }
 function videoChannelLinkTail(link) {
   const clean = String(link || '').split(/[?#]/)[0];
   return (clean.split('/').filter(Boolean).pop() || '').slice(0, 24);
@@ -23,9 +23,9 @@ function openVideoChannelUpload(targetGroup, onUploaded) {
   const fixedGroup = targetGroup && targetGroup !== 'all' && groups.some(g => g.id === targetGroup) ? targetGroup : null;
   const groupField = fixedGroup
     ? '<div class="asset-upload-destination">上传到：<strong>' + escapeText(folderPath(fixedGroup)) + '</strong></div>'
-    : field('放入分组', '<select class="local-select" aria-label="视频号素材分组">' + (groups.length
+    : field('放入文件夹', '<select class="local-select" aria-label="视频号素材分组">' + (groups.length
       ? groups.map(g => '<option value="' + escapeText(g.id) + '">' + escapeText(folderPath(g.id)) + '</option>').join('')
-      : '<option value="">视频号未分组</option>') + '</select>');
+      : '<option value="">未分组</option>') + '</select>');
   const body = '<p class="opt-muted">视频号素材通过链接下发，不需要上传文件；素材ID由后端生成。</p>'
     + field('原始链接', '<input class="local-input" aria-label="视频号原始链接" placeholder="请输入视频号动态原始链接">')
     + groupField
@@ -37,7 +37,7 @@ function openVideoChannelUpload(targetGroup, onUploaded) {
       return feedback('请填写原始链接');
     }
     const groupSelect = modal.querySelector('[aria-label="视频号素材分组"]');
-    const groupId = fixedGroup || (groupSelect && groupSelect.value) || 'ungrouped-videochannel';
+    const groupId = fixedGroup || (groupSelect && groupSelect.value) || simpleUngroupedId();
     const tail = videoChannelLinkTail(link);
     const name = '视频号素材' + (tail ? ' · ' + tail : '');
     const asset = {
