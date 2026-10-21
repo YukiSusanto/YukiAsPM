@@ -1,7 +1,7 @@
 /* 界面美化：滚动区域阴影 + 消息列表分页条结构优化（纯展示，不改业务逻辑）。 */
 (function () {
   /* ---------- 1. 滚动区域标记 ---------- */
-  const SELECTOR = '.message-list-table-wrap,.asset-list-host,.asset-group-list,.time-nav-list,.opt-group-list,.past-page-host,.node-workspace,.opt-action-menu,.el-dialog__body';
+  const SELECTOR = '.message-list-table-wrap,.asset-list-host,.asset-group-list,.time-nav-list,.opt-group-list,.node-workspace,.opt-action-menu,.el-dialog__body';
   function mark(el) {
     if (!el || el.nodeType !== 1 || typeof el.matches !== 'function' || !el.matches(SELECTOR)) return;
     const overflow = el.scrollHeight - el.clientHeight > 2;

@@ -56,76 +56,8 @@ body{--replica-side-width:210px;padding-top:48px}.replica-header{position:fixed;
 .time-node-nav>.fixed-period-context{border:0;border-radius:0;margin:0;padding:2px 10px 10px;background:transparent;max-width:100%;min-width:0;box-sizing:border-box}.time-node-nav .fixed-context-controls{display:flex;flex-wrap:wrap;gap:7px 10px;align-items:center}.time-node-nav .fixed-current-period{font-size:11px;padding:4px 6px}.time-node-nav .fixed-sales{font-size:11px}.workspace-page>.node-workspace{margin-top:0}.message-workbench-header{border-bottom:1px solid #ebeef5}
 @media(max-width:1000px){.node-workspace>.time-node-nav{grid-template-columns:minmax(0,1fr) auto;gap:7px 10px}.time-node-nav>.fixed-period-context{grid-column:1/-1;grid-row:2;padding:0}.time-node-nav .week-filter{grid-column:2;grid-row:1;max-width:160px}.time-node-nav .compact-node-select{grid-row:3}.time-node-nav .fixed-context-controls{gap:8px}.time-node-nav .fixed-current-period{padding:3px 6px}}
 .time-node-menu{min-width:110px;z-index:3100}.time-node-menu button.danger{color:#f56c6c}.time-node-menu button.danger:hover{background:#fef0f0}.delete-current-time-node{display:none!important}@media(max-width:1000px){.message-workbench-header .delete-current-time-node{display:inline-flex!important;padding:0;height:auto;font-size:11px;margin-top:6px;margin-left:9px}}
-/* Past-period entry sits right of the page title without disturbing the responsive header. */
 .workspace-header .workspace-title-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-width:0}
 .workspace-header .workspace-title-line h2{min-width:0}
-.past-periods-entry{font-size:12px;padding:6px 13px;height:auto;line-height:1.4;white-space:nowrap}
-/* Past-period archive page: full-width workspace instead of a drawer. */
-.past-page-panel{flex:1 1 0;min-height:0;display:flex;flex-direction:column;background:#fff;border:1px solid #e4e7ed;border-radius:6px;overflow:hidden}
-.past-page-note{flex:0 0 auto;padding:10px 14px;border-bottom:1px solid #ebeef5;background:#fafbfd;font-size:12px;color:#909399;line-height:1.7;margin:0}
-.past-page-host{flex:1 1 0;min-height:0;overflow:auto;padding:12px 14px 16px;background:#f7f8fa;scrollbar-gutter:stable}
-.past-page-host::-webkit-scrollbar{width:10px;height:10px}
-.past-page-host::-webkit-scrollbar-thumb{background:#c3ccd8;border:2px solid #f7f8fa;border-radius:6px}
-.past-page-host::-webkit-scrollbar-thumb:hover{background:#a3aebd}
-.past-loading{display:flex;align-items:center;justify-content:center;gap:10px;padding:90px 0;color:#909399;font-size:13px}
-.past-spinner{width:16px;height:16px;border:2px solid #dcdfe6;border-top-color:#409eff;border-radius:50%;animation:past-spin .8s linear infinite}
-@keyframes past-spin{to{transform:rotate(1turn)}}
-.past-empty{background:#fff;border:1px solid #e4e7ed;border-radius:6px;padding:72px 20px;text-align:center;color:#909399}
-.past-empty strong{display:block;font-size:14px;color:#606266;margin-bottom:8px}
-.past-empty p{font-size:12px;line-height:1.7;margin:0}
-.past-list{display:flex;flex-direction:column;gap:8px}
-/* Shared expand/collapse affordance for both nesting levels. */
-.past-toggle-open,.past-toggle-close{font-size:12px;color:#409eff;white-space:nowrap;margin-left:auto}
-.past-toggle-close{display:none}
-.past-period[open]>summary .past-toggle-open,.past-node[open]>summary .past-toggle-open{display:none}
-.past-period[open]>summary .past-toggle-close,.past-node[open]>summary .past-toggle-close{display:inline}
-/* Level 1: period. */
-.past-period{background:#fff;border:1px solid #e4e7ed;border-radius:6px;overflow:hidden}
-.past-period[open]{border-color:#c6e2ff;box-shadow:0 2px 8px rgba(64,158,255,.08)}
-.past-period-summary{display:flex;align-items:center;gap:8px 16px;flex-wrap:wrap;padding:12px 14px;cursor:pointer;list-style:none;font-size:13px;color:#303133}
-.past-period-summary::-webkit-details-marker{display:none}
-.past-period-summary:hover{background:#fafcff}
-.past-period-name{font-weight:600;color:#303133;min-width:64px}
-.past-period-range,.past-period-sales,.past-period-nodes{font-size:12px;color:#909399}
-.past-period-metric{font-size:12px;color:#606266}
-.past-period-metric strong{color:#409eff;font-size:14px}
-.past-period-body{padding:0 14px 14px;border-top:1px solid #f2f6fc}
-.past-period-cards{display:flex;flex-wrap:wrap;gap:10px;padding:12px 0}
-.past-period-cards>div{flex:1 1 150px;min-width:132px;background:#f7f8fa;border:1px solid #ebeef5;border-radius:6px;padding:9px 11px;display:flex;flex-direction:column;gap:4px}
-.past-period-cards label{font-size:11px;color:#909399}
-.past-period-cards strong{font-size:13px;color:#303133}
-.past-period-cards small{font-size:11px;color:#909399;line-height:1.5}
-.past-period-cards .past-metric{background:#ecf5ff;border-color:#d9ecff}
-.past-period-cards .past-metric strong{color:#409eff;font-size:15px}
-.past-snapshot-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 0 8px;border-top:1px dashed #ebeef5}
-.past-snapshot-head strong{font-size:13px;color:#303133}
-.past-readonly-badge{font-size:11px;color:#909399;background:#f5f7fa;border:1px solid #dcdfe6;border-radius:3px;padding:1px 6px;white-space:nowrap}
-.past-snapshot-meta{margin-left:auto;font-size:11px;color:#a0a5ae}
-.past-snapshot-note{font-size:11px;color:#909399;line-height:1.6;margin:0 0 10px}
-/* Level 2: time node (W-D). */
-.past-node{border:1px solid #ebeef5;border-radius:6px;margin-bottom:8px;overflow:hidden;background:#fff}
-.past-node:last-child{margin-bottom:0}
-.past-node[open]{border-color:#d9ecff}
-.past-node-summary{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap;padding:9px 12px;cursor:pointer;list-style:none;background:#fafbfd;font-size:12px;color:#606266}
-.past-node-summary::-webkit-details-marker{display:none}
-.past-node-summary:hover{background:#f3f8ff}
-.past-node[open]>summary{border-bottom:1px solid #ebeef5}
-.past-node-code{font-family:Consolas,monospace;color:#409eff;background:#ecf5ff;border:1px solid #d9ecff;border-radius:3px;padding:1px 6px;white-space:nowrap}
-.past-node-name{font-weight:500;color:#303133}
-.past-node-meta{color:#909399}
-.past-snapshot-empty{padding:12px;font-size:12px;color:#909399}
-.past-table-wrap{overflow:auto;max-width:100%}
-.past-table{width:100%;border-collapse:collapse;font-size:12px}
-.past-table th,.past-table td{border-bottom:1px solid #f2f6fc;padding:7px 9px;text-align:left;vertical-align:top}
-.past-table th{background:#fafafa;color:#909399;font-weight:500;white-space:nowrap;position:sticky;top:0;z-index:1}
-.past-table td{color:#606266}
-.past-table tbody tr:last-child td{border-bottom:0}
-.past-col-time{white-space:nowrap;color:#409eff!important}
-.past-col-tags{min-width:120px}
-.past-col-sent{white-space:nowrap;color:#303133;font-weight:600}
-.past-message-text{max-width:520px;max-height:110px;overflow:auto;white-space:pre-wrap;word-break:break-word;line-height:1.6}
-@media(max-width:1000px){.past-page-host{padding:10px}.past-period-summary{gap:6px 12px}.past-message-text{max-width:320px}}
-@media(max-width:700px){.workspace-header{flex-wrap:wrap;row-gap:8px}.workspace-header>div{min-width:0}.past-periods-entry{padding:5px 10px}.past-period-name{min-width:0}.past-period-metric{width:100%}.past-period-cards>div{flex:1 1 100%}.past-message-text{max-width:220px}.past-page-panel{border-radius:0}}
 /* Fixed SOP covers exactly two weeks: W1 converts the current period, W2 chases the previous one. */
 .week-filter button{display:flex;flex-direction:column;align-items:center;gap:1px;line-height:1.25;min-width:62px;padding:4px 7px}
 .week-filter button strong{font-size:12px;font-weight:600;line-height:1.2}
@@ -199,7 +131,6 @@ body{--replica-side-width:210px;padding-top:48px}.replica-header{position:fixed;
 .message-action-tag.is-private{color:#606266}
 .opt-estimate.is-group{color:#409eff}
 .opt-estimate.is-empty{color:#c0c4cc;font-weight:400}
-.past-group-note{display:block;font-size:11px;color:#909399;line-height:1.6;margin-top:4px}
 .message-list-table col:nth-child(3){width:98px!important}
 
 /* 社群动作：建群产品线 */
@@ -315,7 +246,6 @@ body{--replica-side-width:210px;padding-top:48px}.replica-header{position:fixed;
 .asset-picker-modal .asset-list-host,.opt-group-list{scrollbar-gutter:stable}
 /* 8. 素材库/分组树滚动区轻质感 */
 .asset-group-list{padding-bottom:6px}
-.past-page-host{scrollbar-gutter:stable}
 
 /* 9. 消息分页条结构（左信息 / 右页码） */
 .message-pagination .page-info,.sop-pagination .page-info{display:flex;align-items:center;gap:8px;min-width:0;flex-wrap:wrap}
@@ -355,5 +285,92 @@ body{--replica-side-width:210px;padding-top:48px}.replica-header{position:fixed;
 .send-task-kind{display:inline-block;background:#eef5ff;border:1px solid #d5e5fb;color:#33608f;border-radius:3px;padding:0 5px;margin-right:6px;font-size:11px;line-height:18px}
 .send-task-counts b{color:#303133}
 .send-task-reason{display:block;font-size:11px;color:#f56c6c;margin-top:4px;line-height:1.4}
+.send-task-owner{white-space:nowrap}
+.send-task-owner small{display:block;font-size:11px;color:#909399;margin-top:2px;line-height:1.3}
 .send-task-group-table td:first-child{color:#33608f}
 .send-task-groups-modal .send-task-sales-tabs button{white-space:nowrap}
+
+/* ===== 私信节点 / 群聊节点 ===== */
+.node-kind-badge{display:inline-block;font-size:11px;line-height:18px;padding:0 5px;border-radius:3px;margin-right:6px;vertical-align:middle;white-space:nowrap}
+.node-kind-badge.is-private{background:#f0f2f5;color:#5a6472;border:1px solid #e4e7ed}
+.node-kind-badge.is-group{background:#eef5ff;color:#33608f;border:1px solid #d5e5fb}
+.message-workbench-header>div>div{display:flex;align-items:center;gap:8px}
+
+/* ===== 消息列表：8 列左对齐 ===== */
+.message-list-table{table-layout:fixed}
+.message-list-table th,.message-list-table td{text-align:left!important}
+.message-list-table th:nth-child(7),.message-list-table td:nth-child(7),
+.message-list-table th:nth-child(8),.message-list-table td:nth-child(8){white-space:nowrap}
+.message-list-table .node-kind-badge+.message-action-tag{margin-left:0}
+.message-workbench-header>div>div{display:flex;align-items:center;gap:8px}
+
+/* 消息列表：列宽收紧到容器内，避免最后一列 sticky 覆盖素材列 */
+.message-list-table{min-width:900px;width:100%}
+.message-list-table .message-actual-sent{display:none}
+
+/* 消息区标题右侧：两个新增入口并排靠右 */
+.message-workbench-header>.message-header-actions{display:flex;align-items:center;gap:8px;flex:none;margin-left:auto}
+.message-workbench-header>.message-header-actions>.el-button{margin:0;font-size:12px;padding:7px 14px;height:auto;line-height:1.4}
+.message-workbench-header>.message-header-actions>.el-button.el-button--primary{font-weight:500}
+
+/* ===== 欢迎语配置 ===== */
+.welcome-config-modal .el-dialog{--el-dialog-width:620px!important}
+.welcome-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 14px}
+.welcome-tabs button{border:1px solid #dcdfe6;background:#fff;border-radius:14px;padding:5px 14px;font-size:12px;color:#606266;cursor:pointer;transition:all .15s}
+.welcome-tabs button:hover{border-color:#a9c9f5;color:#409eff}
+.welcome-tabs button[aria-selected="true"]{background:#409eff;border-color:#409eff;color:#fff;font-weight:500}
+.welcome-textarea{min-height:150px;width:100%;box-sizing:border-box;border:1px solid #dcdfe6;border-radius:4px;padding:10px 12px;font:inherit;font-size:13px;line-height:1.7;color:#606266;resize:vertical}
+.welcome-textarea:focus{outline:none;border-color:#409eff;box-shadow:0 0 0 2px rgba(64,158,255,.12)}
+.welcome-count{text-align:right;font-size:11px;color:#909399;margin-top:4px}
+.welcome-group-hint{font-size:12px;line-height:1.7;margin-top:6px}
+.welcome-group-hint b{color:#33608f;font-weight:500}
+.message-workbench-header>.message-header-actions>.welcome-config-entry{font-size:12px;padding:7px 14px;height:auto;line-height:1.4}
+
+/* 欢迎语配置：快捷插入与素材库 */
+.welcome-shortcuts{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.welcome-shortcuts .variable-shortcuts-label{font-size:12px;color:#909399}
+.welcome-shortcuts .el-button{margin:0;font-size:12px;padding:4px 10px;height:auto}
+.welcome-material-field{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.welcome-material-field>label{font-size:13px;color:#606266;font-weight:500}
+.welcome-material-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.welcome-material-actions .el-button{margin:0;font-size:12px;padding:5px 14px;height:auto}
+.welcome-material-tip{font-size:11px}
+.welcome-material-chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center;min-height:26px}
+.welcome-material-modal .el-dialog{--el-dialog-width:520px!important}
+.welcome-material-list{max-height:46vh;overflow:auto;border:1px solid #ebeef5;border-radius:4px;margin-top:10px}
+.welcome-material-row{display:flex;align-items:center;gap:9px;padding:9px 12px;border-bottom:1px solid #f2f4f7;cursor:pointer}
+.welcome-material-row:last-child{border-bottom:0}
+.welcome-material-row:hover{background:#f5f9ff}
+.welcome-material-row input{margin:0;flex:none}
+.welcome-material-main{display:flex;flex-direction:column;gap:2px;min-width:0}
+.welcome-material-main strong{font-size:13px;font-weight:500;color:#303133;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.welcome-material-main small{font-size:11px;color:#909399}
+
+/* ===== 素材库：子文件夹行 + 文件列表 ===== */
+.asset-subfolders{display:flex;flex-direction:column;border:1px solid #ebeef5;border-radius:4px;margin-bottom:10px;overflow:hidden;background:#fff}
+.asset-subfolder-row{display:flex;align-items:center;gap:10px;width:100%;border:0;border-bottom:1px solid #f2f4f7;background:#fff;padding:10px 12px;cursor:pointer;text-align:left;font:inherit}
+.asset-subfolder-row:last-child{border-bottom:0}
+.asset-subfolder-row:hover{background:#f5f9ff}
+.asset-subfolder-row .folder-symbol{color:#e6a23c;font-size:14px}
+.asset-subfolder-row strong{font-size:13px;font-weight:500;color:#303133;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.asset-subfolder-row small{font-size:11px;color:#909399}
+.asset-subfolder-open{font-size:11px;color:#409eff;white-space:nowrap}
+
+/* 素材引用入口：空态点击引用 + 已引用时的「添加素材」 */
+.material-empty.is-clickable{cursor:pointer;color:#409eff;border:1px dashed #c6dcf7;background:#f7fbff;border-radius:4px;transition:all .15s}
+.material-empty.is-clickable:hover{background:#ecf5ff;border-color:#8cc5ff}
+.material-add-btn{margin-top:8px;border:1px dashed #c6dcf7;background:#f7fbff;color:#409eff;border-radius:4px;padding:6px 12px;font-size:12px;cursor:pointer;width:100%;transition:all .15s}
+.material-add-btn:hover{background:#ecf5ff;border-color:#8cc5ff}
+.material-add-btn[data-readonly="1"],.material-empty.is-clickable[data-readonly="1"]{cursor:default;opacity:.6}
+
+/* ===== 建群任务拉群明细里的入群欢迎语 ===== */
+.send-task-welcome-content{margin-top:16px;padding-top:14px;border-top:1px solid #ebeef5}
+.send-task-welcome-item{border:1px solid #ebeef5;border-radius:4px;padding:10px 12px;margin-bottom:10px;background:#fafcff}
+.send-task-welcome-item:last-child{margin-bottom:0}
+.send-task-welcome-item h4{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:0 0 6px;font-size:13px;font-weight:600;color:#303133}
+.send-task-welcome-item h4 span{font-size:11px;font-weight:400;color:#909399}
+.send-task-welcome-item p{margin:0 0 8px;font-size:12px;line-height:1.7;color:#606266;white-space:pre-wrap;word-break:break-word}
+.send-task-welcome-materials{display:flex;flex-wrap:wrap;gap:6px}
+.send-task-welcome-material{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#606266;background:#eff5fd;border:1px solid #dbe7f6;border-radius:10px;padding:2px 9px;max-width:100%}
+.send-task-welcome-material>span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.send-task-welcome-empty{font-size:11px;color:#c0c4cc}

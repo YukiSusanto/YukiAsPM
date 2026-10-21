@@ -8,45 +8,46 @@ function sendTaskDay(offset) {
   date.setDate(date.getDate()+offset);
   return date.toLocaleDateString('sv-SE',{timeZone:'Asia/Shanghai'});
 }
-/* 群发任务的群聊演示数据：按产品线命名，销售与群聊一对一/一对多分配 */
+/* 群发任务的群聊演示数据：按产品线命名，销售与群聊一对一/一对多分配；owner/account 为群主（群管理员）即建群销售账号 */
 const sendTaskGroupPool = [
-  {name:'雪梨老师悦读小达人打卡群', members:486, product:'悦读小达人'},
-  {name:'雪梨老师单词拼读王打卡群', members:412, product:'单词拼读王'},
-  {name:'雪梨老师1500词学习群', members:498, product:'1500词'},
-  {name:'雪梨老师100篇学习群', members:377, product:'100篇'},
-  {name:'雪梨老师悦读小达人打卡群（2群）', members:301, product:'悦读小达人'},
-  {name:'雪梨老师1500词学习群（2群）', members:265, product:'1500词'}
+  {name:'雪梨老师悦读小达人打卡群', members:486, product:'悦读小达人', owner:'销售甲', account:'demo_sales_1'},
+  {name:'雪梨老师单词拼读王打卡群', members:412, product:'单词拼读王', owner:'销售乙', account:'demo_sales_2'},
+  {name:'雪梨老师1500词学习群', members:498, product:'1500词', owner:'销售丙', account:'demo_sales_3'},
+  {name:'雪梨老师100篇学习群', members:377, product:'100篇', owner:'销售丁', account:'demo_sales_4'},
+  {name:'雪梨老师悦读小达人打卡群（2群）', members:301, product:'悦读小达人', owner:'销售乙', account:'demo_sales_2'},
+  {name:'雪梨老师1500词学习群（2群）', members:265, product:'1500词', owner:'销售丙', account:'demo_sales_3'}
 ];
 /* 建群任务的演示数据：按客户的产品通用渠道标签各建一个群，并记录拉进群里的客户 */
 const sendTaskCreatePool = [
-  {name:'雪梨老师悦读小达人打卡群', product:'悦读小达人', members:486},
-  {name:'雪梨老师单词拼读王打卡群', product:'单词拼读王', members:412},
-  {name:'雪梨老师1500词学习群', product:'1500词', members:498},
-  {name:'雪梨老师100篇学习群', product:'100篇', members:377}
+  {name:'雪梨老师悦读小达人打卡群', product:'悦读小达人', members:486, owner:'销售甲', account:'demo_sales_1'},
+  {name:'雪梨老师单词拼读王打卡群', product:'单词拼读王', members:412, owner:'销售乙', account:'demo_sales_2'},
+  {name:'雪梨老师1500词学习群', product:'1500词', members:498, owner:'销售丙', account:'demo_sales_3'},
+  {name:'雪梨老师100篇学习群', product:'100篇', members:377, owner:'销售丁', account:'demo_sales_4'}
 ];
 function sendTaskSeed(date, historical=false) {
   const times=['14:00','16:30','18:58','19:10','19:20','19:30','22:03'];
   const labels=['14:00','16:30','直播开始时间-2分钟','直播开始时间+10分钟','直播开始时间+20分钟','直播开始时间+30分钟','直播结束时间+3分钟'];
-  /* j=1/3/4 为群发任务（演示群聊维度），j=5 为建群任务（可看每个群拉进哪些客户），其余为私信任务 */
+  /* j=1/3/4 为群发任务（演示群聊维度），j=5 建群任务（看每个群拉进哪些客户），j=2 解散群聊任务，其余私信任务 */
   const groupIndexes=[1,3,4];
   const groupActions={1:'社群普通发送',3:'社群@ALL',4:'群公告'};
   const plannedMap={1:4,3:6,4:5};
   return Array.from({length:historical?27:7},(_,i)=>{
-    const j=i%7, status=historical?sendTaskStatuses[i%4]:(i<2||i%7===5?'已完成':'待触发');
+    const j=i%7, status=historical?sendTaskStatuses[i%4]:(i<2||j===5||j===2?'已完成':'待触发');
     const isCreate=j===5;
-    const isGroup=groupIndexes.includes(j)||isCreate;
+    const isDissolve=j===2;
+    const isGroup=groupIndexes.includes(j)||isCreate||isDissolve;
     const sopCreate=isCreate?sendTaskSopCreateNode():null;
     const customerCount=status==='待触发'?0:(j===0?67:83);
-    const plannedGroups=isCreate?((sopCreate&&Array.isArray(sopCreate.node.buildGroups)&&sopCreate.node.buildGroups.length)||sendTaskCreatePool.length):isGroup?plannedMap[j]:0;
+    const plannedGroups=isCreate?((sopCreate&&Array.isArray(sopCreate.node.buildGroups)&&sopCreate.node.buildGroups.length)||sendTaskCreatePool.length):isDissolve?1:isGroup?plannedMap[j]:0;
     const actualGroups=!isGroup||status==='待触发'||status==='执行失败'?0:status==='执行中'?Math.ceil(plannedGroups*0.4):plannedGroups;
     return {id:date+'-'+i,date,period:j===0?133:134,business:j===0?'133期内部ai':'134内部ai',
       stage:j===0?'W2-D2追单私信-周二':'W1-D2直播-周二',code:j===0?'W2-D2':'W1-D2',
-      time:isCreate&&sopCreate?String(sopCreate.node.time):labels[j],action:isCreate?'建群':isGroup?groupActions[j]:'私信1v1',
+      time:isCreate&&sopCreate?String(sopCreate.node.time):labels[j],action:isDissolve?'解散群聊':isCreate?'建群':isGroup?groupActions[j]:'私信1v1',
       planned:date+' '+(isCreate&&sopCreate?String(sopCreate.node.time):times[j])+':00',
       actual:status==='待触发'?'':date+' '+(isCreate&&sopCreate?String(sopCreate.node.time):times[j])+':00',status,customerCount,
       success:status==='已完成'?customerCount*(j===0?2:1):status==='执行中'?35:0,
       failure:status==='执行失败'?customerCount:0,progress:status==='已完成'?100:status==='执行中'?42:0,
-      isGroup,isCreate,plannedGroups,actualGroups,failedGroups:Math.max(0,plannedGroups-actualGroups),
+      isGroup,isCreate,isDissolve,plannedGroups,actualGroups,failedGroups:Math.max(0,plannedGroups-actualGroups),
       text:'家长您好，今天的英语直播即将开始，欢迎通过 {{live1_url}} 进入直播间。期待与您一起学习！',
       material:j===0?'直播提醒海报.png':''};
   });
@@ -96,7 +97,9 @@ function sendTaskRenderRows() {
         +'</div>'
       : '<div class="send-task-counts">客户 <b>'+t.customerCount+'</b> 成功 <b>'+t.success+'</b>'+(t.failure?' <span class="send-task-red">失败 '+t.failure+'</span>':'')+'</div>';
     const op=t.isGroup
-      ?(t.isCreate?(t.status==='待触发'?'预拉群':'拉群明细'):(t.status==='待触发'?'预发送群聊':'发送群聊'))
+      ?(t.isCreate?(t.status==='待触发'?'预拉群':'拉群明细')
+        :t.isDissolve?(t.status==='待触发'?'预解散':'查看解散')
+        :(t.status==='待触发'?'预发送群聊':'发送群聊'))
       :(t.status==='待触发'?'预触达客户':'触达客户');
     return '<tr><td>'+escapeText(t.business)+'</td><td>'+t.period+'期</td><td>'+escapeText(t.stage)+'</td><td>'+t.code+'</td><td>'+escapeText(t.time)+'</td><td>'+t.action+'</td><td>'+t.planned+'</td><td>'+(t.actual||'—')+'</td><td>'+sendTaskBadge(t.status)+'</td><td>'+counts+'<div class="send-task-progress-line"><progress max="100" value="'+t.progress+'" aria-label="发送进度 '+t.progress+'%"></progress><small>'+t.progress+'%</small></div></td><td><button type="button" class="el-button is-link el-button--primary" data-task="'+t.id+'">'+op+'</button></td></tr>';
   }).join('');
@@ -106,6 +109,7 @@ function sendTaskRenderRows() {
     const t=sendTaskRecords.find(x=>x.id===b.dataset.task);
     if(!t)return;
     if(t.isCreate)openSendTaskCreateGroups(t);
+    else if(t.isDissolve)openSendTaskDissolve(t);
     else if(t.isGroup)openSendTaskGroups(t);
     else openSendTaskClients(t);
   });
@@ -166,6 +170,7 @@ function sendTaskGroupList(task) {
       out.push({
         id:'g-'+cursor,sale:sale.name,saleId:sale.id,index:cursor,
         name:g.name,members:g.members,product:g.product,
+        owner:g.owner,account:g.account,
         status:preview?'待发送':sent?'已发送':'发送失败',
         time:preview?task.planned.slice(11,16)+'（预计）':sent?task.actual.slice(11,16):'—',
         reason:preview||sent?'':['群已被解散','机器人不在群内','群人数已达上限'][cursor%3]
@@ -185,7 +190,8 @@ function openSendTaskGroups(task) {
   const preview=task.status==='待触发';
   const groups=sendTaskGroupList(task), sales=sendTaskGroupSales(task);
   const pager={page:1,size:10};
-  let selected=0;
+  /* 默认停在「全部」，先看这个任务到底发了哪些群；再按销售看各自名下群聊 */
+  let selected=-1;
   const metrics=preview?'':'<div class="send-task-detail-metrics">实际发送销售 <b>'+sales.length+'</b> 人 <span>实际触达群聊 <b>'+task.actualGroups+'</b> 个</span></div>';
   /* 群发任务不论是否已触达，都在最下面展示该节点的话术与物料 */
   const body=sendTaskSummary(task)+metrics+'<div class="send-task-sales-tabs" role="tablist" aria-label="销售群聊分组"></div><div class="send-task-clients-host"></div><nav class="send-task-pagination" aria-label="群聊分页"></nav>'
@@ -194,12 +200,19 @@ function openSendTaskGroups(task) {
   layer.classList.add('send-task-groups-modal');
   function paint() {
     const tabs=layer.querySelector('.send-task-sales-tabs');
-    tabs.innerHTML=sales.map((s,i)=>'<button type="button" role="tab" aria-selected="'+(selected===i)+'" data-sale="'+i+'">'+s.name+'（'+s.count+'）</button>').join('');
+    tabs.innerHTML='<button type="button" role="tab" aria-selected="'+(selected<0)+'" data-sale="-1">全部（'+groups.length+'）</button>'
+      +sales.map((s,i)=>'<button type="button" role="tab" aria-selected="'+(selected===i)+'" data-sale="'+i+'">'+s.name+'（'+s.count+'）</button>').join('');
     tabs.querySelectorAll('button').forEach(b=>b.onclick=()=>{selected=Number(b.dataset.sale);pager.page=1;paint()});
+    const allScope=selected<0;
     const sale=sales[selected]||{name:'',count:0};
-    const own=groups.filter(g=>g.sale===sale.name);
-    const rows=own.slice((pager.page-1)*pager.size,pager.page*pager.size).map(g=>'<tr><td>'+escapeText(g.name)+'</td><td>'+g.members+' 人</td><td>'+tag(g.status,g.status==='已发送'?'success':g.status==='待发送'?'info':'danger')+(g.reason?'<small class="send-task-reason">'+escapeText(g.reason)+'</small>':'')+'</td><td>'+escapeText(g.time)+'</td></tr>').join('');
-    layer.querySelector('.send-task-clients-host').innerHTML=sendTaskTable(['群名称','群人数','状态','发送时间'],rows||'<tr><td colspan="4" class="send-task-empty">暂无群聊</td></tr>','send-task-group-table');
+    const own=allScope?groups:groups.filter(g=>g.sale===sale.name);
+    const rows=own.slice((pager.page-1)*pager.size,pager.page*pager.size).map(g=>{
+      const ownerCell='<td class="send-task-owner">'+escapeText(g.owner||'—')+'<small>'+escapeText(g.account||'')+'</small></td>';
+      const head='<tr><td>'+escapeText(g.name)+'</td>'+ownerCell+(allScope?'<td>'+escapeText(g.sale)+'</td>':'');
+      return head+'<td>'+g.members+' 人</td><td>'+tag(g.status,g.status==='已发送'?'success':g.status==='待发送'?'info':'danger')+(g.reason?'<small class="send-task-reason">'+escapeText(g.reason)+'</small>':'')+'</td><td>'+escapeText(g.time)+'</td></tr>';
+    }).join('');
+    const headers=allScope?['群名称','群主（建群销售）','所属销售','群人数','状态','发送时间']:['群名称','群主（建群销售）','群人数','状态','发送时间'];
+    layer.querySelector('.send-task-clients-host').innerHTML=sendTaskTable(headers,rows||'<tr><td colspan="'+headers.length+'" class="send-task-empty">暂无群聊</td></tr>','send-task-group-table');
     sendTaskPager(layer.querySelector('.send-task-pagination'),pager,own.length,paint,'群聊');
   }
   paint();
@@ -216,13 +229,17 @@ function sendTaskSopCreateNode() {
 function sendTaskCreateGroups(task) {
   const preview=task.status==='待触发';
   const sop=sendTaskSopCreateNode();
+  const periodSales=taskSalesOfPeriod(task)||['销售甲','销售乙','销售丙','销售丁'];
   const source=(sop && Array.isArray(sop.node.buildGroups) && sop.node.buildGroups.length)
     ? sop.node.buildGroups.map(b=>({name:b.name,product:b.product,pulled:b.count}))
-    : sendTaskCreatePool.map((g,i)=>({name:g.name,product:g.product,pulled:Math.min(g.members,268+i*41)}));
+    : sendTaskCreatePool.map((g,i)=>({name:g.name,product:g.product,pulled:Math.min(g.members,268+i*41),owner:g.owner,account:g.account}));
   return source.slice(0, task.plannedGroups||source.length).map((g,i)=>{
     const built=i<task.actualGroups;
+    /* 群主（群管理员）＝建群时使用的销售账号，按产品群顺序落到期数内的销售 */
+    const owner=g.owner||periodSales[i%periodSales.length];
+    const account=g.account||('demo_sales_'+((i%periodSales.length)+1));
     return {
-      index:i, name:g.name, product:g.product, pulled:g.pulled, planned:g.pulled,
+      index:i, name:g.name, product:g.product, pulled:g.pulled, planned:g.pulled, owner, account,
       status:preview?'待建群':built?'已建群':'建群失败',
       time:preview?task.planned.slice(11,16)+'（预计）':built?task.actual.slice(11,16):'—',
       reason:preview||built?'':['产品标签同步失败','企微建群接口超时'][i%2]
@@ -240,15 +257,35 @@ function sendTaskCreateRows(task,group) {
     };
   });
 }
+/* 入群欢迎语：不单独占一个入口，合并到建群任务的拉群明细里，按产品线展示建群后自动发出的欢迎语 */
+function sendTaskWelcomeContent(groups) {
+  const store = typeof welcomeStore === 'function' ? welcomeStore() : { messages: {}, materials: {} };
+  const lines = [];
+  (groups || []).forEach(g => { if (g && g.product && lines.indexOf(g.product) < 0) lines.push(g.product); });
+  if (!lines.length) return '';
+  const blocks = lines.map(name => {
+    const text = String(store.messages[name] || '').trim();
+    const list = Array.isArray(store.materials[name]) ? store.materials[name] : [];
+    const chips = list.length
+      ? list.map(a => '<span class="send-task-welcome-material"><span class="material-ref-icon">' + materialIcon((product.materials.find(x => x.id === a.id) || {}).kind || 'document') + '</span><span>' + escapeText(a.name) + '</span></span>').join('')
+      : '<span class="send-task-welcome-empty">未配置素材</span>';
+    return '<article class="send-task-welcome-item"><h4>' + escapeText(name) + '<span>' + escapeText(communityGroupNameFor(name)) + '</span></h4>'
+      + '<p>' + (text ? escapeText(text) : '<span class="send-task-welcome-empty">未配置欢迎语话术</span>') + '</p>'
+      + '<div class="send-task-welcome-materials">' + chips + '</div></article>';
+  }).join('');
+  return '<section class="send-task-node-content send-task-welcome-content"><h3>入群欢迎语</h3>'
+    + '<p class="opt-muted">群建好后自动发到对应产品群的欢迎语，按产品线展示。</p>' + blocks + '</section>';
+}
 function openSendTaskCreateGroups(task) {
   const preview=task.status==='待触发';
   const groups=sendTaskCreateGroups(task);
   const pulledTotal=groups.reduce((n,g)=>n+(g.status==='已建群'?g.pulled:0),0);
   const metrics=preview?'':'<div class="send-task-detail-metrics">实际建群 <b>'+task.actualGroups+'</b> 个 <span>实际拉群客户 <b>'+pulledTotal+'</b> 人</span></div>';
-  const rows=groups.map(g=>'<tr><td>'+escapeText(g.name)+'</td><td>'+escapeText(g.product)+'</td><td>'+(g.status==='建群失败'?'—':g.planned+' 人')+'</td><td>'+tag(g.status,g.status==='已建群'?'success':g.status==='待建群'?'info':'danger')+(g.reason?'<small class="send-task-reason">'+escapeText(g.reason)+'</small>':'')+'</td><td>'+escapeText(g.time)+'</td><td><button type="button" class="el-button is-link el-button--primary" data-create-detail="'+g.index+'">发送明细</button></td></tr>').join('');
+  const rows=groups.map(g=>'<tr><td>'+escapeText(g.name)+'</td><td>'+escapeText(g.product)+'</td><td class="send-task-owner">'+escapeText(g.owner)+'<small>'+escapeText(g.account)+'</small></td><td>'+(g.status==='建群失败'?'—':g.planned+' 人')+'</td><td>'+tag(g.status,g.status==='已建群'?'success':g.status==='待建群'?'info':'danger')+(g.reason?'<small class="send-task-reason">'+escapeText(g.reason)+'</small>':'')+'</td><td>'+escapeText(g.time)+'</td><td><button type="button" class="el-button is-link el-button--primary" data-create-detail="'+g.index+'">发送明细</button></td></tr>').join('');
   const body=sendTaskSummary(task)+metrics
     +'<p class="opt-muted">按客户的产品通用渠道标签分别建群；点「发送明细」可查看该群拉进的具体客户。</p>'
-    +sendTaskTable(['群名称','产品线','拉群人数','状态','建群时间','操作'],rows,'send-task-group-table');
+    +sendTaskTable(['群名称','产品线','群主（建群销售）','拉群人数','状态','建群时间','操作'],rows,'send-task-group-table')
+    +sendTaskWelcomeContent(groups);
   const layer=sendTaskDialog(preview?'预拉群':'拉群明细',body,'send-task-clients-modal');
   layer.classList.add('send-task-groups-modal');
   layer.classList.add('send-task-create-modal');
@@ -261,10 +298,35 @@ function openSendTaskCreateGroups(task) {
 }
 function openSendTaskPulledCustomers(task,group) {
   const customers=sendTaskCreateRows(task,group);
-  const values=[['群名称',group.name],['产品线',group.product],['拉群人数',group.planned+' 人'],['群状态',group.status],['建群时间',group.time]].concat(group.reason?[['失败原因',group.reason]]:[]);
+  const values=[['群名称',group.name],['产品线',group.product],['群主（建群销售）',group.owner+'（'+group.account+'）'],['拉群人数',group.planned+' 人'],['群状态',group.status],['建群时间',group.time]].concat(group.reason?[['失败原因',group.reason]]:[]);
   const description='<div class="send-task-description">'+values.map(([key,value])=>'<div><strong>'+key+'</strong><span>'+escapeText(value)+'</span></div>').join('')+'</div>';
   const rows=customers.map(c=>'<tr><td>'+escapeText(c.name)+'</td><td>'+c.wechat+'</td><td>'+c.added+'</td></tr>').join('');
   sendTaskDialog('发送明细',description+sendTaskTable(['客户名称','客户企微ID','加微时间'],rows,'send-task-client-table')+'<p class="opt-muted">演示数据：仅展示前 '+customers.length+' 位客户，该群共 '+group.planned+' 人。</p>','send-task-messages-modal');
+}
+function sendTaskDissolveTarget(task) {
+  const preview = task.status === '待触发';
+  const group = sendTaskGroupPool[0];
+  return {
+    name: group.name,
+    members: group.members,
+    sales: (taskSalesOfPeriod(task) || ['销售甲'])[0],
+    owner: group.owner || '销售甲',
+    account: group.account || 'demo_sales_1',
+    status: preview ? '待解散' : (task.actualGroups > 0 ? '已解散' : '解散失败'),
+    time: preview ? task.planned.slice(11, 16) + '（预计）' : (task.actual ? task.actual.slice(11, 16) : '—'),
+    reason: !preview && task.actualGroups === 0 ? '群主已退出，无法解散' : ''
+  };
+}
+function taskSalesOfPeriod(task) {
+  return ['销售甲', '销售乙', '销售丙', '销售丁'];
+}
+function openSendTaskDissolve(task) {
+  const target = sendTaskDissolveTarget(task);
+  const values = [['群名称', target.name], ['群人数', target.members + ' 人'], ['群主（建群销售）', target.owner + '（' + target.account + '）'], ['所属销售', target.sales], ['群状态', target.status], ['执行时间', target.time]]
+    .concat(target.reason ? [['失败原因', target.reason]] : []);
+  const description = '<div class="send-task-description">' + values.map(([key, value]) => '<div><strong>' + key + '</strong><span>' + escapeText(value) + '</span></div>').join('') + '</div>';
+  const summary = '<p class="opt-muted">解散群聊是群管理动作，不发送任何内容；此处仅展示本次解散的执行结果。</p>';
+  sendTaskDialog(task.status === '待触发' ? '预解散' : '查看解散', sendTaskSummary(task) + summary + description, 'send-task-messages-modal');
 }
 function sendTaskPreviewMaterial() {
   sendTaskDialog('素材预览','<div class="send-task-demo-poster"><small>雪梨英语 · 演示素材</small><h3>今天，一起开口说英语</h3><p>直播课堂 · 快乐学习</p><span>19:00 准时开课</span></div>','send-task-poster-modal');
@@ -293,6 +355,6 @@ function sendTaskSyncNav() {
 }
 const sendTaskRenderBefore=render;
 render=function(){if(view==='send-tasks')renderSendTasks();else sendTaskRenderBefore();sendTaskSyncNav()};
-window.addEventListener('hashchange',()=>{const next={'#/send-tasks':'send-tasks','#/node-config':'configuration','#/material-library':'materials','#/past-periods':'past'}[location.hash];if(next&&next!==view){view=next;render()}});
+window.addEventListener('hashchange',()=>{const next={'#/send-tasks':'send-tasks','#/node-config':'configuration','#/material-library':'materials'}[location.hash];if(next&&next!==view){view=next;render()}});
 if(initialPrototypeHash==='#/send-tasks')view='send-tasks';
 render();

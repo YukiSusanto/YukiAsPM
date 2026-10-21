@@ -12,30 +12,10 @@
   if (typeof materialKinds === 'object') reorder(materialKinds, kindOrder);
 })();
 
-const VIDEO_CHANNEL_TYPES = [
-  { id: 'dynamic', label: '视频号动态' },
-  { id: 'live', label: '视频号直播' }
-];
-const VIDEO_CHANNEL_FIELDS = [
-  { key: 'title', label: '消息标题', max: 256, required: true, placeholder: '请输入企微消息中展示的标题' },
-  { key: 'authorName', label: '作者昵称', required: true, placeholder: '请输入视频号作者昵称' },
-  { key: 'avatarUrl', label: '作者头像', placeholder: '请输入作者头像地址' },
-  { key: 'coverUrl', label: '封面地址', required: true, placeholder: '请输入视频或直播封面地址' },
-  { key: 'description', label: '内容描述', max: 500, multiline: true, placeholder: '请输入视频号动态描述' },
-  { key: 'link', label: '原始链接', required: true, placeholder: '请输入视频号动态原始链接' },
-  { key: 'previewUrl', label: '预览链接', placeholder: '请输入预览链接' }
-];
-
-function videoChannelTypeLabel(id) {
-  return (VIDEO_CHANNEL_TYPES.find(t => t.id === id) || VIDEO_CHANNEL_TYPES[0]).label;
-}
 function videoChannelGroups() { return (product.materialGroups || []).filter(g => g.kind === 'videochannel'); }
-function videoChannelFieldMarkup(f) {
-  const input = f.multiline
-    ? '<textarea class="el-textarea__inner asset-vc-textarea" maxlength="' + f.max + '" aria-label="视频号' + f.label + '" placeholder="' + f.placeholder + '"></textarea>'
-    : '<input class="local-input" ' + (f.max ? 'maxlength="' + f.max + '" ' : '') + 'aria-label="视频号' + f.label + '" placeholder="' + f.placeholder + '">';
-  const counter = f.max ? '<div class="asset-vc-count">0 / ' + f.max + '</div>' : '';
-  return '<div class="opt-field"><label>' + f.label + (f.required ? '<span class="asset-vc-required">*</span>' : '') + '</label>' + input + counter + '</div>';
+function videoChannelLinkTail(link) {
+  const clean = String(link || '').split(/[?#]/)[0];
+  return (clean.split('/').filter(Boolean).pop() || '').slice(0, 24);
 }
 
 function openVideoChannelUpload(targetGroup, onUploaded) {
@@ -46,27 +26,24 @@ function openVideoChannelUpload(targetGroup, onUploaded) {
     : field('放入分组', '<select class="local-select" aria-label="视频号素材分组">' + (groups.length
       ? groups.map(g => '<option value="' + escapeText(g.id) + '">' + escapeText(folderPath(g.id)) + '</option>').join('')
       : '<option value="">视频号未分组</option>') + '</select>');
-  const body = '<p class="opt-muted">视频号素材通过链接下发，不需要上传文件；素材ID由后端生成。消息标题同时作为素材库内的识别名称。</p>'
-    + field('内容类型', '<select class="local-select" aria-label="视频号内容类型">' + VIDEO_CHANNEL_TYPES.map(t => '<option value="' + t.id + '">' + t.label + '</option>').join('') + '</select>')
-    + VIDEO_CHANNEL_FIELDS.map(videoChannelFieldMarkup).join('')
+  const body = '<p class="opt-muted">视频号素材通过链接下发，不需要上传文件；素材ID由后端生成。</p>'
+    + field('原始链接', '<input class="local-input" aria-label="视频号原始链接" placeholder="请输入视频号动态原始链接">')
     + groupField
     + '<div class="asset-upload-error" role="status"></div>';
   const m = simpleModal('上传视频号素材', body, modal => {
-    const data = {};
-    VIDEO_CHANNEL_FIELDS.forEach(f => { data[f.key] = ((modal.querySelector('[aria-label="视频号' + f.label + '"]') || {}).value || '').trim(); });
-    data.contentType = (modal.querySelector('[aria-label="视频号内容类型"]') || {}).value || 'dynamic';
-    const missing = VIDEO_CHANNEL_FIELDS.filter(f => f.required && !data[f.key]);
-    if (missing.length) {
-      const text = '请填写：' + missing.map(f => f.label).join('、');
-      modal.querySelector('.asset-upload-error').textContent = text;
-      return feedback(text);
+    const link = ((modal.querySelector('[aria-label="视频号原始链接"]') || {}).value || '').trim();
+    if (!link) {
+      modal.querySelector('.asset-upload-error').textContent = '请填写原始链接';
+      return feedback('请填写原始链接');
     }
     const groupSelect = modal.querySelector('[aria-label="视频号素材分组"]');
     const groupId = fixedGroup || (groupSelect && groupSelect.value) || 'ungrouped-videochannel';
+    const tail = videoChannelLinkTail(link);
+    const name = '视频号素材' + (tail ? ' · ' + tail : '');
     const asset = {
       id: 'video-channel-' + Date.now() + '-' + Math.random().toString(36).slice(2),
-      name: data.title,
-      originalName: data.title,
+      name,
+      originalName: name,
       size: 0,
       mime: 'video/x-videochannel',
       kind: 'videochannel',
@@ -74,17 +51,7 @@ function openVideoChannelUpload(targetGroup, onUploaded) {
       /* 24 位占位ID（沿用原视频号占位样式 000…001），正式值由后端生成后覆盖 */
       videoChannelId: '00000000000000000000' + String((product.materials || []).filter(a => a.sourceType === 'video-channel' && a.videoChannelDemo).length + 1).padStart(4, '0'),
       videoChannelDemo: true,
-      videoChannel: {
-        contentType: data.contentType,
-        contentTypeLabel: videoChannelTypeLabel(data.contentType),
-        title: data.title,
-        authorName: data.authorName,
-        avatarUrl: data.avatarUrl,
-        coverUrl: data.coverUrl,
-        description: data.description,
-        link: data.link,
-        previewUrl: data.previewUrl
-      },
+      videoChannel: { link },
       groupId,
       uploadedAt: new Date().toISOString()
     };
@@ -105,12 +72,6 @@ function openVideoChannelUpload(targetGroup, onUploaded) {
     feedback('已上传视频号素材');
   }, '开始上传');
   m.classList.add('asset-upload-modal', 'asset-video-channel-modal');
-  m.querySelectorAll('.asset-vc-count').forEach((counter, i) => {
-    const def = VIDEO_CHANNEL_FIELDS.filter(f => f.max)[i];
-    if (!def) return;
-    const input = m.querySelector('[aria-label="视频号' + def.label + '"]');
-    input.oninput = () => { counter.textContent = input.value.length + ' / ' + def.max; };
-  });
 }
 
 /* 共用「上传素材」入口：只在该分类（含视频号分组）下切换为视频号表单 */
@@ -139,20 +100,18 @@ renderMaterialLibrary = function () {
   if (count) count.textContent = product.materials.filter(a => a.kind === 'videochannel').length;
 };
 
-/* 列表：视频号素材展示类型、作者与封面标记 */
+/* 列表：视频号素材只补一行原始链接（类型列已显示「视频号素材」） */
 const videoChannelMarkupBefore = videoChannelIdMarkup;
 videoChannelIdMarkup = function (asset) {
   const base = videoChannelMarkupBefore(asset);
   if (!asset || !asset.videoChannel) return base;
-  const vc = asset.videoChannel;
-  const meta = '<div class="asset-vc-meta"><span class="asset-vc-type">' + escapeText(vc.contentTypeLabel) + '</span>'
-    + '<span>作者：' + escapeText(vc.authorName || '—') + '</span>'
-    + (vc.coverUrl ? '<span class="asset-vc-has-cover" title="' + escapeText(vc.coverUrl) + '">含封面</span>' : '')
-    + '</div>';
+  const link = String(asset.videoChannel.link || '');
+  const short = link.replace(/^https?:\/\//, '').slice(0, 32);
+  const meta = '<div class="asset-vc-meta"><span class="asset-vc-link" title="' + escapeText(link) + '">' + escapeText(short || '未填写原始链接') + '</span></div>';
   return meta + base;
 };
 
-/* 预览：展示视频号字段 */
+/* 预览：展示原始链接 */
 const videoChannelPreviewBefore = previewMaterial;
 previewMaterial = function (asset) {
   const result = videoChannelPreviewBefore(asset);
@@ -162,16 +121,7 @@ previewMaterial = function (asset) {
     const m = dialogs.lastElementChild;
     const bodyEl = m && m.querySelector('.el-dialog__body');
     if (!bodyEl || bodyEl.querySelector('.asset-vc-detail')) return;
-    const rows = [
-      ['内容类型', vc.contentTypeLabel],
-      ['消息标题', vc.title],
-      ['作者昵称', vc.authorName],
-      ['作者头像', vc.avatarUrl],
-      ['封面地址', vc.coverUrl],
-      ['内容描述', vc.description],
-      ['原始链接', vc.link],
-      ['预览链接', vc.previewUrl]
-    ].filter(([, v]) => v);
+    const rows = [['原始链接', vc.link]].filter(([, v]) => v);
     const box = document.createElement('div');
     box.className = 'asset-vc-detail';
     box.innerHTML = '<h4>视频号信息</h4><dl>' + rows.map(([k, v]) => '<dt>' + escapeText(k) + '</dt><dd>' + escapeText(v) + '</dd>').join('') + '</dl>';

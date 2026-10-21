@@ -8,7 +8,7 @@ setNav=function(){const nav=document.querySelector('.replica-sidebar'),link=nav.
 const fixedConfigurationBefore=renderConfiguration;
 /* W1 全部算本期（含周五/周末追单）；W2 才是追单上一期。顶部只展示“正在进行”的期数。 */
 function fixedTargetsPreviousPeriod(group){if(!group)return false;return stageWeek(group)>=2;}
-function fixedPeriodSales(period){if(period===null||period===undefined)return[];if(periods[period]?.sales)return periods[period].sales;const past=(product.pastPeriods||[]).find(x=>Number(x.period)===Number(period));return past?.sales||[];}
+function fixedPeriodSales(period){if(period===null||period===undefined)return[];return periods[period]?.sales||[];}
 renderConfiguration=function(){fixedConfigurationBefore();const page=root.querySelector('.workspace-page'),header=page.querySelector('.workspace-header');header.querySelector('.workspace-breadcrumb').remove();header.querySelector('h2').textContent='消息节点配置';const save=buttons(header,'保存SOP')[0];save.textContent='保存配置';save.onclick=()=>{persist();feedback('固定SOP配置已保存')};
  const focus=state[current]&&String(stageWeek(state[current]))===String(selectedWeek)?state[current]:null;
  const chase=focus?fixedTargetsPreviousPeriod(focus):false;
@@ -23,10 +23,10 @@ renderConfiguration=function(){fixedConfigurationBefore();const page=root.queryS
  page.querySelector('.time-nav-header').after(context);page.querySelector('.message-order-note')?.remove();
  if(salesButton)salesButton.onclick=()=>{const m=simpleModal('关联销售 · 第'+ongoing+'期',`<p class="opt-muted">自动读取第${ongoing}期销售，无需手动选择。</p><div class="opt-sales">${ongoingSales.map((x,i)=>`<div><strong>${escapeText(x)}</strong><span>企微账号 ${i+1} · 演示</span></div>`).join('')}</div>`,m=>m.remove(),'关闭');buttons(m,'取消')[0].remove();};};
 const fixedMessagesBefore=renderMessages;
-renderMessages=function(group){fixedMessagesBefore(group);const nodes=orderedMessages(group),pager=messagePaging(group),counts=product.actualSentByPeriod?.[String(activeSop.period)]||{};root.querySelectorAll('.message-list-table tbody tr[data-index]').forEach(row=>{const n=nodes[Number(row.dataset.index)],count=counts[n.id],span=row.querySelector('.message-actual-sent span');span.textContent=Number.isSafeInteger(count)&&count>=0?count+'人':'—';span.title=Number.isSafeInteger(count)&&count>=0?'第'+activeSop.period+'期实际发送结果':'当前期数暂无实际发送结果';});};
+renderMessages=function(group){fixedMessagesBefore(group);};
 const fixedRenderBefore=render;
 render=function(){activeSop.period=Number(resolveDemoCurrentPeriod())||null;if(view==='management')view='configuration';fixedRenderBefore();const link=document.querySelector('.replica-sidebar a[href="#/node-config"] .el-text');if(link)link.textContent='消息节点配置';if(view!=='materials')history.replaceState(null,'','#/node-config');};
-view=location.hash==='#/material-library'?'materials':location.hash==='#/past-periods'?'past':'configuration';saveProduct();render();
+view=location.hash==='#/material-library'?'materials':'configuration';saveProduct();render();
 
 function refreshCurrentPeriod(){const next=Number(resolveDemoCurrentPeriod())||null;if(next!==activeSop.period){activeSop.period=next;saveProduct();render();}}
 window.addEventListener("focus",refreshCurrentPeriod);document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshCurrentPeriod()});setInterval(refreshCurrentPeriod,60000);

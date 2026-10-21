@@ -1,26 +1,25 @@
-/* 社群动作：在【新增/编辑消息节点】中扩展社群发送动作，并按所选动作动态联动表单字段。
-   需求来源：《销转期建群与群聊sop需求》三、消息节点发送动作扩展与表单联动。 */
-const COMMUNITY_ACTION_IDS = ['pm', 'group', 'group_at_all', 'group_notice', 'create_group', 'rename_group', 'dissolve_group'];
+/* 节点分两类：私信节点（固定私信1v1）与群聊节点（社群发送 + 群管理动作）。
+   需求来源：《销转期建群与群聊sop需求》三、私信节点与群聊节点。 */
+const COMMUNITY_ACTION_IDS = ['pm', 'group', 'group_at_all', 'group_notice', 'create_group', 'dissolve_group'];
 const COMMUNITY_ACTIONS = [
-  { id: 'pm', label: '私信1v1' },
-  { id: 'group', label: '社群普通发送' },
-  { id: 'group_at_all', label: '社群@ALL' },
-  { id: 'group_notice', label: '群公告' },
-  { id: 'create_group', label: '建群' },
-  { id: 'rename_group', label: '改群名' },
-  { id: 'dissolve_group', label: '解散群聊' }
+  { id: 'group', label: '社群普通发送', nodeType: 'group', group: '社群发送' },
+  { id: 'group_at_all', label: '社群@ALL', nodeType: 'group', group: '社群发送' },
+  { id: 'group_notice', label: '群公告', nodeType: 'group', group: '社群发送' },
+  { id: 'create_group', label: '建群', nodeType: 'group', group: '群管理' },
+  { id: 'dissolve_group', label: '解散群聊', nodeType: 'group', group: '群管理' }
 ];
-/* 三个社群发送类动作：需要选择已有群聊、有话术与素材、按群数估算。 */
+const COMMUNITY_PRIVATE_ACTION = 'pm';
+const COMMUNITY_PRIVATE_LABEL = '私信1v1';
+/* 社群发送类动作：需要选择已有群聊、有话术与素材。 */
 const COMMUNITY_GROUP_SEND = new Set(['group', 'group_at_all', 'group_notice']);
-/* 三个静默/群管理动作：无话术与素材。 */
-const COMMUNITY_SILENT = new Set(['create_group', 'rename_group', 'dissolve_group']);
+/* 群管理动作：无话术与素材。 */
+const COMMUNITY_SILENT = new Set(['create_group', 'dissolve_group']);
 const COMMUNITY_HINTS = {
   pm: '按添加好友时间与选中/排除标签圈选客户，逐人私信发送。',
   group: '向所选群聊发送一条普通消息，不在群内产生额外提醒。',
   group_at_all: '在群内发送消息并@所有人，会在群内产生强提醒。',
   group_notice: '更新所选群聊的群公告，新公告会替换当前群公告。',
   create_group: '按客户范围与产品线标签自动建群，并把对应客户拉进对应产品群。',
-  rename_group: '修改所选群聊的群名称，不会在群内发送任何消息。',
   dissolve_group: '解散所选群聊，群内成员无法继续发言，操作不可恢复。'
 };
 /* 建群按产品线分别建群：APP类产品线…打卡群，图书类产品线…学习群（见需求二·群聊名称）。 */
@@ -85,15 +84,26 @@ function communityNormalizeAction(value) {
   if (id === '私信1v1' || id === '私信1V1' || id === '私信' || id === '全量发送') return 'pm';
   return 'pm';
 }
-function communityMeta(id) { return COMMUNITY_ACTIONS.find(a => a.id === communityNormalizeAction(id)) || COMMUNITY_ACTIONS[0]; }
+function communityMeta(id) {
+  const a = communityNormalizeAction(id);
+  return COMMUNITY_ACTIONS.find(x => x.id === a) || { id: COMMUNITY_PRIVATE_ACTION, label: COMMUNITY_PRIVATE_LABEL, nodeType: 'private', group: '' };
+}
 function communityLabel(id) { return communityMeta(id).label; }
+/* 节点类型：私信节点 / 群聊节点 */
+function communityNodeType(id) { return communityNormalizeAction(id) === COMMUNITY_PRIVATE_ACTION ? 'private' : 'group'; }
+function communityNodeTypeLabel(id) { return communityNodeType(id) === 'private' ? '私信' : '群聊'; }
+function communityNodeTypeName(id) { return communityNodeType(id) === 'private' ? '私信节点' : '群聊节点'; }
+function communityNodeCountText(group) {
+  const nodes = (group && group.nodes) || [];
+  const priv = nodes.filter(n => communityNodeType(n.action) === 'private').length;
+  return '私信 ' + priv + ' 条 · 群聊 ' + (nodes.length - priv) + ' 个';
+}
 function communityIsGroupSend(id) { return COMMUNITY_GROUP_SEND.has(communityNormalizeAction(id)); }
-function communityNeedsGroup(id) { const a = communityNormalizeAction(id); return COMMUNITY_GROUP_SEND.has(a) || a === 'rename_group' || a === 'dissolve_group'; }
+function communityNeedsGroup(id) { const a = communityNormalizeAction(id); return COMMUNITY_GROUP_SEND.has(a) || a === 'dissolve_group'; }
 function communityNeedsText(id) { const a = communityNormalizeAction(id); return a === 'pm' || COMMUNITY_GROUP_SEND.has(a); }
 function communityNeedsAudience(id) { const a = communityNormalizeAction(id); return a === 'pm' || a === 'create_group'; }
 /* 建群先用添加好友时间框定客户总范围，因此好友时间对建群同样生效。 */
 function communityNeedsFriendTime(id) { const a = communityNormalizeAction(id); return a === 'pm' || a === 'create_group'; }
-function communityNeedsNewGroupName(id) { return communityNormalizeAction(id) === 'rename_group'; }
 function communityNeedsBuildList(id) { return communityNormalizeAction(id) === 'create_group'; }
 function communityActionTone(id) {
   const a = communityNormalizeAction(id);
@@ -105,14 +115,12 @@ function communityActionTone(id) {
 /* 建群已改为先按添加好友时间框定范围，因此与私信共用同一套估算口径。 */
 function communityEstimate(node) { return estimate(node); }
 function communityGroupList(node) { return Array.isArray(node && node.groups) ? node.groups : []; }
-/* 列表/快照里“话术内容”列：只有带话术的动作才展示内容，建群／改群名／解散群聊一律不展示。 */
+/* 列表里的“话术内容”列：只有带话术的动作才展示内容，建群／解散群聊不展示。 */
 function communityContentTitle(node) {
   const id = communityNormalizeAction(node && node.action);
   if (communityNeedsText(id)) return (node && node.text) || '';
   return '';
 }
-/* 往期数据/详情里的素材列：静默动作没有素材。 */
-function communityMaterialCell(node) { return communityNeedsText(node && node.action) ? String(Number(node.materialCount || 0)) : '—'; }
 
 /* 演示用企微群列表：覆盖需求文档里的四条产品线，另含第二群与通用群，便于验证搜索与多选。 */
 function communityDemoGroups() {
@@ -130,7 +138,7 @@ function communityDemoGroups() {
 }
 
 function communityPickerModal(m, ctx) {
-  const single = draft.action === 'rename_group' || draft.action === 'dissolve_group';
+  const single = draft.action === 'dissolve_group';
   const pool = communityDemoGroups();
   const chosen = new Set(communityGroupList(draft).map(g => g.id));
   const box = modal(captured.stage, '选择群聊');
@@ -233,25 +241,14 @@ function communityApplyEditorLayout(m, ctx, readOnly) {
   ctx.actionNote.style.display = silent ? '' : 'none';
   if (silent) {
     const silentText = action === 'create_group' ? '<span>ⓘ</span><span><strong>建群是静默动作：</strong>只按客户范围与产品线标签建群拉人，不产生任何群消息。系统用添加好友时间与标签框定客户范围，再按客户的产品线标签分别建群并拉入对应客户。</span>'
-      : action === 'rename_group' ? '<span>ⓘ</span><span><strong>改群名不会在群内发送任何消息：</strong>只修改群名称，群内历史消息与成员不受影响。</span>'
-        : '<span>⚠</span><span><strong>解散群聊属高危动作：</strong>保存时需二次确认，解散后群聊不可恢复。</span>';
+      : '<span>⚠</span><span><strong>解散群聊属高危动作：</strong>保存时需二次确认，解散后群聊不可恢复。</span>';
     ctx.actionNote.className = 'opt-action-alert ' + (action === 'dissolve_group' ? 'warning' : 'info') + ' opt-action-note';
     ctx.actionNote.innerHTML = silentText;
   }
-  const needNames = communityNeedsNewGroupName(action) || communityNeedsBuildList(action);
-  ctx.newGroupItem.style.display = needNames ? '' : 'none';
   const buildList = communityNeedsBuildList(action);
-  ctx.newGroupLabel.textContent = buildList ? '自动建群清单' : '新群名称';
-  ctx.newGroupInput.style.display = buildList ? 'none' : '';
+  ctx.buildItem.style.display = buildList ? '' : 'none';
   ctx.buildList.style.display = buildList ? '' : 'none';
-  if (buildList) {
-    ctx.newGroupHint.style.display = '';
-  } else {
-    /* 改群名不再挂说明小字，输入框直接拉满一行 */
-    ctx.newGroupHint.textContent = '';
-    ctx.newGroupHint.style.display = 'none';
-    ctx.newGroupInput.style.width = '100%';
-  }
+  ctx.newGroupHint.style.display = buildList ? '' : 'none';
   if (ctx.textarea) {
     const notice = action === 'group_notice';
     ctx.textarea.maxLength = notice ? COMMUNITY_NOTICE_MAX : 10000;
@@ -288,7 +285,6 @@ const COMMUNITY_ACTION_DESC = {
   group_at_all: '@群内所有成员，强提醒',
   group_notice: '更新所选群聊的群公告',
   create_group: '按产品线标签自动建群拉人',
-  rename_group: '修改所选群聊的群名称',
   dissolve_group: '解散所选群聊，不可恢复'
 };
 function communityActionIcon(id) { return communityNormalizeAction(id) === 'pm' ? COMMUNITY_PM_ICON : COMMUNITY_GROUP_ICON; }
@@ -316,9 +312,10 @@ function communityActionMenu(ctx) {
       + '<span class="opt-action-item-text"><strong>' + escapeText(meta.label) + '</strong><small>' + escapeText(COMMUNITY_ACTION_DESC[id] || '') + '</small></span>'
       + '<span class="opt-action-item-check">✓</span></button>';
   };
-  menu.innerHTML = '<div class="opt-action-group-label">私信</div>' + item('pm')
-    + '<div class="opt-action-group-label">社群发送</div>'
-    + COMMUNITY_ACTIONS.filter(a => a.id !== 'pm').map(a => item(a.id)).join('');
+  menu.innerHTML = ['社群发送', '群管理'].map(label =>
+    '<div class="opt-action-group-label">' + label + '</div>'
+    + COMMUNITY_ACTIONS.filter(a => a.group === label).map(a => item(a.id)).join('')
+  ).join('');
   document.body.append(menu);
   ctx.menu = menu;
   const rect = ctx.trigger.getBoundingClientRect();
@@ -346,6 +343,12 @@ function communityActionMenu(ctx) {
   document.addEventListener('keydown', e => { if (e.key === 'Escape') { close(); ctx.trigger.focus(); } }, { signal: controller.signal });
 }
 
+/* 新增节点：type = 'private' | 'group' */
+let communityPendingNodeType = 'private';
+function communityAddNode(type) {
+  communityPendingNodeType = type === 'group' ? 'group' : 'private';
+  editNode();
+}
 const communityEditNodeBefore = editNode;
 editNode = function (i, readOnly = false) {
   communityEditNodeBefore(i, readOnly);
@@ -354,12 +357,24 @@ editNode = function (i, readOnly = false) {
   const form = m.querySelector('form.node-editor');
   const select = m.querySelector('select[aria-label="发送动作"]');
   if (!form || !select) return;
-  draft.action = communityNormalizeAction(draft.action);
+  /* 新建时按入口决定类型；编辑时由已有动作推导 */
+  const nodeType = i === undefined ? communityPendingNodeType : communityNodeType(draft.action);
+  draft.action = nodeType === 'private' ? COMMUNITY_PRIVATE_ACTION : communityNormalizeAction(draft.action);
+  if (nodeType === 'group' && draft.action === COMMUNITY_PRIVATE_ACTION) draft.action = COMMUNITY_ACTIONS[0].id;
   draft.groups = communityGroupList(draft).filter(g => g && g.id);
-  draft.newGroupName = draft.newGroupName || '';
-  const ctx = {};
-  /* 发送动作：原生 select 保留取值，外层换成两级分组面板 */
-  select.innerHTML = '<option value="pm">私信1v1</option><optgroup label="社群发送">' + COMMUNITY_ACTIONS.filter(a => a.id !== 'pm').map(a => '<option value="' + a.id + '">' + a.label + '</option>').join('') + '</optgroup>';
+  const ctx = { nodeType };
+  /* 标题：私信节点 / 群聊节点 */
+  const typeName = nodeType === 'private' ? '私信节点' : '群聊节点';
+  const titleText = readOnly ? typeName + '详情' : (i === undefined ? '新增' : '编辑') + typeName;
+  const titleEl = m.querySelector('.el-dialog__title');
+  if (titleEl) titleEl.textContent = titleText;
+  const dialogEl = m.querySelector('[role="dialog"]');
+  if (dialogEl) dialogEl.setAttribute('aria-label', titleText);
+  /* 动作字段：私信节点没有发送动作，整行隐藏 */
+  const actionItem = select.closest('.el-form-item');
+  if (actionItem) actionItem.style.display = nodeType === 'private' ? 'none' : '';
+  select.innerHTML = '<optgroup label="社群发送">' + COMMUNITY_ACTIONS.filter(a => a.group === '社群发送').map(a => '<option value="' + a.id + '">' + a.label + '</option>').join('')
+    + '</optgroup><optgroup label="群管理">' + COMMUNITY_ACTIONS.filter(a => a.group === '群管理').map(a => '<option value="' + a.id + '">' + a.label + '</option>').join('') + '</optgroup>';
   select.value = draft.action;
   select.classList.add('opt-action-native');
   const wrap = document.createElement('div');
@@ -400,18 +415,14 @@ editNode = function (i, readOnly = false) {
   actionNote.className = 'opt-action-alert info opt-action-note';
   audienceItem.before(actionNote);
   ctx.actionNote = actionNote;
-  /* 新群名称（改群名）/ 自动建群清单（建群）：插在发送人群之后 */
-  const newGroupItem = document.createElement('div');
-  newGroupItem.className = 'el-form-item asterisk-left el-form-item--label-top opt-new-group-item';
-  newGroupItem.innerHTML = '<label class="el-form-item__label">新群名称</label><div class="el-form-item__content"><input class="local-input opt-new-group-input" maxlength="64" aria-label="新群名称" placeholder="请输入新群名称，如：雪梨老师悦读小达人打卡群"><div class="opt-build-list"></div><small class="opt-field-hint"></small></div>';
-  audienceItem.after(newGroupItem);
-  ctx.newGroupItem = newGroupItem;
-  ctx.newGroupLabel = newGroupItem.querySelector('.el-form-item__label');
-  ctx.newGroupHint = newGroupItem.querySelector('.opt-field-hint');
-  ctx.newGroupInput = newGroupItem.querySelector('.opt-new-group-input');
-  ctx.buildList = newGroupItem.querySelector('.opt-build-list');
-  ctx.newGroupInput.value = draft.newGroupName;
-  ctx.newGroupInput.oninput = () => { draft.newGroupName = ctx.newGroupInput.value; };
+  /* 自动建群清单（建群）：插在发送人群之后 */
+  const buildItem = document.createElement('div');
+  buildItem.className = 'el-form-item asterisk-left el-form-item--label-top opt-build-item';
+  buildItem.innerHTML = '<label class="el-form-item__label">自动建群清单</label><div class="el-form-item__content"><div class="opt-build-list"></div><small class="opt-field-hint"></small></div>';
+  audienceItem.after(buildItem);
+  ctx.buildItem = buildItem;
+  ctx.newGroupHint = buildItem.querySelector('.opt-field-hint');
+  ctx.buildList = buildItem.querySelector('.opt-build-list');
   m.__community = ctx;
   /* 话术/素材组合区：插入动作警示与素材限制提示 */
   const composer = m.querySelector('.message-composer');
@@ -440,7 +451,7 @@ editNode = function (i, readOnly = false) {
   };
   communityApplyEditorLayout(m, ctx, readOnly);
   if (readOnly) {
-    m.querySelectorAll('.opt-group-picker button,.opt-new-group-item input,.opt-new-group-item button').forEach(el => { el.disabled = true; });
+    m.querySelectorAll('.opt-group-picker button,.opt-build-item button').forEach(el => { el.disabled = true; });
     ctx.trigger.disabled = true;
     return;
   }
@@ -452,10 +463,8 @@ editNode = function (i, readOnly = false) {
     const noteArea = m.querySelectorAll('textarea')[1];
     if (!time || !time.value.trim()) return feedback('请填写节点时间');
     if (communityNeedsText(draft.action) && (!ctx.textarea || !ctx.textarea.value.trim())) return feedback(draft.action === 'group_notice' ? '请填写群公告内容' : '请填写话术内容');
-    if (communityNeedsGroup(draft.action) && !communityGroupList(draft).length) return feedback(draft.action === 'dissolve_group' || draft.action === 'rename_group' ? '请选择目标群聊' : '请选择目标群聊后保存');
+    if (communityNeedsGroup(draft.action) && !communityGroupList(draft).length) return feedback(draft.action === 'dissolve_group' ? '请选择目标群聊' : '请选择目标群聊后保存');
     if (communityNeedsBuildList(draft.action) && !communityBuildStats(draft).groups.length) return feedback('当前客户范围内没有可建群的产品线，请放宽添加好友时间或调整标签');
-    if (communityNeedsNewGroupName(draft.action) && !String(draft.newGroupName || '').trim()) return feedback('请填写新群名称');
-    if (draft.action === 'rename_group' && communityGroupList(draft).some(g => g.name === String(draft.newGroupName).trim())) return feedback('新群名称与当前群名相同，无需修改');
     if (communityNeedsFriendTime(draft.action) && draft.friendStart && draft.friendEnd && draft.friendStart > draft.friendEnd) return feedback('添加好友开始日期不能晚于结束日期');
     const relative = m.querySelector('.opt-relative');
     const offset = m.querySelector('[aria-label="偏移分钟"]');
@@ -467,8 +476,8 @@ editNode = function (i, readOnly = false) {
     /* 只保留当前动作用得到的字段，避免详情/快照里出现无关的群聊与群名 */
     if (!communityNeedsGroup(draft.action)) draft.groups = [];
     delete draft.productLines;
-    if (draft.action !== 'rename_group') draft.newGroupName = '';
-    /* 建群清单在保存时冻结，往期快照与详情读这份副本 */
+    delete draft.newGroupName;
+    /* 建群清单在保存时冻结，SOP 详情与任务发送情况的拉群明细读这份副本 */
     if (communityNeedsBuildList(draft.action)) {
       const stats = communityBuildStats(draft);
       draft.buildGroups = stats.groups.map(g => ({ product: g.product, name: g.name, count: g.count }));
@@ -479,11 +488,31 @@ editNode = function (i, readOnly = false) {
       persist();
       close();
       render();
-      feedback(draft.action === 'pm' ? '已保存到本地副本' : '已保存「' + communityLabel(draft.action) + '」消息节点');
+      feedback(communityNodeType(draft.action) === 'private' ? '已保存私信节点' : '已保存「' + communityLabel(draft.action) + '」群聊节点');
     };
     if (draft.action === 'dissolve_group') return communityConfirmDissolve(commit);
     commit();
   };
+};
+
+/* 时间节点与消息区的计数：私信 N 条 · 群聊 M 个 */
+const communityRenderConfigurationBefore = renderConfiguration;
+renderConfiguration = function () {
+  communityRenderConfigurationBefore();
+  /* 左侧时间节点：条数改为「私信 N 条 · 群聊 M 个」 */
+  root.querySelectorAll('.time-nav-item button[data-group]').forEach(btn => {
+    const index = Number(btn.dataset.group);
+    const group = state[index];
+    const small = btn.querySelector('small');
+    if (group && small) small.textContent = communityNodeCountText(group);
+  });
+  /* 消息区标题下方的摘要 */
+  const workbench = root.querySelector('.message-workbench-header p');
+  if (workbench && workbench.textContent.includes('条消息')) {
+    const head = workbench.textContent.split(' · ')[0];
+    const group = state[current];
+    if (group) workbench.textContent = head + ' · ' + communityNodeCountText(group);
+  }
 };
 
 /* 列表与 SOP 详情沿用同一套动作文案。 */
@@ -497,9 +526,13 @@ renderMessages = function (group) {
     const node = all[(pager.page - 1) * pager.pageSize + Number(row.dataset.index)];
     if (!node) return;
     const cells = row.children;
-    if (cells[2]) cells[2].innerHTML = '<span class="message-action-tag ' + communityActionTone(node.action) + '">' + escapeText(communityLabel(node.action)) + '</span>';
+    if (cells[2]) {
+      const kind = communityNodeType(node.action);
+      cells[2].innerHTML = '<span class="node-kind-badge is-' + kind + '">' + communityNodeTypeLabel(node.action) + '</span>'
+        + (kind === 'private' ? '' : '<span class="message-action-tag ' + communityActionTone(node.action) + '">' + escapeText(communityLabel(node.action)) + '</span>');
+    }
     if (cells[5]) { const title = communityContentTitle(node) || '—'; cells[5].innerHTML = '<div class="message-text' + (title === '—' ? ' is-empty' : '') + '" title="' + escapeText(title) + '">' + escapeText(title) + '</div>'; }
-    /* 「预计触发人群/群聊」列已移除（由任务发送情况界面承载），这里只处理素材列 */
-    if (cells[7]) cells[7].textContent = communityNeedsText(node.action) ? String(node.materialCount || 0) : '—';
+    /* 「预计触发」与「实际发送人数」列已移除（由任务发送情况界面承载），这里只处理素材列 */
+    if (cells[6]) cells[6].textContent = communityNeedsText(node.action) ? String(node.materialCount || 0) : '—';
   });
 };
