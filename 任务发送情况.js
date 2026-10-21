@@ -29,7 +29,7 @@ function sendTaskSeed(date, historical=false) {
   const labels=['14:00','16:30','直播开始时间-2分钟','直播开始时间+10分钟','直播开始时间+20分钟','直播开始时间+30分钟','直播结束时间+3分钟'];
   /* j=1/3/4 为群发任务（演示群聊维度），j=5 建群任务（看每个群拉进哪些客户），j=2 解散群聊任务，其余私信任务 */
   const groupIndexes=[1,3,4];
-  const groupActions={1:'社群普通发送',3:'社群@ALL',4:'群公告'};
+  const groupActions={1:'社群消息发送',3:'社群消息发送',4:'群公告'};
   const plannedMap={1:4,3:6,4:5};
   return Array.from({length:historical?27:7},(_,i)=>{
     const j=i%7, status=historical?sendTaskStatuses[i%4]:(i<2||j===5||j===2?'已完成':'待触发');
@@ -47,7 +47,7 @@ function sendTaskSeed(date, historical=false) {
       actual:status==='待触发'?'':date+' '+(isCreate&&sopCreate?String(sopCreate.node.time):times[j])+':00',status,customerCount,
       success:status==='已完成'?customerCount*(j===0?2:1):status==='执行中'?35:0,
       failure:status==='执行失败'?customerCount:0,progress:status==='已完成'?100:status==='执行中'?42:0,
-      isGroup,isCreate,isDissolve,plannedGroups,actualGroups,failedGroups:Math.max(0,plannedGroups-actualGroups),
+      atAll:isGroup&&j===3,isGroup,isCreate,isDissolve,plannedGroups,actualGroups,failedGroups:Math.max(0,plannedGroups-actualGroups),
       text:'家长您好，今天的英语直播即将开始，欢迎通过 {{live1_url}} 进入直播间。期待与您一起学习！',
       material:j===0?'直播提醒海报.png':''};
   });
@@ -101,7 +101,7 @@ function sendTaskRenderRows() {
         :t.isDissolve?(t.status==='待触发'?'预解散':'查看解散')
         :(t.status==='待触发'?'预发送群聊':'发送群聊'))
       :(t.status==='待触发'?'预触达客户':'触达客户');
-    return '<tr><td>'+escapeText(t.business)+'</td><td>'+t.period+'期</td><td>'+escapeText(t.stage)+'</td><td>'+t.code+'</td><td>'+escapeText(t.time)+'</td><td>'+t.action+'</td><td>'+t.planned+'</td><td>'+(t.actual||'—')+'</td><td>'+sendTaskBadge(t.status)+'</td><td>'+counts+'<div class="send-task-progress-line"><progress max="100" value="'+t.progress+'" aria-label="发送进度 '+t.progress+'%"></progress><small>'+t.progress+'%</small></div></td><td><button type="button" class="el-button is-link el-button--primary" data-task="'+t.id+'">'+op+'</button></td></tr>';
+    return '<tr><td>'+escapeText(t.business)+'</td><td>'+t.period+'期</td><td>'+escapeText(t.stage)+'</td><td>'+t.code+'</td><td>'+escapeText(t.time)+'</td><td>'+t.action+(t.atAll?'<span class="message-at-all-badge">@所有人</span>':'')+'</td><td>'+t.planned+'</td><td>'+(t.actual||'—')+'</td><td>'+sendTaskBadge(t.status)+'</td><td>'+counts+'<div class="send-task-progress-line"><progress max="100" value="'+t.progress+'" aria-label="发送进度 '+t.progress+'%"></progress><small>'+t.progress+'%</small></div></td><td><button type="button" class="el-button is-link el-button--primary" data-task="'+t.id+'">'+op+'</button></td></tr>';
   }).join('');
   const headers=['业务期数','期数','阶段名称','阶段Code','节点时间','发送动作','计划触发时间','实际触发时间','任务状态','发送情况','操作'];
   root.querySelector('.send-task-list-host').innerHTML=sendTaskTable(headers,markup||'<tr><td colspan="11" class="send-task-empty">暂无数据</td></tr>','send-task-main-table');
@@ -126,6 +126,7 @@ function sendTaskDialog(title,body,kind='') {
 }
 function sendTaskSummary(task) {
   const entries=[['业务期数',task.business],['期数',task.period+'期'],['任务状态',sendTaskBadge(task.status),true],['阶段',task.stage+'（'+task.code+'）'],['节点时间',task.time],[task.status==='待触发'?'计划触发时间':'实际触发时间',task.status==='待触发'?task.planned:(task.actual||'—')]];
+  if(task.action==='社群消息发送')entries.push(['消息提醒',task.atAll?'@所有人':'不@所有人']);
   return '<div class="send-task-description">'+entries.map(([key,value,raw])=>'<div><strong>'+key+'</strong><span>'+(raw?value:escapeText(value))+'</span></div>').join('')+'</div>';
 }
 function sendTaskSales(task) {

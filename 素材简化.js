@@ -1,4 +1,4 @@
-/* 素材库简化：去掉按格式的固定分类与格式限制，改成一个简单文件系统（文件夹 + 任意格式文件）。
+/* 素材库简化：使用文件夹管理任意格式文件，格式筛选只作用于当前目录。
    消息节点里的素材入口也合并为「素材库」一个按钮。 */
 
 (function normalizeSimpleFS() {
@@ -78,9 +78,46 @@ materialGroupsMarkup = function (active) {
 };
 
 /* 列表渲染：永远不按类型过滤 */
+const simpleMaterialFormatState = {format:'all', folder:null};
+assetFormatKey = function (asset) {
+  if (asset.kind === 'videochannel' || asset.videoChannel) return 'videochannel';
+  const name = String(asset.originalName || asset.name || '');
+  const match = name.match(/\.([^.\s]+)$/);
+  return match ? 'ext:' + match[1].toLowerCase() : 'none';
+};
+/* 两处共用筛选器：素材管理页，以及节点/欢迎语的引用弹窗。 */
+prepareMaterialFormat = function (container, options) {
+  const picker = !!options.picker;
+  const group = options.group ?? materialGroup;
+  const state = picker ? options : simpleMaterialFormatState;
+  if (state.folder !== group) { state.folder = group; state.format = 'all'; }
+  const filters = container.querySelector(picker ? '.asset-picker-filters' : '.asset-filters');
+  if (!filters) return 'all';
+  const choices = new Map();
+  product.materials.filter(a => group === 'all' || (a.groupId || 'ungrouped') === group).forEach(a => {
+    const key = assetFormatKey(a);
+    choices.set(key, key === 'videochannel' ? '视频号' : key === 'none' ? '无扩展名' : '.' + key.slice(4).toUpperCase());
+  });
+  if (state.format !== 'all' && !choices.has(state.format)) state.format = 'all';
+  let select = filters.querySelector('.asset-format-filter');
+  if (!select) {
+    select = document.createElement('select');
+    select.className = 'local-select asset-format-filter';
+    select.setAttribute('aria-label', picker ? '引用素材文件格式' : '筛选素材文件格式');
+    const search = filters.querySelector('input');
+    if (search) search.before(select); else filters.append(select);
+  }
+  select.innerHTML = '<option value="all">全部格式</option>' + [...choices].sort((a,b) => a[1].localeCompare(b[1])).map(([key,label]) => '<option value="' + escapeText(key) + '">' + escapeText(label) + '</option>').join('');
+  select.value = state.format || 'all';
+  select.disabled = choices.size === 0;
+  select.onchange = () => { state.format = select.value; renderMaterialCards(container, options); };
+  return state.format || 'all';
+};
 const simpleCardsBefore = renderMaterialCards;
 renderMaterialCards = function (container, options) {
-  return simpleCardsBefore(container, Object.assign({}, options || {}, { type: 'all' }));
+  const state = options || {};
+  state.type = 'all';
+  return simpleCardsBefore(container, state);
 };
 
 /* 上传：任意格式，落进当前/所选文件夹 */
@@ -222,7 +259,7 @@ function simpleMountExplorer(page) {
   }
 }
 
-/* 页面渲染后：隐藏类型/格式筛选，只留一个右上角上传入口 + 视频号上传 */
+/* 页面渲染后：保留目录内的格式筛选，隐藏旧类型分类。 */
 const simpleLibraryBefore = renderMaterialLibrary;
 renderMaterialLibrary = function () {
   materialType = 'all';
@@ -231,7 +268,7 @@ renderMaterialLibrary = function () {
   const page = root.querySelector('.asset-page');
   if (!page) return;
   materialType = 'all';
-  page.querySelectorAll('.asset-default-types,[aria-label="筛选素材类型"],.asset-format-filter,.folder-type-hint').forEach(el => el.remove());
+  page.querySelectorAll('.asset-default-types,[aria-label="筛选素材类型"],.folder-type-hint').forEach(el => el.remove());
   /* 内容区里散落的上传按钮统一收进右上角 */
   page.querySelectorAll('button').forEach(b => {
     if (b.textContent.trim() === '上传素材' && !b.closest('.asset-header-actions')) b.remove();
@@ -266,14 +303,14 @@ renderMaterialLibrary = function () {
   if (groupsTitleBtn) groupsTitleBtn.disabled = false;
 };
 
-/* 引用素材库弹窗：去掉类型/格式筛选，列表始终全部素材 */
+/* 引用素材库弹窗：文件夹与文件格式筛选共用素材管理页的口径。 */
 const simplePickerBefore = materialLibrary;
 materialLibrary = function (editor, initialType) {
   simplePickerBefore(editor, 'all');
   if (!editor || !materialType) return;
   const m = dialogs.lastElementChild;
   if (!m) return;
-  m.querySelectorAll('[aria-label="引用素材类型"],.asset-format-filter').forEach(el => el.remove());
+  m.querySelectorAll('[aria-label="引用素材类型"]').forEach(el => el.remove());
   const groupSelect = m.querySelector('[aria-label="引用素材分组"]');
   if (groupSelect) {
     const options = '<option value="all">全部文件夹</option>' + flattenedFolders().map(g => '<option value="' + escapeText(g.id) + '">' + escapeText(folderPath(g.id)) + '</option>').join('');

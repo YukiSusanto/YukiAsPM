@@ -19,51 +19,9 @@ function welcomeStore() {
   return { messages: product.welcomeMessages, materials: product.welcomeMaterials };
 }
 
-/* 素材选择：直接列出简单文件系统里的全部素材 */
-function openWelcomeMaterialPicker(selected, onConfirm) {
-  const chosen = new Set((selected || []).map(a => a.id));
-  const box = modal(captured.stage, '选择素材');
-  if (!box) return;
-  box.classList.add('welcome-material-modal');
-  const body = box.querySelector('.el-dialog__body');
-  body.innerHTML = '<div class="opt-group-search"><input class="local-input" aria-label="搜索素材名称" placeholder="搜索素材名称或文件夹"></div>'
-    + '<div class="welcome-material-list" role="group" aria-label="素材列表"></div>'
-    + '<div class="opt-group-empty-tip opt-muted" hidden>没有匹配的素材</div>'
-    + '<div class="opt-group-picker-count opt-muted">已选 0 项</div>';
-  const list = body.querySelector('.welcome-material-list');
-  const search = body.querySelector('[aria-label="搜索素材名称"]');
-  const emptyTip = body.querySelector('.opt-group-empty-tip');
-  const counter = body.querySelector('.opt-group-picker-count');
-  const paint = () => {
-    const keyword = search.value.trim();
-    const items = (product.materials || []).filter(a => !keyword || String(a.name).includes(keyword) || folderPath(a.groupId || '').includes(keyword));
-    list.innerHTML = items.map(a => '<label class="welcome-material-row"><input type="checkbox" value="' + escapeText(a.id) + '"' + (chosen.has(a.id) ? ' checked' : '') + '>'
-      + '<span class="material-ref-icon">' + materialIcon(a.kind) + '</span>'
-      + '<span class="welcome-material-main"><strong>' + escapeText(a.name) + '</strong><small>' + materialSize(a.size) + (a.groupId ? ' · ' + escapeText(folderPath(a.groupId)) : '') + '</small></span></label>').join('');
-    emptyTip.hidden = items.length > 0;
-    counter.textContent = '已选 ' + chosen.size + ' 项';
-    list.querySelectorAll('input').forEach(input => {
-      input.onchange = () => {
-        if (input.checked) chosen.add(input.value); else chosen.delete(input.value);
-        counter.textContent = '已选 ' + chosen.size + ' 项';
-      };
-    });
-  };
-  search.oninput = paint;
-  paint();
-  buttons(box, '取消')[0].onclick = () => box.remove();
-  const save = buttons(box, '保存')[0];
-  save.textContent = '确认引用';
-  save.onclick = () => {
-    const picked = (product.materials || []).filter(a => chosen.has(a.id)).map(a => ({ id: a.id, name: a.name, mime: a.mime, size: a.size }));
-    box.remove();
-    if (!dialogs.children.length) document.body.style.overflow = '';
-    onConfirm(picked);
-  };
-}
-
 function openWelcomeMessageConfig(initialProduct) {
-  const store = welcomeStore();
+  const saved = welcomeStore();
+  const store = {messages:{...saved.messages},materials:Object.fromEntries(Object.entries(saved.materials).map(([key,list])=>[key,list.map(a=>({...a}))]))};
   const products = welcomeProducts();
   let active = products.includes(initialProduct) ? initialProduct : products[0];
   const box = modal(captured.stage, '入群欢迎语配置');
@@ -77,13 +35,12 @@ function openWelcomeMessageConfig(initialProduct) {
     + '<textarea class="el-textarea__inner welcome-textarea" maxlength="2000" aria-label="入群欢迎语话术" placeholder="请输入该产品线的入群欢迎语"></textarea>'
     + '<div class="asset-vc-count welcome-count">0 / 2000</div></div>'
     + '<div class="welcome-material-field"><label>素材</label>'
-    + '<div class="welcome-material-actions"><button type="button" class="el-button el-button--primary is-plain welcome-material-btn">素材库</button><span class="opt-muted welcome-material-tip">从素材库引用，发送时只发文件本身</span></div>'
-    + '<div class="welcome-material-chips"></div></div>';
+    + '<div class="material-uploader"><div class="material-empty"></div></div></div>';
   const tabs = body.querySelector('.welcome-tabs');
   const textarea = body.querySelector('[aria-label="入群欢迎语话术"]');
   const counter = body.querySelector('.welcome-count');
   const shortcuts = body.querySelector('.welcome-shortcuts');
-  const chips = body.querySelector('.welcome-material-chips');
+
   const insertToken = token => {
     textarea.setRangeText(token, textarea.selectionStart, textarea.selectionEnd, 'end');
     counter.textContent = textarea.value.length + ' / 2000';
@@ -118,11 +75,13 @@ function openWelcomeMessageConfig(initialProduct) {
     shortcuts.append(button);
   });
   const paintMaterials = () => {
-    const list = store.materials[active] || [];
-    chips.innerHTML = list.length
-      ? list.map((a, i) => '<span class="opt-group-chip"><span class="material-ref-icon">' + materialIcon((product.materials.find(x => x.id === a.id) || {}).kind || 'document') + '</span><span>' + escapeText(a.name) + '</span><button type="button" aria-label="移除素材 ' + escapeText(a.name) + '">×</button></span>').join('')
-      : '<span class="opt-group-empty-hint">未引用素材</span>';
-    chips.querySelectorAll('button').forEach((b, i) => { b.onclick = () => { list.splice(i, 1); store.materials[active] = list; paintMaterials(); }; });
+    const currentProduct = active;
+    box.__materialSelection = {
+      materials:store.materials[currentProduct] || [],
+      materialCount:(store.materials[currentProduct] || []).length,
+      onChange:picked => { store.materials[currentProduct] = picked; }
+    };
+    renderMaterials(box);
   };
   const paint = () => {
     tabs.innerHTML = products.map(p => '<button type="button" role="tab" aria-selected="' + (p === active) + '" data-welcome="' + escapeText(p) + '">' + escapeText(p) + '</button>').join('');
@@ -134,21 +93,17 @@ function openWelcomeMessageConfig(initialProduct) {
     paintMaterials();
   };
   textarea.oninput = () => { counter.textContent = textarea.value.length + ' / 2000'; };
-  body.querySelector('.welcome-material-btn').onclick = () => {
-    openWelcomeMaterialPicker(store.materials[active] || [], picked => {
-      store.materials[active] = picked;
-      paintMaterials();
-    });
-  };
   paint();
   buttons(box, '取消')[0].onclick = () => box.remove();
   const save = buttons(box, '保存')[0];
   save.textContent = '保存入群欢迎语';
   save.onclick = () => {
     store.messages[active] = textarea.value;
+    product.welcomeMessages = store.messages;
+    product.welcomeMaterials = store.materials;
     try { persist(); } catch (e) { }
     box.remove();
-    document.body.style.overflow = '';
+    if (!dialogs.children.length) document.body.style.overflow = '';
     feedback('已保存「' + active + '」入群欢迎语');
   };
 }
@@ -168,34 +123,25 @@ renderConfiguration = function () {
   actions.append(entry);
 };
 
-/* 入口二：群聊节点选「建群」时，自动建群清单标题旁给一个入口 */
+/* 入口二：建群欢迎语放在发送动作下方；建群清单不在节点配置中展示。 */
 const welcomeApplyLayoutBefore = communityApplyEditorLayout;
 communityApplyEditorLayout = function (m, ctx, readOnly) {
   welcomeApplyLayoutBefore(m, ctx, readOnly);
-  const buildItem = ctx && ctx.buildItem;
-  if (!buildItem) return;
-  const label = buildItem.querySelector('.el-form-item__label');
-  if (!label) return;
-  /* 只有建群动作才挂这个入口 */
-  if (!communityNeedsBuildList(draft.action)) {
-    const stale = label.querySelector('.welcome-config-inline');
-    if (stale) stale.remove();
-    return;
+  if (!ctx.welcomeItem) {
+    const item = document.createElement('div');
+    item.className = 'el-form-item asterisk-left el-form-item--label-top opt-build-welcome';
+    item.innerHTML = '<label class="el-form-item__label">入群欢迎语</label><div class="el-form-item__content"><button type="button" class="el-button is-plain el-button--primary welcome-config-inline">入群欢迎语配置</button><small class="opt-field-hint">按产品线维护欢迎语话术与引用素材。</small></div>';
+    ctx.select.closest('.el-form-item').after(item);
+    ctx.welcomeItem = item;
   }
-  if (label.querySelector('.welcome-config-inline')) return;
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.className = 'el-button is-link el-button--primary welcome-config-inline';
-  button.textContent = '入群欢迎语配置';
-  button.title = '按产品线维护入群欢迎语';
-  button.style.marginLeft = '10px';
-  button.onclick = e => {
-    e.preventDefault();
+  ctx.welcomeItem.style.display = draft.action === 'create_group' ? '' : 'none';
+  const button = ctx.welcomeItem.querySelector('button');
+  button.disabled = readOnly;
+  button.onclick = () => {
     if (readOnly) return;
     const first = communityBuildStats(draft).groups[0];
     openWelcomeMessageConfig(first ? first.product : undefined);
   };
-  label.append(button);
 };
 
 /* 首屏补渲染：本模块在初次 render 之后才加载，补一次让右上也出现入口 */

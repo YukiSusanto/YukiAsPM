@@ -1,9 +1,8 @@
 /* 节点分两类：私信节点（固定私信1v1）与群聊节点（社群发送 + 群管理动作）。
    需求来源：《销转期建群与群聊sop需求》三、私信节点与群聊节点。 */
-const COMMUNITY_ACTION_IDS = ['pm', 'group', 'group_at_all', 'group_notice', 'create_group', 'dissolve_group'];
+const COMMUNITY_ACTION_IDS = ['pm', 'group', 'group_notice', 'create_group', 'dissolve_group'];
 const COMMUNITY_ACTIONS = [
-  { id: 'group', label: '社群普通发送', nodeType: 'group', group: '社群发送' },
-  { id: 'group_at_all', label: '社群@ALL', nodeType: 'group', group: '社群发送' },
+  { id: 'group', label: '社群消息发送', nodeType: 'group', group: '社群发送' },
   { id: 'group_notice', label: '群公告', nodeType: 'group', group: '社群发送' },
   { id: 'create_group', label: '建群', nodeType: 'group', group: '群管理' },
   { id: 'dissolve_group', label: '解散群聊', nodeType: 'group', group: '群管理' }
@@ -11,13 +10,12 @@ const COMMUNITY_ACTIONS = [
 const COMMUNITY_PRIVATE_ACTION = 'pm';
 const COMMUNITY_PRIVATE_LABEL = '私信1v1';
 /* 社群发送类动作：需要选择已有群聊、有话术与素材。 */
-const COMMUNITY_GROUP_SEND = new Set(['group', 'group_at_all', 'group_notice']);
+const COMMUNITY_GROUP_SEND = new Set(['group', 'group_notice']);
 /* 群管理动作：无话术与素材。 */
 const COMMUNITY_SILENT = new Set(['create_group', 'dissolve_group']);
 const COMMUNITY_HINTS = {
   pm: '按添加好友时间与选中/排除标签圈选客户，逐人私信发送。',
-  group: '向所选群聊发送一条普通消息，不在群内产生额外提醒。',
-  group_at_all: '在群内发送消息并@所有人，会在群内产生强提醒。',
+  group: '向所选群聊发送消息，可自主选择是否开启@所有人。',
   group_notice: '更新所选群聊的群公告，新公告会替换当前群公告。',
   create_group: '按客户范围与产品线标签自动建群，并把对应客户拉进对应产品群。',
   dissolve_group: '解散所选群聊，群内成员无法继续发言，操作不可恢复。'
@@ -80,10 +78,17 @@ const COMMUNITY_GROUP_ICON = '<svg viewBox="0 0 24 24" width="16" height="16" fi
 
 function communityNormalizeAction(value) {
   const id = String(value == null ? '' : value).trim();
+  if (id === 'group_at_all') return 'group';
   if (COMMUNITY_ACTION_IDS.includes(id)) return id;
   if (id === '私信1v1' || id === '私信1V1' || id === '私信' || id === '全量发送') return 'pm';
   return 'pm';
 }
+/* Preserve the reminder setting when opening configurations saved before the merge. */
+function communityMigrateMessage(node) {
+  if (node.action === 'group_at_all') { node.action = 'group'; node.atAll = true; }
+  if (node.action === 'group' && typeof node.atAll !== 'boolean') node.atAll = false;
+}
+product.sops.forEach(s => s.groups.forEach(g => g.nodes.forEach(communityMigrateMessage)));
 function communityMeta(id) {
   const a = communityNormalizeAction(id);
   return COMMUNITY_ACTIONS.find(x => x.id === a) || { id: COMMUNITY_PRIVATE_ACTION, label: COMMUNITY_PRIVATE_LABEL, nodeType: 'private', group: '' };
@@ -235,7 +240,9 @@ function communityApplyEditorLayout(m, ctx, readOnly) {
   if (ctx.friend) ctx.friend.style.display = communityNeedsFriendTime(action) ? '' : 'none';
   if (ctx.composer) ctx.composer.style.display = communityNeedsText(action) ? '' : 'none';
   if (ctx.composerItem) ctx.composerItem.style.display = communityNeedsText(action) ? '' : 'none';
-  ctx.atAll.style.display = action === 'group_at_all' ? '' : 'none';
+  ctx.atAllItem.style.display = action === 'group' ? '' : 'none';
+  ctx.atAllSwitch.checked = !!draft.atAll;
+  ctx.atAll.style.display = action === 'group' && draft.atAll ? '' : 'none';
   ctx.notice.style.display = action === 'group_notice' ? '' : 'none';
   const silent = COMMUNITY_SILENT.has(action);
   ctx.actionNote.style.display = silent ? '' : 'none';
@@ -245,10 +252,6 @@ function communityApplyEditorLayout(m, ctx, readOnly) {
     ctx.actionNote.className = 'opt-action-alert ' + (action === 'dissolve_group' ? 'warning' : 'info') + ' opt-action-note';
     ctx.actionNote.innerHTML = silentText;
   }
-  const buildList = communityNeedsBuildList(action);
-  ctx.buildItem.style.display = buildList ? '' : 'none';
-  ctx.buildList.style.display = buildList ? '' : 'none';
-  ctx.newGroupHint.style.display = buildList ? '' : 'none';
   if (ctx.textarea) {
     const notice = action === 'group_notice';
     ctx.textarea.maxLength = notice ? COMMUNITY_NOTICE_MAX : 10000;
@@ -281,8 +284,7 @@ const COMMUNITY_PM_ICON = '<svg viewBox="0 0 24 24" width="16" height="16" fill=
 const COMMUNITY_CARET_ICON = '<svg viewBox="0 0 1024 1024" width="12" height="12" fill="currentColor"><path d="M512 704 160 352l64-64 288 288 288-288 64 64-352 352z"></path></svg>';
 const COMMUNITY_ACTION_DESC = {
   pm: '按标签与好友时间圈选，逐人私信',
-  group: '向所选群聊发送普通消息',
-  group_at_all: '@群内所有成员，强提醒',
+  group: '发送群消息，可选择是否@所有人',
   group_notice: '更新所选群聊的群公告',
   create_group: '按产品线标签自动建群拉人',
   dissolve_group: '解散所选群聊，不可恢复'
@@ -357,6 +359,7 @@ editNode = function (i, readOnly = false) {
   const form = m.querySelector('form.node-editor');
   const select = m.querySelector('select[aria-label="发送动作"]');
   if (!form || !select) return;
+  communityMigrateMessage(draft);
   /* 新建时按入口决定类型；编辑时由已有动作推导 */
   const nodeType = i === undefined ? communityPendingNodeType : communityNodeType(draft.action);
   draft.action = nodeType === 'private' ? COMMUNITY_PRIVATE_ACTION : communityNormalizeAction(draft.action);
@@ -373,6 +376,15 @@ editNode = function (i, readOnly = false) {
   /* 动作字段：私信节点没有发送动作，整行隐藏 */
   const actionItem = select.closest('.el-form-item');
   if (actionItem) actionItem.style.display = nodeType === 'private' ? 'none' : '';
+  const atAllItem = document.createElement('div');
+  atAllItem.className = 'el-form-item asterisk-left el-form-item--label-top opt-at-all-item';
+  atAllItem.innerHTML = '<label class="el-form-item__label">消息提醒</label><div class="el-form-item__content"><label class="opt-at-all-toggle"><input type="checkbox" role="switch" aria-label="开启@所有人"><span>@所有人</span></label><small class="opt-at-all-help">关闭时发送普通群消息，开启后提醒群内所有成员。</small></div>';
+  actionItem.after(atAllItem);
+  ctx.atAllItem = atAllItem;
+  ctx.atAllSwitch = atAllItem.querySelector('input');
+  ctx.atAllSwitch.checked = !!draft.atAll;
+  ctx.atAllSwitch.disabled = readOnly;
+  ctx.atAllSwitch.onchange = () => { draft.atAll = ctx.atAllSwitch.checked; communityApplyEditorLayout(m, ctx, readOnly); };
   select.innerHTML = '<optgroup label="社群发送">' + COMMUNITY_ACTIONS.filter(a => a.group === '社群发送').map(a => '<option value="' + a.id + '">' + a.label + '</option>').join('')
     + '</optgroup><optgroup label="群管理">' + COMMUNITY_ACTIONS.filter(a => a.group === '群管理').map(a => '<option value="' + a.id + '">' + a.label + '</option>').join('') + '</optgroup>';
   select.value = draft.action;
@@ -415,14 +427,6 @@ editNode = function (i, readOnly = false) {
   actionNote.className = 'opt-action-alert info opt-action-note';
   audienceItem.before(actionNote);
   ctx.actionNote = actionNote;
-  /* 自动建群清单（建群）：插在发送人群之后 */
-  const buildItem = document.createElement('div');
-  buildItem.className = 'el-form-item asterisk-left el-form-item--label-top opt-build-item';
-  buildItem.innerHTML = '<label class="el-form-item__label">自动建群清单</label><div class="el-form-item__content"><div class="opt-build-list"></div><small class="opt-field-hint"></small></div>';
-  audienceItem.after(buildItem);
-  ctx.buildItem = buildItem;
-  ctx.newGroupHint = buildItem.querySelector('.opt-field-hint');
-  ctx.buildList = buildItem.querySelector('.opt-build-list');
   m.__community = ctx;
   /* 话术/素材组合区：插入动作警示与素材限制提示 */
   const composer = m.querySelector('.message-composer');
@@ -470,6 +474,7 @@ editNode = function (i, readOnly = false) {
     const offset = m.querySelector('[aria-label="偏移分钟"]');
     if (relative && relative.style.display !== 'none' && offset && (!Number.isFinite(Number(offset.value)) || Number(offset.value) < 0 || Number(offset.value) > 1440)) return feedback('请输入0至1440之间的分钟数');
     draft.time = time.value;
+    draft.atAll = draft.action === 'group' && !!draft.atAll;
     draft.text = communityNeedsText(draft.action) ? (ctx.textarea ? ctx.textarea.value : '') : '';
     draft.note = noteArea ? noteArea.value : draft.note;
     if (!communityNeedsAudience(draft.action)) { draft.friendStart = ''; draft.friendEnd = ''; }
@@ -529,7 +534,8 @@ renderMessages = function (group) {
     if (cells[2]) {
       const kind = communityNodeType(node.action);
       cells[2].innerHTML = '<span class="node-kind-badge is-' + kind + '">' + communityNodeTypeLabel(node.action) + '</span>'
-        + (kind === 'private' ? '' : '<span class="message-action-tag ' + communityActionTone(node.action) + '">' + escapeText(communityLabel(node.action)) + '</span>');
+        + (kind === 'private' ? '' : '<span class="message-action-tag ' + communityActionTone(node.action) + '">' + escapeText(communityLabel(node.action)) + '</span>')
+        + (node.action === 'group' && node.atAll ? '<span class="message-at-all-badge">@所有人</span>' : '');
     }
     if (cells[5]) { const title = communityContentTitle(node) || '—'; cells[5].innerHTML = '<div class="message-text' + (title === '—' ? ' is-empty' : '') + '" title="' + escapeText(title) + '">' + escapeText(title) + '</div>'; }
     /* 「预计触发」与「实际发送人数」列已移除（由任务发送情况界面承载），这里只处理素材列 */
