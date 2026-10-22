@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f7fa" />
+    <title>AI会话质检 | 雪梨英语管理系统</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-block">
+          <div class="brand-mark" aria-hidden="true"><span>雪</span></div>
+          <span class="brand-name">雪梨英语管理系统</span>
+        </div>
+        <div class="breadcrumbs" aria-label="当前位置">
+          <span>AI销售</span>
+          <span class="crumb-separator">/</span>
+          <strong>AI会话质检</strong>
+        </div>
+        <div class="topbar-actions">
+          <button class="icon-button" aria-label="通知" title="通知"><span class="icon icon-bell"></span></button>
+          <button class="profile-button" title="个人中心"><span class="profile-dot">郑</span><span>郑舜杰</span><span class="chevron-down"></span></button>
+        </div>
+      </header>
+
+      <aside class="sidebar" aria-label="主导航">
+        <nav class="side-nav">
+          <button class="side-nav-item" title="首页"><span class="icon icon-home"></span></button>
+          <button class="side-nav-item" title="用户"><span class="icon icon-user"></span></button>
+          <button class="side-nav-item active" title="AI会话质检"><span class="icon icon-robot"></span></button>
+          <button class="side-nav-item" title="任务"><span class="icon icon-list"></span></button>
+          <button class="side-nav-item" title="视频"><span class="icon icon-video"></span></button>
+          <button class="side-nav-item" title="组织"><span class="icon icon-team"></span></button>
+          <button class="side-nav-item" title="设置"><span class="icon icon-setting"></span></button>
+        </nav>
+        <button class="sidebar-collapse" aria-label="收起侧边栏"><span class="icon icon-menu"></span></button>
+      </aside>
+
+      <main class="main-content">
+        <div class="page-heading">
+          <div>
+            <h1>AI会话质检</h1>
+            <p><span class="status-dot"></span>数据来自销售企微会话</p>
+          </div>
+        </div>
+
+        <section class="filter-bar" aria-label="时间筛选">
+          <div class="quick-filters" role="tablist" aria-label="快捷时间">
+            <button class="quick-filter active" data-range="today">今天</button>
+            <button class="quick-filter" data-range="yesterday">昨天</button>
+            <button class="quick-filter" data-range="week">近7天</button>
+          </div>
+          <label class="date-input"><span class="icon icon-calendar"></span><input id="start-date" type="date" value="2026-10-21" aria-label="开始日期" /></label>
+          <span class="date-separator">至</span>
+          <label class="date-input"><input id="end-date" type="date" value="2026-10-21" aria-label="结束日期" /></label>
+          <button class="refresh-button" id="refresh-button"><span class="icon icon-refresh"></span><span>刷新</span></button>
+          <span class="refresh-state" id="refresh-state" role="status">已是最新</span>
+        </section>
+
+        <section class="workspace" aria-label="会话质检工作区">
+          <section class="panel account-panel">
+            <div class="panel-header">
+              <div>
+                <h2>销售企微账号</h2>
+                <p>共 80 个账号</p>
+              </div>
+              <div class="panel-tools"><button class="plain-icon" aria-label="收藏账号" title="收藏账号"><span class="icon icon-star"></span></button><button class="plain-icon" aria-label="收起账号栏" title="收起账号栏"><span class="icon icon-chevron-left"></span></button></div>
+            </div>
+            <label class="search-box"><span class="icon icon-search"></span><input id="account-search" placeholder="搜索账号名称或企微ID" /></label>
+            <div class="list-scroll" id="account-list"></div>
+          </section>
+
+          <section class="panel customer-panel">
+            <div class="panel-header">
+              <div>
+                <h2>外部联系人客户</h2>
+                <p>外部客户数：67</p>
+              </div>
+              <div class="panel-tools"><button class="plain-icon" aria-label="收藏客户" title="收藏客户"><span class="icon icon-star"></span></button><button class="plain-icon" aria-label="收起客户栏" title="收起客户栏"><span class="icon icon-chevron-left"></span></button></div>
+            </div>
+            <label class="search-box"><span class="icon icon-search"></span><input id="customer-search" placeholder="搜索客户名称或ID" /></label>
+            <div class="customer-filters" role="tablist" aria-label="客户类型">
+              <button class="customer-filter active" data-filter="new">新客户</button>
+              <button class="customer-filter" data-filter="old">老客户</button>
+              <button class="customer-filter" data-filter="all">全部</button>
+            </div>
+            <div class="list-scroll customer-list" id="customer-list"></div>
+          </section>
+
+          <section class="panel conversation-panel" aria-label="只读会话展示" aria-readonly="true">
+            <div class="conversation-header">
+              <div class="conversation-identity"><div class="avatar avatar-large" id="conversation-avatar">墨</div><h2 id="conversation-title">墨言（邮政）</h2><span class="readonly-badge">只读</span></div>
+              <button class="outline-button" id="favorite-button"><span class="icon icon-star"></span><span id="favorite-label">收藏</span></button>
+            </div>
+            <label class="search-box conversation-search"><span class="icon icon-search"></span><input id="message-search" placeholder="搜索当前时间范围内的聊天内容" /></label>
+            <div class="conversation-meta"><span id="message-page-label">第 1 页 · 共 17 条</span><button class="ghost-button">筛选</button></div>
+            <div class="messages" id="messages"></div>
+          </section>
+
+          <footer class="workspace-footer" aria-label="翻页">
+            <div class="footer-pagination footer-pagination-left">
+              <button class="footer-arrow" id="account-prev" disabled aria-label="上一页账号">‹</button>
+              <span id="account-page">1 / 6</span>
+              <button class="footer-arrow" id="account-next" aria-label="下一页账号">›</button>
+            </div>
+            <div class="footer-pagination footer-pagination-center">
+              <button class="footer-arrow" id="customer-prev" disabled aria-label="上一页客户">‹</button>
+              <span id="customer-page">1 / 1</span>
+              <button class="footer-arrow" id="customer-next" disabled aria-label="下一页客户">›</button>
+            </div>
+            <div class="footer-pagination footer-pagination-right">
+              <span id="message-count">共 17 条</span>
+              <select aria-label="每页条数"><option>50条/页</option><option>20条/页</option><option>10条/页</option></select>
+              <button class="footer-arrow" disabled aria-label="上一页会话">‹</button>
+              <span class="page-current">1</span>
+              <button class="footer-arrow" disabled aria-label="下一页会话">›</button>
+              <label>前往 <input type="number" value="1" min="1" aria-label="跳转页码" /> 页</label>
+            </div>
+          </footer>
+        </section>
+      </main>
+
+      <div class="toast" id="toast" role="status"></div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
