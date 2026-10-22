@@ -97,14 +97,23 @@ const conversations = {
 let contactKind = 'customer';
 let contactStatus = 'all';
 let customerAge = 'new';
+let selectedAccount = accounts[0];
 let selectedContact = customers[0];
 let selectedCustomerTags = new Set();
 let draftCustomerTags = new Set();
 let activeTagGroupId = customerTagGroups[0].id;
+let exportSelectedCustomerIds = new Set();
+let draftExportCustomerIds = new Set();
+let exportCustomerFilterTags = new Set();
+let draftExportCustomerFilterTags = new Set();
+let activeExportTagGroupId = customerTagGroups[0].id;
 let accountPage = 1;
 let customerPage = 1;
 const accountPageTotal = 6;
 const customerPageSize = 6;
+const MESSAGE_BATCH_SIZE = 50;
+const conversationHistoryCache = new Map();
+const conversationLoadState = { contactId: null, loadedCount: MESSAGE_BATCH_SIZE, isLoading: false, isAdjustingScroll: false, requestToken: 0 };
 
 const $ = (selector) => document.querySelector(selector);
 const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
@@ -196,7 +205,7 @@ function avatarMarkup(item, large = false) {
 function renderAccounts() {
   const query = $('#account-search').value.trim().toLowerCase();
   const result = accounts.filter((item) => `${item.name}${item.id}`.toLowerCase().includes(query));
-  $('#account-list').innerHTML = result.map((item, index) => `<button class="account-item ${index === 0 ? 'active' : ''}" data-account="${escapeHtml(item.name)}">${avatarMarkup(item)}<span class="item-copy"><span class="item-title">${escapeHtml(item.name)}</span><span class="item-subtitle">${escapeHtml(item.id)}</span></span><span class="item-star icon icon-star"></span></button>`).join('') || '<div class="empty-state">没有找到匹配账号</div>';
+  $('#account-list').innerHTML = result.map((item) => `<button class="account-item ${item.id === selectedAccount.id ? 'active' : ''}" data-account-id="${escapeHtml(item.id)}">${avatarMarkup(item)}<span class="item-copy"><span class="item-title">${escapeHtml(item.name)}</span><span class="item-subtitle">${escapeHtml(item.id)}</span></span><span class="item-star icon icon-star"></span></button>`).join('') || '<div class="empty-state">没有找到匹配账号</div>';
   $('#account-page').textContent = `${accountPage} / ${accountPageTotal}`;
   $('#account-prev').disabled = accountPage <= 1;
   $('#account-next').disabled = accountPage >= accountPageTotal;
@@ -257,21 +266,117 @@ function renderCustomers() {
   $('#customer-next').setAttribute('aria-label', `下一页${contactKind === 'customer' ? '客户' : '群聊'}`);
 }
 
-function renderConversation() {
+function buildConversationHistory() {
+  if (conversationHistoryCache.has(selectedContact.id)) return conversationHistoryCache.get(selectedContact.id);
+  const base = conversations[selectedContact.name] || [
+    { role: 'customer', label: contactKind === 'customer' ? '客户' : '群成员', time: '2026/10/21 18:06', text: selectedContact.preview },
+    { role: 'agent', label: 'AI', time: '2026/10/21 18:07', text: '家长好～我是接下来负责咱们孩子英语学习的班主任老师' },
+    { role: 'agent', label: 'AI', time: '2026/10/21 18:08', text: '接下来的学习规划和雪梨老师的直播，都会根据孩子的情况安排～' },
+  ];
+  const targetTotal = 128;
+  const earlierCount = Math.max(0, targetTotal - base.length);
+  const customerLabel = selectedContact.id.startsWith('G-') ? '群成员' : '客户';
+  const customerTexts = ['老师，这个课程应该怎么安排？', '好的，我先看一下课程资料。', '直播链接稍后会发到这里吗？', '孩子目前每天可以学习半小时。'];
+  const agentTexts = ['可以的，我先了解一下孩子目前的学习情况。', '课程资料和直播提醒都会在会话里同步给您。', '收到，我会结合孩子的时间给您安排学习节奏。', '有问题随时在这里留言，我看到后会继续跟进。'];
+  const earlier = Array.from({ length: earlierCount }, (_, index) => {
+    const minuteOfDay = 8 * 60 + Math.floor(index * 560 / Math.max(1, earlierCount - 1));
+    const hour = String(Math.floor(minuteOfDay / 60)).padStart(2, '0');
+    const minute = String(minuteOfDay % 60).padStart(2, '0');
+    const isCustomer = index % 4 === 0;
+    return {
+      role: isCustomer ? 'customer' : 'agent',
+      label: isCustomer ? customerLabel : 'AI',
+      time: `2026/10/21 ${hour}:${minute}`,
+      text: (isCustomer ? customerTexts : agentTexts)[index % 4],
+    };
+  });
+  const result = [...earlier, ...base];
+  conversationHistoryCache.set(selectedContact.id, result);
+  return result;
+}
+
+function updateEarliestTooltip() {
+  const start = $('#start-date').value || '所选时间范围';
+  $('#earliest-tooltip').textContent = `最早消息为左上角所选时间范围的最早时间（${start} 00:00）；加载完成后将自动向上滑动`;
+}
+
+function updateLatestButton() {
+  const node = $('#messages');
+  const atLatest = node.scrollHeight - node.scrollTop - node.clientHeight < 18;
+  $('#jump-latest-button').classList.toggle('is-at-latest', atLatest);
+}
+
+function renderConversation(options = {}) {
   const avatarNode = $('#conversation-avatar');
   avatarNode.className = `avatar avatar-large ${selectedContact.tone}`;
   avatarNode.textContent = selectedContact.initial;
   $('#conversation-title').textContent = selectedContact.name;
   const search = $('#message-search').value.trim().toLowerCase();
-  const source = conversations[selectedContact.name] || [
-    { role: 'customer', label: contactKind === 'customer' ? '客户' : '群成员', time: '2026/10/21 18:06', text: selectedContact.preview },
-    { role: 'agent', label: 'AI', time: '2026/10/21 18:07', text: '家长好～我是接下来负责咱们孩子英语学习的班主任老师' },
-    { role: 'agent', label: 'AI', time: '2026/10/21 18:08', text: '接下来的学习规划和雪梨老师的直播，都会根据孩子的情况安排～' },
-  ];
-  const result = source.filter((message) => message.text.toLowerCase().includes(search));
-  $('#messages').innerHTML = result.map((message) => `<article class="message-row ${message.role}">${avatarMarkup({ initial: message.role === 'customer' ? selectedContact.initial : 'AI', tone: message.role === 'customer' ? selectedContact.tone : 'blue' })}<div class="message-body"><div class="message-meta"><span>${escapeHtml(message.label)}</span><span>${escapeHtml(message.time)}</span></div><div class="message-bubble">${escapeHtml(message.text)}</div>${message.score ? `<span class="message-score">${escapeHtml(message.score)}</span>` : ''}</div></article>`).join('') || '<div class="empty-state">当前范围内没有匹配的聊天内容</div>';
-  $('#message-page-label').textContent = `第 1 页 · 共 ${source.length} 条`;
-  $('#message-count').textContent = `共 ${source.length} 条`;
+  const source = buildConversationHistory();
+  const isNewConversation = conversationLoadState.contactId !== selectedContact.id;
+  if (isNewConversation) {
+    conversationLoadState.contactId = selectedContact.id;
+    conversationLoadState.loadedCount = Math.min(MESSAGE_BATCH_SIZE, source.length);
+    conversationLoadState.isLoading = false;
+    conversationLoadState.requestToken += 1;
+  }
+  const loaded = source.slice(-conversationLoadState.loadedCount);
+  const result = loaded.filter((message) => message.text.toLowerCase().includes(search));
+  const hasEarlier = conversationLoadState.loadedCount < source.length;
+  const historyState = conversationLoadState.isLoading
+    ? '<div class="history-load-state is-loading" id="history-load-state">正在加载更早的 50 条消息…</div>'
+    : `<div class="history-load-state" id="history-load-state">${hasEarlier ? '继续向上滑动，加载更早的 50 条消息' : '已到达所选时间范围内的最早消息'}</div>`;
+  const messageMarkup = result.map((message) => `<article class="message-row ${message.role}">${avatarMarkup({ initial: message.role === 'customer' ? selectedContact.initial : 'AI', tone: message.role === 'customer' ? selectedContact.tone : 'blue' })}<div class="message-body"><div class="message-meta"><span>${escapeHtml(message.label)}</span><span>${escapeHtml(message.time)}</span></div><div class="message-bubble">${escapeHtml(message.text)}</div>${message.score ? `<span class="message-score">${escapeHtml(message.score)}</span>` : ''}</div></article>`).join('') || '<div class="empty-state">当前已加载消息中没有匹配内容</div>';
+  const messagesNode = $('#messages');
+  conversationLoadState.isAdjustingScroll = true;
+  messagesNode.innerHTML = historyState + messageMarkup;
+  const loadedLabel = `已加载 ${loaded.length} / ${source.length} 条`;
+  $('#message-page-label').textContent = search ? `${loadedLabel} · 缓存内匹配 ${result.length} 条` : `${loadedLabel}${hasEarlier ? ' · 上滑加载更早消息' : ' · 已加载至最早消息'}`;
+  $('#message-count').textContent = `${loadedLabel}${hasEarlier ? '，上滑加载更早消息' : '，已到最早消息'}`;
+  $('#jump-earliest-button').disabled = conversationLoadState.isLoading;
+  updateEarliestTooltip();
+  window.requestAnimationFrame(() => {
+    if (options.preserveViewport) {
+      messagesNode.scrollTop = messagesNode.scrollHeight - options.previousScrollHeight + options.previousScrollTop;
+    } else if (options.scrollToTop) {
+      messagesNode.scrollTop = 0;
+    } else if (isNewConversation || options.scrollToBottom) {
+      messagesNode.scrollTop = messagesNode.scrollHeight;
+    }
+    conversationLoadState.isAdjustingScroll = false;
+    updateLatestButton();
+  });
+}
+
+function loadOlderMessages(loadAll = false) {
+  const source = buildConversationHistory();
+  if (conversationLoadState.isLoading || conversationLoadState.loadedCount >= source.length) return;
+  const messagesNode = $('#messages');
+  const previousScrollHeight = messagesNode.scrollHeight;
+  const previousScrollTop = messagesNode.scrollTop;
+  const token = ++conversationLoadState.requestToken;
+  conversationLoadState.isLoading = true;
+  const loadingNode = $('#history-load-state');
+  if (loadingNode) {
+    loadingNode.classList.add('is-loading');
+    loadingNode.textContent = loadAll ? '正在加载所选时间范围内的全部历史消息…' : '正在加载更早的 50 条消息…';
+  }
+  $('#jump-earliest-button').disabled = true;
+  window.setTimeout(() => {
+    if (token !== conversationLoadState.requestToken) return;
+    conversationLoadState.loadedCount = loadAll ? source.length : Math.min(source.length, conversationLoadState.loadedCount + MESSAGE_BATCH_SIZE);
+    conversationLoadState.isLoading = false;
+    renderConversation(loadAll
+      ? { scrollToTop: true }
+      : { preserveViewport: true, previousScrollHeight, previousScrollTop });
+    toast(loadAll ? '已切换至所选时间范围内的最早消息' : `已加载更早的 ${Math.min(MESSAGE_BATCH_SIZE, conversationLoadState.loadedCount)} 条消息`);
+  }, loadAll ? 850 : 520);
+}
+
+function scrollToLatest() {
+  const messagesNode = $('#messages');
+  messagesNode.scrollTo({ top: messagesNode.scrollHeight, behavior: 'smooth' });
+  window.setTimeout(updateLatestButton, 280);
 }
 
 function selectContact(id) {
@@ -287,7 +392,279 @@ function refreshContactView() {
   renderConversation();
 }
 
+function getCustomerTagLabels(customer) {
+  return (customerTagAssignments[customer.id] || []).map((key) => {
+    const separator = key.indexOf('::');
+    return { key, tag: key.slice(separator + 2) };
+  });
+}
+
+function getExportEmployee() {
+  return accounts.find((account) => account.id === $('#export-employee').value) || selectedAccount;
+}
+
+function updateExportTaskName() {
+  const employee = getExportEmployee();
+  const start = $('#export-start-date').value;
+  const end = $('#export-end-date').value;
+  $('#export-task-name').value = `${employee.name}_${start}至${end}`;
+}
+
+function updateExportScopeDisplay() {
+  const specified = document.querySelector('input[name="export-scope"]:checked')?.value === 'specified';
+  $('#specified-customer-action').hidden = !specified;
+  $('#selected-customer-summary').textContent = exportSelectedCustomerIds.size
+    ? `已选择 ${exportSelectedCustomerIds.size} 位客户`
+    : '暂未选择客户';
+}
+
+function openExportDialog() {
+  $('#export-employee').innerHTML = accounts.map((account) => `<option value="${escapeHtml(account.id)}" ${account.id === selectedAccount.id ? 'selected' : ''}>${escapeHtml(account.name)}（${escapeHtml(account.id)}）</option>`).join('');
+  $('#export-start-date').value = $('#start-date').value;
+  $('#export-end-date').value = $('#end-date').value;
+  document.querySelector('input[name="export-format"][value="single"]').checked = true;
+  document.querySelector('input[name="export-scope"][value="all"]').checked = true;
+  exportSelectedCustomerIds = new Set();
+  exportCustomerFilterTags = new Set();
+  document.querySelectorAll('.export-choice-card').forEach((card) => card.classList.toggle('active', card.querySelector('input').checked));
+  updateExportTaskName();
+  updateExportScopeDisplay();
+  $('#export-overlay').hidden = false;
+  window.requestAnimationFrame(() => $('#export-employee').focus());
+}
+
+function closeExportDialog() {
+  $('#export-overlay').hidden = true;
+  $('#open-export-dialog').focus();
+}
+
+function renderExportTagTrigger() {
+  const selected = getSelectedTagDetails(exportCustomerFilterTags);
+  const visible = selected.slice(0, 2);
+  $('#export-tag-trigger-content').innerHTML = selected.length
+    ? `${visible.map((item) => `<span class="tag-trigger-chip">${escapeHtml(item.tag)}</span>`).join('')}${selected.length > visible.length ? `<span class="tag-trigger-more">+${selected.length - visible.length}</span>` : ''}`
+    : '<span class="tag-trigger-placeholder">请选择标签</span>';
+  const tooltip = $('#export-tag-trigger-tooltip');
+  tooltip.textContent = selected.map((item) => `${item.group}：${item.tag}`).join('；');
+  tooltip.hidden = selected.length <= visible.length;
+  $('#export-tag-filter-trigger').setAttribute('aria-label', selected.length ? `已选择 ${selected.length} 个客户标签` : '选择客户标签');
+}
+
+function renderExportSelectedTagSummary() {
+  const selected = getSelectedTagDetails(draftExportCustomerFilterTags);
+  $('#export-tag-selected-list').innerHTML = selected.length
+    ? selected.map((item) => `<span class="selected-tag-chip">${escapeHtml(item.tag)}<button data-remove-export-tag="${escapeHtml(item.key)}" aria-label="移除${escapeHtml(item.tag)}">×</button></span>`).join('')
+    : '<span class="tag-selected-empty">暂未选择标签</span>';
+}
+
+function renderExportTagGroups() {
+  const query = $('#export-tag-group-search').value.trim().toLowerCase();
+  const matching = customerTagGroups.filter((group) => group.name.toLowerCase().includes(query));
+  $('#export-tag-group-list').innerHTML = matching.map((group) => {
+    const selectedCount = group.tags.filter((tag) => draftExportCustomerFilterTags.has(tagKey(group.id, tag))).length;
+    return `<button class="tag-group-button ${group.id === activeExportTagGroupId ? 'active' : ''}" data-export-tag-group="${group.id}"><span>${escapeHtml(group.name)}</span><span class="tag-group-count">${selectedCount}/${group.tags.length}</span></button>`;
+  }).join('') || '<div class="empty-state">没有匹配的标签组</div>';
+}
+
+function renderExportTagOptions() {
+  const group = customerTagGroups.find((item) => item.id === activeExportTagGroupId) || customerTagGroups[0];
+  const query = $('#export-tag-name-search').value.trim().toLowerCase();
+  const tags = group.tags.filter((tag) => tag.toLowerCase().includes(query));
+  const selectedCount = group.tags.filter((tag) => draftExportCustomerFilterTags.has(tagKey(group.id, tag))).length;
+  $('#export-tag-option-title').textContent = group.name;
+  $('#export-tag-select-all').textContent = selectedCount === group.tags.length ? '取消全选' : '全选';
+  $('#export-tag-option-list').innerHTML = tags.map((tag) => {
+    const key = tagKey(group.id, tag);
+    const selected = draftExportCustomerFilterTags.has(key);
+    return `<button class="tag-option-button ${selected ? 'selected' : ''}" data-export-tag-key="${escapeHtml(key)}" aria-pressed="${selected}"><span class="tag-checkbox">✓</span><span>${escapeHtml(tag)}</span></button>`;
+  }).join('') || '<div class="empty-state">没有匹配的标签</div>';
+}
+
+function renderExportTagDialog() {
+  renderExportSelectedTagSummary();
+  renderExportTagGroups();
+  renderExportTagOptions();
+}
+
+function openExportTagDialog() {
+  draftExportCustomerFilterTags = new Set(exportCustomerFilterTags);
+  activeExportTagGroupId = customerTagGroups[0].id;
+  $('#export-tag-group-search').value = '';
+  $('#export-tag-name-search').value = '';
+  renderExportTagDialog();
+  $('#export-tag-filter-overlay').hidden = false;
+  window.requestAnimationFrame(() => $('#export-tag-group-search').focus());
+}
+
+function closeExportTagDialog(commit = false) {
+  if (commit) {
+    exportCustomerFilterTags = new Set(draftExportCustomerFilterTags);
+    renderExportTagTrigger();
+    renderExportCustomerList();
+  }
+  $('#export-tag-filter-overlay').hidden = true;
+  $('#export-tag-filter-trigger').focus();
+}
+
+function matchesExportCustomerTags(customer) {
+  if (!exportCustomerFilterTags.size) return true;
+  const assigned = customerTagAssignments[customer.id] || [];
+  return customerTagGroups.every((group) => {
+    const selectedInGroup = group.tags.map((tag) => tagKey(group.id, tag)).filter((key) => exportCustomerFilterTags.has(key));
+    return !selectedInGroup.length || selectedInGroup.some((key) => assigned.includes(key));
+  });
+}
+
+function getFilteredExportCustomers() {
+  const query = $('#export-customer-search').value.trim().toLowerCase();
+  return customers.filter((customer) => {
+    const matchesText = `${customer.name}${customer.id}`.toLowerCase().includes(query);
+    return matchesText && matchesExportCustomerTags(customer);
+  });
+}
+
+function renderExportCustomerList() {
+  const result = getFilteredExportCustomers();
+  const employee = getExportEmployee();
+  $('#export-customer-list').innerHTML = result.map((customer) => {
+    const index = customers.findIndex((item) => item.id === customer.id);
+    const tags = getCustomerTagLabels(customer);
+    const addedBy = accounts[(index + 4) % accounts.length];
+    const day = String(5 + index).padStart(2, '0');
+    const minute = String((index * 7) % 60).padStart(2, '0');
+    return `<tr>
+      <td class="check-column"><input type="checkbox" class="export-customer-check" data-customer-id="${escapeHtml(customer.id)}" ${draftExportCustomerIds.has(customer.id) ? 'checked' : ''} aria-label="选择${escapeHtml(customer.name)}" /></td>
+      <td><div class="export-customer-cell">${avatarMarkup(customer)}<span class="export-customer-name"><strong>${escapeHtml(customer.name)}</strong><span class="wechat-mark">@微信</span></span></div></td>
+      <td class="customer-tag-cell">${tags.length ? `<span class="customer-table-tag">${escapeHtml(tags[0].tag)}</span>${tags.length > 1 ? `<span class="customer-tag-more">+${tags.length - 1}</span>` : ''}` : '<span class="muted-cell">暂无标签</span>'}</td>
+      <td class="added-by-cell">${escapeHtml(addedBy.name)}<br><span>${escapeHtml(addedBy.id)}</span></td>
+      <td class="added-at-cell">2026-10-${day} 19:${minute}:30</td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="5"><div class="empty-state">没有找到匹配客户</div></td></tr>';
+  const allVisibleSelected = result.length > 0 && result.every((customer) => draftExportCustomerIds.has(customer.id));
+  const someVisibleSelected = result.some((customer) => draftExportCustomerIds.has(customer.id));
+  $('#export-select-all').checked = allVisibleSelected;
+  $('#export-select-all').indeterminate = someVisibleSelected && !allVisibleSelected;
+  $('#selector-result-count').textContent = `共 ${result.length} 位客户`;
+  $('#selector-selected-count').textContent = `已选择 ${draftExportCustomerIds.size} 位客户`;
+}
+
+function openCustomerSelector() {
+  draftExportCustomerIds = new Set(exportSelectedCustomerIds);
+  $('#export-customer-search').value = '';
+  renderExportTagTrigger();
+  renderExportCustomerList();
+  $('#customer-selector-overlay').hidden = false;
+  window.requestAnimationFrame(() => $('#export-customer-search').focus());
+}
+
+function closeCustomerSelector(commit = false) {
+  if (commit) exportSelectedCustomerIds = new Set(draftExportCustomerIds);
+  $('#customer-selector-overlay').hidden = true;
+  updateExportScopeDisplay();
+  $('#open-customer-selector').focus();
+}
+
 document.addEventListener('click', (event) => {
+  if (event.target.closest('#export-customer-info')) {
+    toast('导出客户信息的字段与范围待确认');
+    return;
+  }
+  if (event.target.closest('#open-export-dialog')) {
+    openExportDialog();
+    return;
+  }
+  if (event.target.closest('#export-dialog-close') || event.target.closest('#export-dialog-cancel')) {
+    closeExportDialog();
+    return;
+  }
+  if (event.target === $('#export-overlay')) {
+    closeExportDialog();
+    return;
+  }
+  if (event.target.closest('#open-customer-selector')) {
+    openCustomerSelector();
+    return;
+  }
+  if (event.target.closest('#customer-selector-close') || event.target.closest('#customer-selector-cancel')) {
+    closeCustomerSelector(false);
+    return;
+  }
+  if (event.target.closest('#customer-selector-confirm')) {
+    closeCustomerSelector(true);
+    return;
+  }
+  if (event.target === $('#customer-selector-overlay')) {
+    closeCustomerSelector(false);
+    return;
+  }
+  if (event.target.closest('#export-tag-filter-trigger')) {
+    openExportTagDialog();
+    return;
+  }
+  if (event.target.closest('#export-tag-dialog-close') || event.target.closest('#export-tag-dialog-cancel')) {
+    closeExportTagDialog(false);
+    return;
+  }
+  if (event.target.closest('#export-tag-dialog-confirm')) {
+    closeExportTagDialog(true);
+    return;
+  }
+  if (event.target === $('#export-tag-filter-overlay')) {
+    closeExportTagDialog(false);
+    return;
+  }
+  const exportTagGroupButton = event.target.closest('[data-export-tag-group]');
+  if (exportTagGroupButton) {
+    activeExportTagGroupId = exportTagGroupButton.dataset.exportTagGroup;
+    $('#export-tag-name-search').value = '';
+    renderExportTagGroups();
+    renderExportTagOptions();
+    return;
+  }
+  if (event.target.closest('#export-tag-select-all')) {
+    const group = customerTagGroups.find((item) => item.id === activeExportTagGroupId) || customerTagGroups[0];
+    const allSelected = group.tags.every((tag) => draftExportCustomerFilterTags.has(tagKey(group.id, tag)));
+    group.tags.forEach((tag) => {
+      const key = tagKey(group.id, tag);
+      if (allSelected) draftExportCustomerFilterTags.delete(key); else draftExportCustomerFilterTags.add(key);
+    });
+    renderExportTagDialog();
+    return;
+  }
+  const exportTagOptionButton = event.target.closest('[data-export-tag-key]');
+  if (exportTagOptionButton) {
+    const key = exportTagOptionButton.dataset.exportTagKey;
+    if (draftExportCustomerFilterTags.has(key)) draftExportCustomerFilterTags.delete(key); else draftExportCustomerFilterTags.add(key);
+    renderExportTagDialog();
+    return;
+  }
+  const removeExportTagButton = event.target.closest('[data-remove-export-tag]');
+  if (removeExportTagButton) {
+    draftExportCustomerFilterTags.delete(removeExportTagButton.dataset.removeExportTag);
+    renderExportTagDialog();
+    return;
+  }
+  if (event.target.closest('#export-dialog-submit')) {
+    const scope = document.querySelector('input[name="export-scope"]:checked')?.value;
+    if (!$('#export-task-name').value.trim()) {
+      toast('请填写导出任务名称');
+      $('#export-task-name').focus();
+      return;
+    }
+    if ($('#export-start-date').value > $('#export-end-date').value) {
+      toast('导出开始日期不能晚于结束日期');
+      return;
+    }
+    if (scope === 'specified' && !exportSelectedCustomerIds.size) {
+      toast('请先选择需要导出的客户');
+      openCustomerSelector();
+      return;
+    }
+    const taskName = $('#export-task-name').value.trim();
+    closeExportDialog();
+    toast(`已创建导出任务：${taskName}`);
+    return;
+  }
   if (event.target.closest('#tag-filter-trigger')) {
     openTagDialog();
     return;
@@ -345,6 +722,9 @@ document.addEventListener('click', (event) => {
     if (rangeButton.dataset.range === 'week') start.setDate(start.getDate() - 6);
     $('#start-date').value = formatLocalDate(start);
     $('#end-date').value = formatLocalDate(today);
+    conversationLoadState.contactId = null;
+    conversationLoadState.requestToken += 1;
+    renderConversation();
     toast(`已切换至${rangeButton.textContent}`);
     return;
   }
@@ -386,8 +766,9 @@ document.addEventListener('click', (event) => {
   if (customerButton) { selectContact(customerButton.dataset.contact); return; }
   const accountButton = event.target.closest('.account-item');
   if (accountButton) {
+    selectedAccount = accounts.find((account) => account.id === accountButton.dataset.accountId) || selectedAccount;
     document.querySelectorAll('.account-item').forEach((button) => button.classList.toggle('active', button === accountButton));
-    toast(`已切换账号：${accountButton.dataset.account}`);
+    toast(`已切换账号：${selectedAccount.name}`);
     return;
   }
   if (event.target.closest('#refresh-button')) {
@@ -395,6 +776,14 @@ document.addEventListener('click', (event) => {
     node.classList.add('is-loading');
     $('#refresh-state').textContent = '正在刷新…';
     window.setTimeout(() => { node.classList.remove('is-loading'); $('#refresh-state').textContent = '已是最新'; toast('数据刷新完成'); }, 650);
+    return;
+  }
+  if (event.target.closest('#jump-earliest-button')) {
+    loadOlderMessages(true);
+    return;
+  }
+  if (event.target.closest('#jump-latest-button')) {
+    scrollToLatest();
     return;
   }
   if (event.target.closest('#favorite-button')) {
@@ -408,9 +797,46 @@ document.addEventListener('click', (event) => {
 $('#account-search').addEventListener('input', renderAccounts);
 $('#customer-search').addEventListener('input', () => { customerPage = 1; renderCustomers(); renderConversation(); });
 $('#message-search').addEventListener('input', renderConversation);
+$('#messages').addEventListener('scroll', () => {
+  updateLatestButton();
+  if (!conversationLoadState.isAdjustingScroll && $('#messages').scrollTop <= 12) loadOlderMessages(false);
+});
+['start-date', 'end-date'].forEach((id) => $(`#${id}`).addEventListener('change', () => {
+  conversationLoadState.contactId = null;
+  conversationLoadState.requestToken += 1;
+  renderConversation();
+}));
 $('#tag-group-search').addEventListener('input', renderTagGroups);
 $('#tag-name-search').addEventListener('input', renderTagOptions);
-document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !$('#tag-filter-overlay').hidden) closeTagDialog(false); });
+$('#export-customer-search').addEventListener('input', renderExportCustomerList);
+$('#export-tag-group-search').addEventListener('input', renderExportTagGroups);
+$('#export-tag-name-search').addEventListener('input', renderExportTagOptions);
+$('#export-employee').addEventListener('change', updateExportTaskName);
+['export-start-date', 'export-end-date'].forEach((id) => $(`#${id}`).addEventListener('change', updateExportTaskName));
+document.addEventListener('change', (event) => {
+  if (event.target.matches('input[name="export-format"]')) {
+    document.querySelectorAll('.export-choice-card').forEach((card) => card.classList.toggle('active', card.querySelector('input').checked));
+  }
+  if (event.target.matches('input[name="export-scope"]')) updateExportScopeDisplay();
+  if (event.target.matches('.export-customer-check')) {
+    const id = event.target.dataset.customerId;
+    if (event.target.checked) draftExportCustomerIds.add(id); else draftExportCustomerIds.delete(id);
+    renderExportCustomerList();
+  }
+  if (event.target.matches('#export-select-all')) {
+    getFilteredExportCustomers().forEach((customer) => {
+      if (event.target.checked) draftExportCustomerIds.add(customer.id); else draftExportCustomerIds.delete(customer.id);
+    });
+    renderExportCustomerList();
+  }
+});
+document.addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape') return;
+  if (!$('#export-tag-filter-overlay').hidden) closeExportTagDialog(false);
+  else if (!$('#customer-selector-overlay').hidden) closeCustomerSelector(false);
+  else if (!$('#export-overlay').hidden) closeExportDialog();
+  else if (!$('#tag-filter-overlay').hidden) closeTagDialog(false);
+});
 $('#account-prev').addEventListener('click', () => { if (accountPage > 1) { accountPage -= 1; renderAccounts(); toast(`已切换至第 ${accountPage} 页账号`); } });
 $('#account-next').addEventListener('click', () => { if (accountPage < accountPageTotal) { accountPage += 1; renderAccounts(); toast(`已切换至第 ${accountPage} 页账号`); } });
 $('#customer-prev').addEventListener('click', () => { if (customerPage > 1) { customerPage -= 1; renderCustomers(); toast(`已切换至第 ${customerPage} 页${contactKind === 'customer' ? '客户' : '群聊'}`); } });
