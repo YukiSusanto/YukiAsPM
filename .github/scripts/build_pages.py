@@ -25,6 +25,12 @@ def build(sources, output):
         source = sources / 'sop-prototype' / label / '原型' / filename
         if not source.is_file():
             raise FileNotFoundError(source)
+    quality_source = sources / 'conversation-quality-prototype'
+    quality_files = ('index.html', 'styles.css', 'app.js')
+    for filename in quality_files:
+        source = quality_source / filename
+        if not source.is_file():
+            raise FileNotFoundError(source)
     output.mkdir(parents=True, exist_ok=True)
     for branch, label, filename, alternate in prototypes:
         folder = output / branch
@@ -40,6 +46,10 @@ def build(sources, output):
         # Keep previously shared file URLs working.
         for alias in (filename, alternate):
             (output / alias).write_text(redirect(f'./{branch}/'), encoding='utf-8')
+    quality_output = output / 'conversation-quality-prototype'
+    quality_output.mkdir(parents=True, exist_ok=True)
+    for filename in quality_files:
+        shutil.copyfile(quality_source / filename, quality_output / filename)
     legacy = output / 'sop-prototype'
     legacy.mkdir(parents=True, exist_ok=True)
     for filename in ('index.html', 'optimized-sop.html'):
@@ -55,12 +65,13 @@ HOME = '''<!doctype html>
 <title>YukiAsPM · 产品原型</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#f6f8fc;color:#25324a;font-family:system-ui,-apple-system,"Microsoft YaHei",sans-serif}
-main{max-width:980px;margin:100px auto;padding:0 28px}.brand{font-size:14px;color:#536dca;font-weight:600;letter-spacing:.05em}h1{font-size:38px;letter-spacing:-.04em;margin:16px 0}p{color:#6b778c;line-height:1.8}.cards{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:38px}
+main{max-width:1200px;margin:100px auto;padding:0 28px}.brand{font-size:14px;color:#536dca;font-weight:600;letter-spacing:.05em}h1{font-size:38px;letter-spacing:-.04em;margin:16px 0}p{color:#6b778c;line-height:1.8}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:38px}
 a.card{display:flex;flex-direction:column;align-items:flex-start;min-height:240px;padding:30px;border:1px solid #e1e7f0;border-radius:16px;background:#fff;color:inherit;text-decoration:none;transition:transform .15s,border-color .15s}a.card:hover{transform:translateY(-3px);border-color:#9babdf}a:focus-visible{outline:3px solid #536dca;outline-offset:4px}.badge{font-size:12px;background:#edf2ff;color:#536dca;border-radius:6px;padding:5px 9px}h2{font-size:23px;margin:18px 0 8px}.card p{font-size:14px;margin:0 0 24px}.open{margin-top:auto;color:#4a65c0;font-size:14px;font-weight:600}footer{margin-top:30px;font-size:12px;color:#8b95a8}
-@media(max-width:640px){main{margin:55px auto;padding:0 20px}.cards{grid-template-columns:1fr}h1{font-size:30px}a.card{min-height:210px;padding:24px}}
+@media(max-width:900px){.cards{grid-template-columns:1fr 1fr}}@media(max-width:640px){main{margin:55px auto;padding:0 20px}.cards{grid-template-columns:1fr}h1{font-size:30px}a.card{min-height:210px;padding:24px}}
 </style></head><body><main><span class="brand">YukiAsPM</span><h1>产品原型</h1><p>选择一个版本，查看并体验完整交互。</p>
 <div class="cards"><a class="card" href="./sop-prototype/固定SOP/原型/"><span class="badge">固定 SOP</span><h2>固定 SOP 版</h2><p>固定消息规则、时间节点配置与素材引用。</p><span class="open">打开原型 →</span></a>
-<a class="card" href="./sop-prototype/社群SOP/原型/"><span class="badge">社群 SOP</span><h2>社群 SOP 版</h2><p>社群消息、自动建群、群公告与群聊管理。</p><span class="open">打开原型 →</span></a></div><footer>原型中的业务数据为演示数据。</footer></main></body></html>'''
+<a class="card" href="./sop-prototype/社群SOP/原型/"><span class="badge">社群 SOP</span><h2>社群 SOP 版</h2><p>社群消息、自动建群、群公告与群聊管理。</p><span class="open">打开原型 →</span></a>
+<a class="card" href="./conversation-quality-prototype/"><span class="badge">AI 销售</span><h2>AI 会话质检</h2><p>按销售企微账号和客户查看只读会话，支持日期、搜索、筛选与分页。</p><span class="open">打开原型 →</span></a></div><footer>原型中的业务数据为演示数据。</footer></main></body></html>'''
 
 
 if __name__ == '__main__':
