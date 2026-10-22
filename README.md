@@ -6,7 +6,7 @@
 |---|---|---|---|
 | 固定 SOP | [原型](sop-prototype/固定SOP/原型/) | [需求文档](sop-prototype/固定SOP/需求文档/固定SOP需求文档.md) | [打开固定版](https://yukisusanto.github.io/YukiAsPM/stubborn-sop/) |
 | 社群 SOP | [原型](sop-prototype/社群SOP/原型/) | [需求文档](sop-prototype/社群SOP/需求文档/销转期建群与群聊sop需求.md) | [打开社群版](https://yukisusanto.github.io/YukiAsPM/social-chat-sop/) |
-| AI 会话质检 | [原型](conversation-quality-prototype/) | 待补充 | [打开会话质检](https://yukisusanto.github.io/YukiAsPM/conversation-quality-prototype/) |
+| AI 会话质检 | [原型](conversation-quality-prototype/) | [需求文档](conversation-quality-prototype/需求文档/AI会话质检需求文档.md) | [打开会话质检](https://yukisusanto.github.io/YukiAsPM/conversation-quality-prototype/) |
 
 ```text
 sop-prototype/
@@ -20,7 +20,8 @@ conversation-quality-prototype/
 ├── index.html       # 会话质检原型入口
 ├── styles.css       # 页面样式
 ├── app.js           # 演示数据与交互
-└── server.cjs       # 本地预览服务
+├── server.cjs       # 本地预览服务
+└── 需求文档/        # Markdown 需求文档与基线原型图
 ```
 
 ## 构建与发布
