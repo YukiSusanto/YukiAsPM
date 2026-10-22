@@ -42,6 +42,33 @@ const groups = [
   { name: '暑期英语启蒙训练营', preview: '本期训练营已结束', time: '3 天前', initial: '营', tone: 'gray', status: 'dissolved', id: 'G-2005' },
 ];
 
+const customerTagGroups = [
+  { id: 'trial-period', name: '体验课-用户标签', tags: ['140期', '139期', '138期', '137期', '136期', '135期', '134期', '133期'] },
+  { id: 'group-status', name: '芝麻微客-在群状态', tags: ['【已退群】', '【未入群】', '【在群中】'] },
+  { id: 'mantis-test', name: '螳螂测试-勿动', tags: ['螳螂测试 128 期-0906', '螳螂测试 128 期-0905', '螳螂测试 128 期-0904', '螳螂测试 128 期-0903'] },
+  { id: 'ai-test', name: 'ai 测试-勿动', tags: ['ai135期-1025', 'ai135期-1024', 'ai135期-1023', 'ai135期-1022', 'ai135期-1021', 'ai135期-1020', 'ai135期-1019', 'ai134期-1018'] },
+  { id: 'support-ai', name: '支援AI标签2', tags: ['测试线135期图书-1025', '测试线135期图书-1024', '测试线135期图书-1023', '测试线135期图书-1022', '测试线134期D3到课-1022', '测试线134期D2到课-1021', '测试线134期D1到课-1020'] },
+  { id: 'attendance', name: '销转-大课营销到课标-CD区', tags: ['螳螂127期-图书线D3到课30min', '螳螂127期-图书线D2到课30min', '螳螂127期-图书线D1到课30min', '螳螂127期-图书线D3已点链接', '螳螂127期-图书线D2已点链接', '螳螂127期-图书线D1已点链接', '螳螂127期-图书线D3已到课', '螳螂127期-图书线D2已到课', '螳螂127期-图书线D1已到课'] },
+];
+
+const customerTagAssignments = {
+  'C-1001': ['trial-period::140期', 'group-status::【在群中】', 'ai-test::ai135期-1025', 'attendance::螳螂127期-图书线D1已到课'],
+  'C-1002': ['trial-period::140期', 'group-status::【未入群】', 'support-ai::测试线135期图书-1025'],
+  'C-1003': ['trial-period::139期', 'group-status::【在群中】', 'ai-test::ai135期-1024'],
+  'C-1004': ['trial-period::139期', 'group-status::【已退群】', 'attendance::螳螂127期-图书线D2已点链接'],
+  'C-1005': ['trial-period::138期', 'group-status::【在群中】', 'support-ai::测试线135期图书-1024'],
+  'C-1006': ['trial-period::138期', 'group-status::【已退群】', 'mantis-test::螳螂测试 128 期-0906'],
+  'C-1007': ['trial-period::137期', 'group-status::【未入群】', 'ai-test::ai135期-1023'],
+  'C-1008': ['trial-period::137期', 'group-status::【在群中】', 'attendance::螳螂127期-图书线D3到课30min'],
+  'C-1009': ['trial-period::136期', 'group-status::【在群中】', 'support-ai::测试线135期图书-1023'],
+  'C-1010': ['trial-period::136期', 'group-status::【未入群】', 'mantis-test::螳螂测试 128 期-0905'],
+  'C-1011': ['trial-period::135期', 'group-status::【已退群】', 'ai-test::ai135期-1022'],
+  'C-1012': ['trial-period::135期', 'group-status::【在群中】', 'support-ai::测试线134期D3到课-1022'],
+  'C-1013': ['trial-period::134期', 'group-status::【未入群】', 'attendance::螳螂127期-图书线D2到课30min'],
+  'C-1014': ['trial-period::134期', 'group-status::【在群中】', 'ai-test::ai135期-1021'],
+  'C-1015': ['trial-period::133期', 'group-status::【已退群】', 'support-ai::测试线134期D2到课-1021'],
+};
+
 const conversations = {
   '墨言（邮政）': [
     { role: 'customer', label: '客户', time: '2026/10/21 18:06', text: '我已经添加了你，现在我们可以开始聊天了。' },
@@ -71,6 +98,9 @@ let contactKind = 'customer';
 let contactStatus = 'all';
 let customerAge = 'new';
 let selectedContact = customers[0];
+let selectedCustomerTags = new Set();
+let draftCustomerTags = new Set();
+let activeTagGroupId = customerTagGroups[0].id;
 let accountPage = 1;
 let customerPage = 1;
 const accountPageTotal = 6;
@@ -80,6 +110,84 @@ const $ = (selector) => document.querySelector(selector);
 const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 const toast = (message) => { const node = $('#toast'); node.textContent = message; node.classList.add('show'); window.clearTimeout(toast.timer); toast.timer = window.setTimeout(() => node.classList.remove('show'), 1800); };
 const formatLocalDate = (date) => [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-');
+const tagKey = (groupId, tag) => `${groupId}::${tag}`;
+
+function getSelectedTagDetails(selection) {
+  return customerTagGroups.flatMap((group) => group.tags
+    .filter((tag) => selection.has(tagKey(group.id, tag)))
+    .map((tag) => ({ key: tagKey(group.id, tag), group: group.name, tag })));
+}
+
+function renderTagTrigger() {
+  const selected = getSelectedTagDetails(selectedCustomerTags);
+  const visible = selected.slice(0, 2);
+  $('#tag-trigger-content').innerHTML = selected.length
+    ? `${visible.map((item) => `<span class="tag-trigger-chip">${escapeHtml(item.tag)}</span>`).join('')}${selected.length > visible.length ? `<span class="tag-trigger-more">+${selected.length - visible.length}</span>` : ''}`
+    : '<span class="tag-trigger-placeholder">请选择标签</span>';
+  const tooltip = $('#tag-trigger-tooltip');
+  tooltip.textContent = selected.map((item) => `${item.group}：${item.tag}`).join('；');
+  tooltip.hidden = selected.length <= visible.length;
+  $('#tag-filter-trigger').setAttribute('aria-label', selected.length ? `已选择 ${selected.length} 个客户标签` : '选择客户标签');
+}
+
+function renderSelectedTagSummary() {
+  const selected = getSelectedTagDetails(draftCustomerTags);
+  $('#tag-selected-list').innerHTML = selected.length
+    ? selected.map((item) => `<span class="selected-tag-chip">${escapeHtml(item.tag)}<button data-remove-tag="${escapeHtml(item.key)}" aria-label="移除${escapeHtml(item.tag)}">×</button></span>`).join('')
+    : '<span class="tag-selected-empty">暂未选择标签</span>';
+}
+
+function renderTagGroups() {
+  const query = $('#tag-group-search').value.trim().toLowerCase();
+  const matching = customerTagGroups.filter((group) => group.name.toLowerCase().includes(query));
+  $('#tag-group-list').innerHTML = matching.map((group) => {
+    const selectedCount = group.tags.filter((tag) => draftCustomerTags.has(tagKey(group.id, tag))).length;
+    return `<button class="tag-group-button ${group.id === activeTagGroupId ? 'active' : ''}" data-tag-group="${group.id}"><span>${escapeHtml(group.name)}</span><span class="tag-group-count">${selectedCount}/${group.tags.length}</span></button>`;
+  }).join('') || '<div class="empty-state">没有匹配的标签组</div>';
+}
+
+function renderTagOptions() {
+  const group = customerTagGroups.find((item) => item.id === activeTagGroupId) || customerTagGroups[0];
+  const query = $('#tag-name-search').value.trim().toLowerCase();
+  const tags = group.tags.filter((tag) => tag.toLowerCase().includes(query));
+  const selectedCount = group.tags.filter((tag) => draftCustomerTags.has(tagKey(group.id, tag))).length;
+  $('#tag-option-title').textContent = group.name;
+  $('#tag-select-all').textContent = selectedCount === group.tags.length ? '取消全选' : '全选';
+  $('#tag-option-list').innerHTML = tags.map((tag) => {
+    const key = tagKey(group.id, tag);
+    const selected = draftCustomerTags.has(key);
+    return `<button class="tag-option-button ${selected ? 'selected' : ''}" data-tag-key="${escapeHtml(key)}" aria-pressed="${selected}"><span class="tag-checkbox">✓</span><span>${escapeHtml(tag)}</span></button>`;
+  }).join('') || '<div class="empty-state">没有匹配的标签</div>';
+}
+
+function renderTagDialog() {
+  renderSelectedTagSummary();
+  renderTagGroups();
+  renderTagOptions();
+}
+
+function openTagDialog() {
+  draftCustomerTags = new Set(selectedCustomerTags);
+  activeTagGroupId = customerTagGroups[0].id;
+  $('#tag-group-search').value = '';
+  $('#tag-name-search').value = '';
+  renderTagDialog();
+  $('#tag-filter-overlay').hidden = false;
+  window.requestAnimationFrame(() => $('#tag-group-search').focus());
+}
+
+function closeTagDialog(commit = false) {
+  if (commit) {
+    selectedCustomerTags = new Set(draftCustomerTags);
+    renderTagTrigger();
+    customerPage = 1;
+    renderCustomers();
+    renderConversation();
+    toast(selectedCustomerTags.size ? `已选择 ${selectedCustomerTags.size} 个客户标签` : '已清空客户标签');
+  }
+  $('#tag-filter-overlay').hidden = true;
+  $('#tag-filter-trigger').focus();
+}
 
 function avatarMarkup(item, large = false) {
   return `<span class="avatar ${item.tone || 'blue'} ${large ? 'avatar-large' : ''}">${escapeHtml(item.initial || item.name?.slice(0, 1) || '客')}</span>`;
@@ -94,6 +202,15 @@ function renderAccounts() {
   $('#account-next').disabled = accountPage >= accountPageTotal;
 }
 
+function matchesSelectedCustomerTags(customer) {
+  if (!selectedCustomerTags.size) return true;
+  const assigned = customerTagAssignments[customer.id] || [];
+  return customerTagGroups.every((group) => {
+    const selectedInGroup = group.tags.map((tag) => tagKey(group.id, tag)).filter((key) => selectedCustomerTags.has(key));
+    return !selectedInGroup.length || selectedInGroup.some((key) => assigned.includes(key));
+  });
+}
+
 function getFilteredContacts() {
   const query = $('#customer-search').value.trim().toLowerCase();
   const source = contactKind === 'customer' ? customers : groups;
@@ -101,13 +218,15 @@ function getFilteredContacts() {
     const matchesKindFilter = contactKind === 'customer'
       ? item.age === customerAge && (contactStatus === 'all' || item.status === contactStatus)
       : contactStatus === 'all' || item.status === contactStatus;
-    return matchesKindFilter && `${item.name}${item.preview}${item.id}`.toLowerCase().includes(query);
+    const matchesTags = contactKind !== 'customer' || matchesSelectedCustomerTags(item);
+    return matchesKindFilter && matchesTags && `${item.name}${item.preview}${item.id}`.toLowerCase().includes(query);
   });
 }
 
 function renderContactControls() {
   const isCustomer = contactKind === 'customer';
   $('#age-filter').classList.toggle('is-hidden', !isCustomer);
+  $('#tag-filter').classList.toggle('is-hidden', !isCustomer);
   $('#contact-count').textContent = isCustomer ? '客户数：67' : '群聊数：12';
   $('#customer-search').placeholder = isCustomer ? '搜索客户名称或ID' : '搜索群聊名称或ID';
   document.querySelectorAll('.contact-kind-tab').forEach((button) => {
@@ -169,6 +288,53 @@ function refreshContactView() {
 }
 
 document.addEventListener('click', (event) => {
+  if (event.target.closest('#tag-filter-trigger')) {
+    openTagDialog();
+    return;
+  }
+  if (event.target.closest('#tag-dialog-close') || event.target.closest('#tag-dialog-cancel')) {
+    closeTagDialog(false);
+    return;
+  }
+  if (event.target.closest('#tag-dialog-confirm')) {
+    closeTagDialog(true);
+    return;
+  }
+  if (event.target === $('#tag-filter-overlay')) {
+    closeTagDialog(false);
+    return;
+  }
+  const tagGroupButton = event.target.closest('.tag-group-button');
+  if (tagGroupButton) {
+    activeTagGroupId = tagGroupButton.dataset.tagGroup;
+    $('#tag-name-search').value = '';
+    renderTagGroups();
+    renderTagOptions();
+    return;
+  }
+  if (event.target.closest('#tag-select-all')) {
+    const group = customerTagGroups.find((item) => item.id === activeTagGroupId) || customerTagGroups[0];
+    const allSelected = group.tags.every((tag) => draftCustomerTags.has(tagKey(group.id, tag)));
+    group.tags.forEach((tag) => {
+      const key = tagKey(group.id, tag);
+      if (allSelected) draftCustomerTags.delete(key); else draftCustomerTags.add(key);
+    });
+    renderTagDialog();
+    return;
+  }
+  const tagOptionButton = event.target.closest('.tag-option-button');
+  if (tagOptionButton) {
+    const key = tagOptionButton.dataset.tagKey;
+    if (draftCustomerTags.has(key)) draftCustomerTags.delete(key); else draftCustomerTags.add(key);
+    renderTagDialog();
+    return;
+  }
+  const removeTagButton = event.target.closest('[data-remove-tag]');
+  if (removeTagButton) {
+    draftCustomerTags.delete(removeTagButton.dataset.removeTag);
+    renderTagDialog();
+    return;
+  }
   const rangeButton = event.target.closest('.quick-filter');
   if (rangeButton) {
     document.querySelectorAll('.quick-filter').forEach((button) => button.classList.remove('active'));
@@ -242,10 +408,14 @@ document.addEventListener('click', (event) => {
 $('#account-search').addEventListener('input', renderAccounts);
 $('#customer-search').addEventListener('input', () => { customerPage = 1; renderCustomers(); renderConversation(); });
 $('#message-search').addEventListener('input', renderConversation);
+$('#tag-group-search').addEventListener('input', renderTagGroups);
+$('#tag-name-search').addEventListener('input', renderTagOptions);
+document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !$('#tag-filter-overlay').hidden) closeTagDialog(false); });
 $('#account-prev').addEventListener('click', () => { if (accountPage > 1) { accountPage -= 1; renderAccounts(); toast(`已切换至第 ${accountPage} 页账号`); } });
 $('#account-next').addEventListener('click', () => { if (accountPage < accountPageTotal) { accountPage += 1; renderAccounts(); toast(`已切换至第 ${accountPage} 页账号`); } });
 $('#customer-prev').addEventListener('click', () => { if (customerPage > 1) { customerPage -= 1; renderCustomers(); toast(`已切换至第 ${customerPage} 页${contactKind === 'customer' ? '客户' : '群聊'}`); } });
 $('#customer-next').addEventListener('click', () => { const pageTotal = Math.max(1, Math.ceil(getFilteredContacts().length / customerPageSize)); if (customerPage < pageTotal) { customerPage += 1; renderCustomers(); toast(`已切换至第 ${customerPage} 页${contactKind === 'customer' ? '客户' : '群聊'}`); } });
 
 renderAccounts();
+renderTagTrigger();
 refreshContactView();

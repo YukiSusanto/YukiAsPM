@@ -57,11 +57,25 @@
           <label class="date-input"><input id="end-date" type="date" value="2026-10-21" aria-label="结束日期" /></label>
           <button class="refresh-button" id="refresh-button"><span class="icon icon-refresh"></span><span>刷新</span></button>
           <div class="age-filter" id="age-filter">
+            <span class="age-filter-label">添加时间：</span>
             <div class="age-filter-buttons" role="tablist" aria-label="客户添加时间">
-              <button class="age-filter-button active" role="tab" aria-selected="true" data-age="new">新客户</button>
-              <button class="age-filter-button" role="tab" aria-selected="false" data-age="old">老客户</button>
+              <button class="age-filter-button active" role="tab" aria-selected="true" aria-describedby="new-customer-tooltip" data-age="new">
+                新客户
+                <span class="age-button-tooltip" id="new-customer-tooltip" role="tooltip">添加时间在所选会话时间内为新客户</span>
+              </button>
+              <button class="age-filter-button" role="tab" aria-selected="false" aria-describedby="old-customer-tooltip" data-age="old">
+                老客户
+                <span class="age-button-tooltip" id="old-customer-tooltip" role="tooltip">添加时间在所选会话时间内为老客户</span>
+              </button>
             </div>
-            <span class="age-filter-note">添加时间：新客户｜老客户</span>
+          </div>
+          <div class="tag-filter" id="tag-filter">
+            <span class="tag-filter-label">客户标签：</span>
+            <button class="tag-filter-trigger" id="tag-filter-trigger" aria-haspopup="dialog" aria-controls="tag-filter-overlay">
+              <span class="tag-trigger-content" id="tag-trigger-content"><span class="tag-trigger-placeholder">请选择标签</span></span>
+              <span class="chevron-down" aria-hidden="true"></span>
+              <span class="tag-trigger-tooltip" id="tag-trigger-tooltip" role="tooltip" hidden></span>
+            </button>
           </div>
           <span class="refresh-state" id="refresh-state" role="status">已是最新</span>
         </section>
@@ -128,6 +142,35 @@
           </footer>
         </section>
       </main>
+
+      <div class="tag-filter-overlay" id="tag-filter-overlay" hidden>
+        <section class="tag-filter-dialog" role="dialog" aria-modal="true" aria-labelledby="tag-dialog-title">
+          <header class="tag-dialog-header">
+            <div><h2 id="tag-dialog-title">筛选客户标签</h2><p>选择一个或多个客户标签</p></div>
+            <button class="tag-dialog-close" id="tag-dialog-close" aria-label="关闭标签筛选">×</button>
+          </header>
+          <div class="tag-selected-summary">
+            <span class="tag-summary-label">已选标签</span>
+            <div class="tag-selected-list" id="tag-selected-list"></div>
+          </div>
+          <div class="tag-dialog-body">
+            <aside class="tag-group-pane">
+              <h3>标签组 <small>共 90 个</small></h3>
+              <label class="tag-search"><span class="icon icon-search"></span><input id="tag-group-search" placeholder="搜索标签组" /></label>
+              <div class="tag-group-list" id="tag-group-list"></div>
+            </aside>
+            <section class="tag-option-pane">
+              <div class="tag-option-heading"><h3 id="tag-option-title">标签</h3><button class="tag-select-all" id="tag-select-all">全选</button></div>
+              <label class="tag-search"><span class="icon icon-search"></span><input id="tag-name-search" placeholder="搜索标签" /></label>
+              <div class="tag-option-list" id="tag-option-list"></div>
+            </section>
+          </div>
+          <footer class="tag-dialog-footer">
+            <button class="tag-dialog-button secondary" id="tag-dialog-cancel">取消</button>
+            <button class="tag-dialog-button primary" id="tag-dialog-confirm">确认</button>
+          </footer>
+        </section>
+      </div>
 
       <div class="toast" id="toast" role="status"></div>
     </div>
