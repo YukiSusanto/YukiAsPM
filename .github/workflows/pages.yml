@@ -1,0 +1,41 @@
+name: Publish prototype collection
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out stable collection
+        uses: actions/checkout@v4
+      - name: Build fixed SOP
+        run: node "sop-prototype/固定SOP/原型/build.cjs"
+      - name: Build community SOP
+        run: node "sop-prototype/社群SOP/原型/build.cjs"
+      - name: Assemble published site
+        run: python3 .github/scripts/build_pages.py . _site
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Deploy site
+        id: deployment
+        uses: actions/deploy-pages@v4

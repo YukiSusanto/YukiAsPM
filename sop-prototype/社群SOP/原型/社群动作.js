@@ -1,0 +1,544 @@
+/* 节点分两类：私信节点（固定私信1v1）与群聊节点（社群发送 + 群管理动作）。
+   需求来源：《销转期建群与群聊sop需求》三、私信节点与群聊节点。 */
+const COMMUNITY_ACTION_IDS = ['pm', 'group', 'group_notice', 'create_group', 'dissolve_group'];
+const COMMUNITY_ACTIONS = [
+  { id: 'group', label: '社群消息发送', nodeType: 'group', group: '社群发送' },
+  { id: 'group_notice', label: '群公告', nodeType: 'group', group: '社群发送' },
+  { id: 'create_group', label: '建群', nodeType: 'group', group: '群管理' },
+  { id: 'dissolve_group', label: '解散群聊', nodeType: 'group', group: '群管理' }
+];
+const COMMUNITY_PRIVATE_ACTION = 'pm';
+const COMMUNITY_PRIVATE_LABEL = '私信1v1';
+/* 社群发送类动作：需要选择已有群聊、有话术与素材。 */
+const COMMUNITY_GROUP_SEND = new Set(['group', 'group_notice']);
+/* 群管理动作：无话术与素材。 */
+const COMMUNITY_SILENT = new Set(['create_group', 'dissolve_group']);
+const COMMUNITY_HINTS = {
+  pm: '按添加好友时间与选中/排除标签圈选客户，逐人私信发送。',
+  group: '向所选群聊发送消息，可自主选择是否开启@所有人。',
+  group_notice: '更新所选群聊的群公告，新公告会替换当前群公告。',
+  create_group: '按客户范围与产品线标签自动建群，并把对应客户拉进对应产品群。',
+  dissolve_group: '解散所选群聊，群内成员无法继续发言，操作不可恢复。'
+};
+/* 建群按产品线分别建群：APP类产品线…打卡群，图书类产品线…学习群（见需求二·群聊名称）。 */
+const COMMUNITY_PRODUCT_LINES = [
+  { product: '悦读小达人', category: 'APP类产品线', suffix: '打卡群' },
+  { product: '单词拼读王', category: 'APP类产品线', suffix: '打卡群' },
+  { product: '1500词', category: '图书类产品线', suffix: '学习群' },
+  { product: '100篇', category: '图书类产品线', suffix: '学习群' }
+];
+function communityGroupNameFor(product) {
+  const line = COMMUNITY_PRODUCT_LINES.find(x => x.product === product);
+  return line ? '雪梨老师' + line.product + line.suffix : '';
+}
+/* 建群清单 = 客户范围 ∩ 产品通用渠道标签：命中哪个产品线就给哪个产品线建群；
+   同一客户同时命中多条产品线标签时，会同时进入对应的多个群。 */
+function communityBuildStats(node) {
+  const sales = (periods[activeSop.period] || {}).sales || [];
+  const products = COMMUNITY_PRODUCT_LINES.map(p => p.product);
+  const counts = new Map();
+  let matched = 0, multi = 0, joined = 0;
+  for (let si = 0; si < sales.length; si++) {
+    for (let i = 0; i < 120; i++) {
+      const date = new Date('2026-10-01T08:00:00+08:00');
+      date.setDate(date.getDate() + i % 28);
+      const added = date.toLocaleString('sv-SE', { timeZone: 'Asia/Shanghai' }).slice(0, 10);
+      if ((node.friendStart && added < node.friendStart.slice(0, 10)) || (node.friendEnd && added > node.friendEnd.slice(0, 10))) continue;
+      const tags = [];
+      if (i % 3 === 0) tags.push('承诺到课');
+      if (i % 4 === 0) tags.push('已到课');
+      if (i % 11 === 0) tags.push('勿扰');
+      if (i % 13 === 0) tags.push('非推广员');
+      if (i % 7 === 0) tags.push('已购');
+      if (node.include && node.include.length && !matchesAudienceTags(tags, node.include, node.includeLogic)) continue;
+      if (node.exclude && node.exclude.length && matchesAudienceTags(tags, node.exclude, node.excludeLogic)) continue;
+      /* 演示数据：约 1/9 的客户没有产品通用渠道标签，不会被拉进任何产品群；约 1/5 同时带两条产品线标签 */
+      const key = i + si;
+      const owned = [];
+      if (key % 9 !== 0) {
+        owned.push(products[key % 4]);
+        if (key % 5 === 0) owned.push(products[(key % 4 + 2) % 4]);
+      }
+      if (owned.length) {
+        matched++;
+        joined += owned.length;
+        if (owned.length > 1) multi++;
+        owned.forEach(p => counts.set(p, (counts.get(p) || 0) + 1));
+      }
+    }
+  }
+  const groups = COMMUNITY_PRODUCT_LINES
+    .map(p => ({ product: p.product, category: p.category, name: communityGroupNameFor(p.product), count: counts.get(p.product) || 0 }))
+    .filter(g => g.count > 0);
+  return { groups, matched, multi, joined };
+}
+const COMMUNITY_NOTICE_MAX = 2000;
+const COMMUNITY_GROUP_MEMBER_LIMIT = 500;
+const COMMUNITY_GROUP_ICON = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.1"></circle><path d="M3.2 19.2c0-3.1 2.6-5.2 5.8-5.2s5.8 2.1 5.8 5.2"></path><circle cx="17.2" cy="9.2" r="2.3"></circle><path d="M15.4 14.6c2.6.2 4.6 1.9 4.6 4.6"></path></svg>';
+
+function communityNormalizeAction(value) {
+  const id = String(value == null ? '' : value).trim();
+  if (id === 'group_at_all') return 'group';
+  if (COMMUNITY_ACTION_IDS.includes(id)) return id;
+  if (id === '私信1v1' || id === '私信1V1' || id === '私信' || id === '全量发送') return 'pm';
+  return 'pm';
+}
+/* Preserve the reminder setting when opening configurations saved before the merge. */
+function communityMigrateMessage(node) {
+  if (node.action === 'group_at_all') { node.action = 'group'; node.atAll = true; }
+  if (node.action === 'group' && typeof node.atAll !== 'boolean') node.atAll = false;
+}
+product.sops.forEach(s => s.groups.forEach(g => g.nodes.forEach(communityMigrateMessage)));
+function communityMeta(id) {
+  const a = communityNormalizeAction(id);
+  return COMMUNITY_ACTIONS.find(x => x.id === a) || { id: COMMUNITY_PRIVATE_ACTION, label: COMMUNITY_PRIVATE_LABEL, nodeType: 'private', group: '' };
+}
+function communityLabel(id) { return communityMeta(id).label; }
+/* 节点类型：私信节点 / 群聊节点 */
+function communityNodeType(id) { return communityNormalizeAction(id) === COMMUNITY_PRIVATE_ACTION ? 'private' : 'group'; }
+function communityNodeTypeLabel(id) { return communityNodeType(id) === 'private' ? '私信' : '群聊'; }
+function communityNodeTypeName(id) { return communityNodeType(id) === 'private' ? '私信节点' : '群聊节点'; }
+function communityNodeCountText(group) {
+  const nodes = (group && group.nodes) || [];
+  const priv = nodes.filter(n => communityNodeType(n.action) === 'private').length;
+  return '私信 ' + priv + ' 条 · 群聊 ' + (nodes.length - priv) + ' 个';
+}
+function communityIsGroupSend(id) { return COMMUNITY_GROUP_SEND.has(communityNormalizeAction(id)); }
+function communityNeedsGroup(id) { const a = communityNormalizeAction(id); return COMMUNITY_GROUP_SEND.has(a) || a === 'dissolve_group'; }
+function communityNeedsText(id) { const a = communityNormalizeAction(id); return a === 'pm' || COMMUNITY_GROUP_SEND.has(a); }
+function communityNeedsAudience(id) { const a = communityNormalizeAction(id); return a === 'pm' || a === 'create_group'; }
+/* 建群先用添加好友时间框定客户总范围，因此好友时间对建群同样生效。 */
+function communityNeedsFriendTime(id) { const a = communityNormalizeAction(id); return a === 'pm' || a === 'create_group'; }
+function communityNeedsBuildList(id) { return communityNormalizeAction(id) === 'create_group'; }
+function communityActionTone(id) {
+  const a = communityNormalizeAction(id);
+  if (a === 'pm') return 'is-private';
+  if (a === 'dissolve_group') return 'is-danger';
+  if (COMMUNITY_SILENT.has(a)) return 'is-silent';
+  return 'is-community';
+}
+/* 建群已改为先按添加好友时间框定范围，因此与私信共用同一套估算口径。 */
+function communityEstimate(node) { return estimate(node); }
+function communityGroupList(node) { return Array.isArray(node && node.groups) ? node.groups : []; }
+/* 列表里的“话术内容”列：只有带话术的动作才展示内容，建群／解散群聊不展示。 */
+function communityContentTitle(node) {
+  const id = communityNormalizeAction(node && node.action);
+  if (communityNeedsText(id)) return (node && node.text) || '';
+  return '';
+}
+
+/* 演示用企微群列表：覆盖需求文档里的四条产品线，另含第二群与通用群，便于验证搜索与多选。 */
+function communityDemoGroups() {
+  if (communityDemoGroups.cache) return communityDemoGroups.cache;
+  communityDemoGroups.cache = [
+    { id: 'g-xdr-1', name: '雪梨老师悦读小达人打卡群', product: '悦读小达人', members: 486, owner: '销售甲' },
+    { id: 'g-dcpd-1', name: '雪梨老师单词拼读王打卡群', product: '单词拼读王', members: 412, owner: '销售乙' },
+    { id: 'g-1500-1', name: '雪梨老师1500词学习群', product: '1500词', members: 498, owner: '销售丙' },
+    { id: 'g-100p-1', name: '雪梨老师100篇学习群', product: '100篇', members: 377, owner: '销售丁' },
+    { id: 'g-xdr-2', name: '雪梨老师悦读小达人打卡群（2群）', product: '悦读小达人', members: 301, owner: '销售戊' },
+    { id: 'g-1500-2', name: '雪梨老师1500词学习群（2群）', product: '1500词', members: 265, owner: '销售己' },
+    { id: 'g-after', name: '雪梨老师售后答疑群', product: '通用', members: 128, owner: '销售庚' }
+  ];
+  return communityDemoGroups.cache;
+}
+
+function communityPickerModal(m, ctx) {
+  const single = draft.action === 'dissolve_group';
+  const pool = communityDemoGroups();
+  const chosen = new Set(communityGroupList(draft).map(g => g.id));
+  const box = modal(captured.stage, '选择群聊');
+  if (!box) return;
+  box.classList.add('opt-group-modal');
+  const body = box.querySelector('.el-dialog__body');
+  body.innerHTML = '<p class="opt-muted">' + (single ? '该动作只能选择 1 个群聊。' : '可选择一个或多个目标群聊。') + '发送时精准定向到所选群；演示群列表由接口返回，正式版对接企微群列表。</p><div class="opt-group-search"><input class="local-input" aria-label="搜索群聊名称" placeholder="搜索群名称或产品线"></div><div class="opt-group-list" role="group" aria-label="群聊列表"></div><div class="opt-group-empty-tip opt-muted" hidden>没有匹配的群聊</div><div class="opt-group-picker-count opt-muted">已选 0个群</div>';
+  const list = body.querySelector('.opt-group-list');
+  const search = body.querySelector('[aria-label="搜索群聊名称"]');
+  const emptyTip = body.querySelector('.opt-group-empty-tip');
+  const counter = body.querySelector('.opt-group-picker-count');
+  const paint = () => {
+    const keyword = search.value.trim();
+    const rows = pool.filter(g => !keyword || g.name.includes(keyword) || g.product.includes(keyword));
+    list.innerHTML = rows.map(g => '<label class="opt-group-row"><input type="' + (single ? 'radio' : 'checkbox') + '" name="opt-group-pick" value="' + escapeText(g.id) + '"' + (chosen.has(g.id) ? ' checked' : '') + '><span class="opt-group-icon">' + COMMUNITY_GROUP_ICON + '</span><span class="opt-group-main"><strong>' + escapeText(g.name) + '<span class="opt-group-badge">' + escapeText(g.product) + '</span></strong><small>' + g.members + '人 · 群主 ' + escapeText(g.owner) + ' · 企微群</small></span></label>').join('');
+    emptyTip.hidden = rows.length > 0;
+    counter.textContent = '已选 ' + chosen.size + '个群';
+    list.querySelectorAll('input').forEach(input => {
+      input.onchange = () => {
+        if (single) { chosen.clear(); if (input.checked) chosen.add(input.value); }
+        else if (input.checked) chosen.add(input.value);
+        else chosen.delete(input.value);
+        counter.textContent = '已选 ' + chosen.size + '个群';
+      };
+    });
+  };
+  search.oninput = paint;
+  paint();
+  buttons(box, '取消')[0].onclick = () => box.remove();
+  const confirm = buttons(box, '保存')[0];
+  confirm.textContent = '确认选择';
+  confirm.onclick = () => {
+    draft.groups = pool.filter(g => chosen.has(g.id)).map(g => ({ id: g.id, name: g.name, members: g.members, product: g.product }));
+    box.remove();
+    communityRenderGroups(m, ctx);
+    updateEstimate(m);
+  };
+}
+
+function communityRenderGroups(m, ctx) {
+  const list = communityGroupList(draft);
+  ctx.groupSelected.innerHTML = list.length
+    ? list.map(g => '<span class="opt-group-chip"><span class="opt-group-icon">' + COMMUNITY_GROUP_ICON + '</span><span>' + escapeText(g.name) + '</span><button type="button" aria-label="移除群聊 ' + escapeText(g.name) + '">×</button></span>').join('')
+    : '<span class="opt-group-empty-hint">' + (draft.action === 'create_group' ? '建群无需选择已有群聊' : '尚未选择群聊，点击右侧按钮选择') + '</span>';
+  if (list.length) ctx.groupSelected.querySelectorAll('button').forEach((b, i) => { b.onclick = () => { if (b.disabled) return; draft.groups.splice(i, 1); communityRenderGroups(m, ctx); updateEstimate(m); }; });
+  ctx.groupPickBtn.textContent = list.length ? '更换群聊' : '选择群聊';
+}
+
+/* 建群清单：只读预览，随客户范围（好友时间 + 标签）实时重算。 */
+function communityRenderBuildPreview(m, stats) {
+  const ctx = m.__community;
+  if (!ctx || !ctx.buildList || ctx.buildList.style.display === 'none') return;
+  stats = stats || communityBuildStats(draft);
+  const total = communityEstimate(draft).total;
+  const rows = stats.groups.map(g => {
+    const over = g.count > COMMUNITY_GROUP_MEMBER_LIMIT;
+    return '<tr><td class="opt-build-product"><strong>' + escapeText(g.product) + '</strong><small>' + escapeText(g.category) + '</small></td>'
+      + '<td class="opt-build-name">' + escapeText(g.name) + '</td>'
+      + '<td class="opt-build-count' + (over ? ' is-over' : '') + '">' + g.count + '人' + (over ? '<em>超出 ' + COMMUNITY_GROUP_MEMBER_LIMIT + ' 人上限</em>' : '') + '</td></tr>';
+  }).join('');
+  const unmatched = total - stats.matched;
+  ctx.buildList.innerHTML = '<p class="opt-build-note">系统按客户范围（添加好友时间 + 选中／排除标签）圈定客户，再按客户持有的<b>产品通用渠道标签</b>分别建群：一条产品线建一个群，命中该产品线标签的客户进入对应群；<b>同一客户同时命中多条产品线标签时，会同时进入对应的多个群</b>。群名按「雪梨老师{产品线名称}打卡群／学习群」自动生成。</p>'
+    + (stats.groups.length
+      ? '<table class="opt-build-table"><thead><tr><th>产品线</th><th>群名称</th><th>入群人数</th></tr></thead><tbody>' + rows + '</tbody></table>'
+      : '<div class="opt-build-empty">当前范围内没有可建群的产品线，请放宽添加好友时间或调整标签。</div>')
+    + (stats.groups.length ? '<p class="opt-build-tip">共 ' + stats.matched + ' 人会被拉群，其中 ' + stats.multi + ' 人同时带多条产品线标签，会同时进入多个群（群内人数合计 ' + stats.joined + ' 人次）。</p>' : '')
+    + (unmatched > 0 ? '<p class="opt-build-tip">范围内另有 ' + unmatched + ' 人未带产品线标签，不会进入任何产品群。</p>' : '')
+    + '<p class="opt-build-tip">单群上限 ' + COMMUNITY_GROUP_MEMBER_LIMIT + ' 人，超出部分不会入群。群名为规则自动生成，无需手工填写。</p>';
+  if (ctx.newGroupHint) ctx.newGroupHint.textContent = stats.groups.length ? '将自动建立 ' + stats.groups.length + ' 个产品群，创建后可在群管理查看。' : '';
+}
+
+/* 预计触发人数/群聊已整体移除（改由任务发送情况界面承载）；
+   这里只保留「自动建群清单」的实时刷新，它属于建群动作本身的配置结果。 */
+updateEstimate = function (m) {
+  if (draft.action === 'create_group') communityRenderBuildPreview(m);
+};
+
+/* 预估盒子移除后，原链路（renderAudience 末尾的判断）不再触发刷新，这里补一次 */
+const communityRenderAudienceBefore = renderAudience;
+renderAudience = function (m) {
+  communityRenderAudienceBefore(m);
+  try { updateEstimate(m); } catch (e) { /* 忽略 */ }
+};
+
+function communityApplyEditorLayout(m, ctx, readOnly) {
+  const action = draft.action;
+  ctx.hint.textContent = COMMUNITY_HINTS[action] || '';
+  if (ctx.audienceLabel) ctx.audienceLabel.textContent = action === 'pm' ? '发送人群' : action === 'create_group' ? '拉群对象' : '目标群聊';
+  ctx.picker.style.display = communityNeedsGroup(action) ? '' : 'none';
+  communityRenderGroups(m, ctx);
+  const showTags = communityNeedsAudience(action);
+  m.querySelectorAll('.audience-section').forEach(s => { s.style.display = showTags ? '' : 'none'; });
+  m.querySelectorAll('.opt-tag-hint').forEach(s => { s.style.display = showTags ? '' : 'none'; });
+  if (ctx.friend) ctx.friend.style.display = communityNeedsFriendTime(action) ? '' : 'none';
+  if (ctx.composer) ctx.composer.style.display = communityNeedsText(action) ? '' : 'none';
+  if (ctx.composerItem) ctx.composerItem.style.display = communityNeedsText(action) ? '' : 'none';
+  ctx.atAllItem.style.display = action === 'group' ? '' : 'none';
+  ctx.atAllSwitch.checked = !!draft.atAll;
+  ctx.atAll.style.display = action === 'group' && draft.atAll ? '' : 'none';
+  ctx.notice.style.display = action === 'group_notice' ? '' : 'none';
+  const silent = COMMUNITY_SILENT.has(action);
+  ctx.actionNote.style.display = silent ? '' : 'none';
+  if (silent) {
+    const silentText = action === 'create_group' ? '<span>ⓘ</span><span><strong>建群是静默动作：</strong>只按客户范围与产品线标签建群拉人，不产生任何群消息。系统用添加好友时间与标签框定客户范围，再按客户的产品线标签分别建群并拉入对应客户。</span>'
+      : '<span>⚠</span><span><strong>解散群聊属高危动作：</strong>保存时需二次确认，解散后群聊不可恢复。</span>';
+    ctx.actionNote.className = 'opt-action-alert ' + (action === 'dissolve_group' ? 'warning' : 'info') + ' opt-action-note';
+    ctx.actionNote.innerHTML = silentText;
+  }
+  if (ctx.textarea) {
+    const notice = action === 'group_notice';
+    ctx.textarea.maxLength = notice ? COMMUNITY_NOTICE_MAX : 10000;
+    ctx.textarea.placeholder = notice ? '请输入群公告内容，支持变量；超出 ' + COMMUNITY_NOTICE_MAX + ' 字的部分将被截断' : '请输入节点话术，可保留变量占位符';
+    try { if (typeof ctx.textarea.oninput === 'function') ctx.textarea.oninput(); } catch (e) { /* 字数计数器缺失时忽略 */ }
+  }
+  communitySyncTrigger(ctx);
+  updateEstimate(m);
+}
+
+function communityConfirmDissolve(onConfirm) {
+  const box = modal(captured.stage, '解散群聊 · 二次确认');
+  if (!box) return;
+  box.classList.add('opt-danger-confirm');
+  const groups = communityGroupList(draft);
+  box.querySelector('.el-dialog__body').innerHTML = '<div class="opt-danger-box"><strong>该动作不可恢复</strong>即将解散 ' + (groups.length ? '「' + escapeText(groups.map(g => g.name).join('、')) + '」' : '所选群聊') + '，群内成员将无法继续在群内发言，历史群数据仅可保留只读记录。<br>请在下框输入 <b>确认解散</b> 后继续。</div><input class="local-input" aria-label="解散群聊确认输入" placeholder="请输入 确认解散">';
+  const input = box.querySelector('[aria-label="解散群聊确认输入"]');
+  const ok = buttons(box, '保存')[0];
+  ok.textContent = '确认解散';
+  ok.classList.add('el-button--danger');
+  ok.disabled = true;
+  buttons(box, '取消')[0].onclick = () => box.remove();
+  input.oninput = () => { ok.disabled = input.value.trim() !== '确认解散'; };
+  input.onkeydown = e => { if (e.key === 'Enter' && !ok.disabled) ok.click(); };
+  ok.onclick = () => { if (ok.disabled) return; box.remove(); onConfirm(); };
+  setTimeout(() => input.focus(), 30);
+}
+
+const COMMUNITY_PM_ICON = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12.5a7.5 7.5 0 0 1-7.5 7.5H8.4L4 23v-4.6A7.5 7.5 0 0 1 4.5 12 7.5 7.5 0 0 1 12 5h.5a7.5 7.5 0 0 1 7.5 7.5z"></path></svg>';
+const COMMUNITY_CARET_ICON = '<svg viewBox="0 0 1024 1024" width="12" height="12" fill="currentColor"><path d="M512 704 160 352l64-64 288 288 288-288 64 64-352 352z"></path></svg>';
+const COMMUNITY_ACTION_DESC = {
+  pm: '按标签与好友时间圈选，逐人私信',
+  group: '发送群消息，可选择是否@所有人',
+  group_notice: '更新所选群聊的群公告',
+  create_group: '按产品线标签自动建群拉人',
+  dissolve_group: '解散所选群聊，不可恢复'
+};
+function communityActionIcon(id) { return communityNormalizeAction(id) === 'pm' ? COMMUNITY_PM_ICON : COMMUNITY_GROUP_ICON; }
+function communitySyncTrigger(ctx) {
+  if (!ctx || !ctx.trigger) return;
+  const id = draft.action;
+  ctx.trigger.innerHTML = '<span class="opt-action-trigger-icon">' + communityActionIcon(id) + '</span><span class="opt-action-trigger-label">' + escapeText(communityLabel(id)) + '</span><span class="opt-action-trigger-caret">' + COMMUNITY_CARET_ICON + '</span>';
+  ctx.trigger.className = 'opt-action-trigger ' + communityActionTone(id);
+  ctx.trigger.setAttribute('aria-label', '发送动作：' + communityLabel(id) + '，点击切换');
+}
+/* 自定义两级动作下拉：原生 select 仅保存值，展示用分组面板 */
+function communityActionMenu(ctx) {
+  communityActionMenu.cleanup?.();
+  ctx.menu?.remove();
+  const menu = document.createElement('div');
+  menu.className = 'opt-action-menu';
+  menu.setAttribute('role', 'listbox');
+  menu.setAttribute('aria-label', '发送动作');
+  const item = id => {
+    const meta = communityMeta(id);
+    const active = draft.action === id;
+    const danger = id === 'dissolve_group';
+    return '<button type="button" role="option" aria-selected="' + active + '" data-action="' + id + '" class="opt-action-item' + (active ? ' is-active' : '') + (danger ? ' is-danger' : '') + '">'
+      + '<span class="opt-action-item-icon">' + communityActionIcon(id) + '</span>'
+      + '<span class="opt-action-item-text"><strong>' + escapeText(meta.label) + '</strong><small>' + escapeText(COMMUNITY_ACTION_DESC[id] || '') + '</small></span>'
+      + '<span class="opt-action-item-check">✓</span></button>';
+  };
+  menu.innerHTML = ['社群发送', '群管理'].map(label =>
+    '<div class="opt-action-group-label">' + label + '</div>'
+    + COMMUNITY_ACTIONS.filter(a => a.group === label).map(a => item(a.id)).join('')
+  ).join('');
+  document.body.append(menu);
+  ctx.menu = menu;
+  const rect = ctx.trigger.getBoundingClientRect();
+  const width = Math.min(320, Math.max(rect.width, 260));
+  menu.style.width = width + 'px';
+  menu.style.left = Math.max(8, Math.min(rect.left, innerWidth - width - 8)) + 'px';
+  const height = menu.offsetHeight;
+  const below = rect.bottom + 4;
+  menu.style.top = (below + height > innerHeight - 8 && rect.top - height - 4 > 8 ? rect.top - height - 4 : below) + 'px';
+  const controller = new AbortController();
+  const close = () => { controller.abort(); menu.remove(); ctx.menu = null; ctx.trigger.setAttribute('aria-expanded', 'false'); };
+  communityActionMenu.cleanup = close;
+  menu.querySelectorAll('[data-action]').forEach(btn => {
+    btn.onclick = () => {
+      const id = btn.dataset.action;
+      close();
+      if (id === draft.action) return;
+      ctx.select.value = id;
+      ctx.select.dispatchEvent(new Event('change'));
+      ctx.trigger.focus();
+    };
+  });
+  ctx.trigger.setAttribute('aria-expanded', 'true');
+  document.addEventListener('pointerdown', e => { if (!menu.contains(e.target) && !ctx.trigger.contains(e.target)) close(); }, { signal: controller.signal });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { close(); ctx.trigger.focus(); } }, { signal: controller.signal });
+}
+
+/* 新增节点：type = 'private' | 'group' */
+let communityPendingNodeType = 'private';
+function communityAddNode(type) {
+  communityPendingNodeType = type === 'group' ? 'group' : 'private';
+  editNode();
+}
+const communityEditNodeBefore = editNode;
+editNode = function (i, readOnly = false) {
+  communityEditNodeBefore(i, readOnly);
+  const m = dialogs.lastElementChild;
+  if (!m) return;
+  const form = m.querySelector('form.node-editor');
+  const select = m.querySelector('select[aria-label="发送动作"]');
+  if (!form || !select) return;
+  communityMigrateMessage(draft);
+  /* 新建时按入口决定类型；编辑时由已有动作推导 */
+  const nodeType = i === undefined ? communityPendingNodeType : communityNodeType(draft.action);
+  draft.action = nodeType === 'private' ? COMMUNITY_PRIVATE_ACTION : communityNormalizeAction(draft.action);
+  if (nodeType === 'group' && draft.action === COMMUNITY_PRIVATE_ACTION) draft.action = COMMUNITY_ACTIONS[0].id;
+  draft.groups = communityGroupList(draft).filter(g => g && g.id);
+  const ctx = { nodeType };
+  /* 标题：私信节点 / 群聊节点 */
+  const typeName = nodeType === 'private' ? '私信节点' : '群聊节点';
+  const titleText = readOnly ? typeName + '详情' : (i === undefined ? '新增' : '编辑') + typeName;
+  const titleEl = m.querySelector('.el-dialog__title');
+  if (titleEl) titleEl.textContent = titleText;
+  const dialogEl = m.querySelector('[role="dialog"]');
+  if (dialogEl) dialogEl.setAttribute('aria-label', titleText);
+  /* 动作字段：私信节点没有发送动作，整行隐藏 */
+  const actionItem = select.closest('.el-form-item');
+  if (actionItem) actionItem.style.display = nodeType === 'private' ? 'none' : '';
+  const atAllItem = document.createElement('div');
+  atAllItem.className = 'el-form-item asterisk-left el-form-item--label-top opt-at-all-item';
+  atAllItem.innerHTML = '<label class="el-form-item__label">消息提醒</label><div class="el-form-item__content"><label class="opt-at-all-toggle"><input type="checkbox" role="switch" aria-label="开启@所有人"><span>@所有人</span></label><small class="opt-at-all-help">关闭时发送普通群消息，开启后提醒群内所有成员。</small></div>';
+  actionItem.after(atAllItem);
+  ctx.atAllItem = atAllItem;
+  ctx.atAllSwitch = atAllItem.querySelector('input');
+  ctx.atAllSwitch.checked = !!draft.atAll;
+  ctx.atAllSwitch.disabled = readOnly;
+  ctx.atAllSwitch.onchange = () => { draft.atAll = ctx.atAllSwitch.checked; communityApplyEditorLayout(m, ctx, readOnly); };
+  select.innerHTML = '<optgroup label="社群发送">' + COMMUNITY_ACTIONS.filter(a => a.group === '社群发送').map(a => '<option value="' + a.id + '">' + a.label + '</option>').join('')
+    + '</optgroup><optgroup label="群管理">' + COMMUNITY_ACTIONS.filter(a => a.group === '群管理').map(a => '<option value="' + a.id + '">' + a.label + '</option>').join('') + '</optgroup>';
+  select.value = draft.action;
+  select.classList.add('opt-action-native');
+  const wrap = document.createElement('div');
+  wrap.className = 'opt-action-wrap';
+  select.parentElement.insertBefore(wrap, select);
+  const trigger = document.createElement('button');
+  trigger.type = 'button';
+  trigger.className = 'opt-action-trigger';
+  trigger.setAttribute('aria-haspopup', 'listbox');
+  trigger.setAttribute('aria-expanded', 'false');
+  trigger.onclick = () => { if (readOnly) return; if (ctx.menu) communityActionMenu.cleanup?.(); else communityActionMenu(ctx); };
+  wrap.append(select, trigger);
+  ctx.select = select;
+  ctx.trigger = trigger;
+  const hint = document.createElement('div');
+  hint.className = 'opt-action-hint';
+  select.closest('.el-form-item__content').append(hint);
+  ctx.hint = hint;
+  /* 发送人群：群聊选择控件放在最上方（原标签区域位置） */
+  const audienceItem = Array.from(m.querySelectorAll('.el-form-item')).find(fi => (fi.querySelector('.el-form-item__label')?.textContent || '').trim() === '发送人群');
+  const audience = m.querySelector('.audience-config');
+  if (!audienceItem || !audience) return;
+  const picker = document.createElement('div');
+  picker.className = 'opt-group-picker';
+  picker.innerHTML = '<div class="opt-group-picker-head"><span><strong>目标群聊</strong><span class="opt-group-required">必填</span></span><button type="button" class="el-button el-button--small opt-group-pick-btn">选择群聊</button></div><div class="opt-group-selected"></div>';
+  audience.prepend(picker);
+  ctx.picker = picker;
+  ctx.groupSelected = picker.querySelector('.opt-group-selected');
+  ctx.groupPickBtn = picker.querySelector('.opt-group-pick-btn');
+  ctx.groupPickBtn.onclick = () => { if (!readOnly) communityPickerModal(m, ctx); };
+  ctx.audienceLabel = audienceItem.querySelector('.el-form-item__label');
+  ctx.friend = m.querySelector('.opt-friend-time');
+  /* 「预计触发人数／群聊」整块移除（编辑与详情都不再展示），改由任务发送情况界面查看 */
+  ctx.estimate = m.querySelector('.opt-draft-estimate');
+  if (ctx.estimate) { ctx.estimate.remove(); ctx.estimate = null; }
+  /* 静默动作说明放在“发送人群”上方，话术/素材区整体隐藏时仍然可见 */
+  const actionNote = document.createElement('div');
+  actionNote.className = 'opt-action-alert info opt-action-note';
+  audienceItem.before(actionNote);
+  ctx.actionNote = actionNote;
+  m.__community = ctx;
+  /* 话术/素材组合区：插入动作警示与素材限制提示 */
+  const composer = m.querySelector('.message-composer');
+  if (composer) {
+    ctx.composer = composer;
+    /* 整行隐/显：只隐藏 .message-composer 会留下“话术内容”空标签 */
+    ctx.composerItem = composer.closest('.el-form-item');
+    ctx.textarea = composer.querySelector('textarea');
+    /* 紧凑布局把话术 textarea 移出 .el-textarea 后，原字数计数器不再在 parentElement 下，
+       直接调用原 oninput 会抛错；这里按弹窗范围重新绑定，保证字数与截断提示始终同步。 */
+    if (ctx.textarea) {
+      const counter = m.querySelector('.el-textarea .el-input__count');
+      ctx.textarea.oninput = () => {
+        if (counter && counter.isConnected) counter.textContent = ctx.textarea.value.length + ' / ' + ctx.textarea.maxLength;
+      };
+    }
+    const makeAlert = (cls, html) => { const el = document.createElement('div'); el.className = 'opt-action-alert ' + cls; el.innerHTML = html; composer.insertBefore(el, composer.firstElementChild); return el; };
+    ctx.atAll = makeAlert('warning', '<span>⚠</span><span><strong>注意：</strong>该动作将@群内所有成员，会触发强提醒，请谨慎使用。</span>');
+    ctx.notice = makeAlert('info', '<span>ⓘ</span><span><strong>群公告字数限制：</strong>超出 ' + COMMUNITY_NOTICE_MAX + ' 字的部分将被截断。</span>');
+  }
+  select.onchange = () => {
+    if (readOnly) return;
+    draft.action = communityNormalizeAction(select.value);
+    if (!communityNeedsAudience(draft.action)) { /* 标签数据保留，切回时仍可见 */ }
+    communityApplyEditorLayout(m, ctx, readOnly);
+  };
+  communityApplyEditorLayout(m, ctx, readOnly);
+  if (readOnly) {
+    m.querySelectorAll('.opt-group-picker button,.opt-build-item button').forEach(el => { el.disabled = true; });
+    ctx.trigger.disabled = true;
+    return;
+  }
+  /* 保存校验与高危二次确认：动作决定必填项，替代原“时间+话术”一刀切校验 */
+  const save = buttons(m, '保存节点')[0];
+  if (!save) return;
+  save.onclick = () => {
+    const time = m.querySelector('.time-control input');
+    const noteArea = m.querySelectorAll('textarea')[1];
+    if (!time || !time.value.trim()) return feedback('请填写节点时间');
+    if (communityNeedsText(draft.action) && (!ctx.textarea || !ctx.textarea.value.trim())) return feedback(draft.action === 'group_notice' ? '请填写群公告内容' : '请填写话术内容');
+    if (communityNeedsGroup(draft.action) && !communityGroupList(draft).length) return feedback(draft.action === 'dissolve_group' ? '请选择目标群聊' : '请选择目标群聊后保存');
+    if (communityNeedsBuildList(draft.action) && !communityBuildStats(draft).groups.length) return feedback('当前客户范围内没有可建群的产品线，请放宽添加好友时间或调整标签');
+    if (communityNeedsFriendTime(draft.action) && draft.friendStart && draft.friendEnd && draft.friendStart > draft.friendEnd) return feedback('添加好友开始日期不能晚于结束日期');
+    const relative = m.querySelector('.opt-relative');
+    const offset = m.querySelector('[aria-label="偏移分钟"]');
+    if (relative && relative.style.display !== 'none' && offset && (!Number.isFinite(Number(offset.value)) || Number(offset.value) < 0 || Number(offset.value) > 1440)) return feedback('请输入0至1440之间的分钟数');
+    draft.time = time.value;
+    draft.atAll = draft.action === 'group' && !!draft.atAll;
+    draft.text = communityNeedsText(draft.action) ? (ctx.textarea ? ctx.textarea.value : '') : '';
+    draft.note = noteArea ? noteArea.value : draft.note;
+    if (!communityNeedsAudience(draft.action)) { draft.friendStart = ''; draft.friendEnd = ''; }
+    /* 只保留当前动作用得到的字段，避免详情/快照里出现无关的群聊与群名 */
+    if (!communityNeedsGroup(draft.action)) draft.groups = [];
+    delete draft.productLines;
+    delete draft.newGroupName;
+    /* 建群清单在保存时冻结，SOP 详情与任务发送情况的拉群明细读这份副本 */
+    if (communityNeedsBuildList(draft.action)) {
+      const stats = communityBuildStats(draft);
+      draft.buildGroups = stats.groups.map(g => ({ product: g.product, name: g.name, count: g.count }));
+      draft.buildMatched = stats.matched;
+    } else { delete draft.buildGroups; delete draft.buildMatched; }
+    const commit = () => {
+      if (editIndex < 0) state[current].nodes.push(draft); else state[current].nodes[editIndex] = draft;
+      persist();
+      close();
+      render();
+      feedback(communityNodeType(draft.action) === 'private' ? '已保存私信节点' : '已保存「' + communityLabel(draft.action) + '」群聊节点');
+    };
+    if (draft.action === 'dissolve_group') return communityConfirmDissolve(commit);
+    commit();
+  };
+};
+
+/* 时间节点与消息区的计数：私信 N 条 · 群聊 M 个 */
+const communityRenderConfigurationBefore = renderConfiguration;
+renderConfiguration = function () {
+  communityRenderConfigurationBefore();
+  /* 左侧时间节点：条数改为「私信 N 条 · 群聊 M 个」 */
+  root.querySelectorAll('.time-nav-item button[data-group]').forEach(btn => {
+    const index = Number(btn.dataset.group);
+    const group = state[index];
+    const small = btn.querySelector('small');
+    if (group && small) small.textContent = communityNodeCountText(group);
+  });
+  /* 消息区标题下方的摘要 */
+  const workbench = root.querySelector('.message-workbench-header p');
+  if (workbench && workbench.textContent.includes('条消息')) {
+    const head = workbench.textContent.split(' · ')[0];
+    const group = state[current];
+    if (group) workbench.textContent = head + ' · ' + communityNodeCountText(group);
+  }
+};
+
+/* 列表与 SOP 详情沿用同一套动作文案。 */
+const communityRenderMessagesBefore = renderMessages;
+renderMessages = function (group) {
+  communityRenderMessagesBefore(group);
+  const table = root.querySelector('.message-list-table');
+  if (!table) return;
+  const all = orderedMessages(group), pager = messagePaging(group);
+  table.querySelectorAll('tbody tr[data-index]').forEach(row => {
+    const node = all[(pager.page - 1) * pager.pageSize + Number(row.dataset.index)];
+    if (!node) return;
+    const cells = row.children;
+    if (cells[2]) {
+      const kind = communityNodeType(node.action);
+      cells[2].innerHTML = '<span class="node-kind-badge is-' + kind + '">' + communityNodeTypeLabel(node.action) + '</span>'
+        + (kind === 'private' ? '' : '<span class="message-action-tag ' + communityActionTone(node.action) + '">' + escapeText(communityLabel(node.action)) + '</span>')
+        + (node.action === 'group' && node.atAll ? '<span class="message-at-all-badge">@所有人</span>' : '');
+    }
+    if (cells[5]) { const title = communityContentTitle(node) || '—'; cells[5].innerHTML = '<div class="message-text' + (title === '—' ? ' is-empty' : '') + '" title="' + escapeText(title) + '">' + escapeText(title) + '</div>'; }
+    /* 「预计触发」与「实际发送人数」列已移除（由任务发送情况界面承载），这里只处理素材列 */
+    if (cells[6]) cells[6].textContent = communityNeedsText(node.action) ? String(node.materialCount || 0) : '—';
+  });
+};
