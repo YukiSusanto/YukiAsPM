@@ -60,6 +60,12 @@ button:disabled { cursor: default; }
 .date-separator { margin: 0 -2px; color: #a0aaba; font-size: 13px; }
 .refresh-button { display: inline-flex; align-items: center; gap: 7px; height: 32px; padding: 0 12px; border: 1px solid #dfe5eb; border-radius: 5px; color: #687486; font-size: 13px; }
 .refresh-button:hover { color: var(--primary); border-color: #b9d8ff; background: #f5faff; }
+.age-filter { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.age-filter.is-hidden { display: none; }
+.age-filter-buttons { display: inline-flex; align-items: center; padding: 2px; border: 1px solid #e1e6ee; border-radius: 5px; background: #f7f8fa; }
+.age-filter-button { min-width: 52px; height: 26px; border-radius: 3px; color: #728094; font-size: 12px; }
+.age-filter-button.active { color: var(--primary); background: #fff; box-shadow: 0 1px 4px rgba(53, 92, 128, .12); }
+.age-filter-note { color: #9aa5b3; font-size: 11px; white-space: nowrap; }
 .refresh-state { margin-left: auto; color: #a2adbb; font-size: 12px; }
 
 .workspace { --workspace-columns: clamp(235px, 18vw, 320px) clamp(250px, 20vw, 360px) minmax(0, 1fr); flex: 1; display: grid; grid-template-columns: var(--workspace-columns); grid-template-rows: minmax(0, 1fr) 43px; min-height: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 7px; background: var(--panel); box-shadow: var(--shadow); }
@@ -91,9 +97,12 @@ button:disabled { cursor: default; }
 .item-subtitle { overflow: hidden; margin-top: 4px; color: #a0aab8; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
 .item-star { flex: 0 0 auto; color: #a4afbd; }
 .item-star.is-favorite { color: #f0b53d; }
-.customer-filters { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0 16px 9px; }
-.customer-filter { height: 28px; border: 1px solid #e1e6ee; border-radius: 4px; color: #6f7b8b; background: #fff; font-size: 12px; }
-.customer-filter.active { border-color: #8fc2ff; color: #2081f3; background: #f0f7ff; }
+.contact-kind-tabs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; margin: 0 16px 9px; padding: 3px; border-radius: 6px; background: #f2f4f7; }
+.contact-kind-tab { height: 30px; border-radius: 4px; color: #707c8e; font-size: 13px; font-weight: 600; }
+.contact-kind-tab.active { color: var(--primary); background: #fff; box-shadow: 0 1px 5px rgba(48, 72, 98, .12); }
+.contact-status-filters { display: flex; align-items: center; gap: 7px; min-height: 27px; margin: 0 16px 9px; }
+.contact-status-filter { height: 25px; padding: 0 12px; border: 1px solid #e1e7ee; border-radius: 999px; color: #748093; background: #fff; font-size: 11px; }
+.contact-status-filter.active { border-color: #8fc2ff; color: #2081f3; background: #edf6ff; }
 .customer-item { min-height: 66px; }
 .customer-item .avatar { width: 34px; height: 34px; font-size: 13px; }
 .customer-item .item-title { font-size: 13px; }
@@ -174,4 +183,5 @@ button:disabled { cursor: default; }
   .workspace { --workspace-columns: clamp(220px, 25vw, 280px) clamp(235px, 28vw, 310px) minmax(0, 1fr); }
   .footer-pagination { gap: 5px; padding: 0 8px; }
   .footer-pagination-right label { display: none; }
+  .age-filter-note { display: none; }
 }

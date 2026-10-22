@@ -56,6 +56,13 @@
           <span class="date-separator">至</span>
           <label class="date-input"><input id="end-date" type="date" value="2026-10-21" aria-label="结束日期" /></label>
           <button class="refresh-button" id="refresh-button"><span class="icon icon-refresh"></span><span>刷新</span></button>
+          <div class="age-filter" id="age-filter">
+            <div class="age-filter-buttons" role="tablist" aria-label="客户添加时间">
+              <button class="age-filter-button active" role="tab" aria-selected="true" data-age="new">新客户</button>
+              <button class="age-filter-button" role="tab" aria-selected="false" data-age="old">老客户</button>
+            </div>
+            <span class="age-filter-note">添加时间：新客户｜老客户</span>
+          </div>
           <span class="refresh-state" id="refresh-state" role="status">已是最新</span>
         </section>
 
@@ -75,17 +82,17 @@
           <section class="panel customer-panel">
             <div class="panel-header">
               <div>
-                <h2>外部联系人客户</h2>
-                <p>外部客户数：67</p>
+                <h2>外部联系人</h2>
+                <p id="contact-count">客户数：67</p>
               </div>
               <div class="panel-tools"><button class="plain-icon" aria-label="收藏客户" title="收藏客户"><span class="icon icon-star"></span></button><button class="plain-icon" aria-label="收起客户栏" title="收起客户栏"><span class="icon icon-chevron-left"></span></button></div>
             </div>
-            <label class="search-box"><span class="icon icon-search"></span><input id="customer-search" placeholder="搜索客户名称或ID" /></label>
-            <div class="customer-filters" role="tablist" aria-label="客户类型">
-              <button class="customer-filter active" data-filter="new">新客户</button>
-              <button class="customer-filter" data-filter="old">老客户</button>
-              <button class="customer-filter" data-filter="all">全部</button>
+            <div class="contact-kind-tabs" role="tablist" aria-label="外部联系人类型">
+              <button class="contact-kind-tab active" role="tab" aria-selected="true" data-kind="customer">客户</button>
+              <button class="contact-kind-tab" role="tab" aria-selected="false" data-kind="group">群聊</button>
             </div>
+            <label class="search-box"><span class="icon icon-search"></span><input id="customer-search" placeholder="搜索客户名称或ID" /></label>
+            <div class="contact-status-filters" id="contact-status-filters" role="tablist" aria-label="客户状态"></div>
             <div class="list-scroll customer-list" id="customer-list"></div>
           </section>
 
