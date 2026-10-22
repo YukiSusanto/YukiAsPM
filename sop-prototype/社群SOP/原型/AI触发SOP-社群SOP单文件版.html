@@ -36,6 +36,23 @@ body{--replica-side-width:210px;padding-top:48px}.replica-header{position:fixed;
 .asset-section-title{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}.asset-section-title>.asset-current-group-upload{flex:none}.asset-section-title h3{margin-top:2px}.asset-section-title p{line-height:1.7}.asset-group-row>button:first-child strong{max-width:none}@media(max-width:700px){.asset-section-title{gap:8px}.asset-section-title>.asset-current-group-upload{font-size:12px;padding:8px 12px}}
 .asset-group-edit{width:26px;height:28px;padding:5px;display:flex;align-items:center;justify-content:center;flex:none;border-radius:4px;color:#909399}.asset-group-edit:hover{background:#ecf5ff;color:#409eff}.asset-group-edit:focus-visible{outline:2px solid #409eff;outline-offset:1px}
 .asset-current-group-title{display:flex;align-items:center;gap:8px}.asset-current-group-edit{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border:1px solid #d9ecff;border-radius:4px;background:#ecf5ff;color:#409eff;cursor:pointer;flex:none}.asset-current-group-edit:hover{background:#d9ecff}.asset-group-edit{color:#409eff;opacity:1;visibility:visible}.asset-current-group-edit:focus-visible{outline:2px solid #409eff;outline-offset:2px}
+/* 素材数量挪到文件夹名字旁边 + 文件夹「···」菜单 + 拖动改分级 */
+.asset-current-group-count{font-size:12px;color:#909399;white-space:nowrap;line-height:1.6}
+.asset-folder-more,.folder-more{flex:none;border:0;background:none;color:#a8b3c0;cursor:pointer;font-size:15px;line-height:1;letter-spacing:1px;padding:4px 6px;border-radius:4px}
+.asset-folder-more{margin-left:auto}
+.asset-folder-more:hover,.folder-more:hover{background:#ecf5ff;color:#409eff}
+.asset-folder-more:focus-visible,.folder-more:focus-visible{outline:2px solid #409eff;outline-offset:1px}
+.folder-tree-row:hover .folder-more,.folder-tree-row.active .folder-more{color:#409eff}
+.folder-tree-row.dragging{opacity:.45}
+.folder-tree-row.drop-into{background:#ecf5ff;box-shadow:inset 0 0 0 1px #a8cdfb}
+.asset-file-id{color:#b4bac3;font-size:12px;line-height:1.5}
+/* 重命名铅笔紧贴文件夹名，··· 留在行尾 */
+.folder-tree-row .folder-select{flex:0 1 auto!important}
+.folder-tree-row .folder-select strong{flex:0 1 auto!important;max-width:120px}
+.folder-pencil{flex:none;width:22px;height:24px;display:inline-flex;align-items:center;justify-content:center;border:0;background:none;padding:0;margin-left:2px;color:#a8b3c0;cursor:pointer;border-radius:4px}
+.folder-pencil:hover{background:#ecf5ff;color:#409eff}
+.folder-pencil:focus-visible{outline:2px solid #409eff;outline-offset:1px}
+.folder-spacer{flex:1 1 auto;min-width:4px}
 /* Horizontal resource list with folders on the right. */
 .asset-folder-workspace{grid-template-columns:minmax(0,1fr) 240px}.asset-folder-workspace>.asset-main{order:1}.asset-folder-workspace>.asset-groups{order:2;display:block;min-width:0}.asset-folder-tree-container{display:block!important;overflow:auto;max-height:calc(100vh - 260px);padding:0 6px 8px}.folder-tree-row{display:flex;align-items:center;gap:2px;padding:3px 4px 3px calc(4px + var(--folder-depth)*14px);min-height:36px;border-radius:4px;min-width:190px}.folder-tree-row.active,.folder-all.active{background:#ecf5ff}.folder-tree-row:hover,.folder-all:hover{background:#f5f9ff}.folder-select{display:flex;align-items:center;gap:6px;min-width:0;flex:1;border:0;background:none;padding:5px 0;color:#606266;cursor:pointer;text-align:left}.folder-select strong{font-size:12px;font-weight:500;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.folder-select small{font-size:11px;color:#909399;margin-left:auto}.folder-symbol{color:#7e9bbc;font-size:16px}.folder-tree-row.active .folder-select strong,.folder-tree-row.active .folder-symbol{color:#409eff}.folder-toggle,.folder-toggle-placeholder{width:16px;flex:none;display:inline-flex;align-items:center;justify-content:center}.folder-toggle{height:26px;cursor:pointer;background:none;border:0;padding:0;color:#909399;font-size:19px}.folder-add{flex:none;width:21px;height:24px;border:0;background:none;padding:0;color:#409eff;font-size:17px;cursor:pointer}.folder-tree-row .asset-group-edit{width:22px;padding:3px;height:24px}.folder-all{border-radius:4px;margin-bottom:4px}.folder-all button{display:flex;width:100%;align-items:center;gap:8px;padding:12px;border:0;background:none;cursor:pointer;color:#606266}.folder-all strong{font-size:12px;font-weight:500;flex:1;text-align:left}.folder-all small{color:#909399;font-size:11px}.folder-all.active strong{color:#409eff}.asset-folder-workspace .asset-groups-title>button{display:block}.asset-folder-workspace .asset-new-group{width:100%;border-top:1px solid #ebeef5}.asset-grid.asset-list-host{display:block;overflow:auto}.asset-list-table{width:100%;min-width:730px;table-layout:fixed;border-collapse:collapse;font-size:12px;color:#606266}.asset-list-table th{font-weight:500;text-align:left;padding:12px 10px;background:#f5f7fa;white-space:nowrap;border-bottom:1px solid #ebeef5}.asset-list-table td{padding:14px 10px;vertical-align:middle;border-bottom:1px solid #ebeef5;overflow:hidden}.asset-list-table td:nth-child(3),.asset-list-table td:nth-child(4){white-space:nowrap;color:#909399}.asset-list-table tr{height:84px}.asset-list-table tbody tr:hover{background:#f8fbff}.asset-row-name{display:block;font-size:13px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#303133;line-height:1.7}.asset-row-secondary{display:flex;align-items:center;gap:8px;font-size:11px;color:#909399;margin-top:5px}.asset-row-secondary>span:first-child{background:#f0f3f8;border-radius:3px;padding:1px 4px;white-space:nowrap}.asset-row-secondary>span:last-child{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.asset-row-thumbnail{width:64px;height:50px;position:relative;background:#f4f7fb;border-radius:4px}.asset-row-preview{position:relative;display:flex;align-items:center;justify-content:center;border:0;width:100%;height:100%;padding:0;cursor:pointer;background:transparent;overflow:hidden;border-radius:4px}.asset-row-preview>span{font-size:28px;color:#8ca5cb}.asset-row-preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#f4f7fb}.asset-row-thumbnail .asset-delete-icon{left:-4px;top:-4px;width:21px;height:21px;padding:2px}.asset-row-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.asset-row-actions .el-button{padding:0;margin:0;font-size:12px;height:auto;line-height:1.8}.asset-list-row.selected{background:#ecf5ff}.asset-picker-modal .asset-list-table{min-width:650px}.asset-folder-workspace .asset-section-title p{overflow-wrap:anywhere}.asset-folder-workspace .asset-group-list{gap:0}@media(max-width:1000px){.asset-folder-workspace{grid-template-columns:minmax(0,1fr)}.asset-folder-workspace>.asset-groups{order:0}.asset-folder-workspace>.asset-main{order:1}.asset-folder-tree-container{max-height:240px}.asset-folder-workspace .asset-groups-title{padding:10px 12px}.asset-folder-workspace .asset-new-group{padding:10px;display:block}.folder-tree-row{min-width:0}.asset-folder-workspace .asset-group-list{display:block;overflow:auto}.asset-list-table{min-width:730px}.asset-folder-workspace .asset-groups-title>button{display:block}}
 /* Type shortcuts and pagination. */
@@ -611,7 +628,7 @@ renderMaterialCards=function(container,options={}){const group=options.group??ma
   const info=materialFilePresentation(asset),selected=options.selected?.has(asset.id);
   const path=folderPath(asset.groupId||'ungrouped');
   const row=document.createElement('tr');row.className='asset-list-row'+(selected?' selected':'');
-  row.innerHTML='<td><div class="asset-file-cell"><div class="asset-row-thumbnail is-'+info.kind+'"><button type="button" class="asset-row-preview" aria-label="预览'+escapeText(asset.name)+'">'+info.icon+'</button></div><div class="asset-file-info"><div class="asset-name-line"><button type="button" class="asset-file-name" title="'+escapeText(asset.name)+'">'+escapeText(asset.name)+'</button>'+(options.picker?'':'<button type="button" class="asset-name-pencil" aria-label="修改素材名称 '+escapeText(asset.name)+'" title="修改名称">'+folderPencil+'</button>')+'</div><div class="asset-file-meta">'+escapeText(info.description)+(group==='all'?' <span>·</span> <span title="'+escapeText(path)+'">'+escapeText(path)+'</span>':'')+'</div>'+videoChannelIdMarkup(asset)+'</div></div></td><td><span class="asset-file-format is-'+info.kind+'">'+escapeText(info.format)+'</span></td><td class="asset-file-size">'+(asset.videoChannel?'—':materialSize(asset.size))+'</td><td class="asset-file-date"><time>'+materialDate(asset.uploadedAt)+'</time></td><td><div class="asset-row-actions">'+(options.picker?'<button type="button" class="el-button '+(selected?'asset-select-done':'is-plain el-button--primary')+'" aria-pressed="'+!!selected+'">'+(selected?'已选择':'选择')+'</button>':btn('下载','is-link el-button--primary')+btn('移动分组','is-link el-button--primary')+btn('删除','is-link el-button--danger'))+'</div></td>';
+  row.innerHTML='<td><div class="asset-file-cell"><div class="asset-row-thumbnail is-'+info.kind+'"><button type="button" class="asset-row-preview" aria-label="预览'+escapeText(asset.name)+'">'+info.icon+'</button></div><div class="asset-file-info"><div class="asset-name-line"><button type="button" class="asset-file-name" title="'+escapeText(asset.name)+'">'+escapeText(asset.name)+'</button>'+(options.picker?'':'<button type="button" class="asset-name-pencil" aria-label="修改素材名称 '+escapeText(asset.name)+'" title="修改名称">'+folderPencil+'</button>')+'</div><div class="asset-file-meta"><span class="asset-file-id">ID:</span>'+(group==='all'?' <span>·</span> <span title="'+escapeText(path)+'">'+escapeText(path)+'</span>':'')+'</div>'+videoChannelRowMeta(asset)+'</div></div></td><td><span class="asset-file-format is-'+info.kind+'">'+escapeText(info.format)+'</span></td><td class="asset-file-size">'+(asset.videoChannel?'—':materialSize(asset.size))+'</td><td class="asset-file-date"><time>'+materialDate(asset.uploadedAt)+'</time></td><td><div class="asset-row-actions">'+(options.picker?'<button type="button" class="el-button '+(selected?'asset-select-done':'is-plain el-button--primary')+'" aria-pressed="'+!!selected+'">'+(selected?'已选择':'选择')+'</button>':btn('下载','is-link el-button--primary')+btn('移动分组','is-link el-button--primary')+btn('删除','is-link el-button--danger'))+'</div></td>';
   row.querySelector('.asset-row-preview').onclick=()=>previewMaterial(asset);row.querySelector('.asset-file-name').onclick=()=>previewMaterial(asset);
   const copyIdButton=row.querySelector('.copy-video-channel-id');if(copyIdButton)copyIdButton.onclick=()=>copyVideoChannelId(asset,copyIdButton);
   if(options.picker){buttons(row,selected?'已选择':'选择')[0].onclick=()=>{if(options.selected.has(asset.id))options.selected.delete(asset.id);else options.selected.add(asset.id);renderMaterialCards(container,options);options.onSelection?.()};}
@@ -620,8 +637,12 @@ renderMaterialCards=function(container,options={}){const group=options.group??ma
   if(asset.kind==='image')materialURL(asset.id).then(url=>{if(url&&row.isConnected){const img=document.createElement('img');img.src=url;img.alt='';img.onerror=()=>img.remove();row.querySelector('.asset-row-preview').prepend(img)}}).catch(()=>{});
  });renderAssetPagination(host,pager,matches.length,()=>renderMaterialCards(container,options),!!options.picker);
 };
-function materialFilePresentation(asset){
- const name=String(asset.originalName||asset.name||''),match=name.match(/\.([^.\s]+)$/),ext=match?match[1].toLowerCase():'';
+/* 列表里素材ID统一显示在文件名称下方（ID: 占位），视频号素材只保留原始链接行，不再重复一行ID */
+function videoChannelRowMeta(asset){
+  if(typeof videoChannelIdMarkup!=='function')return '';
+  return videoChannelIdMarkup(asset).replace(/<div class="asset-video-id[^>]*>[^]*?<\/div>/,'');
+}
+function materialFilePresentation(asset){ const name=String(asset.originalName||asset.name||''),match=name.match(/\.([^.\s]+)$/),ext=match?match[1].toLowerCase():'';
  let kind='document',description='文档';
  if(asset.videoChannel||asset.kind==='videochannel'){kind='video';description='视频号链接'}
  else if(/^(png|jpe?g|gif|webp|svg|bmp|avif|heic)$/.test(ext)||asset.kind==='image'){kind='image';description='图片'}
@@ -1952,22 +1973,22 @@ materialGroupsMarkup = function (active) {
       next.add(g.id);
       const children = entries.filter(x => x.parentId === g.id);
       const expanded = expandedMaterialFolders.has(g.id);
-      const count = product.materials.filter(a => (a.groupId || '') === g.id).length;
-      return '<div class="folder-tree-node" role="treeitem" aria-level="' + (depth + 1) + '" aria-selected="' + (active === g.id) + '"' + (children.length ? ' aria-expanded="' + expanded + '"' : '') + '>'
-        + '<div class="folder-tree-row ' + (active === g.id ? 'active' : '') + '" style="--folder-depth:' + depth + '">'
+      return '<div class="folder-tree-node" role="treeitem" aria-level="' + (depth + 1) + '" aria-selected="' + (active === g.id) + '"' + (children.length ? ' aria-expanded="' + expanded + '"' : '') + ' data-folder-node="' + escapeText(g.id) + '">'
+        + '<div class="folder-tree-row ' + (active === g.id ? 'active' : '') + '" style="--folder-depth:' + depth + '" draggable="true" data-folder-row="' + escapeText(g.id) + '">'
         + (children.length
           ? '<button type="button" class="folder-toggle" data-expand-folder="' + escapeText(g.id) + '" aria-label="' + (expanded ? '收起' : '展开') + escapeText(g.name) + '">' + (expanded ? '⌄' : '›') + '</button>'
           : '<span class="folder-toggle-placeholder"></span>')
-        + '<button type="button" class="folder-select" data-material-group="' + escapeText(g.id) + '" title="' + escapeText(folderPath(g.id)) + '"><span class="folder-symbol">▱</span><strong>' + escapeText(g.name) + '</strong><small>' + count + '</small></button>'
-        + '<button type="button" class="folder-add" data-add-subgroup="' + escapeText(g.id) + '" aria-label="在' + escapeText(g.name) + '下新建子文件夹" title="新建子文件夹">＋</button>'
-        + '<button type="button" class="asset-group-edit" data-rename-group="' + escapeText(g.id) + '" aria-label="重命名' + escapeText(g.name) + '" title="修改文件夹名称">' + folderPencil + '</button>'
+        + '<button type="button" class="folder-select" data-material-group="' + escapeText(g.id) + '" title="' + escapeText(folderPath(g.id)) + '"><span class="folder-symbol">▱</span><strong>' + escapeText(g.name) + '</strong></button>'
+        + '<button type="button" class="folder-pencil" data-rename-group="' + escapeText(g.id) + '" aria-label="重命名' + escapeText(g.name) + '" title="重命名文件夹">' + folderPencil + '</button>'
+        + '<span class="folder-spacer"></span>'
+        + '<button type="button" class="folder-more" data-folder-menu="' + escapeText(g.id) + '" aria-label="' + escapeText(g.name) + '的更多操作" title="更多操作" aria-haspopup="menu">···</button>'
         + '</div>'
         + (children.length && expanded ? '<div role="group">' + branch(g.id, depth + 1, next) + '</div>' : '')
         + '</div>';
     }).join('');
   }
   /* 保留一个隐藏的「全部素材」节点：旧的渲染逻辑仍会去绑定它的点击事件 */
-  return '<div class="folder-all" style="display:none"><button type="button" data-material-group="all"><span>▱</span><strong>全部素材</strong><small>' + product.materials.length + '</small></button></div>'
+  return '<div class="folder-all" style="display:none"><button type="button" data-material-group="all"><span>▱</span><strong>全部素材</strong></button></div>'
     + '<div class="asset-detail-group-heading">文件夹</div>'
     + (branch(null, 0, new Set()) || '<div class="opt-empty">暂无文件夹</div>');
 };
@@ -2128,6 +2149,135 @@ function simpleEnsureFolder() {
 function simpleSubfolders(id) {
   return product.materialGroups.filter(g => (g.parentId || null) === id);
 }
+/* 文件夹「···」菜单：只放新增子文件夹 / 删除文件夹；重命名的铅笔紧贴文件夹名 */
+function simpleFolderMenu(anchor, folderId) {
+  document.querySelectorAll('.folder-action-menu').forEach(m => m.remove());
+  const folder = folderId ? product.materialGroups.find(g => g.id === folderId) : null;
+  const items = folder
+    ? [['新增子文件夹', () => editMaterialGroup(null, folder.id)], ['删除文件夹', () => simpleDeleteFolder(folder.id)]]
+    : [['新增一级文件夹', () => editMaterialGroup(null, null)]];
+  const menu = document.createElement('div');
+  menu.className = 'local-menu folder-action-menu';
+  menu.setAttribute('role', 'menu');
+  menu.innerHTML = items.map(([label], i) => '<button type="button" role="menuitem" data-folder-action="' + i + '">' + escapeText(label) + '</button>').join('');
+  document.body.append(menu);
+  const rect = anchor.getBoundingClientRect();
+  const left = Math.max(8, Math.min(rect.right - 140, window.innerWidth - 160));
+  menu.style.left = left + 'px';
+  menu.style.top = Math.round(rect.bottom + 4) + 'px';
+  menu.querySelectorAll('button').forEach((b, i) => {
+    b.onclick = e => { e.stopPropagation(); menu.remove(); items[i][1](); };
+  });
+  const close = ev => {
+    if (menu.contains(ev.target)) return;
+    menu.remove();
+    document.removeEventListener('click', close);
+    document.removeEventListener('keydown', onKey);
+  };
+  const onKey = ev => {
+    if (ev.key !== 'Escape') return;
+    menu.remove();
+    document.removeEventListener('click', close);
+    document.removeEventListener('keydown', onKey);
+  };
+  setTimeout(() => { document.addEventListener('click', close); document.addEventListener('keydown', onKey); }, 0);
+}
+/* 删除文件夹：连同子文件夹一起删除（弹窗里明确提醒），其中文件移到上一级、不删文件本身 */
+function simpleDeleteFolder(id) {
+  const folder = product.materialGroups.find(g => g.id === id);
+  if (!folder) return;
+  const parent = folder.parentId || null;
+  const descendants = [...new Set(folderDescendants(id))];
+  const ids = new Set([id, ...descendants]);
+  const files = product.materials.filter(a => ids.has(a.groupId || ''));
+  const target = parent ? folderPath(parent) : '未分组';
+  const m = simpleModal('删除文件夹',
+    '<p>确认删除文件夹「' + escapeText(folder.name) + '」？</p>'
+    + (descendants.length ? '<p class="asset-deletion-warning">注意：该文件夹下还有 ' + descendants.length + ' 个子文件夹（含多级），删除父文件夹时会一并删除，不可恢复。</p>' : '')
+    + '<p class="opt-muted">' + (files.length ? '其中 ' + files.length + ' 个文件不会被删除，会移到「' + escapeText(target) + '」。' : '该文件夹下没有文件。') + '</p>',
+    modal => {
+      product.materialGroups = product.materialGroups.filter(g => !ids.has(g.id));
+      const dropTo = parent && !ids.has(parent) ? parent : simpleUngroupedId();
+      files.forEach(a => { a.groupId = dropTo; });
+      ids.forEach(fid => expandedMaterialFolders.delete(fid));
+      if (ids.has(materialGroup)) materialGroup = parent && !ids.has(parent) ? parent : dropTo;
+      product.materialExpanded = [...expandedMaterialFolders];
+      if (!materialPersist()) return feedback('删除失败，请检查浏览器存储空间');
+      modal.remove();
+      if (!dialogs.children.length) document.body.style.overflow = '';
+      render();
+      feedback(descendants.length ? '文件夹及其 ' + descendants.length + ' 个子文件夹已删除' : '文件夹已删除');
+    }, '删除');
+  buttons(m, '删除')[0].classList.add('el-button--danger');
+}
+/* 拖动文件夹改变分级：拖到另一个文件夹上成为它的子文件夹，拖到空白处变回一级 */
+function simpleInitFolderDrag(page) {
+  const rows = [...page.querySelectorAll('[data-folder-row]')];
+  const tree = page.querySelector('.asset-group-list');
+  if (!tree || !rows.length) return;
+  const descendants = id => new Set(folderDescendants(id));
+  const clearMarks = () => rows.forEach(r => r.classList.remove('drop-into', 'dragging'));
+  rows.forEach(row => {
+    row.ondragstart = e => {
+      const id = row.dataset.folderRow;
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', id);
+      window.__folderDragId = id;
+      row.classList.add('dragging');
+    };
+    row.ondragend = () => { window.__folderDragId = null; clearMarks(); };
+    row.ondragover = e => {
+      const from = window.__folderDragId;
+      if (!from || from === row.dataset.folderRow || descendants(from).has(row.dataset.folderRow)) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      rows.forEach(r => r.classList.remove('drop-into'));
+      row.classList.add('drop-into');
+    };
+    row.ondragleave = () => row.classList.remove('drop-into');
+    row.ondrop = e => {
+      const from = window.__folderDragId;
+      clearMarks();
+      if (!from) return;
+      e.preventDefault();
+      const to = row.dataset.folderRow;
+      if (from === to || descendants(from).has(to)) return;
+      simpleMoveFolder(from, to);
+    };
+  });
+  tree.ondragover = e => {
+    if (!window.__folderDragId) return;
+    if (e.target.closest('[data-folder-row]')) return;
+    e.preventDefault();
+  };
+  tree.ondrop = e => {
+    const from = window.__folderDragId;
+    if (!from || e.target.closest('[data-folder-row]')) return;
+    e.preventDefault();
+    clearMarks();
+    simpleMoveFolder(from, null);
+  };
+}
+function simpleMoveFolder(id, parentId) {
+  const folder = product.materialGroups.find(g => g.id === id);
+  if (!folder) return;
+  const currentParent = folder.parentId || null;
+  let parent = parentId || null;
+  /* 拖到自己的父文件夹＝向外拖出，与父文件夹平级 */
+  if (parent && parent === currentParent) {
+    parent = (product.materialGroups.find(g => g.id === currentParent) || {}).parentId || null;
+  }
+  if (parent === currentParent) return;
+  const ban = new Set(folderDescendants(id));
+  if (parent && (parent === id || ban.has(parent))) return feedback('不能把文件夹移动到自身或其子文件夹中');
+  if (product.materialGroups.some(g => g.id !== id && (g.parentId || null) === parent && g.name === folder.name)) return feedback('目标文件夹下已存在同名文件夹');
+  folder.parentId = parent;
+  if (parent) expandedMaterialFolders.add(parent);
+  product.materialExpanded = [...expandedMaterialFolders];
+  if (!materialPersist()) return feedback('移动失败，请检查浏览器存储空间');
+  render();
+  feedback(parent ? '已移动到「' + folderPath(parent) + '」' : '已向上移动一级，与「' + (product.materialGroups.find(g => g.id === currentParent) || {}).name + '」平级');
+}
 function simpleFileCount(id) {
   return product.materials.filter(a => (a.groupId || '') === id).length;
 }
@@ -2196,6 +2346,35 @@ renderMaterialLibrary = function () {
   if (newGroup) newGroup.disabled = false;
   const groupsTitleBtn = page.querySelector('.asset-groups-title button');
   if (groupsTitleBtn) groupsTitleBtn.disabled = false;
+  /* 素材数量跟着文件夹名字走，不再放在筛选行最右侧 */
+  const count = page.querySelector('.asset-result-count');
+  const titleHost = page.querySelector('.asset-current-group-title');
+  if (count && titleHost && count.parentElement !== titleHost) {
+    count.classList.add('asset-current-group-count');
+    titleHost.append(count);
+  }
+  /* 右侧当前文件夹最右端：··· 菜单（新增子文件夹 / 重命名 / 删除） */
+  const sectionTitle = page.querySelector('.asset-section-title');
+  if (sectionTitle && !sectionTitle.querySelector('.asset-folder-more')) {
+    const more = document.createElement('button');
+    more.type = 'button';
+    more.className = 'asset-folder-more';
+    more.textContent = '···';
+    more.title = '文件夹操作';
+    more.setAttribute('aria-label', '文件夹操作');
+    more.setAttribute('aria-haspopup', 'menu');
+    more.onclick = e => {
+      e.stopPropagation();
+      const id = materialGroup && product.materialGroups.some(g => g.id === materialGroup) ? materialGroup : null;
+      simpleFolderMenu(more, id);
+    };
+    sectionTitle.append(more);
+  }
+  /* 左侧文件夹行的 ··· 菜单 */
+  page.querySelectorAll('[data-folder-menu]').forEach(b => {
+    b.onclick = e => { e.stopPropagation(); simpleFolderMenu(b, b.dataset.folderMenu); };
+  });
+  simpleInitFolderDrag(page);
 };
 
 /* 引用素材库弹窗：文件夹与文件格式筛选共用素材管理页的口径。 */

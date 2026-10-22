@@ -57,22 +57,22 @@ materialGroupsMarkup = function (active) {
       next.add(g.id);
       const children = entries.filter(x => x.parentId === g.id);
       const expanded = expandedMaterialFolders.has(g.id);
-      const count = product.materials.filter(a => (a.groupId || '') === g.id).length;
-      return '<div class="folder-tree-node" role="treeitem" aria-level="' + (depth + 1) + '" aria-selected="' + (active === g.id) + '"' + (children.length ? ' aria-expanded="' + expanded + '"' : '') + '>'
-        + '<div class="folder-tree-row ' + (active === g.id ? 'active' : '') + '" style="--folder-depth:' + depth + '">'
+      return '<div class="folder-tree-node" role="treeitem" aria-level="' + (depth + 1) + '" aria-selected="' + (active === g.id) + '"' + (children.length ? ' aria-expanded="' + expanded + '"' : '') + ' data-folder-node="' + escapeText(g.id) + '">'
+        + '<div class="folder-tree-row ' + (active === g.id ? 'active' : '') + '" style="--folder-depth:' + depth + '" draggable="true" data-folder-row="' + escapeText(g.id) + '">'
         + (children.length
           ? '<button type="button" class="folder-toggle" data-expand-folder="' + escapeText(g.id) + '" aria-label="' + (expanded ? '收起' : '展开') + escapeText(g.name) + '">' + (expanded ? '⌄' : '›') + '</button>'
           : '<span class="folder-toggle-placeholder"></span>')
-        + '<button type="button" class="folder-select" data-material-group="' + escapeText(g.id) + '" title="' + escapeText(folderPath(g.id)) + '"><span class="folder-symbol">▱</span><strong>' + escapeText(g.name) + '</strong><small>' + count + '</small></button>'
-        + '<button type="button" class="folder-add" data-add-subgroup="' + escapeText(g.id) + '" aria-label="在' + escapeText(g.name) + '下新建子文件夹" title="新建子文件夹">＋</button>'
-        + '<button type="button" class="asset-group-edit" data-rename-group="' + escapeText(g.id) + '" aria-label="重命名' + escapeText(g.name) + '" title="修改文件夹名称">' + folderPencil + '</button>'
+        + '<button type="button" class="folder-select" data-material-group="' + escapeText(g.id) + '" title="' + escapeText(folderPath(g.id)) + '"><span class="folder-symbol">▱</span><strong>' + escapeText(g.name) + '</strong></button>'
+        + '<button type="button" class="folder-pencil" data-rename-group="' + escapeText(g.id) + '" aria-label="重命名' + escapeText(g.name) + '" title="重命名文件夹">' + folderPencil + '</button>'
+        + '<span class="folder-spacer"></span>'
+        + '<button type="button" class="folder-more" data-folder-menu="' + escapeText(g.id) + '" aria-label="' + escapeText(g.name) + '的更多操作" title="更多操作" aria-haspopup="menu">···</button>'
         + '</div>'
         + (children.length && expanded ? '<div role="group">' + branch(g.id, depth + 1, next) + '</div>' : '')
         + '</div>';
     }).join('');
   }
   /* 保留一个隐藏的「全部素材」节点：旧的渲染逻辑仍会去绑定它的点击事件 */
-  return '<div class="folder-all" style="display:none"><button type="button" data-material-group="all"><span>▱</span><strong>全部素材</strong><small>' + product.materials.length + '</small></button></div>'
+  return '<div class="folder-all" style="display:none"><button type="button" data-material-group="all"><span>▱</span><strong>全部素材</strong></button></div>'
     + '<div class="asset-detail-group-heading">文件夹</div>'
     + (branch(null, 0, new Set()) || '<div class="opt-empty">暂无文件夹</div>');
 };
@@ -233,6 +233,135 @@ function simpleEnsureFolder() {
 function simpleSubfolders(id) {
   return product.materialGroups.filter(g => (g.parentId || null) === id);
 }
+/* 文件夹「···」菜单：只放新增子文件夹 / 删除文件夹；重命名的铅笔紧贴文件夹名 */
+function simpleFolderMenu(anchor, folderId) {
+  document.querySelectorAll('.folder-action-menu').forEach(m => m.remove());
+  const folder = folderId ? product.materialGroups.find(g => g.id === folderId) : null;
+  const items = folder
+    ? [['新增子文件夹', () => editMaterialGroup(null, folder.id)], ['删除文件夹', () => simpleDeleteFolder(folder.id)]]
+    : [['新增一级文件夹', () => editMaterialGroup(null, null)]];
+  const menu = document.createElement('div');
+  menu.className = 'local-menu folder-action-menu';
+  menu.setAttribute('role', 'menu');
+  menu.innerHTML = items.map(([label], i) => '<button type="button" role="menuitem" data-folder-action="' + i + '">' + escapeText(label) + '</button>').join('');
+  document.body.append(menu);
+  const rect = anchor.getBoundingClientRect();
+  const left = Math.max(8, Math.min(rect.right - 140, window.innerWidth - 160));
+  menu.style.left = left + 'px';
+  menu.style.top = Math.round(rect.bottom + 4) + 'px';
+  menu.querySelectorAll('button').forEach((b, i) => {
+    b.onclick = e => { e.stopPropagation(); menu.remove(); items[i][1](); };
+  });
+  const close = ev => {
+    if (menu.contains(ev.target)) return;
+    menu.remove();
+    document.removeEventListener('click', close);
+    document.removeEventListener('keydown', onKey);
+  };
+  const onKey = ev => {
+    if (ev.key !== 'Escape') return;
+    menu.remove();
+    document.removeEventListener('click', close);
+    document.removeEventListener('keydown', onKey);
+  };
+  setTimeout(() => { document.addEventListener('click', close); document.addEventListener('keydown', onKey); }, 0);
+}
+/* 删除文件夹：连同子文件夹一起删除（弹窗里明确提醒），其中文件移到上一级、不删文件本身 */
+function simpleDeleteFolder(id) {
+  const folder = product.materialGroups.find(g => g.id === id);
+  if (!folder) return;
+  const parent = folder.parentId || null;
+  const descendants = [...new Set(folderDescendants(id))];
+  const ids = new Set([id, ...descendants]);
+  const files = product.materials.filter(a => ids.has(a.groupId || ''));
+  const target = parent ? folderPath(parent) : '未分组';
+  const m = simpleModal('删除文件夹',
+    '<p>确认删除文件夹「' + escapeText(folder.name) + '」？</p>'
+    + (descendants.length ? '<p class="asset-deletion-warning">注意：该文件夹下还有 ' + descendants.length + ' 个子文件夹（含多级），删除父文件夹时会一并删除，不可恢复。</p>' : '')
+    + '<p class="opt-muted">' + (files.length ? '其中 ' + files.length + ' 个文件不会被删除，会移到「' + escapeText(target) + '」。' : '该文件夹下没有文件。') + '</p>',
+    modal => {
+      product.materialGroups = product.materialGroups.filter(g => !ids.has(g.id));
+      const dropTo = parent && !ids.has(parent) ? parent : simpleUngroupedId();
+      files.forEach(a => { a.groupId = dropTo; });
+      ids.forEach(fid => expandedMaterialFolders.delete(fid));
+      if (ids.has(materialGroup)) materialGroup = parent && !ids.has(parent) ? parent : dropTo;
+      product.materialExpanded = [...expandedMaterialFolders];
+      if (!materialPersist()) return feedback('删除失败，请检查浏览器存储空间');
+      modal.remove();
+      if (!dialogs.children.length) document.body.style.overflow = '';
+      render();
+      feedback(descendants.length ? '文件夹及其 ' + descendants.length + ' 个子文件夹已删除' : '文件夹已删除');
+    }, '删除');
+  buttons(m, '删除')[0].classList.add('el-button--danger');
+}
+/* 拖动文件夹改变分级：拖到另一个文件夹上成为它的子文件夹，拖到空白处变回一级 */
+function simpleInitFolderDrag(page) {
+  const rows = [...page.querySelectorAll('[data-folder-row]')];
+  const tree = page.querySelector('.asset-group-list');
+  if (!tree || !rows.length) return;
+  const descendants = id => new Set(folderDescendants(id));
+  const clearMarks = () => rows.forEach(r => r.classList.remove('drop-into', 'dragging'));
+  rows.forEach(row => {
+    row.ondragstart = e => {
+      const id = row.dataset.folderRow;
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', id);
+      window.__folderDragId = id;
+      row.classList.add('dragging');
+    };
+    row.ondragend = () => { window.__folderDragId = null; clearMarks(); };
+    row.ondragover = e => {
+      const from = window.__folderDragId;
+      if (!from || from === row.dataset.folderRow || descendants(from).has(row.dataset.folderRow)) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      rows.forEach(r => r.classList.remove('drop-into'));
+      row.classList.add('drop-into');
+    };
+    row.ondragleave = () => row.classList.remove('drop-into');
+    row.ondrop = e => {
+      const from = window.__folderDragId;
+      clearMarks();
+      if (!from) return;
+      e.preventDefault();
+      const to = row.dataset.folderRow;
+      if (from === to || descendants(from).has(to)) return;
+      simpleMoveFolder(from, to);
+    };
+  });
+  tree.ondragover = e => {
+    if (!window.__folderDragId) return;
+    if (e.target.closest('[data-folder-row]')) return;
+    e.preventDefault();
+  };
+  tree.ondrop = e => {
+    const from = window.__folderDragId;
+    if (!from || e.target.closest('[data-folder-row]')) return;
+    e.preventDefault();
+    clearMarks();
+    simpleMoveFolder(from, null);
+  };
+}
+function simpleMoveFolder(id, parentId) {
+  const folder = product.materialGroups.find(g => g.id === id);
+  if (!folder) return;
+  const currentParent = folder.parentId || null;
+  let parent = parentId || null;
+  /* 拖到自己的父文件夹＝向外拖出，与父文件夹平级 */
+  if (parent && parent === currentParent) {
+    parent = (product.materialGroups.find(g => g.id === currentParent) || {}).parentId || null;
+  }
+  if (parent === currentParent) return;
+  const ban = new Set(folderDescendants(id));
+  if (parent && (parent === id || ban.has(parent))) return feedback('不能把文件夹移动到自身或其子文件夹中');
+  if (product.materialGroups.some(g => g.id !== id && (g.parentId || null) === parent && g.name === folder.name)) return feedback('目标文件夹下已存在同名文件夹');
+  folder.parentId = parent;
+  if (parent) expandedMaterialFolders.add(parent);
+  product.materialExpanded = [...expandedMaterialFolders];
+  if (!materialPersist()) return feedback('移动失败，请检查浏览器存储空间');
+  render();
+  feedback(parent ? '已移动到「' + folderPath(parent) + '」' : '已向上移动一级，与「' + (product.materialGroups.find(g => g.id === currentParent) || {}).name + '」平级');
+}
 function simpleFileCount(id) {
   return product.materials.filter(a => (a.groupId || '') === id).length;
 }
@@ -301,6 +430,35 @@ renderMaterialLibrary = function () {
   if (newGroup) newGroup.disabled = false;
   const groupsTitleBtn = page.querySelector('.asset-groups-title button');
   if (groupsTitleBtn) groupsTitleBtn.disabled = false;
+  /* 素材数量跟着文件夹名字走，不再放在筛选行最右侧 */
+  const count = page.querySelector('.asset-result-count');
+  const titleHost = page.querySelector('.asset-current-group-title');
+  if (count && titleHost && count.parentElement !== titleHost) {
+    count.classList.add('asset-current-group-count');
+    titleHost.append(count);
+  }
+  /* 右侧当前文件夹最右端：··· 菜单（新增子文件夹 / 重命名 / 删除） */
+  const sectionTitle = page.querySelector('.asset-section-title');
+  if (sectionTitle && !sectionTitle.querySelector('.asset-folder-more')) {
+    const more = document.createElement('button');
+    more.type = 'button';
+    more.className = 'asset-folder-more';
+    more.textContent = '···';
+    more.title = '文件夹操作';
+    more.setAttribute('aria-label', '文件夹操作');
+    more.setAttribute('aria-haspopup', 'menu');
+    more.onclick = e => {
+      e.stopPropagation();
+      const id = materialGroup && product.materialGroups.some(g => g.id === materialGroup) ? materialGroup : null;
+      simpleFolderMenu(more, id);
+    };
+    sectionTitle.append(more);
+  }
+  /* 左侧文件夹行的 ··· 菜单 */
+  page.querySelectorAll('[data-folder-menu]').forEach(b => {
+    b.onclick = e => { e.stopPropagation(); simpleFolderMenu(b, b.dataset.folderMenu); };
+  });
+  simpleInitFolderDrag(page);
 };
 
 /* 引用素材库弹窗：文件夹与文件格式筛选共用素材管理页的口径。 */
