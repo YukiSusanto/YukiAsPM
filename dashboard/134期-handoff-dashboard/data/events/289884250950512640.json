@@ -1,0 +1,81 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "289884250950512640",
+    "handoff_id": "cd8fe82d2aaf42eb89fafa10d2fa02ce",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "WuBingBing01",
+    "external_userid": "wm5oClDAAAJammQ9GbjSacDDrKORQsQA",
+    "vid": "1688854713729599",
+    "third_user_id": "7881301520016706",
+    "third_sale_uuid": "ac006d54a38a38eaa038e87d2719bd52",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不足，追问：确认家长问的是哪一场直播（周几那场）",
+    "trigger_message_id": "1667523139008396395",
+    "pre_window_start": "2026-10-15 16:36:05",
+    "pre_window_end": "2026-10-15 17:06:05"
+  },
+  "messages": [
+    {
+      "_id": "6ad096f726a9b747d9e953fc",
+      "vid": "1688854713729599",
+      "userId": "7881301520016706",
+      "uuid": "ac006d54a38a38eaa038e87d2719bd52",
+      "senderType": 0,
+      "msgType": 1,
+      "sender": "1688854713729599",
+      "receiver": "7881301520016706",
+      "sendTime": "2026-10-15 17:03:51",
+      "content": "家长，给您赠送的3天直播课名额还留着呢，三天内容不一样，记得分别点三天链接预约哦",
+      "msgId": "3911157",
+      "serverId": "11548749",
+      "appInfo": "CIOACBDC7bb2kzQYv4SoipKAgAMgyp8M",
+      "revoked": false,
+      "createdAt": "1792055031710"
+    },
+    {
+      "_id": "6ad0970f27f2447a703e0331",
+      "vid": "1688854713729599",
+      "userId": "7881301520016706",
+      "uuid": "ac006d54a38a38eaa038e87d2719bd52",
+      "senderType": 0,
+      "msgType": 1,
+      "sender": "1688854713729599",
+      "receiver": "7881301520016706",
+      "sendTime": "2026-10-15 17:04:15",
+      "content": "家长，刚看您兑换会员没成功，这边赠送的3天直播课先帮您安排上，三天内容不一样，记得分别点三天链接预约哦",
+      "msgId": "3911159",
+      "serverId": "11548750",
+      "appInfo": "CIOACBCcq7j2kzQYv4SoipKAgAMgzJ8M",
+      "revoked": false,
+      "createdAt": "1792055055986"
+    },
+    {
+      "_id": "6ad0977026a9b747d9e95c3a",
+      "vid": "1688854713729599",
+      "userId": "7881301520016706",
+      "uuid": "ac006d54a38a38eaa038e87d2719bd52",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881301520016706",
+      "receiver": "1688854713729599",
+      "sendTime": "2026-10-15 17:05:51",
+      "content": "在哪里点？",
+      "msgId": "3911171",
+      "serverId": "11548755",
+      "appInfo": "1667523139008396395",
+      "revoked": false,
+      "createdAt": "1792055152808"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:22:15.949Z"
+}

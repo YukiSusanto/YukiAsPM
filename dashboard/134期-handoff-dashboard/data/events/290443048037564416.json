@@ -1,0 +1,81 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290443048037564416",
+    "handoff_id": "9476be8ee08d456bbd5c590840401072",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "XuLei",
+    "external_userid": "wm5oClDAAA73SLj5AR5reOKqoYnHeztA",
+    "vid": "1688856635654364",
+    "third_user_id": "7881303148050098",
+    "third_sale_uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不足，追问：请家长提供订单号或购买平台",
+    "trigger_message_id": "8819109574163688767",
+    "pre_window_start": "2026-10-21 20:37:55",
+    "pre_window_end": "2026-10-21 21:07:55"
+  },
+  "messages": [
+    {
+      "_id": "6ad8b911c927de5c485d2ac8",
+      "vid": "1688856635654364",
+      "userId": "7881303148050098",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881303148050098",
+      "receiver": "1688856635654364",
+      "sendTime": "2026-10-21 21:07:28",
+      "content": "怎么弄啊",
+      "msgId": "5266261",
+      "serverId": "9811319",
+      "appInfo": "6296939601021564312",
+      "revoked": false,
+      "createdAt": "1792588049684"
+    },
+    {
+      "_id": "6ad8b91156bb206080beebbf",
+      "vid": "1688856635654364",
+      "userId": "7881303148050098",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 4,
+      "msgType": 0,
+      "sender": "1688856635654364",
+      "receiver": "7881303148050098",
+      "sendTime": "2026-10-21 21:07:29",
+      "content": "家长您好! 现在是休息时间，把问题留言给我~我会按顺序给您回复！\n\n工作时间周一到周五：13点--21点。",
+      "msgId": "5266264",
+      "serverId": "9811320",
+      "appInfo": "crm_offwork_1688856635654364_7881303148050098_1792587600_text_1",
+      "revoked": false,
+      "createdAt": "1792588049885"
+    },
+    {
+      "_id": "6ad8b91dc927de5c485d2acb",
+      "vid": "1688856635654364",
+      "userId": "7881303148050098",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881303148050098",
+      "receiver": "1688856635654364",
+      "sendTime": "2026-10-21 21:07:40",
+      "content": "那天付了款我又退了",
+      "msgId": "5266268",
+      "serverId": "9811322",
+      "appInfo": "8819109574163688767",
+      "revoked": false,
+      "createdAt": "1792588061983"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:52.408Z"
+}

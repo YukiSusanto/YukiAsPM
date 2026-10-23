@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290442147766910976",
+    "handoff_id": "e587eee6567148b09beb84eff74c1b66",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "XuLei",
+    "external_userid": "wm5oClDAAAJEKk0C9560fIpCLhzqqLkA",
+    "vid": "1688856635654364",
+    "third_user_id": "7881300253916482",
+    "third_sale_uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不够明确，请结合上文确认家长真正想问的问题",
+    "trigger_message_id": "3821026544883813971",
+    "pre_window_start": "2026-10-21 20:23:37",
+    "pre_window_end": "2026-10-21 20:53:37"
+  },
+  "messages": [
+    {
+      "_id": "6ad8b56bc927de5c485d0359",
+      "vid": "1688856635654364",
+      "userId": "7881300253916482",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 4,
+      "msgType": 2,
+      "sender": "1688856635654364",
+      "receiver": "7881300253916482",
+      "sendTime": "2026-10-21 20:51:55",
+      "content": "​‌​​‌​‌​​‌​‌​​‌‌​‌​‌​​​‌​‌​​​‌‌​  【您的陪跑营7天试学权益已解锁】💓\n   \n   报名后试学7天！体验一周正式课程和1对1专八老师纠音陪跑服务👏🏻\n   \n   不满意随时申请全额退费❗\n   不合适随时申请全额退费❗\n   支持淘宝6期免息报名\n  \n   雪梨老师也想问下您，有考虑让孩子跟着她学英语吗？\n   真的可以和我说下，我们解决好了再报名！",
+      "msgId": "5265969",
+      "serverId": "9811185",
+      "appInfo": "KHGS_19OMpPPJRtWCM-F7881300253916482_4729165004021293050_0",
+      "revoked": false,
+      "createdAt": "1792587115686"
+    },
+    {
+      "_id": "6ad8b5c556bb206080bec4b9",
+      "vid": "1688856635654364",
+      "userId": "7881300253916482",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881300253916482",
+      "receiver": "1688856635654364",
+      "sendTime": "2026-10-21 20:53:23",
+      "content": "直播福利  发下",
+      "msgId": "5266061",
+      "serverId": "9811230",
+      "appInfo": "3821026544883813971",
+      "revoked": false,
+      "createdAt": "1792587205106"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:52.076Z"
+}

@@ -1,0 +1,81 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "289885150032084992",
+    "handoff_id": "82e38a0328c64ff7b98168a80b0647e4",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "ZhangNing",
+    "external_userid": "wm5oClDAAAe_PM3yJ3uV3gZhhNU-rC0Q",
+    "vid": "1688856537655175",
+    "third_user_id": "7881301389015591",
+    "third_sale_uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+    "scenario_type": "knowledge_support",
+    "scenario_code": "KNOWLEDGE_INSUFFICIENT",
+    "scenario_description": "现有知识不足以可靠回答客户问题",
+    "trigger_message_id": "1117217871268368856",
+    "pre_window_start": "2026-10-15 16:50:22",
+    "pre_window_end": "2026-10-15 17:20:22"
+  },
+  "messages": [
+    {
+      "_id": "6ad09ab826a9b747d9e95c82",
+      "vid": "1688856537655175",
+      "userId": "7881301389015591",
+      "uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881301389015591",
+      "receiver": "1688856537655175",
+      "sendTime": "2026-10-15 17:19:52",
+      "content": "我已经添加了你，现在我们可以开始聊天了。",
+      "msgId": "9193073",
+      "serverId": "14501240",
+      "appInfo": "xcx_create_conversation_together_7881301389015591_1688856537655175_1#queue2@21_100_38_218@2#1792055991|889621262_2",
+      "revoked": false,
+      "createdAt": "1792055992565"
+    },
+    {
+      "_id": "6ad09abc27f2447a703e08a6",
+      "vid": "1688856537655175",
+      "userId": "7881301389015591",
+      "uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+      "senderType": 4,
+      "msgType": 2,
+      "sender": "1688856537655175",
+      "receiver": "7881301389015591",
+      "sendTime": "2026-10-15 17:19:55",
+      "content": "🌹欢迎参加雪梨老师三天直播课\n\n在直播前，请先回答下面问题，方便雪梨老师给孩子做相对应的学习规划\n\n❶孩子目前几年级\n❷孩子是否有以下问题：发音不标准、记不住单词、不愿意开口，对英语提不起兴趣",
+      "msgId": "9193082",
+      "serverId": "14501244",
+      "appInfo": "WMG_API_-l3vyOwCQLmd7FL",
+      "revoked": false,
+      "createdAt": "1792055996033"
+    },
+    {
+      "_id": "6ad09acb26a9b747d9e95c85",
+      "vid": "1688856537655175",
+      "userId": "7881301389015591",
+      "uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881301389015591",
+      "receiver": "1688856537655175",
+      "sendTime": "2026-10-15 17:20:09",
+      "content": "21天学会自然拼读",
+      "msgId": "9193096",
+      "serverId": "14501250",
+      "appInfo": "1117217871268368856",
+      "revoked": false,
+      "createdAt": "1792056011146"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:22:16.105Z"
+}

@@ -1,0 +1,81 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290347016876376064",
+    "handoff_id": "35027d9b8b0045d88979be699168864e",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "XuLei",
+    "external_userid": "wm5oClDAAAGu5sSPTnonrTu1_83yBKBQ",
+    "vid": "1688856635654364",
+    "third_user_id": "7881301905929353",
+    "third_sale_uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+    "scenario_type": "knowledge_support",
+    "scenario_code": "KNOWLEDGE_INSUFFICIENT",
+    "scenario_description": "现有知识不足以可靠回答客户问题",
+    "trigger_message_id": "6318596702757504598",
+    "pre_window_start": "2026-10-20 19:11:33",
+    "pre_window_end": "2026-10-20 19:41:33"
+  },
+  "messages": [
+    {
+      "_id": "6ad74d7daa86062019881f2f",
+      "vid": "1688856635654364",
+      "userId": "7881301905929353",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 4,
+      "msgType": 2,
+      "sender": "1688856635654364",
+      "receiver": "7881301905929353",
+      "sendTime": "2026-10-20 19:16:13",
+      "content": "​‌​​‌​‌​​‌​‌​​‌‌​‌​‌​​​‌​‌​​​‌‌​【系统提醒】您预约的雪梨老师直播课正在讲解中……，请尽快加入直播间参与哦~\n \n 直播入口：https://xl.shirleyclass.com/s/7nNXmp9",
+      "msgId": "5237512",
+      "serverId": "9797784",
+      "appInfo": "KHGS_oDeAIDksSVSXzae7881301905929353_4729158968206828119_0",
+      "revoked": false,
+      "createdAt": "1792494973738"
+    },
+    {
+      "_id": "6ad751e1aa86062019882edc",
+      "vid": "1688856635654364",
+      "userId": "7881301905929353",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 4,
+      "msgType": 2,
+      "sender": "1688856635654364",
+      "receiver": "7881301905929353",
+      "sendTime": "2026-10-20 19:34:57",
+      "content": "​‌​​‌​‌​​‌​‌​​‌‌​‌​‌​​​‌​‌​​​‌‌​ 咱宝贝有没有单词记不住、发音不好、没兴趣的问题❔\n 雪梨老师在讲解决办法🥰，您听的同时也可以做下笔记，应该能有效解决问题~",
+      "msgId": "5239040",
+      "serverId": "9798529",
+      "appInfo": "KHGS_4z6ET_6dQie7jSZ7881301905929353_4729159039043114201_0",
+      "revoked": false,
+      "createdAt": "1792496097562"
+    },
+    {
+      "_id": "6ad7535daa86062019882fe3",
+      "vid": "1688856635654364",
+      "userId": "7881301905929353",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881301905929353",
+      "receiver": "1688856635654364",
+      "sendTime": "2026-10-20 19:41:15",
+      "content": "这每天背的单词要复习怎么操作？",
+      "msgId": "5239292",
+      "serverId": "9798649",
+      "appInfo": "6318596702757504598",
+      "revoked": false,
+      "createdAt": "1792496477382"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:44.112Z"
+}

@@ -1,0 +1,418 @@
+[
+  {
+    "primary": "knowledge_support",
+    "description": "现有知识不足以可靠回答客户问题",
+    "secondary": "knowledge_support/knowledge-gap",
+    "secondary_name": "知识覆盖不足（未细分）",
+    "count": 229,
+    "rationale": "原始描述未提供具体知识主题，保留为未细分。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "信息不足，追问：确认家长问的是哪一场直播（周几那场）",
+    "secondary": "agent_request/live-session",
+    "secondary_name": "直播场次待确认",
+    "count": 144,
+    "rationale": "需要确认客户所指的直播场次。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "信息不够明确，请结合上文确认家长真正想问的问题",
+    "secondary": "agent_request/unclear-question",
+    "secondary_name": "问题指向不明确",
+    "count": 112,
+    "rationale": "上下文不足以确认客户真正的问题。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户咨询产品类问题，但无产品标签且上下文未指名产品，无法定位所购产品；需人工确认客户购买的产品后按对应产品口径回答",
+    "secondary": "agent_request/product-identity",
+    "secondary_name": "所购产品待确认",
+    "count": 100,
+    "rationale": "缺少产品标签或明确产品指向。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "信息不足，追问：请家长提供订单号或购买平台",
+    "secondary": "agent_request/order-info",
+    "secondary_name": "订单或购买平台待补充",
+    "count": 86,
+    "rationale": "缺少订单号或购买平台信息。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "信息不足，追问：确认购课手机号是否与登录手机号一致",
+    "secondary": "agent_request/phone-check",
+    "secondary_name": "购课与登录手机号核对",
+    "count": 64,
+    "rationale": "需核对购课和登录使用的手机号。"
+  },
+  {
+    "primary": "customer_refusal",
+    "description": "客户明确拒绝继续沟通",
+    "secondary": "customer_refusal/refusal",
+    "secondary_name": "明确拒绝继续沟通",
+    "count": 57,
+    "rationale": "依据原始描述中的明确拒绝意图。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "信息不足，追问：确认家长的设备品牌型号",
+    "secondary": "agent_request/device-info",
+    "secondary_name": "设备品牌型号待确认",
+    "count": 33,
+    "rationale": "缺少设备型号信息。"
+  },
+  {
+    "primary": "after_sales",
+    "description": "退款、投诉或售后纠纷，需要人工处理",
+    "secondary": "after_sales/after-sales",
+    "secondary_name": "退款、投诉与售后纠纷",
+    "count": 13,
+    "rationale": "原始描述合并了三类情况，未作无证据拆分。"
+  },
+  {
+    "primary": "sales_objection",
+    "description": "客户对价格、费用或优惠存在异议",
+    "secondary": "sales_objection/price",
+    "secondary_name": "价格与优惠异议",
+    "count": 12,
+    "rationale": "合并价格、费用和优惠相关异议。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户质疑沟通对象身份（怀疑是机器人/AI），信任出现危机，不再解释、直接转人工",
+    "secondary": "agent_request/trust",
+    "secondary_name": "身份质疑与信任危机",
+    "count": 7,
+    "rationale": "客户质疑机器回复或沟通对象身份。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "不支持的客户消息类型：msgType=103（外部联系人视频消息）",
+    "secondary": "agent_request/unsupported-media",
+    "secondary_name": "视频消息暂不支持",
+    "count": 6,
+    "rationale": "原始描述明确为不支持的视频消息类型。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "AI 连续两次生成回复失败，已自动转人工处理",
+    "secondary": "agent_request/generation-failed",
+    "secondary_name": "AI 连续生成失败",
+    "count": 2,
+    "rationale": "明确记载连续生成失败。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "ambiguous_new_fact:订单",
+    "secondary": "agent_request/new-order-fact",
+    "secondary_name": "新增订单事实待核实",
+    "count": 2,
+    "rationale": "原始标签 ambiguous_new_fact:订单。"
+  },
+  {
+    "primary": "sales_objection",
+    "description": "客户对课程效果或适配性存在疑问",
+    "secondary": "sales_objection/effect",
+    "secondary_name": "效果与适配性疑问",
+    "count": 2,
+    "rationale": "课程效果或适配性相关疑问。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户激活时提示兑换码已失效，需要老师核实兑换码状态并处理",
+    "secondary": "agent_request/activation",
+    "secondary_name": "激活失败与账号权益核实",
+    "count": 1,
+    "rationale": "激活码、开通失败、有效期和账号权益问题合并。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户想要前面老师讲课时提到的那个链接，具体指向哪个课程或入口无法确认，需真人老师核实后发送",
+    "secondary": "agent_request/link",
+    "secondary_name": "课程或直播链接补发",
+    "count": 1,
+    "rationale": "链接指向无法确认或需重新发送。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "家长质疑消息是否为机器发送，出现信任危机，需真人老师接管",
+    "secondary": "agent_request/trust",
+    "secondary_name": "身份质疑与信任危机",
+    "count": 1,
+    "rationale": "客户质疑机器回复或沟通对象身份。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "家长反馈打卡学习表格未收到，需要真人老师核实并重新发送该资料",
+    "secondary": "agent_request/materials",
+    "secondary_name": "赠品与资料核实补发",
+    "count": 1,
+    "rationale": "资料未收到、赠品权益等需核实。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户在单词拼读王APP里找不到已购买的200集分级动画，截图显示\"课程还未开通\"需在雪梨学习团小程序开课，涉及订单权益与开课路径核实，需真人老师处理",
+    "secondary": "agent_request/activation",
+    "secondary_name": "激活失败与账号权益核实",
+    "count": 1,
+    "rationale": "激活码、开通失败、有效期和账号权益问题合并。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户激活会员一直不成功，已自行申请人工客服，需真人老师核实订单与激活信息",
+    "secondary": "agent_request/activation",
+    "secondary_name": "激活失败与账号权益核实",
+    "count": 1,
+    "rationale": "激活码、开通失败、有效期和账号权益问题合并。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户提供的订单通知短信里没有兑换码，只有添加助理开通账号的链接，订单编号也激活不了，需要真人老师核实订单并协助开通",
+    "secondary": "agent_request/activation",
+    "secondary_name": "激活失败与账号权益核实",
+    "count": 1,
+    "rationale": "激活码、开通失败、有效期和账号权益问题合并。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "家长按步骤兑换后会员有效期仍显示19号到期，涉及订单和权益核实，需真人老师查订单处理",
+    "secondary": "agent_request/activation",
+    "secondary_name": "激活失败与账号权益核实",
+    "count": 1,
+    "rationale": "激活码、开通失败、有效期和账号权益问题合并。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户兑换码激活反复失败，需真人老师核实订单与兑换码状态",
+    "secondary": "agent_request/activation",
+    "secondary_name": "激活失败与账号权益核实",
+    "count": 1,
+    "rationale": "激活码、开通失败、有效期和账号权益问题合并。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户已提供订单截图，账号权益未到账、激活失败，需真人老师核实订单与权益发放情况",
+    "secondary": "agent_request/activation",
+    "secondary_name": "激活失败与账号权益核实",
+    "count": 1,
+    "rationale": "激活码、开通失败、有效期和账号权益问题合并。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "家长在学习机上找不到单词王APP入口，需要真人老师核实学习机端下载安装方式",
+    "secondary": "agent_request/device-install",
+    "secondary_name": "学习机端下载安装",
+    "count": 1,
+    "rationale": "需核实学习机端的应用安装入口。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "家长下单时买成了悦读小达人，实际想买单词拼读王，需要老师核实订单并处理更换",
+    "secondary": "agent_request/exchange",
+    "secondary_name": "课程更换与订单调整",
+    "count": 1,
+    "rationale": "客户买错或请求更换课程。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户按订单编号激活仍提示兑换码有误，需老师核实订单与兑换码状态",
+    "secondary": "agent_request/activation",
+    "secondary_name": "激活失败与账号权益核实",
+    "count": 1,
+    "rationale": "激活码、开通失败、有效期和账号权益问题合并。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户按兑换码和订单编号激活均失败，需真人老师核实订单与账号权益",
+    "secondary": "agent_request/activation",
+    "secondary_name": "激活失败与账号权益核实",
+    "count": 1,
+    "rationale": "激活码、开通失败、有效期和账号权益问题合并。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "家长表示是确认过赠送绘本和资料才下单的，涉及赠品权益核实与订单处理，需真人老师核实",
+    "secondary": "agent_request/materials",
+    "secondary_name": "赠品与资料核实补发",
+    "count": 1,
+    "rationale": "资料未收到、赠品权益等需核实。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户按步骤用兑换码和订单编号都无法激活单词拼读王会员，需要真人老师核实订单与账号权限",
+    "secondary": "agent_request/activation",
+    "secondary_name": "激活失败与账号权益核实",
+    "count": 1,
+    "rationale": "激活码、开通失败、有效期和账号权益问题合并。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户添加第二个孩子档案反复提示业务繁忙，已换网络仍失败，需技术核实排查",
+    "secondary": "agent_request/technical",
+    "secondary_name": "APP 功能与内容异常",
+    "count": 1,
+    "rationale": "功能异常或发音内容需人工排查。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "家长已提供订单号3739911975112457472，兑换码和订单号均激活失败，需老师后台核实订单与兑换码",
+    "secondary": "agent_request/activation",
+    "secondary_name": "激活失败与账号权益核实",
+    "count": 1,
+    "rationale": "激活码、开通失败、有效期和账号权益问题合并。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "家长反馈激活后有效期显示2026年10月20号，与承诺的20年不符，涉及权益核实，需真人老师处理",
+    "secondary": "agent_request/activation",
+    "secondary_name": "激活失败与账号权益核实",
+    "count": 1,
+    "rationale": "激活码、开通失败、有效期和账号权益问题合并。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户疑似质疑班主任身份（\"你现在就是\"），信任危机，转真人老师接管",
+    "secondary": "agent_request/trust",
+    "secondary_name": "身份质疑与信任危机",
+    "count": 1,
+    "rationale": "客户质疑机器回复或沟通对象身份。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "家长反馈APP里字母Z的发音读成了U，属于发音内容问题，需要真人老师核实音频并判断是否为版本问题",
+    "secondary": "agent_request/technical",
+    "secondary_name": "APP 功能与内容异常",
+    "count": 1,
+    "rationale": "功能异常或发音内容需人工排查。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户兑换码和订单编号均激活失败，需老师核实订单与权益状态",
+    "secondary": "agent_request/activation",
+    "secondary_name": "激活失败与账号权益核实",
+    "count": 1,
+    "rationale": "激活码、开通失败、有效期和账号权益问题合并。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户兑换码和订单编号多次激活均失败，需老师核实订单与权益状态",
+    "secondary": "agent_request/activation",
+    "secondary_name": "激活失败与账号权益核实",
+    "count": 1,
+    "rationale": "激活码、开通失败、有效期和账号权益问题合并。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户订单待发货、短信未收到兑换码，用订单号激活提示有误，需真人老师核实订单与兑换码",
+    "secondary": "agent_request/activation",
+    "secondary_name": "激活失败与账号权益核实",
+    "count": 1,
+    "rationale": "激活码、开通失败、有效期和账号权益问题合并。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "out_of_scope_or_unsafe",
+    "secondary": "agent_request/scope-boundary",
+    "secondary_name": "超范围或安全边界",
+    "count": 1,
+    "rationale": "保留原始标签含义，不进一步推断。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户按指引多次输入订单编号激活仍无20年权益显示，需真人老师核实订单与账号权限",
+    "secondary": "agent_request/activation",
+    "secondary_name": "激活失败与账号权益核实",
+    "count": 1,
+    "rationale": "激活码、开通失败、有效期和账号权益问题合并。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "家长要求把已购课程换成悦读小达人，涉及订单和权益裁决，需真人老师核实处理",
+    "secondary": "agent_request/exchange",
+    "secondary_name": "课程更换与订单调整",
+    "count": 1,
+    "rationale": "客户买错或请求更换课程。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户多次输入兑换码和订单编号激活仍无会员权益显示，需真人老师核实订单与账号权限",
+    "secondary": "agent_request/activation",
+    "secondary_name": "激活失败与账号权益核实",
+    "count": 1,
+    "rationale": "激活码、开通失败、有效期和账号权益问题合并。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户已按激活流程操作仍显示课程未开通，需要真人老师核实订单与账号权限",
+    "secondary": "agent_request/activation",
+    "secondary_name": "激活失败与账号权益核实",
+    "count": 1,
+    "rationale": "激活码、开通失败、有效期和账号权益问题合并。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户多次尝试订单编号和兑换码激活均失败，已反馈技术，需真人老师核实账号与订单状态并处理",
+    "secondary": "agent_request/activation",
+    "secondary_name": "激活失败与账号权益核实",
+    "count": 1,
+    "rationale": "激活码、开通失败、有效期和账号权益问题合并。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "家长已回复1确认预约，需要真人老师核实预约状态并协助激活课程会员",
+    "secondary": "agent_request/booking",
+    "secondary_name": "预约状态核实",
+    "count": 1,
+    "rationale": "核实预约是否成功及后续开通。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户多次反馈收不到可点击的直播预约链接，需要真人老师核实并重新发送链接",
+    "secondary": "agent_request/link",
+    "secondary_name": "课程或直播链接补发",
+    "count": 1,
+    "rationale": "链接指向无法确认或需重新发送。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户质疑消息是机器发的，出现信任危机，需真人老师接管",
+    "secondary": "agent_request/trust",
+    "secondary_name": "身份质疑与信任危机",
+    "count": 1,
+    "rationale": "客户质疑机器回复或沟通对象身份。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "家长要求陪跑营app到期后再开通一次，涉及权益裁决，需真人老师核实处理",
+    "secondary": "agent_request/renewal",
+    "secondary_name": "到期后再次开通权益",
+    "count": 1,
+    "rationale": "再次开通涉及权益裁决。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "存在强勿扰风险但证据不足，需人工确认",
+    "secondary": "agent_request/refusal-boundary",
+    "secondary_name": "拒绝与勿扰边界判断",
+    "count": 1,
+    "rationale": "原始一级仍为 agent_request，二级保留边界判断。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户明确表示“我不报课”，在当前课程推销语境下属于拒绝本次整体购买方案，未达到强勿扰标准。",
+    "secondary": "agent_request/refusal-boundary",
+    "secondary_name": "拒绝与勿扰边界判断",
+    "count": 1,
+    "rationale": "原始一级仍为 agent_request，二级保留边界判断。"
+  },
+  {
+    "primary": "agent_request",
+    "description": "客户明确表示不用推荐、不报课了，属于明确要求停止推销和整体拒绝，礼貌表达同样成立。",
+    "secondary": "agent_request/refusal-boundary",
+    "secondary_name": "拒绝与勿扰边界判断",
+    "count": 1,
+    "rationale": "原始一级仍为 agent_request，二级保留边界判断。"
+  }
+]

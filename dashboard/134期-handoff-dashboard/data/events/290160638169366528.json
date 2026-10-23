@@ -1,0 +1,47 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290160638169366528",
+    "handoff_id": "6169e6da03054880b7d020f5fecbebdc",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "ZhangNing",
+    "external_userid": "wm5oClDAAAziLnITSJSqifubwBhR7JWQ",
+    "vid": "1688856537655175",
+    "third_user_id": "7881300522973097",
+    "third_sale_uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不够明确，请结合上文确认家长真正想问的问题",
+    "trigger_message_id": "3387627413993580360",
+    "pre_window_start": "2026-10-18 17:49:08",
+    "pre_window_end": "2026-10-18 18:19:08"
+  },
+  "messages": [
+    {
+      "_id": "6ad49d0e1f0e945f7d13336c",
+      "vid": "1688856537655175",
+      "userId": "7881300522973097",
+      "uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+      "senderType": 1,
+      "msgType": 101,
+      "sender": "7881300522973097",
+      "receiver": "1688856537655175",
+      "sendTime": "2026-10-18 18:18:52",
+      "content": "https://static.xueliyingyu.com/res/file/qywxChatFile/20261018/290160623739908096.jpg",
+      "msgId": "9248081",
+      "serverId": "14526961",
+      "appInfo": "3387627413993580360",
+      "revoked": false,
+      "createdAt": "1792318734548"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:38.540Z"
+}

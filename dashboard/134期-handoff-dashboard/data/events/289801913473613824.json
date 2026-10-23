@@ -1,0 +1,47 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "289801913473613824",
+    "handoff_id": "6af76476158b44eaac576c28fc7ab76c",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "XuLei",
+    "external_userid": "wm5oClDAAA0KwXLCqZcxosJqpL7Dh5uQ",
+    "vid": "1688856635654364",
+    "third_user_id": "7881300166008585",
+    "third_sale_uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不足，追问：确认家长问的是哪一场直播（周几那场）",
+    "trigger_message_id": "8868529124973638974",
+    "pre_window_start": "2026-10-14 18:47:22",
+    "pre_window_end": "2026-10-14 19:17:22"
+  },
+  "messages": [
+    {
+      "_id": "6acf64b55e3d4368fc253a4c",
+      "vid": "1688856635654364",
+      "userId": "7881300166008585",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881300166008585",
+      "receiver": "1688856635654364",
+      "sendTime": "2026-10-14 19:17:08",
+      "content": "听课干嘛的",
+      "msgId": "5140068",
+      "serverId": "9751645",
+      "appInfo": "8868529124973638974",
+      "revoked": false,
+      "createdAt": "1791976629999"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:22:04.392Z"
+}

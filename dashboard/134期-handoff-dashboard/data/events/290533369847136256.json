@@ -1,0 +1,81 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290533369847136256",
+    "handoff_id": "5f34a43fbf834c0eb5f672ffe7a091dc",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "LiaoZengZeng",
+    "external_userid": "wm5oClDAAA-yf2PweHDQNFVjd0GFQ-0Q",
+    "vid": "1688857564665004",
+    "third_user_id": "7881302882028794",
+    "third_sale_uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+    "scenario_type": "customer_refusal",
+    "scenario_code": "EXPLICIT_REFUSAL",
+    "scenario_description": "客户明确拒绝继续沟通",
+    "trigger_message_id": "7648832430229409312",
+    "pre_window_start": "2026-10-22 20:33:33",
+    "pre_window_end": "2026-10-22 21:03:33"
+  },
+  "messages": [
+    {
+      "_id": "6ada093466c04f27b216f5bf",
+      "vid": "1688857564665004",
+      "userId": "7881302882028794",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 5,
+      "msgType": 2,
+      "sender": "1688857564665004",
+      "receiver": "7881302882028794",
+      "sendTime": "2026-10-22 21:01:40",
+      "content": "雪梨老师刚下播了！3天直播课已结束~ 陪跑营相关您可以咨询我❤\n\n今天报名，除了直播间福利！我可以帮孩子继续申请直播间所有福利！\n赠送6999礼包+7天无理由试学\n\n（不满意无条件全额退款❗）\n\n6期免息，试学不满意能退~抢完剩下的名额！之后就没有这些福利了！您考虑一下给我答复\n\n【立即购买】请发送1\n【分期购买】请发送2 \n【咨询报名级别】请发送3",
+      "msgId": "7505454",
+      "serverId": "13159899",
+      "appInfo": "CIOACBDu7M+dljQYrKnf2ZyAgAMg94MH",
+      "revoked": false,
+      "createdAt": "1792674100989"
+    },
+    {
+      "_id": "6ada0997c4450c34c1d1af90",
+      "vid": "1688857564665004",
+      "userId": "7881302882028794",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881302882028794",
+      "receiver": "1688857564665004",
+      "sendTime": "2026-10-22 21:03:18",
+      "content": "不报了，谢谢[玫瑰]",
+      "msgId": "7505674",
+      "serverId": "13160008",
+      "appInfo": "7648832430229409312",
+      "revoked": false,
+      "createdAt": "1792674199858"
+    },
+    {
+      "_id": "6ada0998c4450c34c1d1af91",
+      "vid": "1688857564665004",
+      "userId": "7881302882028794",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 4,
+      "msgType": 0,
+      "sender": "1688857564665004",
+      "receiver": "7881302882028794",
+      "sendTime": "2026-10-22 21:03:19",
+      "content": "系统通知:\n检测到老师们下班休息充电中，请您留言 老师上班上线第一时间依次帮大家解答~",
+      "msgId": "7505677",
+      "serverId": "13160009",
+      "appInfo": "crm_offwork_1688857564665004_7881302882028794_1792673700_text_1",
+      "revoked": false,
+      "createdAt": "1792674200113"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:55.912Z"
+}

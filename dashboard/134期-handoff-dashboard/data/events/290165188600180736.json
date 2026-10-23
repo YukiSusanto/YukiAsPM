@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290165188600180736",
+    "handoff_id": "f67a5e9adb764ed2b15a30a2e3910397",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "LiaoZengZeng",
+    "external_userid": "wm5oClDAAAgdC6q9p1B8IyYVqqRY1TvQ",
+    "vid": "1688857564665004",
+    "third_user_id": "7881303006097626",
+    "third_sale_uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不够明确，请结合上文确认家长真正想问的问题",
+    "trigger_message_id": "1879682981159909510",
+    "pre_window_start": "2026-10-18 19:01:28",
+    "pre_window_end": "2026-10-18 19:31:28"
+  },
+  "messages": [
+    {
+      "_id": "6ad4ad99b583d134e80fde4d",
+      "vid": "1688857564665004",
+      "userId": "7881303006097626",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 4,
+      "msgType": 2,
+      "sender": "1688857564665004",
+      "receiver": "7881303006097626",
+      "sendTime": "2026-10-18 19:29:29",
+      "content": "​‌​​‌​‌​​‌​‌​​‌‌​‌​‌​​​‌​‌​​​‌‌​上条直播时间部分家长系统通知有误，准确时间：周二晚7点准时开始第一堂直播课！ \n 咱们群内明天马上就要开营开始学习打卡啦~[爱心]未来及进群的家长抓紧进入上面学习群参与开营和学习打卡以及后续领取专属资料，已进群家长可以提前熟悉使用上app，明天即将完成第一次学习打卡发进群里哦",
+      "msgId": "7422630",
+      "serverId": "13119609",
+      "appInfo": "KHGS_w9-W1tepSh2yWYM7881303006097626_4729147093061295239_0",
+      "revoked": false,
+      "createdAt": "1792322969508"
+    },
+    {
+      "_id": "6ad4ae04b583d134e80fde79",
+      "vid": "1688857564665004",
+      "userId": "7881303006097626",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881303006097626",
+      "receiver": "1688857564665004",
+      "sendTime": "2026-10-18 19:31:14",
+      "content": "老师，拉我进群呗",
+      "msgId": "7422830",
+      "serverId": "13119707",
+      "appInfo": "1879682981159909510",
+      "revoked": false,
+      "createdAt": "1792323076085"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:39.152Z"
+}

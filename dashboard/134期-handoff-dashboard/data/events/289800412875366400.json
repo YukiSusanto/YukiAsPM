@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "289800412875366400",
+    "handoff_id": "61fb26f3010446c6aa9732c6cb0a5ccc",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "LiChunYu",
+    "external_userid": "wm5oClDAAANR4Zgfk7NvlOEmuP2p3FpQ",
+    "vid": "1688856836783485",
+    "third_user_id": "7881301686929810",
+    "third_sale_uuid": "b3efc8018338db42d41939af7a9f7142",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不足，追问：确认家长问的是哪一场直播（周几那场）",
+    "trigger_message_id": "7039545678666999292",
+    "pre_window_start": "2026-10-14 18:23:31",
+    "pre_window_end": "2026-10-14 18:53:31"
+  },
+  "messages": [
+    {
+      "_id": "6acf5be3adb45615f3e523cb",
+      "vid": "1688856836783485",
+      "userId": "7881301686929810",
+      "uuid": "b3efc8018338db42d41939af7a9f7142",
+      "senderType": 0,
+      "msgType": 1,
+      "sender": "1688856836783485",
+      "receiver": "7881301686929810",
+      "sendTime": "2026-10-14 18:39:31",
+      "content": "家长，给您赠送的3天直播课还没预约的话记得约一下哈，雪梨老师会讲英语学习规划的方法，三天内容不一样，分别点三天链接预约哦～",
+      "msgId": "3442086",
+      "serverId": "16897746",
+      "appInfo": "CIOACBDZ4PvPkzQY/frU/pmAgAMgv6EB",
+      "revoked": false,
+      "createdAt": "1791974371580"
+    },
+    {
+      "_id": "6acf5f1e268c3c1251f56cf2",
+      "vid": "1688856836783485",
+      "userId": "7881301686929810",
+      "uuid": "b3efc8018338db42d41939af7a9f7142",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881301686929810",
+      "receiver": "1688856836783485",
+      "sendTime": "2026-10-14 18:53:17",
+      "content": "没有预约呢",
+      "msgId": "3442610",
+      "serverId": "16897985",
+      "appInfo": "7039545678666999292",
+      "revoked": false,
+      "createdAt": "1791975198936"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:22:01.569Z"
+}

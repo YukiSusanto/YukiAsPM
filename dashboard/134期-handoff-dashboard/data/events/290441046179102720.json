@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290441046179102720",
+    "handoff_id": "b3e20e05861142ce84a2f0822182bc54",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "WuBingBing01",
+    "external_userid": "wm5oClDAAAhw4Uuu6ED9vhiy7_AB7zSw",
+    "vid": "1688854713729599",
+    "third_user_id": "7881303227029745",
+    "third_sale_uuid": "ac006d54a38a38eaa038e87d2719bd52",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不足，追问：请家长提供订单号或购买平台",
+    "trigger_message_id": "9003251614692616291",
+    "pre_window_start": "2026-10-21 20:06:06",
+    "pre_window_end": "2026-10-21 20:36:06"
+  },
+  "messages": [
+    {
+      "_id": "6ad8b1a956bb206080bec313",
+      "vid": "1688854713729599",
+      "userId": "7881303227029745",
+      "uuid": "ac006d54a38a38eaa038e87d2719bd52",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881303227029745",
+      "receiver": "1688854713729599",
+      "sendTime": "2026-10-21 20:35:51",
+      "content": "直播里说报名",
+      "msgId": "3993183",
+      "serverId": "11587392",
+      "appInfo": "9003251614692616291",
+      "revoked": false,
+      "createdAt": "1792586153181"
+    },
+    {
+      "_id": "6ad8b1b2c927de5c485d020a",
+      "vid": "1688854713729599",
+      "userId": "7881303227029745",
+      "uuid": "ac006d54a38a38eaa038e87d2719bd52",
+      "senderType": 4,
+      "msgType": 2,
+      "sender": "1688854713729599",
+      "receiver": "7881303227029745",
+      "sendTime": "2026-10-21 20:36:02",
+      "content": "嗯嗯",
+      "msgId": "3993188",
+      "serverId": "11587394",
+      "appInfo": "CAEQsuPi1gYYv4SoipKAgAMgtRY=",
+      "revoked": false,
+      "createdAt": "1792586162735"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:51.302Z"
+}

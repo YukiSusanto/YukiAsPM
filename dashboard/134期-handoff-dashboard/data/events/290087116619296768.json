@@ -1,0 +1,81 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290087116619296768",
+    "handoff_id": "a68288306301408d8d601cdefdc1d611",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "XuLei",
+    "external_userid": "wm5oClDAAAMX7tDCFicNokTDBNq76b7A",
+    "vid": "1688856635654364",
+    "third_user_id": "7881302120085877",
+    "third_sale_uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不够明确，请结合上文确认家长真正想问的问题",
+    "trigger_message_id": "7796806906580360096",
+    "pre_window_start": "2026-10-17 22:20:33",
+    "pre_window_end": "2026-10-17 22:50:33"
+  },
+  "messages": [
+    {
+      "_id": "6ad38a0bb583d134e80fa3f7",
+      "vid": "1688856635654364",
+      "userId": "7881302120085877",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 0,
+      "msgType": 1,
+      "sender": "1688856635654364",
+      "receiver": "7881302120085877",
+      "sendTime": "2026-10-17 22:45:30",
+      "content": "家长，赠送的3天直播课名额还给您留着呢，三天内容不一样，记得分别点三天链接预约哦～",
+      "msgId": "5189810",
+      "serverId": "9774911",
+      "appInfo": "CIOACBCm9czSlDQY3IHhnpmAgAMgk84D",
+      "revoked": false,
+      "createdAt": "1792248331114"
+    },
+    {
+      "_id": "6ad38b2db583d134e80fa80b",
+      "vid": "1688856635654364",
+      "userId": "7881302120085877",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881302120085877",
+      "receiver": "1688856635654364",
+      "sendTime": "2026-10-17 22:50:20",
+      "content": "如何申请退款",
+      "msgId": "5190657",
+      "serverId": "9775304",
+      "appInfo": "7796806906580360096",
+      "revoked": false,
+      "createdAt": "1792248621414"
+    },
+    {
+      "_id": "6ad38b2d1f0e945f7d13079b",
+      "vid": "1688856635654364",
+      "userId": "7881302120085877",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 4,
+      "msgType": 0,
+      "sender": "1688856635654364",
+      "receiver": "7881302120085877",
+      "sendTime": "2026-10-17 22:50:21",
+      "content": "家长您好! 现在是休息时间，把问题留言给我~我会按顺序给您回复！\n\n工作时间周一到周五：13点--21点。",
+      "msgId": "5190660",
+      "serverId": "9775305",
+      "appInfo": "crm_offwork_1688856635654364_7881302120085877_1792155600_text_1",
+      "revoked": false,
+      "createdAt": "1792248621418"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:22.479Z"
+}

@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290141946431848448",
+    "handoff_id": "fc24c84d400e466aa41426de08fe5476",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "WuBingBing01",
+    "external_userid": "wm5oClDAAAfulfazl0oxbYCUTW40YFEg",
+    "vid": "1688854713729599",
+    "third_user_id": "7881302091035828",
+    "third_sale_uuid": "ac006d54a38a38eaa038e87d2719bd52",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不够明确，请结合上文确认家长真正想问的问题",
+    "trigger_message_id": "2240977347292364953",
+    "pre_window_start": "2026-10-18 12:52:02",
+    "pre_window_end": "2026-10-18 13:22:02"
+  },
+  "messages": [
+    {
+      "_id": "6ad4576cb583d134e80fc169",
+      "vid": "1688854713729599",
+      "userId": "7881302091035828",
+      "uuid": "ac006d54a38a38eaa038e87d2719bd52",
+      "senderType": 1,
+      "msgType": 101,
+      "sender": "7881302091035828",
+      "receiver": "1688854713729599",
+      "sendTime": "2026-10-18 13:21:46",
+      "content": "https://static.xueliyingyu.com/res/file/qywxChatFile/20261018/290141931927945216.jpg",
+      "msgId": "3949597",
+      "serverId": "11566647",
+      "appInfo": "3895180409869342144",
+      "revoked": false,
+      "createdAt": "1792300908658"
+    },
+    {
+      "_id": "6ad4576cb583d134e80fc16a",
+      "vid": "1688854713729599",
+      "userId": "7881302091035828",
+      "uuid": "ac006d54a38a38eaa038e87d2719bd52",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881302091035828",
+      "receiver": "1688854713729599",
+      "sendTime": "2026-10-18 13:21:47",
+      "content": "这个吉他是名词，怎么有动词的各种",
+      "msgId": "3949600",
+      "serverId": "11566648",
+      "appInfo": "2240977347292364953",
+      "revoked": false,
+      "createdAt": "1792300908815"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:35.887Z"
+}

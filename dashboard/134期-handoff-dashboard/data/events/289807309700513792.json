@@ -1,0 +1,47 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "289807309700513792",
+    "handoff_id": "95f2bee2b24b4856b084733eee304a30",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "ZhangNing",
+    "external_userid": "wm5oClDAAAHYla5fEekTXRqOUy4HJp3A",
+    "vid": "1688856537655175",
+    "third_user_id": "7881302491961641",
+    "third_sale_uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不足，追问：确认家长问的是哪一场直播（周几那场）",
+    "trigger_message_id": "7791879257090001350",
+    "pre_window_start": "2026-10-14 20:13:08",
+    "pre_window_end": "2026-10-14 20:43:08"
+  },
+  "messages": [
+    {
+      "_id": "6acf78cf5c33d8180e16022e",
+      "vid": "1688856537655175",
+      "userId": "7881302491961641",
+      "uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881302491961641",
+      "receiver": "1688856537655175",
+      "sendTime": "2026-10-14 20:42:53",
+      "content": "这个是家长看还是孩子看？",
+      "msgId": "9181005",
+      "serverId": "14495333",
+      "appInfo": "7791879257090001350",
+      "revoked": false,
+      "createdAt": "1791981775011"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:22:07.395Z"
+}

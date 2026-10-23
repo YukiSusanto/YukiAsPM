@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290084115267629056",
+    "handoff_id": "e49f9766db82494883657d234a8636c6",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "YeQingLin",
+    "external_userid": "wm5oClDAAAuguC8FHXYrUbL3u8iKxxbQ",
+    "vid": "1688855715791056",
+    "third_user_id": "7881303067981857",
+    "third_sale_uuid": "3ec83ab255814181834286b01df01c27",
+    "scenario_type": "knowledge_support",
+    "scenario_code": "KNOWLEDGE_INSUFFICIENT",
+    "scenario_description": "现有知识不足以可靠回答客户问题",
+    "trigger_message_id": "2473781033367152924",
+    "pre_window_start": "2026-10-17 21:32:50",
+    "pre_window_end": "2026-10-17 22:02:50"
+  },
+  "messages": [
+    {
+      "_id": "6ad37ce11f0e945f7d12d5d6",
+      "vid": "1688855715791056",
+      "userId": "7881303067981857",
+      "uuid": "3ec83ab255814181834286b01df01c27",
+      "senderType": 0,
+      "msgType": 1,
+      "sender": "1688855715791056",
+      "receiver": "7881303067981857",
+      "sendTime": "2026-10-17 21:49:21",
+      "content": "家长，刚看到您登录遇到点问题哈，赠送的3天直播课名额还给您留着呢，三天内容不一样，记得分别点三天链接预约哦～",
+      "msgId": "3227640",
+      "serverId": "13545151",
+      "appInfo": "CIOACBDUof/QlDQY0IGR6JWAgAMghfAN",
+      "revoked": false,
+      "createdAt": "1792244961661"
+    },
+    {
+      "_id": "6ad37ffe1f0e945f7d12e12b",
+      "vid": "1688855715791056",
+      "userId": "7881303067981857",
+      "uuid": "3ec83ab255814181834286b01df01c27",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881303067981857",
+      "receiver": "1688855715791056",
+      "sendTime": "2026-10-17 22:02:37",
+      "content": "好",
+      "msgId": "3229976",
+      "serverId": "13546197",
+      "appInfo": "2473781033367152924",
+      "revoked": false,
+      "createdAt": "1792245758267"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:07.519Z"
+}

@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290080260471570432",
+    "handoff_id": "cf8040258d784933a5c036f2b780cc85",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "SunPeiJie",
+    "external_userid": "wm5oClDAAAgvD-eSOs_Rj94xYEGOgmVA",
+    "vid": "1688855400822933",
+    "third_user_id": "7881300647966972",
+    "third_sale_uuid": "607d7006e4c61ececbbc921e538e9f31",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不足，追问：确认家长的设备品牌型号",
+    "trigger_message_id": "8814698170523323429",
+    "pre_window_start": "2026-10-17 20:31:34",
+    "pre_window_end": "2026-10-17 21:01:34"
+  },
+  "messages": [
+    {
+      "_id": "6ad3718ab583d134e80f5438",
+      "vid": "1688855400822933",
+      "userId": "7881300647966972",
+      "uuid": "607d7006e4c61ececbbc921e538e9f31",
+      "senderType": 1,
+      "msgType": 103,
+      "sender": "7881300647966972",
+      "receiver": "1688855400822933",
+      "sendTime": "2026-10-17 21:00:54",
+      "content": "https://static.xueliyingyu.com/res/file/qywxChatFile/20261017/290080223363514368.mp4",
+      "msgId": "3013265",
+      "serverId": "11459596",
+      "appInfo": "3091355172663437266",
+      "revoked": false,
+      "createdAt": "1792242058927"
+    },
+    {
+      "_id": "6ad371a21f0e945f7d12b26c",
+      "vid": "1688855400822933",
+      "userId": "7881300647966972",
+      "uuid": "607d7006e4c61ececbbc921e538e9f31",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881300647966972",
+      "receiver": "1688855400822933",
+      "sendTime": "2026-10-17 21:01:20",
+      "content": "老师，您帮我看一下这个，为什么好多软件是点不开的。",
+      "msgId": "3013324",
+      "serverId": "11459622",
+      "appInfo": "8814698170523323429",
+      "revoked": false,
+      "createdAt": "1792242082746"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:22:47.434Z"
+}

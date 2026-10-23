@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290153358767075328",
+    "handoff_id": "b0e6fa0aa43f40d7a32abe3fd6dc3a49",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "LiaoZengZeng",
+    "external_userid": "wm5oClDAAAWLImiErrKSOIMoeKN2-DDA",
+    "vid": "1688857564665004",
+    "third_user_id": "7881300058898586",
+    "third_sale_uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不足，追问：请家长提供订单号或购买平台",
+    "trigger_message_id": "111065847224131185",
+    "pre_window_start": "2026-10-18 15:53:26",
+    "pre_window_end": "2026-10-18 16:23:26"
+  },
+  "messages": [
+    {
+      "_id": "6ad481e31f0e945f7d1331ab",
+      "vid": "1688857564665004",
+      "userId": "7881300058898586",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881300058898586",
+      "receiver": "1688857564665004",
+      "sendTime": "2026-10-18 16:22:57",
+      "content": "你好，我想 退款",
+      "msgId": "7419691",
+      "serverId": "13118192",
+      "appInfo": "4528775207995197283",
+      "revoked": false,
+      "createdAt": "1792311779288"
+    },
+    {
+      "_id": "6ad481ed1f0e945f7d1331af",
+      "vid": "1688857564665004",
+      "userId": "7881300058898586",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881300058898586",
+      "receiver": "1688857564665004",
+      "sendTime": "2026-10-18 16:23:08",
+      "content": "麻烦跟我退下吧",
+      "msgId": "7419694",
+      "serverId": "13118193",
+      "appInfo": "111065847224131185",
+      "revoked": false,
+      "createdAt": "1792311789674"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:37.597Z"
+}

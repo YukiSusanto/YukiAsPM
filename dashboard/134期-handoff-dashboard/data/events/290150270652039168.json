@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290150270652039168",
+    "handoff_id": "aa13fb2d91bc4a788d0a401b7153a648",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "LiChunYu",
+    "external_userid": "wm5oClDAAAVlaLTuZxjJLxSlq6danszA",
+    "vid": "1688856836783485",
+    "third_user_id": "7881299875012781",
+    "third_sale_uuid": "b3efc8018338db42d41939af7a9f7142",
+    "scenario_type": "knowledge_support",
+    "scenario_code": "KNOWLEDGE_INSUFFICIENT",
+    "scenario_description": "现有知识不足以可靠回答客户问题",
+    "trigger_message_id": "700464293537824663",
+    "pre_window_start": "2026-10-18 15:04:21",
+    "pre_window_end": "2026-10-18 15:34:21"
+  },
+  "messages": [
+    {
+      "_id": "6ad472f01f0e945f7d13253b",
+      "vid": "1688856836783485",
+      "userId": "7881299875012781",
+      "uuid": "b3efc8018338db42d41939af7a9f7142",
+      "senderType": 4,
+      "msgType": 0,
+      "sender": "1688856836783485",
+      "receiver": "7881299875012781",
+      "sendTime": "2026-10-18 15:19:12",
+      "content": "对了，三天直播您点击链接预约好了吗？\n\n预约好后可以回复1，这边给咱们激活课程",
+      "msgId": "3550964",
+      "serverId": "16949981",
+      "appInfo": "CAMQ8OXR1gYY/frU/pmAgAMgjdTItwc=",
+      "revoked": false,
+      "createdAt": "1792307952963"
+    },
+    {
+      "_id": "6ad4766cb583d134e80fcb82",
+      "vid": "1688856836783485",
+      "userId": "7881299875012781",
+      "uuid": "b3efc8018338db42d41939af7a9f7142",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881299875012781",
+      "receiver": "1688856836783485",
+      "sendTime": "2026-10-18 15:34:03",
+      "content": "1",
+      "msgId": "3551403",
+      "serverId": "16950193",
+      "appInfo": "700464293537824663",
+      "revoked": false,
+      "createdAt": "1792308844171"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:36.965Z"
+}

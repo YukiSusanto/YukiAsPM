@@ -1,2 +1,13 @@
 _site/
 __pycache__/
+
+# Local handoff exports, credentials and portable sharing packages are not source.
+/exports/
+/release/
+/local-data/
+/runtime/
+/聊天记录数据获取分析/
+/tools/database-inspect/
+/.env
+/.env.*
+*.zip

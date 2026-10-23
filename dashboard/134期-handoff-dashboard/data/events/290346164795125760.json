@@ -1,0 +1,81 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290346164795125760",
+    "handoff_id": "b35f2c7ccbfb402098b64a7d0c3f76b4",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "XuLei",
+    "external_userid": "wm5oClDAAA-8Fgf2425WmtdtBBvGVKDw",
+    "vid": "1688856635654364",
+    "third_user_id": "7881300005170278",
+    "third_sale_uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+    "scenario_type": "customer_refusal",
+    "scenario_code": "EXPLICIT_REFUSAL",
+    "scenario_description": "客户明确拒绝继续沟通",
+    "trigger_message_id": "6802754291882052028",
+    "pre_window_start": "2026-10-20 18:58:00",
+    "pre_window_end": "2026-10-20 19:28:00"
+  },
+  "messages": [
+    {
+      "_id": "6ad7494aaa86062019880fb2",
+      "vid": "1688856635654364",
+      "userId": "7881300005170278",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 5,
+      "msgType": 2,
+      "sender": "1688856635654364",
+      "receiver": "7881300005170278",
+      "sendTime": "2026-10-20 18:58:17",
+      "content": "家长，雪梨老师已经进入直播间了！您现在就可以进来和雪梨老师沟通哦，点这个链接：https://xl.shirleyclass.com/s/8oeMuQZ",
+      "msgId": "5235995",
+      "serverId": "9797047",
+      "appInfo": "CIOACBCnkdnHlTQY3IHhnpmAgAMgyZ4F",
+      "revoked": false,
+      "createdAt": "1792493898090"
+    },
+    {
+      "_id": "6ad74e69aa86062019882069",
+      "vid": "1688856635654364",
+      "userId": "7881300005170278",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 5,
+      "msgType": 2,
+      "sender": "1688856635654364",
+      "receiver": "7881300005170278",
+      "sendTime": "2026-10-20 19:20:09",
+      "content": "您是不是在忙呀?没看到老师的消息！今晚讲的都是小学初中的黄金知识点！\n雪梨老师正在解答：咱家孩子的英语学习问题，不看就损失大啦[凋谢]\n\n直播无回放：https://xl.shirleyclass.com/s/8oeMuQZ",
+      "msgId": "5237640",
+      "serverId": "9797847",
+      "appInfo": "CIOACBDQmanIlTQY3IHhnpmAgAMgq6UF",
+      "revoked": false,
+      "createdAt": "1792495209859"
+    },
+    {
+      "_id": "6ad7503284a32a4383ea505f",
+      "vid": "1688856635654364",
+      "userId": "7881300005170278",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 1,
+      "msgType": 0,
+      "sender": "7881300005170278",
+      "receiver": "1688856635654364",
+      "sendTime": "2026-10-20 19:27:41",
+      "content": "音转文：最近孩子可以自己学习，不用了不用了。",
+      "msgId": "5238356",
+      "serverId": "9798193",
+      "appInfo": "6802754291882052028",
+      "revoked": false,
+      "createdAt": "1792495666925"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:43.650Z"
+}

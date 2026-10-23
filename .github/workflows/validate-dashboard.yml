@@ -1,0 +1,34 @@
+name: Validate dashboard pull request
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'dashboard/**'
+      - '.github/scripts/build_pages.py'
+      - '.github/workflows/pages.yml'
+      - '.github/workflows/validate-dashboard.yml'
+      - 'index.html'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check dashboard JavaScript
+        run: |
+          node --check "dashboard/134期-handoff-dashboard/app.js"
+          node --check "dashboard/134期-handoff-dashboard/scripts/serve.cjs"
+      - name: Validate real conversation dataset
+        run: node "dashboard/134期-handoff-dashboard/scripts/check-data.cjs"
+      - name: Build existing SOP pages
+        run: |
+          node "sop-prototype/固定SOP/原型/build.cjs"
+          node "sop-prototype/社群SOP/原型/build.cjs"
+      - name: Assemble complete Pages site
+        run: python3 .github/scripts/build_pages.py . _site
+      - name: Verify dashboard is included
+        run: test -f "_site/dashboard/134期-handoff-dashboard/data/catalog.json"

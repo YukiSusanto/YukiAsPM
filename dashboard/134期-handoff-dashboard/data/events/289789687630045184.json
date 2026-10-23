@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "289789687630045184",
+    "handoff_id": "1336b477b9264b03bebf1aa61c25a616",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "LiaoZengZeng",
+    "external_userid": "wm5oClDAAAJ_GjOmJLKu0DQ5pL0dI6VA",
+    "vid": "1688857564665004",
+    "third_user_id": "7881301888973704",
+    "third_sale_uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不足，追问：确认家长问的是哪一场直播（周几那场）",
+    "trigger_message_id": "4691166680484697634",
+    "pre_window_start": "2026-10-14 15:33:02",
+    "pre_window_end": "2026-10-14 16:03:02"
+  },
+  "messages": [
+    {
+      "_id": "6acf36812b50fe5a5455c695",
+      "vid": "1688857564665004",
+      "userId": "7881301888973704",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 0,
+      "msgType": 1,
+      "sender": "1688857564665004",
+      "receiver": "7881301888973704",
+      "sendTime": "2026-10-14 16:00:01",
+      "content": "家长，咱6年级孩子拼读和语法吃力的话这个赠送的3天直播课真的挺对症，会讲英语学习该咋规划，三天内容不一样，记得分别点三天链接预约哦～",
+      "msgId": "7316743",
+      "serverId": "13066054",
+      "appInfo": "CIOACBDSz7PLkzQYrKnf2ZyAgAMgw4QB",
+      "revoked": false,
+      "createdAt": "1791964801121"
+    },
+    {
+      "_id": "6acf37282b50fe5a5455c6ff",
+      "vid": "1688857564665004",
+      "userId": "7881301888973704",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881301888973704",
+      "receiver": "1688857564665004",
+      "sendTime": "2026-10-14 16:02:47",
+      "content": "点哪个，上面那个预约链接吗",
+      "msgId": "7316829",
+      "serverId": "13066094",
+      "appInfo": "4691166680484697634",
+      "revoked": false,
+      "createdAt": "1791964968976"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:21:51.029Z"
+}

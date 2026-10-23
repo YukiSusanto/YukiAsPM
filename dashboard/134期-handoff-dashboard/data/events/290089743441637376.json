@@ -1,0 +1,81 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290089743441637376",
+    "handoff_id": "43c5629b7b454961a3b13d50d8b928c8",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "ZhangNing",
+    "external_userid": "wm5oClDAAAm4-QB0lWwVCBaaUB2YM0gw",
+    "vid": "1688856537655175",
+    "third_user_id": "7881300090000931",
+    "third_sale_uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "客户多次输入兑换码和订单编号激活仍无会员权益显示，需真人老师核实订单与账号权限",
+    "trigger_message_id": "1286702290880580582",
+    "pre_window_start": "2026-10-17 23:02:18",
+    "pre_window_end": "2026-10-17 23:32:18"
+  },
+  "messages": [
+    {
+      "_id": "6ad394c5b583d134e80fbb45",
+      "vid": "1688856537655175",
+      "userId": "7881300090000931",
+      "uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+      "senderType": 4,
+      "msgType": 2,
+      "sender": "1688856537655175",
+      "receiver": "7881300090000931",
+      "sendTime": "2026-10-17 23:31:16",
+      "content": "\t\n663702529552",
+      "msgId": "9245715",
+      "serverId": "14525851",
+      "appInfo": "CAEQxqnO1gYYh8+D8JiAgAMgyQw=",
+      "revoked": false,
+      "createdAt": "1792251077281"
+    },
+    {
+      "_id": "6ad394cab583d134e80fbb49",
+      "vid": "1688856537655175",
+      "userId": "7881300090000931",
+      "uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+      "senderType": 4,
+      "msgType": 2,
+      "sender": "1688856537655175",
+      "receiver": "7881300090000931",
+      "sendTime": "2026-10-17 23:31:22",
+      "content": "输入兑换码试试",
+      "msgId": "9245717",
+      "serverId": "14525852",
+      "appInfo": "CAEQy6nO1gYYh8+D8JiAgAMgygw=",
+      "revoked": false,
+      "createdAt": "1792251082740"
+    },
+    {
+      "_id": "6ad394f5b583d134e80fbb61",
+      "vid": "1688856537655175",
+      "userId": "7881300090000931",
+      "uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881300090000931",
+      "receiver": "1688856537655175",
+      "sendTime": "2026-10-17 23:32:04",
+      "content": "输了没用",
+      "msgId": "9245753",
+      "serverId": "14525869",
+      "appInfo": "1286702290880580582",
+      "revoked": false,
+      "createdAt": "1792251125433"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:30.163Z"
+}

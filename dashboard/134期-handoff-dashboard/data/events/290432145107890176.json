@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290432145107890176",
+    "handoff_id": "d7ac5e8d735d46dda01e6cf590b28138",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "LiaoZengZeng",
+    "external_userid": "wm5oClDAAAPZUlVqIo1FvpLAXSd7TtCQ",
+    "vid": "1688857564665004",
+    "third_user_id": "7881301862011119",
+    "third_sale_uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "客户咨询产品类问题，但无产品标签且上下文未指名产品，无法定位所购产品；需人工确认客户购买的产品后按对应产品口径回答",
+    "trigger_message_id": "7690088216735615239",
+    "pre_window_start": "2026-10-21 17:44:37",
+    "pre_window_end": "2026-10-21 18:14:37"
+  },
+  "messages": [
+    {
+      "_id": "6ad88e5b8ae3db73af810565",
+      "vid": "1688857564665004",
+      "userId": "7881301862011119",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 4,
+      "msgType": 2,
+      "sender": "1688857564665004",
+      "receiver": "7881301862011119",
+      "sendTime": "2026-10-21 18:05:15",
+      "content": "刚刚1小时休息吃饭刚回[爱心]   刚看到  咱们刚开课的时候是正常开课还剩学几天之后申请了延期开课呀？",
+      "msgId": "7475472",
+      "serverId": "13145309",
+      "appInfo": "CAEQ2pzi1gYYrKnf2ZyAgAMgjwI=",
+      "revoked": false,
+      "createdAt": "1792577115598"
+    },
+    {
+      "_id": "6ad8908156bb206080bdd118",
+      "vid": "1688857564665004",
+      "userId": "7881301862011119",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881301862011119",
+      "receiver": "1688857564665004",
+      "sendTime": "2026-10-21 18:14:24",
+      "content": "我没有申请延期，",
+      "msgId": "7475787",
+      "serverId": "13145455",
+      "appInfo": "7690088216735615239",
+      "revoked": false,
+      "createdAt": "1792577665799"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:49.012Z"
+}

@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290346176689123328",
+    "handoff_id": "b85452f72e214564baf77e3bb166ce5e",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "WuBingBing01",
+    "external_userid": "wm5oClDAAA_lGJESVWWRFExT2AImeKug",
+    "vid": "1688854713729599",
+    "third_user_id": "7881299642322908",
+    "third_sale_uuid": "ac006d54a38a38eaa038e87d2719bd52",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "客户咨询产品类问题，但无产品标签且上下文未指名产品，无法定位所购产品；需人工确认客户购买的产品后按对应产品口径回答",
+    "trigger_message_id": "1289251017960198572",
+    "pre_window_start": "2026-10-20 18:58:12",
+    "pre_window_end": "2026-10-20 19:28:12"
+  },
+  "messages": [
+    {
+      "_id": "6ad74e65aa86062019881ff5",
+      "vid": "1688854713729599",
+      "userId": "7881299642322908",
+      "uuid": "ac006d54a38a38eaa038e87d2719bd52",
+      "senderType": 5,
+      "msgType": 2,
+      "sender": "1688854713729599",
+      "receiver": "7881299642322908",
+      "sendTime": "2026-10-20 19:20:05",
+      "content": "您是不是在忙呀?没看到老师的消息！今晚讲的都是小学初中的黄金知识点！\n雪梨老师正在解答：咱家孩子的英语学习问题，不看就损失大啦[凋谢]\n\n直播无回放：https://xl.shirleyclass.com/s/69ynvrb",
+      "msgId": "3971864",
+      "serverId": "11577284",
+      "appInfo": "CIOACBCT+KjIlTQYv4SoipKAgAMg3p0P",
+      "revoked": false,
+      "createdAt": "1792495205590"
+    },
+    {
+      "_id": "6ad75040aa860620198827d4",
+      "vid": "1688854713729599",
+      "userId": "7881299642322908",
+      "uuid": "ac006d54a38a38eaa038e87d2719bd52",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881299642322908",
+      "receiver": "1688854713729599",
+      "sendTime": "2026-10-20 19:27:59",
+      "content": "你好我想请问一下我之前买了自然拼读的小程序现在那个微信没有用了可以换个微信吗",
+      "msgId": "3972432",
+      "serverId": "11577559",
+      "appInfo": "1289251017960198572",
+      "revoked": false,
+      "createdAt": "1792495680257"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:43.807Z"
+}

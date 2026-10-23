@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290036841864937472",
+    "handoff_id": "878ad33d4de24e0fbf767e4671499b21",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "ZhangNing",
+    "external_userid": "wm5oClDAAA0JH7ln7xQG3RjFuFEp0jPQ",
+    "vid": "1688856537655175",
+    "third_user_id": "7881300453933113",
+    "third_sale_uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "客户咨询产品类问题，但无产品标签且上下文未指名产品，无法定位所购产品；需人工确认客户购买的产品后按对应产品口径回答",
+    "trigger_message_id": "2514262468375433615",
+    "pre_window_start": "2026-10-17 09:01:27",
+    "pre_window_end": "2026-10-17 09:31:27"
+  },
+  "messages": [
+    {
+      "_id": "6ad2cfe1c8c9345e9fc9c9c0",
+      "vid": "1688856537655175",
+      "userId": "7881300453933113",
+      "uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+      "senderType": 4,
+      "msgType": 0,
+      "sender": "1688856537655175",
+      "receiver": "7881300453933113",
+      "sendTime": "2026-10-17 09:31:13",
+      "content": "家长您好，现在是老师的休息时间[爱心]\n\n有问题请先留言，上班后回复您~",
+      "msgId": "9223267",
+      "serverId": "14515590",
+      "appInfo": "crm_offwork_1688856537655175_7881300453933113_1792058400_text_1",
+      "revoked": false,
+      "createdAt": "1792200673554"
+    },
+    {
+      "_id": "6ad2cfe1d8b4ad09df75fc7d",
+      "vid": "1688856537655175",
+      "userId": "7881300453933113",
+      "uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+      "senderType": 1,
+      "msgType": 101,
+      "sender": "7881300453933113",
+      "receiver": "1688856537655175",
+      "sendTime": "2026-10-17 09:31:11",
+      "content": "https://static.xueliyingyu.com/res/file/qywxChatFile/20261017/290036827884273664.jpg",
+      "msgId": "9223264",
+      "serverId": "14515589",
+      "appInfo": "2514262468375433615",
+      "revoked": false,
+      "createdAt": "1792200673689"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:22:44.325Z"
+}

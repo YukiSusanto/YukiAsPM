@@ -1,0 +1,47 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290124607029161984",
+    "handoff_id": "35c45331e26142f78452dc500f8e5bd0",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "XuLei",
+    "external_userid": "wm5oClDAAA8EAtzefV-pr6yM87t0rcDg",
+    "vid": "1688856635654364",
+    "third_user_id": "7881302250056350",
+    "third_sale_uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+    "scenario_type": "knowledge_support",
+    "scenario_code": "KNOWLEDGE_INSUFFICIENT",
+    "scenario_description": "现有知识不足以可靠回答客户问题",
+    "trigger_message_id": "7367705081299050116",
+    "pre_window_start": "2026-10-18 08:16:26",
+    "pre_window_end": "2026-10-18 08:46:26"
+  },
+  "messages": [
+    {
+      "_id": "6ad416d31f0e945f7d131d2a",
+      "vid": "1688856635654364",
+      "userId": "7881302250056350",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881302250056350",
+      "receiver": "1688856635654364",
+      "sendTime": "2026-10-18 08:46:10",
+      "content": "听着不能自动播放",
+      "msgId": "5195404",
+      "serverId": "9777471",
+      "appInfo": "7367705081299050116",
+      "revoked": false,
+      "createdAt": "1792284371809"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:32.180Z"
+}

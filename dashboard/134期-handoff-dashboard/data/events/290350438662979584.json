@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290350438662979584",
+    "handoff_id": "9814281323d14dd2b2bf5ca37f88eb05",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "LiaoZengZeng",
+    "external_userid": "wm5oClDAAAJ26Vg-rX5iPHa4aztW1NHg",
+    "vid": "1688857564665004",
+    "third_user_id": "7881303224914221",
+    "third_sale_uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不够明确，请结合上文确认家长真正想问的问题",
+    "trigger_message_id": "8079027796366796510",
+    "pre_window_start": "2026-10-20 20:05:56",
+    "pre_window_end": "2026-10-20 20:35:56"
+  },
+  "messages": [
+    {
+      "_id": "6ad75de0986b937b3542a8db",
+      "vid": "1688857564665004",
+      "userId": "7881303224914221",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 4,
+      "msgType": 2,
+      "sender": "1688857564665004",
+      "receiver": "7881303224914221",
+      "sendTime": "2026-10-20 20:26:07",
+      "content": "​‌​​‌​‌​​‌​‌​​‌‌​‌​‌​​​‌​‌​​​‌‌​🌹双重听课礼包发您~明晚7点第二节直播继续来听哦~收听链接https://xl.shirleyclass.com/s/44Wo0Hp（可先预约避免明晚忘记时间错过） \n \n 双重大礼包领取如下：\n 🎁礼包1：雪梨老师整理的1-6年级英文原版儿歌\n 🎁礼包2：雪梨老师整理的1-6年级英文原版动画\n 链接: https://pan.baidu.com/s/1S1QZiBvQZrUQnFgK3lRLxg?pwd=unvb                                                                                提取码: unvb\n \n  ",
+      "msgId": "7462093",
+      "serverId": "13138831",
+      "appInfo": "KHGS_klxtwnPrQ5igdZX7881303224914221_4729159239512653447_0",
+      "revoked": false,
+      "createdAt": "1792499168382"
+    },
+    {
+      "_id": "6ad76020986b937b3542aac2",
+      "vid": "1688857564665004",
+      "userId": "7881303224914221",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881303224914221",
+      "receiver": "1688857564665004",
+      "sendTime": "2026-10-20 20:35:43",
+      "content": "保存超限怎么办[撇嘴]",
+      "msgId": "7462563",
+      "serverId": "13139057",
+      "appInfo": "8079027796366796510",
+      "revoked": false,
+      "createdAt": "1792499744266"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:45.344Z"
+}
