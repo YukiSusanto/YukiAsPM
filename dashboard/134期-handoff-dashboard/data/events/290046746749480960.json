@@ -1,0 +1,47 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290046746749480960",
+    "handoff_id": "af3bd5a787f14dd0966c60ec45125770",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "WuBingBing01",
+    "external_userid": "wm5oClDAAA_s2Yi-sZr-Q0UrXG4QxevQ",
+    "vid": "1688854713729599",
+    "third_user_id": "7881300368002933",
+    "third_sale_uuid": "ac006d54a38a38eaa038e87d2719bd52",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不够明确，请结合上文确认家长真正想问的问题",
+    "trigger_message_id": "5529147901874804800",
+    "pre_window_start": "2026-10-17 11:38:53",
+    "pre_window_end": "2026-10-17 12:08:53"
+  },
+  "messages": [
+    {
+      "_id": "6ad2f4c93b98fc24b05b6843",
+      "vid": "1688854713729599",
+      "userId": "7881300368002933",
+      "uuid": "ac006d54a38a38eaa038e87d2719bd52",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881300368002933",
+      "receiver": "1688854713729599",
+      "sendTime": "2026-10-17 12:08:40",
+      "content": "不是说有八万单词",
+      "msgId": "3928933",
+      "serverId": "11557128",
+      "appInfo": "5529147901874804800",
+      "revoked": false,
+      "createdAt": "1792210121583"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:22:44.781Z"
+}

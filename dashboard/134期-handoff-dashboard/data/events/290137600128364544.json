@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290137600128364544",
+    "handoff_id": "b02cd303aca4444d9b6f4127aae783f0",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "ZhangNing",
+    "external_userid": "wm5oClDAAAwpFywHvBfFpm_B0z3a-Pkg",
+    "vid": "1688856537655175",
+    "third_user_id": "7881299506052061",
+    "third_sale_uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+    "scenario_type": "knowledge_support",
+    "scenario_code": "KNOWLEDGE_INSUFFICIENT",
+    "scenario_description": "现有知识不足以可靠回答客户问题",
+    "trigger_message_id": "788860151759682351",
+    "pre_window_start": "2026-10-18 11:42:57",
+    "pre_window_end": "2026-10-18 12:12:57"
+  },
+  "messages": [
+    {
+      "_id": "6ad4473c1f0e945f7d132036",
+      "vid": "1688856537655175",
+      "userId": "7881299506052061",
+      "uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881299506052061",
+      "receiver": "1688856537655175",
+      "sendTime": "2026-10-18 12:12:42",
+      "content": "孩子不想学，还是退掉吧",
+      "msgId": "9247405",
+      "serverId": "14526648",
+      "appInfo": "788860151759682351",
+      "revoked": false,
+      "createdAt": "1792296764062"
+    },
+    {
+      "_id": "6ad4473c1f0e945f7d132037",
+      "vid": "1688856537655175",
+      "userId": "7881299506052061",
+      "uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+      "senderType": 4,
+      "msgType": 0,
+      "sender": "1688856537655175",
+      "receiver": "7881299506052061",
+      "sendTime": "2026-10-18 12:12:43",
+      "content": "家长您好，现在是老师的休息时间[爱心]\n\n有问题请先留言，上班后回复您~",
+      "msgId": "9247408",
+      "serverId": "14526649",
+      "appInfo": "crm_offwork_1688856537655175_7881299506052061_1792231200_text_1",
+      "revoked": false,
+      "createdAt": "1792296764283"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:34.956Z"
+}

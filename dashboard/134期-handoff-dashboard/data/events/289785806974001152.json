@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "289785806974001152",
+    "handoff_id": "4d27554cb26a4e0c81b3c79e07c4c907",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "YeQingLin",
+    "external_userid": "wm5oClDAAA8KBcOsc6DnyGiDi5Cm4KXw",
+    "vid": "1688855715791056",
+    "third_user_id": "7881300857906340",
+    "third_sale_uuid": "3ec83ab255814181834286b01df01c27",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "客户咨询产品类问题，但无产品标签且上下文未指名产品，无法定位所购产品；需人工确认客户购买的产品后按对应产品口径回答",
+    "trigger_message_id": "8363767569065923797",
+    "pre_window_start": "2026-10-14 14:31:21",
+    "pre_window_end": "2026-10-14 15:01:21"
+  },
+  "messages": [
+    {
+      "_id": "6acf28af0af32b284bc235ac",
+      "vid": "1688855715791056",
+      "userId": "7881300857906340",
+      "uuid": "3ec83ab255814181834286b01df01c27",
+      "senderType": 0,
+      "msgType": 1,
+      "sender": "1688855715791056",
+      "receiver": "7881300857906340",
+      "sendTime": "2026-10-14 15:01:03",
+      "content": "家长，给您赠送的3天直播课还没预约哈，雪梨老师会讲英语学习的规划方法，三天内容不一样，记得分别点三天链接预约哦～",
+      "msgId": "3180312",
+      "serverId": "13465905",
+      "appInfo": "CIOACBCu3dvJkzQY0IGR6JWAgAMg2fAL",
+      "revoked": false,
+      "createdAt": "1791961263985"
+    },
+    {
+      "_id": "6acf28b61ebcde4af35ca42c",
+      "vid": "1688855715791056",
+      "userId": "7881300857906340",
+      "uuid": "3ec83ab255814181834286b01df01c27",
+      "senderType": 1,
+      "msgType": 0,
+      "sender": "7881300857906340",
+      "receiver": "1688855715791056",
+      "sendTime": "2026-10-14 15:01:05",
+      "content": "音转文：你好，你好，我想问一下，这个学习计划只是只能有一个吗？",
+      "msgId": "3180325",
+      "serverId": "13465911",
+      "appInfo": "8363767569065923797",
+      "revoked": false,
+      "createdAt": "1791961270956"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:21:46.118Z"
+}

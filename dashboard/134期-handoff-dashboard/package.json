@@ -1,0 +1,10 @@
+{
+  "name": "period-134-handoff-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "check": "node --check app.js && node --check scripts/serve.cjs && node scripts/check-data.cjs",
+    "preview": "node scripts/serve.cjs"
+  },
+  "engines": { "node": ">=22" }
+}

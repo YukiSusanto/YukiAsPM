@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290439986342440960",
+    "handoff_id": "92c896d2a5914d08ba59c9452ab8ab43",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "XuLei",
+    "external_userid": "wm5oClDAAA-CFEkbQ_2pvz_FMFXmCnbg",
+    "vid": "1688856635654364",
+    "third_user_id": "7881299648081742",
+    "third_sale_uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不足，追问：请家长提供订单号或购买平台",
+    "trigger_message_id": "7146368331184032303",
+    "pre_window_start": "2026-10-21 19:49:15",
+    "pre_window_end": "2026-10-21 20:19:15"
+  },
+  "messages": [
+    {
+      "_id": "6ad8a9fac927de5c485cbde6",
+      "vid": "1688856635654364",
+      "userId": "7881299648081742",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 4,
+      "msgType": 16,
+      "sender": "1688856635654364",
+      "receiver": "7881299648081742",
+      "sendTime": "2026-10-21 20:03:06",
+      "content": "[语音]",
+      "msgId": "5265203",
+      "serverId": "9810844",
+      "appInfo": "CAMQ+dPi1gYY3IHhnpmAgAMgx7uhQw==",
+      "revoked": false,
+      "createdAt": "1792584186490"
+    },
+    {
+      "_id": "6ad8adb7c927de5c485d0071",
+      "vid": "1688856635654364",
+      "userId": "7881299648081742",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881299648081742",
+      "receiver": "1688856635654364",
+      "sendTime": "2026-10-21 20:19:02",
+      "content": "已拍",
+      "msgId": "5265428",
+      "serverId": "9810941",
+      "appInfo": "7146368331184032303",
+      "revoked": false,
+      "createdAt": "1792585143561"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:51.146Z"
+}

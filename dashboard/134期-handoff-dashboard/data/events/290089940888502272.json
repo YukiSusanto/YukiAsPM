@@ -1,0 +1,81 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290089940888502272",
+    "handoff_id": "6c61b42d56a44659aebe0c0a218abc86",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "LiaoZengZeng",
+    "external_userid": "wm5oClDAAA3SOocEJJP45PrSJ3SxV4kw",
+    "vid": "1688857564665004",
+    "third_user_id": "7881302298941590",
+    "third_sale_uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不够明确，请结合上文确认家长真正想问的问题",
+    "trigger_message_id": "5543207341638534342",
+    "pre_window_start": "2026-10-17 23:05:26",
+    "pre_window_end": "2026-10-17 23:35:26"
+  },
+  "messages": [
+    {
+      "_id": "6ad391ef1f0e945f7d1318ce",
+      "vid": "1688857564665004",
+      "userId": "7881302298941590",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 0,
+      "msgType": 1,
+      "sender": "1688857564665004",
+      "receiver": "7881302298941590",
+      "sendTime": "2026-10-17 23:19:11",
+      "content": "家长，给您赠送的3天直播课会讲英语学习规划的方法和底层逻辑，家长领对路孩子少踩坑哦～三天内容不一样，记得分别点三天链接预约哈",
+      "msgId": "7410438",
+      "serverId": "13113755",
+      "appInfo": "CIOACBDJncjTlDQYrKnf2ZyAgAMg48QD",
+      "revoked": false,
+      "createdAt": "1792250351476"
+    },
+    {
+      "_id": "6ad395b2b583d134e80fbbb6",
+      "vid": "1688857564665004",
+      "userId": "7881302298941590",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881302298941590",
+      "receiver": "1688857564665004",
+      "sendTime": "2026-10-17 23:35:12",
+      "content": "这个在哪里预约？",
+      "msgId": "7410696",
+      "serverId": "13113872",
+      "appInfo": "5543207341638534342",
+      "revoked": false,
+      "createdAt": "1792251314207"
+    },
+    {
+      "_id": "6ad395b21f0e945f7d131ae4",
+      "vid": "1688857564665004",
+      "userId": "7881302298941590",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 4,
+      "msgType": 0,
+      "sender": "1688857564665004",
+      "receiver": "7881302298941590",
+      "sendTime": "2026-10-17 23:35:14",
+      "content": "系统通知:\n检测到老师们下班休息充电中，请您留言 老师上班上线第一时间依次帮大家解答~",
+      "msgId": "7410699",
+      "serverId": "13113873",
+      "appInfo": "crm_offwork_1688857564665004_7881302298941590_1792155300_text_1",
+      "revoked": false,
+      "createdAt": "1792251314511"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:30.319Z"
+}

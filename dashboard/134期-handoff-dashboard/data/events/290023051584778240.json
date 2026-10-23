@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290023051584778240",
+    "handoff_id": "27aced9c73384efeaba1eba18e5f6f17",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "LiaoZengZeng",
+    "external_userid": "wm5oClDAAAJkxmknxPkEtDXkGx5cXbLQ",
+    "vid": "1688857564665004",
+    "third_user_id": "7881301874925671",
+    "third_sale_uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+    "scenario_type": "after_sales",
+    "scenario_code": "REFUND_DISPUTE",
+    "scenario_description": "退款、投诉或售后纠纷，需要人工处理",
+    "trigger_message_id": "279268528840937273",
+    "pre_window_start": "2026-10-17 05:22:15",
+    "pre_window_end": "2026-10-17 05:52:15"
+  },
+  "messages": [
+    {
+      "_id": "6ad29c7eb1f91b1e9ccec65b",
+      "vid": "1688857564665004",
+      "userId": "7881301874925671",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 4,
+      "msgType": 0,
+      "sender": "1688857564665004",
+      "receiver": "7881301874925671",
+      "sendTime": "2026-10-17 05:51:58",
+      "content": "系统通知:\n检测到老师们下班休息充电中，请您留言 老师上班上线第一时间依次帮大家解答~",
+      "msgId": "7388427",
+      "serverId": "13103683",
+      "appInfo": "crm_offwork_1688857564665004_7881301874925671_1792155300_text_1",
+      "revoked": false,
+      "createdAt": "1792187518476"
+    },
+    {
+      "_id": "6ad29c7eff889a43bf7f4828",
+      "vid": "1688857564665004",
+      "userId": "7881301874925671",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 1,
+      "msgType": 101,
+      "sender": "7881301874925671",
+      "receiver": "1688857564665004",
+      "sendTime": "2026-10-17 05:51:56",
+      "content": "https://static.xueliyingyu.com/res/file/qywxChatFile/20261017/290023033810370560.jpg",
+      "msgId": "7388424",
+      "serverId": "13103682",
+      "appInfo": "279268528840937273",
+      "revoked": false,
+      "createdAt": "1792187518618"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:22:44.011Z"
+}

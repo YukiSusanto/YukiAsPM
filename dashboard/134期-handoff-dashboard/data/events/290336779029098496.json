@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290336779029098496",
+    "handoff_id": "5f103afd915b4235902fd43130fbbaf2",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "WuBingBing01",
+    "external_userid": "wm5oClDAAAC0YKQTg54_Ubur7IhAj8eQ",
+    "vid": "1688854713729599",
+    "third_user_id": "7881301058313868",
+    "third_sale_uuid": "ac006d54a38a38eaa038e87d2719bd52",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "客户咨询产品类问题，但无产品标签且上下文未指名产品，无法定位所购产品；需人工确认客户购买的产品后按对应产品口径回答",
+    "trigger_message_id": "4612683745363417140",
+    "pre_window_start": "2026-10-20 16:28:49",
+    "pre_window_end": "2026-10-20 16:58:49"
+  },
+  "messages": [
+    {
+      "_id": "6ad726adaa8606201987a1d0",
+      "vid": "1688854713729599",
+      "userId": "7881301058313868",
+      "uuid": "ac006d54a38a38eaa038e87d2719bd52",
+      "senderType": 5,
+      "msgType": 2,
+      "sender": "1688854713729599",
+      "receiver": "7881301058313868",
+      "sendTime": "2026-10-20 16:30:37",
+      "content": "今晚19:00雪梨老师第一节直播课就开始啦，三天直播家长一定要到场，您有空参加吗？",
+      "msgId": "3966614",
+      "serverId": "11574826",
+      "appInfo": "CIOACBDlqrzDlTQYv4SoipKAgAMgq4QP",
+      "revoked": false,
+      "createdAt": "1792485037620"
+    },
+    {
+      "_id": "6ad72d3e84a32a4383e9e7f5",
+      "vid": "1688854713729599",
+      "userId": "7881301058313868",
+      "uuid": "ac006d54a38a38eaa038e87d2719bd52",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881301058313868",
+      "receiver": "1688854713729599",
+      "sendTime": "2026-10-20 16:58:36",
+      "content": "这个群是干嘛的",
+      "msgId": "3968031",
+      "serverId": "11575490",
+      "appInfo": "4612683745363417140",
+      "revoked": false,
+      "createdAt": "1792486718296"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:42.247Z"
+}

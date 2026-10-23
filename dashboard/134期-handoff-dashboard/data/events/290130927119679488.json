@@ -1,0 +1,47 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290130927119679488",
+    "handoff_id": "e7e7ebcc2aaa46e590ec450f15d3ff5c",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "LiChunYu",
+    "external_userid": "wm5oClDAAAp3Lilh8wWtgXHY4UR6zUdg",
+    "vid": "1688856836783485",
+    "third_user_id": "7881300339006269",
+    "third_sale_uuid": "b3efc8018338db42d41939af7a9f7142",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不够明确，请结合上文确认家长真正想问的问题",
+    "trigger_message_id": "7657369245268259043",
+    "pre_window_start": "2026-10-18 09:56:54",
+    "pre_window_end": "2026-10-18 10:26:54"
+  },
+  "messages": [
+    {
+      "_id": "6ad42e62b583d134e80fbf36",
+      "vid": "1688856836783485",
+      "userId": "7881300339006269",
+      "uuid": "b3efc8018338db42d41939af7a9f7142",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881300339006269",
+      "receiver": "1688856836783485",
+      "sendTime": "2026-10-18 10:26:40",
+      "content": "这个软件不好，默写还可以往前滑偷看单词",
+      "msgId": "3549664",
+      "serverId": "16949381",
+      "appInfo": "7657369245268259043",
+      "revoked": false,
+      "createdAt": "1792290402096"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:33.565Z"
+}

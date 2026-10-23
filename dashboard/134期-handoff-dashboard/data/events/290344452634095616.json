@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290344452634095616",
+    "handoff_id": "a1416b9246be4ef49c8cfa02d75b9611",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "LiaoZengZeng",
+    "external_userid": "wm5oClDAAABmJIkIVnK0Jpr7C6EEAVTw",
+    "vid": "1688857564665004",
+    "third_user_id": "7881300442981404",
+    "third_sale_uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+    "scenario_type": "knowledge_support",
+    "scenario_code": "KNOWLEDGE_INSUFFICIENT",
+    "scenario_description": "现有知识不足以可靠回答客户问题",
+    "trigger_message_id": "133763064431984305",
+    "pre_window_start": "2026-10-20 18:30:47",
+    "pre_window_end": "2026-10-20 19:00:47"
+  },
+  "messages": [
+    {
+      "_id": "6ad7495caa860620198811cd",
+      "vid": "1688857564665004",
+      "userId": "7881300442981404",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 5,
+      "msgType": 2,
+      "sender": "1688857564665004",
+      "receiver": "7881300442981404",
+      "sendTime": "2026-10-20 18:58:36",
+      "content": "家长，雪梨老师已经进入直播间了！您现在就可以进来和雪梨老师沟通哦，点这个链接：https://xl.shirleyclass.com/s/1UbrNkb",
+      "msgId": "7455914",
+      "serverId": "13135653",
+      "appInfo": "CIOACBDMotrHlTQYrKnf2ZyAgAMgmI8F",
+      "revoked": false,
+      "createdAt": "1792493916656"
+    },
+    {
+      "_id": "6ad749d284a32a4383ea48b1",
+      "vid": "1688857564665004",
+      "userId": "7881300442981404",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881300442981404",
+      "receiver": "1688857564665004",
+      "sendTime": "2026-10-20 19:00:32",
+      "content": "有回放没有",
+      "msgId": "7456776",
+      "serverId": "13136078",
+      "appInfo": "133763064431984305",
+      "revoked": false,
+      "createdAt": "1792494034817"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:42.716Z"
+}

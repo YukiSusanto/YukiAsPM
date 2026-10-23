@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290419796991979520",
+    "handoff_id": "4c0a0f8f2312438381e7e8cd5a9ae345",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "LiaoZengZeng",
+    "external_userid": "wm5oClDAAAzemqOwmYZnhSgg9W0tGdqw",
+    "vid": "1688857564665004",
+    "third_user_id": "7881302790022865",
+    "third_sale_uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+    "scenario_type": "customer_refusal",
+    "scenario_code": "EXPLICIT_REFUSAL",
+    "scenario_description": "客户明确拒绝继续沟通",
+    "trigger_message_id": "8423809604474302682",
+    "pre_window_start": "2026-10-21 14:28:21",
+    "pre_window_end": "2026-10-21 14:58:21"
+  },
+  "messages": [
+    {
+      "_id": "6ad85c39c8ee4559110de844",
+      "vid": "1688857564665004",
+      "userId": "7881302790022865",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 5,
+      "msgType": 2,
+      "sender": "1688857564665004",
+      "receiver": "7881302790022865",
+      "sendTime": "2026-10-21 14:31:21",
+      "content": "宝贝家长，我看您昨天进直播间了，但是没坚持看完🥲\n因为今天是最重要的一节家长课堂，雪梨老师让我来问问您能参加吗？\n\n今日直播预约链接：https://xl.shirleyclass.com/s/8rayeMj",
+      "msgId": "7469327",
+      "serverId": "13142461",
+      "appInfo": "CIOACBDy/6DplTQYrKnf2ZyAgAMgydQF",
+      "revoked": false,
+      "createdAt": "1792564281499"
+    },
+    {
+      "_id": "6ad8627fc8ee4559110dfcbb",
+      "vid": "1688857564665004",
+      "userId": "7881302790022865",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881302790022865",
+      "receiver": "1688857564665004",
+      "sendTime": "2026-10-21 14:58:06",
+      "content": "不参加了 孩子不喜欢用 我准备退掉了，这下也死心了 光我喜欢也没用",
+      "msgId": "7470425",
+      "serverId": "13142973",
+      "appInfo": "8423809604474302682",
+      "revoked": false,
+      "createdAt": "1792565887410"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:47.828Z"
+}

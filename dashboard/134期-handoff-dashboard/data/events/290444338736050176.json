@@ -1,0 +1,81 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290444338736050176",
+    "handoff_id": "818b1dc09e154b0a8871d49e7e275b56",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "WuBingBing01",
+    "external_userid": "wm5oClDAAArke4linwrt0YEsimflGR-w",
+    "vid": "1688854713729599",
+    "third_user_id": "7881301900970175",
+    "third_sale_uuid": "ac006d54a38a38eaa038e87d2719bd52",
+    "scenario_type": "customer_refusal",
+    "scenario_code": "EXPLICIT_REFUSAL",
+    "scenario_description": "客户明确拒绝继续沟通",
+    "trigger_message_id": "1905703948681576148",
+    "pre_window_start": "2026-10-21 20:58:26",
+    "pre_window_end": "2026-10-21 21:28:26"
+  },
+  "messages": [
+    {
+      "_id": "6ad8bb9bc927de5c485d510a",
+      "vid": "1688854713729599",
+      "userId": "7881301900970175",
+      "uuid": "ac006d54a38a38eaa038e87d2719bd52",
+      "senderType": 4,
+      "msgType": 2,
+      "sender": "1688854713729599",
+      "receiver": "7881301900970175",
+      "sendTime": "2026-10-21 21:18:19",
+      "content": "​‌​​‌​‌​​‌​‌​​‌‌​‌​‌​​​‌​‌​​​‌‌​雪梨老师的今晚介绍的学霸陪跑营开始报名了，10月活动好礼多多，无忧免费试学的名额有限，仅这两天报名！\n  看看您有什么想要了解的吗？\n  ✨1.学习内容\n  ✨2.课时和上课时间\n  ✨3.学习效果\n  ✨4.系统学习，直接报名\n  ✨5.了解分期免息报名\n  \n  您回复数字就好，老师跟您解答一下",
+      "msgId": "3993920",
+      "serverId": "11587735",
+      "appInfo": "KHGS_6h_Yvwm1Qcmn3zK7881301900970175_4729165051223303621_0",
+      "revoked": false,
+      "createdAt": "1792588699335"
+    },
+    {
+      "_id": "6ad8bdedc927de5c485d5203",
+      "vid": "1688854713729599",
+      "userId": "7881301900970175",
+      "uuid": "ac006d54a38a38eaa038e87d2719bd52",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881301900970175",
+      "receiver": "1688854713729599",
+      "sendTime": "2026-10-21 21:28:11",
+      "content": "暂时不做报名的计划",
+      "msgId": "3994619",
+      "serverId": "11588081",
+      "appInfo": "1905703948681576148",
+      "revoked": false,
+      "createdAt": "1792589293646"
+    },
+    {
+      "_id": "6ad8bded56bb206080bf12fc",
+      "vid": "1688854713729599",
+      "userId": "7881301900970175",
+      "uuid": "ac006d54a38a38eaa038e87d2719bd52",
+      "senderType": 4,
+      "msgType": 0,
+      "sender": "1688854713729599",
+      "receiver": "7881301900970175",
+      "sendTime": "2026-10-21 21:28:13",
+      "content": "宝贝家长，现在是非工作时间。 有问题下方留言即可。上班后第一时间回复您。请多多谅解。",
+      "msgId": "3994624",
+      "serverId": "11588083",
+      "appInfo": "crm_offwork_1688854713729599_7881301900970175_1792490400_text_1",
+      "revoked": false,
+      "createdAt": "1792589293859"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:53.036Z"
+}

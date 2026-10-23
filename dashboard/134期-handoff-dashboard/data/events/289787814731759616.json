@@ -1,0 +1,81 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "289787814731759616",
+    "handoff_id": "e59822ea2ad044c183a513089c8c63a1",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "XuLei",
+    "external_userid": "wm5oClDAAAjJBOyZ_l7274Q0E1re2xsA",
+    "vid": "1688856635654364",
+    "third_user_id": "7881301606995019",
+    "third_sale_uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+    "scenario_type": "knowledge_support",
+    "scenario_code": "KNOWLEDGE_INSUFFICIENT",
+    "scenario_description": "现有知识不足以可靠回答客户问题",
+    "trigger_message_id": "4326506457235421251",
+    "pre_window_start": "2026-10-14 15:03:16",
+    "pre_window_end": "2026-10-14 15:33:16"
+  },
+  "messages": [
+    {
+      "_id": "6acf2c311ebcde4af35cb05a",
+      "vid": "1688856635654364",
+      "userId": "7881301606995019",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 0,
+      "msgType": 1,
+      "sender": "1688856635654364",
+      "receiver": "7881301606995019",
+      "sendTime": "2026-10-14 15:16:01",
+      "content": "宝贝家长，咱家六年级孩子英语基础这块儿，正好跟着雪梨老师赠送的3天直播课把规划理顺哈",
+      "msgId": "5129919",
+      "serverId": "9746649",
+      "appInfo": "CIOACBCHw5LKkzQY3IHhnpmAgAMgrYcB",
+      "revoked": false,
+      "createdAt": "1791962161721"
+    },
+    {
+      "_id": "6acf2c3c1ebcde4af35cb062",
+      "vid": "1688856635654364",
+      "userId": "7881301606995019",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 0,
+      "msgType": 1,
+      "sender": "1688856635654364",
+      "receiver": "7881301606995019",
+      "sendTime": "2026-10-14 15:16:12",
+      "content": "三天内容不一样，记得分别点三天链接预约哦～",
+      "msgId": "5129925",
+      "serverId": "9746652",
+      "appInfo": "CIOACBDlmpPKkzQY3IHhnpmAgAMgsIcB",
+      "revoked": false,
+      "createdAt": "1791962172989"
+    },
+    {
+      "_id": "6acf302f0af32b284bc24800",
+      "vid": "1688856635654364",
+      "userId": "7881301606995019",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881301606995019",
+      "receiver": "1688856635654364",
+      "sendTime": "2026-10-14 15:33:01",
+      "content": "好",
+      "msgId": "5131715",
+      "serverId": "9747736",
+      "appInfo": "4326506457235421251",
+      "revoked": false,
+      "createdAt": "1791963183025"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:21:48.517Z"
+}

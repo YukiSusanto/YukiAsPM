@@ -1,0 +1,81 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "289984874555813888",
+    "handoff_id": "c9a220dfe7db46f698c6a0040b8fd10b",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "YeQingLin",
+    "external_userid": "wm5oClDAAA2JlnLsXHvfzAkSjjspjykg",
+    "vid": "1688855715791056",
+    "third_user_id": "7881303610982843",
+    "third_sale_uuid": "3ec83ab255814181834286b01df01c27",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不足，追问：确认家长问的是哪一场直播（周几那场）",
+    "trigger_message_id": "5031772997539736989",
+    "pre_window_start": "2026-10-16 19:15:27",
+    "pre_window_end": "2026-10-16 19:45:27"
+  },
+  "messages": [
+    {
+      "_id": "6ad20e34b1f91b1e9cce96a5",
+      "vid": "1688855715791056",
+      "userId": "7881303610982843",
+      "uuid": "3ec83ab255814181834286b01df01c27",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881303610982843",
+      "receiver": "1688855715791056",
+      "sendTime": "2026-10-16 19:44:51",
+      "content": "老师平板怎么进不去",
+      "msgId": "3216993",
+      "serverId": "13540336",
+      "appInfo": "7728893842067141101",
+      "revoked": false,
+      "createdAt": "1792151092831"
+    },
+    {
+      "_id": "6ad20e44b1f91b1e9cce96b0",
+      "vid": "1688855715791056",
+      "userId": "7881303610982843",
+      "uuid": "3ec83ab255814181834286b01df01c27",
+      "senderType": 0,
+      "msgType": 1,
+      "sender": "1688855715791056",
+      "receiver": "7881303610982843",
+      "sendTime": "2026-10-16 19:45:08",
+      "content": "是卡在哪一步了呀",
+      "msgId": "3217001",
+      "serverId": "13540339",
+      "appInfo": "CIOACBDX9Z6klDQY0IGR6JWAgAMgsaEN",
+      "revoked": false,
+      "createdAt": "1792151108469"
+    },
+    {
+      "_id": "6ad20e4ab1f91b1e9cce96b5",
+      "vid": "1688855715791056",
+      "userId": "7881303610982843",
+      "uuid": "3ec83ab255814181834286b01df01c27",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881303610982843",
+      "receiver": "1688855715791056",
+      "sendTime": "2026-10-16 19:45:12",
+      "content": "不是随时可以听课的是吗",
+      "msgId": "3217003",
+      "serverId": "13540340",
+      "appInfo": "5031772997539736989",
+      "revoked": false,
+      "createdAt": "1792151114420"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:22:41.003Z"
+}

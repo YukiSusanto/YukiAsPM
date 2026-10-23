@@ -1,0 +1,81 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290349089870233600",
+    "handoff_id": "d16eeb359e8947aaacccf9f8aa662f65",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "WuBingBing01",
+    "external_userid": "wm5oClDAAABYk34iIhFHPXj6z5QP2Saw",
+    "vid": "1688854713729599",
+    "third_user_id": "7881302688039050",
+    "third_sale_uuid": "ac006d54a38a38eaa038e87d2719bd52",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不够明确，请结合上文确认家长真正想问的问题",
+    "trigger_message_id": "6515219110791516979",
+    "pre_window_start": "2026-10-20 19:44:30",
+    "pre_window_end": "2026-10-20 20:14:30"
+  },
+  "messages": [
+    {
+      "_id": "6ad75b0e84a32a4383ea54bb",
+      "vid": "1688854713729599",
+      "userId": "7881302688039050",
+      "uuid": "ac006d54a38a38eaa038e87d2719bd52",
+      "senderType": 1,
+      "msgType": 101,
+      "sender": "7881302688039050",
+      "receiver": "1688854713729599",
+      "sendTime": "2026-10-20 20:14:05",
+      "content": "https://static.xueliyingyu.com/res/file/qywxChatFile/20261020/290349065574723584.jpg",
+      "msgId": "3973795",
+      "serverId": "11578205",
+      "appInfo": "1888442813158237258",
+      "revoked": false,
+      "createdAt": "1792498446682"
+    },
+    {
+      "_id": "6ad75b12aa86062019883269",
+      "vid": "1688854713729599",
+      "userId": "7881302688039050",
+      "uuid": "ac006d54a38a38eaa038e87d2719bd52",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881302688039050",
+      "receiver": "1688854713729599",
+      "sendTime": "2026-10-20 20:14:09",
+      "content": "老师  ",
+      "msgId": "3973798",
+      "serverId": "11578206",
+      "appInfo": "950538846603730904",
+      "revoked": false,
+      "createdAt": "1792498450270"
+    },
+    {
+      "_id": "6ad75b17aa8606201988326c",
+      "vid": "1688854713729599",
+      "userId": "7881302688039050",
+      "uuid": "ac006d54a38a38eaa038e87d2719bd52",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881302688039050",
+      "receiver": "1688854713729599",
+      "sendTime": "2026-10-20 20:14:13",
+      "content": "这个在哪里领啊",
+      "msgId": "3973807",
+      "serverId": "11578210",
+      "appInfo": "6515219110791516979",
+      "revoked": false,
+      "createdAt": "1792498455191"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:44.579Z"
+}

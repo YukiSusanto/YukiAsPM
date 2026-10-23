@@ -1,0 +1,47 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290159138350219264",
+    "handoff_id": "bba9d6666be540bd9152c1cc6e9e02d0",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "SunPeiJie",
+    "external_userid": "wm5oClDAAAJrzdEN7GTu4O8LiHHlVSOQ",
+    "vid": "1688855400822933",
+    "third_user_id": "7881299906071578",
+    "third_sale_uuid": "607d7006e4c61ececbbc921e538e9f31",
+    "scenario_type": "sales_objection",
+    "scenario_code": "PRICE_OBJECTION",
+    "scenario_description": "客户对价格、费用或优惠存在异议",
+    "trigger_message_id": "1286728972738253449",
+    "pre_window_start": "2026-10-18 17:25:18",
+    "pre_window_end": "2026-10-18 17:55:18"
+  },
+  "messages": [
+    {
+      "_id": "6ad497771f0e945f7d133336",
+      "vid": "1688855400822933",
+      "userId": "7881299906071578",
+      "uuid": "607d7006e4c61ececbbc921e538e9f31",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881299906071578",
+      "receiver": "1688855400822933",
+      "sendTime": "2026-10-18 17:55:01",
+      "content": "二年级8岁",
+      "msgId": "3047458",
+      "serverId": "11475521",
+      "appInfo": "1286728972738253449",
+      "revoked": false,
+      "createdAt": "1792317303663"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:38.392Z"
+}

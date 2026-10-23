@@ -1,0 +1,81 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290125518814232576",
+    "handoff_id": "06d575633f514fbb97256982899023b2",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "ZhangNing",
+    "external_userid": "wm5oClDAAASEeaj290R15uT6fgbL4POw",
+    "vid": "1688856537655175",
+    "third_user_id": "7881303597001429",
+    "third_sale_uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "客户咨询产品类问题，但无产品标签且上下文未指名产品，无法定位所购产品；需人工确认客户购买的产品后按对应产品口径回答",
+    "trigger_message_id": "2959492885614900665",
+    "pre_window_start": "2026-10-18 08:30:56",
+    "pre_window_end": "2026-10-18 09:00:56"
+  },
+  "messages": [
+    {
+      "_id": "6ad413481f0e945f7d131d0b",
+      "vid": "1688856537655175",
+      "userId": "7881303597001429",
+      "uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+      "senderType": 0,
+      "msgType": 1,
+      "sender": "1688856537655175",
+      "receiver": "7881303597001429",
+      "sendTime": "2026-10-18 08:31:04",
+      "content": "您往上翻一下，九年级上下册都在",
+      "msgId": "9247104",
+      "serverId": "14526519",
+      "appInfo": "CIOACBDwoq3jlDQYh8+D8JiAgAMgzPcD",
+      "revoked": false,
+      "createdAt": "1792283464306"
+    },
+    {
+      "_id": "6ad41350b583d134e80fbdb3",
+      "vid": "1688856537655175",
+      "userId": "7881303597001429",
+      "uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+      "senderType": 0,
+      "msgType": 1,
+      "sender": "1688856537655175",
+      "receiver": "7881303597001429",
+      "sendTime": "2026-10-18 08:31:12",
+      "content": "孩子是初三吧，用的哪个版本教材",
+      "msgId": "9247106",
+      "serverId": "14526520",
+      "appInfo": "CIOACBDx463jlDQYh8+D8JiAgAMgzfcD",
+      "revoked": false,
+      "createdAt": "1792283472577"
+    },
+    {
+      "_id": "6ad41a3b1f0e945f7d131d58",
+      "vid": "1688856537655175",
+      "userId": "7881303597001429",
+      "uuid": "71cd06e381ba3e9c5ba335c0274feaca",
+      "senderType": 1,
+      "msgType": 0,
+      "sender": "7881303597001429",
+      "receiver": "1688856537655175",
+      "sendTime": "2026-10-18 09:00:40",
+      "content": "音转文：翻过了没有？",
+      "msgId": "9247157",
+      "serverId": "14526542",
+      "appInfo": "2959492885614900665",
+      "revoked": false,
+      "createdAt": "1792285243993"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:32.337Z"
+}

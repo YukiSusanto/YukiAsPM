@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "289891719772815360",
+    "handoff_id": "e0dae229824440f6a7bcd9713b9bf50f",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "SunPeiJie",
+    "external_userid": "wm5oClDAAA6DCQTP_YaJ2F1BqekVkflg",
+    "vid": "1688855400822933",
+    "third_user_id": "7881302174002029",
+    "third_sale_uuid": "607d7006e4c61ececbbc921e538e9f31",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不足，追问：确认家长问的是哪一场直播（周几那场）",
+    "trigger_message_id": "3398626787647162245",
+    "pre_window_start": "2026-10-15 18:34:48",
+    "pre_window_end": "2026-10-15 19:04:48"
+  },
+  "messages": [
+    {
+      "_id": "6ad0b31826a9b747d9e96a4e",
+      "vid": "1688855400822933",
+      "userId": "7881302174002029",
+      "uuid": "607d7006e4c61ececbbc921e538e9f31",
+      "senderType": 4,
+      "msgType": 2,
+      "sender": "1688855400822933",
+      "receiver": "7881302174002029",
+      "sendTime": "2026-10-15 19:03:52",
+      "content": "\"雪梨老师助理Alex老师：\n 【非常重要】，雪梨老师的【3天家长直播课】，咱们是安排在【10月20日到22日晚上19点】\n\n💗下面是3天的直播链接，您点进去预约绑定课程👇\nDay1--【10.20直播课19点】：https://xl.shirleyclass.com/s/6CVjanC\nDay2--【10.21直播课19点】：https://xl.shirleyclass.com/s/1sWtvzD\nDay3--【10.22直播课19点】：https://xl.shirleyclass.com/s/8BEfZZL\"\n------\n对了，三天直播您点击链接预约好了吗？\n\n预约好后可以回复1，这边给咱们激活课程",
+      "msgId": "2988800",
+      "serverId": "11447416",
+      "appInfo": "CAEQmObC1gYYlfH40ZSAgAMglgE=",
+      "revoked": false,
+      "createdAt": "1792062232691"
+    },
+    {
+      "_id": "6ad0b34327f2447a703e1442",
+      "vid": "1688855400822933",
+      "userId": "7881302174002029",
+      "uuid": "607d7006e4c61ececbbc921e538e9f31",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881302174002029",
+      "receiver": "1688855400822933",
+      "sendTime": "2026-10-15 19:04:34",
+      "content": "没有",
+      "msgId": "2988817",
+      "serverId": "11447424",
+      "appInfo": "3398626787647162245",
+      "revoked": false,
+      "createdAt": "1792062275810"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:22:18.272Z"
+}

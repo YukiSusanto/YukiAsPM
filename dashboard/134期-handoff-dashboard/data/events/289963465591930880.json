@@ -1,0 +1,81 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "289963465591930880",
+    "handoff_id": "28ba4e13f6b644fab5715e0488b3fae5",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "LiaoZengZeng",
+    "external_userid": "wm5oClDAAA1NXHWC5kVI1TdapswbgGDw",
+    "vid": "1688857564665004",
+    "third_user_id": "7881302650945643",
+    "third_sale_uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不足，追问：确认购课手机号是否与登录手机号一致",
+    "trigger_message_id": "3374820604054182205",
+    "pre_window_start": "2026-10-16 13:35:10",
+    "pre_window_end": "2026-10-16 14:05:10"
+  },
+  "messages": [
+    {
+      "_id": "6ad1be7b4a669e0fdb806b86",
+      "vid": "1688857564665004",
+      "userId": "7881302650945643",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881302650945643",
+      "receiver": "1688857564665004",
+      "sendTime": "2026-10-16 14:04:41",
+      "content": "我已经拍了",
+      "msgId": "7357982",
+      "serverId": "13087782",
+      "appInfo": "1093789152371042989",
+      "revoked": false,
+      "createdAt": "1792130683608"
+    },
+    {
+      "_id": "6ad1be7dd8c5a33a54e409c5",
+      "vid": "1688857564665004",
+      "userId": "7881302650945643",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881302650945643",
+      "receiver": "1688857564665004",
+      "sendTime": "2026-10-16 14:04:44",
+      "content": "接下来需要干嘛",
+      "msgId": "7357985",
+      "serverId": "13087783",
+      "appInfo": "1194778468477732691",
+      "revoked": false,
+      "createdAt": "1792130685970"
+    },
+    {
+      "_id": "6ad1be8a4a669e0fdb806b92",
+      "vid": "1688857564665004",
+      "userId": "7881302650945643",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881302650945643",
+      "receiver": "1688857564665004",
+      "sendTime": "2026-10-16 14:04:56",
+      "content": "也下来APP，注册登入进去了哈",
+      "msgId": "7357991",
+      "serverId": "13087785",
+      "appInfo": "3374820604054182205",
+      "revoked": false,
+      "createdAt": "1792130698315"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:22:23.647Z"
+}

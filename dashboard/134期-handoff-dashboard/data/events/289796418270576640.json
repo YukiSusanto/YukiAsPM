@@ -1,0 +1,47 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "289796418270576640",
+    "handoff_id": "75c67caec1d74ab9a5b9ddbff9cfaa53",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "LiChunYu",
+    "external_userid": "wm5oClDAAAvoU4W4rOTFBA27trN6MISA",
+    "vid": "1688856836783485",
+    "third_user_id": "7881300870982521",
+    "third_sale_uuid": "b3efc8018338db42d41939af7a9f7142",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不足，追问：确认家长问的是哪一场直播（周几那场）",
+    "trigger_message_id": "2820308001957007851",
+    "pre_window_start": "2026-10-14 17:20:01",
+    "pre_window_end": "2026-10-14 17:50:01"
+  },
+  "messages": [
+    {
+      "_id": "6acf503aadb45615f3e51d49",
+      "vid": "1688856836783485",
+      "userId": "7881300870982521",
+      "uuid": "b3efc8018338db42d41939af7a9f7142",
+      "senderType": 1,
+      "msgType": 101,
+      "sender": "7881300870982521",
+      "receiver": "1688856836783485",
+      "sendTime": "2026-10-14 17:49:44",
+      "content": "https://static.xueliyingyu.com/res/file/qywxChatFile/20261014/289796403446849536.jpg",
+      "msgId": "3440472",
+      "serverId": "16896980",
+      "appInfo": "2820308001957007851",
+      "revoked": false,
+      "createdAt": "1791971386992"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:21:57.287Z"
+}

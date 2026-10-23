@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>134期 · 原因探索</title><link rel="stylesheet" href="./style.css"><script src="./app.js" defer></script></head>
+<body>
+<header class="header"><a class="brand" href="./"><span class="brand-icon">s<span></span></span><span>雪梨英语 <i>/</i> 数据观察室</span></a><div class="header-right"><span class="portable-label">静态数据版</span><button id="method">数据口径 <span>ⓘ</span></button><span class="edition">EXPLORER / 02</span></div></header>
+<main>
+ <section class="intro"><div><div class="kicker">134期 <span>·</span> HANDOFF EXPLORER</div><h1>沿着原因，走进对话<span>。</span></h1><p>从整体分布到具体情境，每一次点击，都更接近问题本身。</p></div><div class="date-note"><span class="date-label">客户加微范围</span><strong>10.12 <span>—</span> 10.18</strong><small>2026 · 北京时间</small></div></section>
+ <div id="loading" class="loading"><span class="spinner"></span>正在准备探索视图…</div><div id="error" class="error" hidden></div>
+ <div id="app" hidden>
+  <section id="metrics" class="metrics" aria-label="数据概览"></section>
+  <section class="chart-card">
+   <div class="chart-top"><nav id="breadcrumb" class="breadcrumb" aria-label="原因钻取路径"></nav><button id="back" class="back" hidden>← 返回整体分布</button></div>
+   <div id="chartStage" class="chart-stage">
+    <div class="primary-region"><svg id="donut" viewBox="0 0 420 420" aria-label="一级原因分布，点击扇区展开二级原因" role="group"><circle cx="210" cy="210" r="155" fill="none" stroke="#f0f1ee" stroke-width="52"></circle><g id="sectors"></g><g class="donut-center" aria-hidden="true"><text id="centerEyebrow" x="210" y="177" class="center-eyebrow">转人工事件</text><text id="centerValue" x="210" y="226" class="center-value">906</text><text id="centerLabel" x="210" y="254" class="center-label">5 个一级原因</text></g></svg></div>
+    <div id="overview" class="overview"><div class="chart-caption"><span class="step">01 / OVERVIEW</span><h2>问题从哪里开始？</h2><p>点击扇区或图例，展开这类原因。</p></div><div id="legend" class="legend"></div><div class="chart-footnote"><span class="tiny-dot"></span>扇区大小表示转人工次数占比</div></div>
+    <div id="miniContext" class="mini-context" hidden><span class="step">当前一级原因</span><h3 id="contextName"></h3><div id="contextStats"></div><button id="switchPrimary" class="link-button">查看其他一级原因 ↗</button></div>
+    <section id="secondaryPanel" class="secondary-panel" hidden aria-label="二级原因分布"><div class="secondary-heading"><div><span class="step">02 / BREAKDOWN</span><h2 id="secondaryTitle"></h2><p id="secondarySubtitle"></p></div><span class="chart-type">原因排名 <span>↘</span></span></div><div id="barChart" class="bar-chart"></div><div id="rareReasons" class="rare-reasons"></div><div class="axis-note"><span>点击原因，进入客户对话</span><span>占比以当前一级原因为分母</span></div></section>
+   </div>
+   <div class="chart-bottom"><div id="insight"></div><span id="chartCounter">01 — 03</span></div>
+  </section>
+  <section id="customerSection" class="customer-section" hidden><div class="customer-section-heading"><div><span class="step">03 / CONVERSATIONS</span><h2 id="customerTitle"></h2><p id="customerSubtitle"></p></div><button id="closeCustomers" class="icon-button" aria-label="收起客户列表">×</button></div><div id="reasonNote" class="reason-note"></div><div class="customer-toolbar"><label class="search"><span>⌕</span><input id="search" type="search" placeholder="搜索客户编号、客户 ID 或原始原因" aria-label="搜索当前原因下的客户"></label><label class="sort">排序<select id="sort" aria-label="客户排序"><option value="latest">最近事件</option><option value="events">事件最多</option><option value="messages">消息最多</option></select></label><span id="customerCount"></span></div><div id="customerGrid" class="customer-grid"></div><div id="pagination" class="pagination"></div></section>
+  <section id="journey" class="journey"><span class="journey-label">探索路径</span><span><b>01</b> 看分布</span><i>⟶</i><span><b>02</b> 拆原因</span><i>⟶</i><span><b>03</b> 读对话</span><div class="journey-note">25 个二级原因，保留每一条原始记录。</div></section>
+  <footer><span>SHIRLEY / DATA OBSERVATORY</span><span>134期 · 本地数据快照 · 附件不自动加载</span></footer>
+ </div>
+</main>
+<div id="backdrop" class="backdrop" hidden></div><section id="drawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="chatTitle" hidden><header class="drawer-header"><div><span class="step">CONVERSATION / ORIGINAL</span><h2 id="chatTitle"></h2></div><button id="closeChat" class="icon-button" aria-label="关闭聊天">×</button></header><div id="eventSummary"></div><div id="eventTabs" class="event-tabs"></div><div id="messages" class="messages"></div><footer class="drawer-footer"><span>仅展示转人工前置窗口</span><div><button id="previous" class="link-button">← 上一位</button><button id="next" class="link-button">下一位 →</button></div></footer></section>
+<dialog id="methodDialog"><header><h2>数据与分类口径</h2><button id="closeMethod" class="icon-button" aria-label="关闭口径说明">×</button></header><div id="methodText"></div></dialog>
+</body></html>

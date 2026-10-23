@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290426748890431488",
+    "handoff_id": "b3cdccf4cb8d4491aca546f2a3701be5",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "LiaoZengZeng",
+    "external_userid": "wm5oClDAAAPZUlVqIo1FvpLAXSd7TtCQ",
+    "vid": "1688857564665004",
+    "third_user_id": "7881301862011119",
+    "third_sale_uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不够明确，请结合上文确认家长真正想问的问题",
+    "trigger_message_id": "3625207159393636199",
+    "pre_window_start": "2026-10-21 16:18:51",
+    "pre_window_end": "2026-10-21 16:48:51"
+  },
+  "messages": [
+    {
+      "_id": "6ad87c5aad4bb6717ccc0046",
+      "vid": "1688857564665004",
+      "userId": "7881301862011119",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 1,
+      "msgType": 101,
+      "sender": "7881301862011119",
+      "receiver": "1688857564665004",
+      "sendTime": "2026-10-21 16:48:24",
+      "content": "https://static.xueliyingyu.com/res/file/qywxChatFile/20261021/290426722926637056.jpg",
+      "msgId": "7474286",
+      "serverId": "13144768",
+      "appInfo": "4559846207797791259",
+      "revoked": false,
+      "createdAt": "1792572506500"
+    },
+    {
+      "_id": "6ad87c64c8ee4559110e13a4",
+      "vid": "1688857564665004",
+      "userId": "7881301862011119",
+      "uuid": "c90e3eb03c9dd9d1afd21bf266b09a68",
+      "senderType": 1,
+      "msgType": 101,
+      "sender": "7881301862011119",
+      "receiver": "1688857564665004",
+      "sendTime": "2026-10-21 16:48:33",
+      "content": "https://static.xueliyingyu.com/res/file/qywxChatFile/20261021/290426733215268864.jpg",
+      "msgId": "7474293",
+      "serverId": "13144771",
+      "appInfo": "3625207159393636199",
+      "revoked": false,
+      "createdAt": "1792572516311"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:48.438Z"
+}

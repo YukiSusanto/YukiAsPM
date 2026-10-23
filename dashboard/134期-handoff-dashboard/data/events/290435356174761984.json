@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290435356174761984",
+    "handoff_id": "6005f532755f4b16835c113ac20ea7ac",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "XuLei",
+    "external_userid": "wm5oClDAAAhAg_v0l1H3bm59G9P3NjRA",
+    "vid": "1688856635654364",
+    "third_user_id": "7881300453926370",
+    "third_sale_uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "客户咨询产品类问题，但无产品标签且上下文未指名产品，无法定位所购产品；需人工确认客户购买的产品后按对应产品口径回答",
+    "trigger_message_id": "3384434197237026338",
+    "pre_window_start": "2026-10-21 18:35:40",
+    "pre_window_end": "2026-10-21 19:05:40"
+  },
+  "messages": [
+    {
+      "_id": "6ad89adcc927de5c485c17bc",
+      "vid": "1688856635654364",
+      "userId": "7881300453926370",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 5,
+      "msgType": 2,
+      "sender": "1688856635654364",
+      "receiver": "7881300453926370",
+      "sendTime": "2026-10-21 18:58:36",
+      "content": "晚上好家长~雪梨老师已经在直播间等您了哦，现在可以进来了哦！这是课堂地址：https://xl.shirleyclass.com/s/4oRh6fx",
+      "msgId": "5259385",
+      "serverId": "9807999",
+      "appInfo": "CIOACBC/2fPwlTQY3IHhnpmAgAMg7pMG",
+      "revoked": false,
+      "createdAt": "1792580316497"
+    },
+    {
+      "_id": "6ad89c78c927de5c485c43d6",
+      "vid": "1688856635654364",
+      "userId": "7881300453926370",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881300453926370",
+      "receiver": "1688856635654364",
+      "sendTime": "2026-10-21 19:05:26",
+      "content": "老师，昨天的资料在哪里领？",
+      "msgId": "5260351",
+      "serverId": "9808471",
+      "appInfo": "3384434197237026338",
+      "revoked": false,
+      "createdAt": "1792580728477"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:49.606Z"
+}

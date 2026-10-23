@@ -1,0 +1,47 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "289795131719204864",
+    "handoff_id": "46ae473a2631401994209280518c0fc0",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "LiChunYu",
+    "external_userid": "wm5oClDAAAvE3bkPRyAv0zTDFLiV31sw",
+    "vid": "1688856836783485",
+    "third_user_id": "7881302544960925",
+    "third_sale_uuid": "b3efc8018338db42d41939af7a9f7142",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不足，追问：确认家长问的是哪一场直播（周几那场）",
+    "trigger_message_id": "5634182766490457479",
+    "pre_window_start": "2026-10-14 16:59:34",
+    "pre_window_end": "2026-10-14 17:29:34"
+  },
+  "messages": [
+    {
+      "_id": "6acf4b722b50fe5a5455eba2",
+      "vid": "1688856836783485",
+      "userId": "7881302544960925",
+      "uuid": "b3efc8018338db42d41939af7a9f7142",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881302544960925",
+      "receiver": "1688856836783485",
+      "sendTime": "2026-10-14 17:29:20",
+      "content": "3天已预约",
+      "msgId": "3440221",
+      "serverId": "16896864",
+      "appInfo": "5634182766490457479",
+      "revoked": false,
+      "createdAt": "1791970162354"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:21:56.188Z"
+}

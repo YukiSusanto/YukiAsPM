@@ -1,0 +1,47 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290132534290989056",
+    "handoff_id": "7546528bb62e4a2aba5e88af0e0debfa",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "WuBingBing01",
+    "external_userid": "wm5oClDAAAM5e3KdlWZLhJMaf_nfCMGA",
+    "vid": "1688854713729599",
+    "third_user_id": "7881300676967840",
+    "third_sale_uuid": "ac006d54a38a38eaa038e87d2719bd52",
+    "scenario_type": "customer_refusal",
+    "scenario_code": "EXPLICIT_REFUSAL",
+    "scenario_description": "客户明确拒绝继续沟通",
+    "trigger_message_id": "3340050523286013810",
+    "pre_window_start": "2026-10-18 10:22:26",
+    "pre_window_end": "2026-10-18 10:52:26"
+  },
+  "messages": [
+    {
+      "_id": "6ad4345d1f0e945f7d131f72",
+      "vid": "1688854713729599",
+      "userId": "7881300676967840",
+      "uuid": "ac006d54a38a38eaa038e87d2719bd52",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881300676967840",
+      "receiver": "1688854713729599",
+      "sendTime": "2026-10-18 10:52:11",
+      "content": "退吧",
+      "msgId": "3949410",
+      "serverId": "11566560",
+      "appInfo": "3340050523286013810",
+      "revoked": false,
+      "createdAt": "1792291933104"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:33.876Z"
+}

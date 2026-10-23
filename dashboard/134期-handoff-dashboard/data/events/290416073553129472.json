@@ -1,0 +1,81 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290416073553129472",
+    "handoff_id": "02e955e7e3154cbb9c86e7ce84ae2d61",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "XuLei",
+    "external_userid": "wm5oClDAAAA-qUREaUk7hze_fgE3QjwA",
+    "vid": "1688856635654364",
+    "third_user_id": "7881303160031057",
+    "third_sale_uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "客户咨询产品类问题，但无产品标签且上下文未指名产品，无法定位所购产品；需人工确认客户购买的产品后按对应产品口径回答",
+    "trigger_message_id": "3070784349508487483",
+    "pre_window_start": "2026-10-21 13:29:10",
+    "pre_window_end": "2026-10-21 13:59:10"
+  },
+  "messages": [
+    {
+      "_id": "6ad854934b5acf79e2073b13",
+      "vid": "1688856635654364",
+      "userId": "7881303160031057",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881303160031057",
+      "receiver": "1688856635654364",
+      "sendTime": "2026-10-21 13:58:42",
+      "content": "老师，昨晚老师说的资料在哪里",
+      "msgId": "5246186",
+      "serverId": "9801843",
+      "appInfo": "7799093926358308598",
+      "revoked": false,
+      "createdAt": "1792562323544"
+    },
+    {
+      "_id": "6ad854a24b5acf79e2073b1f",
+      "vid": "1688856635654364",
+      "userId": "7881303160031057",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 0,
+      "msgType": 1,
+      "sender": "1688856635654364",
+      "receiver": "7881303160031057",
+      "sendTime": "2026-10-21 13:58:58",
+      "content": "您说的是哪份资料呀",
+      "msgId": "5246189",
+      "serverId": "9801844",
+      "appInfo": "CIOACBDQsarolTQY3IHhnpmAgAMgvtoF",
+      "revoked": false,
+      "createdAt": "1792562338208"
+    },
+    {
+      "_id": "6ad854a24b5acf79e2073b20",
+      "vid": "1688856635654364",
+      "userId": "7881303160031057",
+      "uuid": "7cd3b28d19cd00c2d8ecfc39a90b95f5",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881303160031057",
+      "receiver": "1688856635654364",
+      "sendTime": "2026-10-21 13:58:57",
+      "content": "动画和儿歌",
+      "msgId": "5246191",
+      "serverId": "9801845",
+      "appInfo": "3070784349508487483",
+      "revoked": false,
+      "createdAt": "1792562338951"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:47.527Z"
+}

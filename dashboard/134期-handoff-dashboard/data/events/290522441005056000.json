@@ -1,0 +1,47 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "290522441005056000",
+    "handoff_id": "fd6e141ff79448a7b4063db02c963cac",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "WuBingBing01",
+    "external_userid": "wm5oClDAAAU6DYO_x3_dCVod0Fg9rfjQ",
+    "vid": "1688854713729599",
+    "third_user_id": "7881301790100693",
+    "third_sale_uuid": "ac006d54a38a38eaa038e87d2719bd52",
+    "scenario_type": "customer_refusal",
+    "scenario_code": "EXPLICIT_REFUSAL",
+    "scenario_description": "客户明确拒绝继续沟通",
+    "trigger_message_id": "2742942650233885346",
+    "pre_window_start": "2026-10-22 17:39:50",
+    "pre_window_end": "2026-10-22 18:09:50"
+  },
+  "messages": [
+    {
+      "_id": "6ad9e0df66c04f27b213938b",
+      "vid": "1688854713729599",
+      "userId": "7881301790100693",
+      "uuid": "ac006d54a38a38eaa038e87d2719bd52",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881301790100693",
+      "receiver": "1688854713729599",
+      "sendTime": "2026-10-22 18:09:33",
+      "content": "不需要，我家小孩一个月才回一次，不合适",
+      "msgId": "4001663",
+      "serverId": "11591373",
+      "appInfo": "2742942650233885346",
+      "revoked": false,
+      "createdAt": "1792663775745"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:23:54.414Z"
+}

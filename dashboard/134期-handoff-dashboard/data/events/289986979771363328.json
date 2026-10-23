@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "289986979771363328",
+    "handoff_id": "af79b83c561342868b0375b258e7d331",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "LiChunYu",
+    "external_userid": "wm5oClDAAAp3Lilh8wWtgXHY4UR6zUdg",
+    "vid": "1688856836783485",
+    "third_user_id": "7881300339006269",
+    "third_sale_uuid": "b3efc8018338db42d41939af7a9f7142",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不够明确，请结合上文确认家长真正想问的问题",
+    "trigger_message_id": "394394452977716189",
+    "pre_window_start": "2026-10-16 19:48:55",
+    "pre_window_end": "2026-10-16 20:18:55"
+  },
+  "messages": [
+    {
+      "_id": "6ad21618ff889a43bf7f1df9",
+      "vid": "1688856836783485",
+      "userId": "7881300339006269",
+      "uuid": "b3efc8018338db42d41939af7a9f7142",
+      "senderType": 1,
+      "msgType": 101,
+      "sender": "7881300339006269",
+      "receiver": "1688856836783485",
+      "sendTime": "2026-10-16 20:18:31",
+      "content": "https://static.xueliyingyu.com/res/file/qywxChatFile/20261016/289986956708986880.jpg",
+      "msgId": "3499322",
+      "serverId": "16925378",
+      "appInfo": "7478226895635925494",
+      "revoked": false,
+      "createdAt": "1792153112726"
+    },
+    {
+      "_id": "6ad21620ff889a43bf7f1dfc",
+      "vid": "1688856836783485",
+      "userId": "7881300339006269",
+      "uuid": "b3efc8018338db42d41939af7a9f7142",
+      "senderType": 1,
+      "msgType": 2,
+      "sender": "7881300339006269",
+      "receiver": "1688856836783485",
+      "sendTime": "2026-10-16 20:18:39",
+      "content": "你好，这个是什么",
+      "msgId": "3499327",
+      "serverId": "16925380",
+      "appInfo": "394394452977716189",
+      "revoked": false,
+      "createdAt": "1792153120471"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:22:42.144Z"
+}

@@ -1,0 +1,64 @@
+{
+  "scope": {
+    "added_start": "2026-10-12 00:00:00",
+    "added_end_exclusive": "2026-10-19 00:00:00",
+    "timezone": "Asia/Shanghai",
+    "message_window": "[pre_window_start,pre_window_end)",
+    "version": 1
+  },
+  "handoff": {
+    "id": "289789258087178240",
+    "handoff_id": "c42a87c4da9a4f3aad88f2390a065143",
+    "corpid": "ww4d3304c455d3b6d1",
+    "qywx_userid": "LiChunYu",
+    "external_userid": "wm5oClDAAAqNC68dWaIT1bvS5gugfrRA",
+    "vid": "1688856836783485",
+    "third_user_id": "7881302145949509",
+    "third_sale_uuid": "b3efc8018338db42d41939af7a9f7142",
+    "scenario_type": "agent_request",
+    "scenario_code": "NEED_HUMAN",
+    "scenario_description": "信息不足，追问：确认家长问的是哪一场直播（周几那场）",
+    "trigger_message_id": "2425248602353187241",
+    "pre_window_start": "2026-10-14 15:26:13",
+    "pre_window_end": "2026-10-14 15:56:13"
+  },
+  "messages": [
+    {
+      "_id": "6acf34792b50fe5a5455c5ae",
+      "vid": "1688856836783485",
+      "userId": "7881302145949509",
+      "uuid": "b3efc8018338db42d41939af7a9f7142",
+      "senderType": 0,
+      "msgType": 1,
+      "sender": "1688856836783485",
+      "receiver": "7881302145949509",
+      "sendTime": "2026-10-14 15:51:21",
+      "content": "宝贝家长，给咱家四年级娃赠送的3天直播课会讲背单词和自然拼读的实用方法，三天内容不一样，记得分别点三天链接预约哦～",
+      "msgId": "3427212",
+      "serverId": "16890451",
+      "appInfo": "CIOACBC+9JPLkzQY/frU/pmAgAMgxIgB",
+      "revoked": false,
+      "createdAt": "1791964281609"
+    },
+    {
+      "_id": "6acf358e5d720016f1273614",
+      "vid": "1688856836783485",
+      "userId": "7881302145949509",
+      "uuid": "b3efc8018338db42d41939af7a9f7142",
+      "senderType": 1,
+      "msgType": 0,
+      "sender": "7881302145949509",
+      "receiver": "1688856836783485",
+      "sendTime": "2026-10-14 15:55:54",
+      "content": "音转文：就是你上面发的这个第一课第二课第三课嘛，那个是给给大人讲的还是给孩子讲的呀。",
+      "msgId": "3427271",
+      "serverId": "16890477",
+      "appInfo": "2425248602353187241",
+      "revoked": false,
+      "createdAt": "1791964558659"
+    }
+  ],
+  "quality": "MATCHED",
+  "uuid_mismatch_count": 0,
+  "read_at": "2026-10-23T03:21:50.871Z"
+}

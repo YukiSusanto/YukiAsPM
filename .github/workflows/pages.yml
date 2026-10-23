@@ -30,6 +30,10 @@ jobs:
         run: node "sop-prototype/社群SOP/原型/build.cjs"
       - name: Assemble published site
         run: python3 .github/scripts/build_pages.py . _site
+      - name: Validate period-134 dashboard
+        run: node "dashboard/134期-handoff-dashboard/scripts/check-data.cjs"
+      - name: Check dashboard output
+        run: test -f "_site/dashboard/134期-handoff-dashboard/data/catalog.json"
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload site
