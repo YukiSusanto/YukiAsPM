@@ -16,6 +16,48 @@ const accounts = [
   { name: '550-游梦茜-助理-202511-至今', id: 'YouMengQian', initial: '游', tone: 'warm' },
 ];
 
+const salesOrgTree = [
+  {
+    id: 'all', name: '全部团队', type: '全部', count: 203, children: [
+      {
+        id: 'sales-team', name: '销售团队', type: '团队', count: 186, children: [
+          {
+            id: 'external-support', name: '外部支援', type: '分区', count: 23, children: [
+              { id: 'support-group', name: '支援小组', type: '小组', count: 22 },
+              { id: 'support-ai-app', name: '支援AI-APP', type: '小组', count: 1 },
+              { id: 'support-ai-coach', name: '支援AI-教辅', type: '小组', count: 0 },
+            ],
+          },
+          {
+            id: 'product-test-area', name: '产研测试', type: '分区', count: 1, children: [
+              { id: 'sales-test', name: '销售测试', type: '小组', count: 1 },
+            ],
+          },
+          {
+            id: 'teaching-a1', name: '教辅A1区', type: '分区', count: 27, children: [
+              { id: 'teaching-a2', name: '教辅A2组', type: '小组', count: 11 },
+              { id: 'teaching-a7', name: '教辅A7组', type: '小组', count: 8 },
+              { id: 'teaching-a8', name: '教辅A8组', type: '小组', count: 8 },
+            ],
+          },
+        ],
+      },
+      { id: 'revival-team', name: '复活团队', type: '团队', count: 13 },
+      { id: 'growth-team', name: '增长团队', type: '团队', count: 3 },
+      { id: 'research-team', name: '产研团队', type: '团队', count: 1 },
+      { id: 'research-test', name: '产研测试', type: '团队', count: 0 },
+    ],
+  },
+];
+
+const accountOrgAssignments = {
+  WuBingBing01: 'support-group', YinLiJuan: 'support-group', LiaoZengZeng: 'support-ai-app',
+  ZhangNing: 'teaching-a2', YeQingLin: 'teaching-a2', LingJiaMin: 'teaching-a7',
+  HuRenLong: 'teaching-a7', QiChunRu: 'teaching-a8', LiChunYu: 'teaching-a8',
+  XuLei: 'sales-test', Tian: 'revival-team', CaiLiuWei: 'growth-team',
+  SunPeiJie: 'research-team', ZhuRuiXiang: 'research-test', YouMengQian: 'support-group',
+};
+
 const customers = [
   { name: '墨言（邮政）', preview: '四年级这个阶段挺关键的', time: '刚刚', initial: '墨', tone: 'warm', age: 'new', status: 'active', id: 'C-1001', account: '361-杜亚敏-免费-202505-至今' },
   { name: '🍜泡面公主👸🏻', preview: '都不太会，会认识字母吧', time: '刚刚', initial: '泡', tone: 'purple', age: 'new', status: 'active', id: 'C-1002', account: '361-杜亚敏-免费-202505-至今' },
@@ -69,6 +111,47 @@ const customerTagAssignments = {
   'C-1015': ['trial-period::133期', 'group-status::【已退群】', 'support-ai::测试线134期D2到课-1021'],
 };
 
+const customerExportFieldGroups = [
+  {
+    id: 'profile', name: '用户资料', description: '客户资料、服务关系与消费概览', modules: [
+      { id: 'basic', name: '基本信息', fields: [
+        { id: 'nickname', name: '昵称' }, { id: 'phone', name: '手机号' }, { id: 'added-at', name: '添加时间' },
+        { id: 'promoter', name: '推广员' }, { id: 'wechat-remark', name: '企微备注' },
+      ] },
+      { id: 'service', name: '服务员工与标签', fields: [
+        { id: 'service-employee', name: '服务员工' }, { id: 'customer-tags', name: '客户标签' }, { id: 'customer-groups', name: '所在社群' },
+      ] },
+      { id: 'consumption', name: '消费概览', fields: [
+        { id: 'total-spend', name: '消费总额' }, { id: 'purchase-count', name: '消费次数' }, { id: 'latest-purchase', name: '最近消费' },
+      ] },
+    ],
+  },
+  {
+    id: 'analysis', name: '用户分析数据', description: '用户意向度与 AI 用户画像结果', modules: [
+      { id: 'intent', name: '意向与画像', fields: [
+        { id: 'intent-level', name: '用户意向度' }, { id: 'gender', name: '性别' }, { id: 'age-stage', name: '年龄阶段' },
+        { id: 'region', name: '所在地区' }, { id: 'child-grade', name: '孩子年级' },
+      ] },
+      { id: 'ai-insight', name: 'AI 分析结果', fields: [
+        { id: 'user-demand', name: '用户需求' }, { id: 'learning-pain', name: '学习痛点' },
+        { id: 'purchase-intent', name: '购买意愿' }, { id: 'followup-advice', name: '跟进建议' },
+      ] },
+    ],
+  },
+  {
+    id: 'business', name: '订单和学习情况', description: '交易记录与课程学习进度', modules: [
+      { id: 'orders', name: '订单记录', fields: [
+        { id: 'order-number', name: '订单编号' }, { id: 'product-name', name: '商品 / 课程名称' }, { id: 'order-status', name: '订单状态' },
+        { id: 'paid-amount', name: '实付金额' }, { id: 'ordered-at', name: '下单时间' }, { id: 'paid-at', name: '支付时间' },
+      ] },
+      { id: 'learning', name: '学习情况', fields: [
+        { id: 'active-course', name: '在学课程' }, { id: 'course-progress', name: '课程进度' }, { id: 'learned-lessons', name: '已学课时' },
+        { id: 'latest-study', name: '最近学习时间' }, { id: 'completion-status', name: '完课状态' },
+      ] },
+    ],
+  },
+];
+
 const conversations = {
   '墨言（邮政）': [
     { role: 'customer', label: '客户', time: '2026/10/21 18:06', text: '我已经添加了你，现在我们可以开始聊天了。' },
@@ -96,24 +179,31 @@ const conversations = {
 
 let contactKind = 'customer';
 let contactStatus = 'all';
-let customerAge = 'new';
+let customerAge = 'all';
 let selectedAccount = accounts[0];
 let selectedContact = customers[0];
 let selectedCustomerTags = new Set();
 let draftCustomerTags = new Set();
 let activeTagGroupId = customerTagGroups[0].id;
 let exportSelectedCustomerIds = new Set();
+let customerInfoExportSelectedCustomerIds = new Set();
 let draftExportCustomerIds = new Set();
+let customerSelectorContext = 'conversation';
 let exportCustomerFilterTags = new Set();
 let draftExportCustomerFilterTags = new Set();
 let activeExportTagGroupId = customerTagGroups[0].id;
+let selectedCustomerExportFields = new Set(['nickname', 'phone', 'added-at', 'wechat-remark', 'service-employee', 'customer-tags', 'customer-groups', 'total-spend', 'latest-purchase', 'intent-level']);
+let draftCustomerExportFields = new Set(selectedCustomerExportFields);
+const expandedCustomerFieldNodes = new Set(['profile', 'profile::basic', 'analysis', 'business']);
+let selectedSalesOrgId = 'all';
+const expandedSalesOrgIds = new Set(['all', 'sales-team', 'external-support', 'teaching-a1']);
 let accountPage = 1;
 let customerPage = 1;
-const accountPageTotal = 6;
 const customerPageSize = 6;
 const MESSAGE_BATCH_SIZE = 50;
 const conversationHistoryCache = new Map();
 const conversationLoadState = { contactId: null, loadedCount: MESSAGE_BATCH_SIZE, isLoading: false, isAdjustingScroll: false, requestToken: 0 };
+let conversationJumpTarget = 'earliest';
 
 const $ = (selector) => document.querySelector(selector);
 const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
@@ -202,9 +292,64 @@ function avatarMarkup(item, large = false) {
   return `<span class="avatar ${item.tone || 'blue'} ${large ? 'avatar-large' : ''}">${escapeHtml(item.initial || item.name?.slice(0, 1) || '客')}</span>`;
 }
 
+function flattenSalesOrgNodes(nodes = salesOrgTree) {
+  return nodes.flatMap((node) => [node, ...flattenSalesOrgNodes(node.children || [])]);
+}
+
+function findSalesOrgNode(id) {
+  return flattenSalesOrgNodes().find((node) => node.id === id) || salesOrgTree[0];
+}
+
+function getSalesOrgLeafIds(node) {
+  if (!node.children?.length) return [node.id];
+  return node.children.flatMap(getSalesOrgLeafIds);
+}
+
+function getAccountsForSelectedOrg() {
+  const selectedNode = findSalesOrgNode(selectedSalesOrgId);
+  const allowedOrgIds = new Set(getSalesOrgLeafIds(selectedNode));
+  return accounts.filter((account) => allowedOrgIds.has(accountOrgAssignments[account.id]));
+}
+
+function renderSalesOrgTree(nodes = salesOrgTree, depth = 0) {
+  return nodes.map((node) => {
+    const hasChildren = Boolean(node.children?.length);
+    const expanded = hasChildren && expandedSalesOrgIds.has(node.id);
+    const active = node.id === selectedSalesOrgId;
+    return `<div class="sales-org-branch">
+      <div class="sales-org-row ${active ? 'active' : ''}" style="--org-depth:${depth}">
+        ${hasChildren ? `<button class="sales-org-toggle" data-sales-org-toggle="${node.id}" aria-label="${expanded ? '收起' : '展开'}${escapeHtml(node.name)}" aria-expanded="${expanded}"><span>${expanded ? '⌄' : '›'}</span></button>` : '<span class="sales-org-leaf-dot">·</span>'}
+        <button class="sales-org-option" data-sales-org-id="${node.id}" aria-pressed="${active}"><span class="sales-org-name">${escapeHtml(node.name)}</span><span class="sales-org-type">${escapeHtml(node.type)}</span><span class="sales-org-count">${node.count}</span></button>
+      </div>
+      ${expanded ? `<div class="sales-org-children">${renderSalesOrgTree(node.children, depth + 1)}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function renderSalesOrgSelector() {
+  const selectedNode = findSalesOrgNode(selectedSalesOrgId);
+  $('#sales-org-current').textContent = selectedNode.name;
+  $('#sales-org-current-type').textContent = selectedNode.type;
+  $('#sales-org-tree').innerHTML = renderSalesOrgTree();
+}
+
+function closeSalesOrgPopover() {
+  $('#sales-org-popover').hidden = true;
+  $('#sales-org-trigger').setAttribute('aria-expanded', 'false');
+}
+
+function getAccountPageTotal() {
+  const orgAccounts = getAccountsForSelectedOrg();
+  return selectedSalesOrgId === 'all' ? 6 : Math.max(1, Math.ceil(orgAccounts.length / 10));
+}
+
 function renderAccounts() {
   const query = $('#account-search').value.trim().toLowerCase();
-  const result = accounts.filter((item) => `${item.name}${item.id}`.toLowerCase().includes(query));
+  const orgAccounts = getAccountsForSelectedOrg();
+  const result = orgAccounts.filter((item) => `${item.name}${item.id}`.toLowerCase().includes(query));
+  const accountPageTotal = getAccountPageTotal();
+  if (accountPage > accountPageTotal) accountPage = accountPageTotal;
+  $('#account-count').textContent = selectedSalesOrgId === 'all' ? '共 80 个账号' : `共 ${orgAccounts.length} 个账号`;
   $('#account-list').innerHTML = result.map((item) => `<button class="account-item ${item.id === selectedAccount.id ? 'active' : ''}" data-account-id="${escapeHtml(item.id)}">${avatarMarkup(item)}<span class="item-copy"><span class="item-title">${escapeHtml(item.name)}</span><span class="item-subtitle">${escapeHtml(item.id)}</span></span><span class="item-star icon icon-star"></span></button>`).join('') || '<div class="empty-state">没有找到匹配账号</div>';
   $('#account-page').textContent = `${accountPage} / ${accountPageTotal}`;
   $('#account-prev').disabled = accountPage <= 1;
@@ -225,7 +370,7 @@ function getFilteredContacts() {
   const source = contactKind === 'customer' ? customers : groups;
   return source.filter((item) => {
     const matchesKindFilter = contactKind === 'customer'
-      ? item.age === customerAge && (contactStatus === 'all' || item.status === contactStatus)
+      ? (customerAge === 'all' || item.age === customerAge) && (contactStatus === 'all' || item.status === contactStatus)
       : contactStatus === 'all' || item.status === contactStatus;
     const matchesTags = contactKind !== 'customer' || matchesSelectedCustomerTags(item);
     return matchesKindFilter && matchesTags && `${item.name}${item.preview}${item.id}`.toLowerCase().includes(query);
@@ -243,9 +388,14 @@ function renderContactControls() {
     button.classList.toggle('active', active);
     button.setAttribute('aria-selected', String(active));
   });
+  document.querySelectorAll('.age-filter-button').forEach((button) => {
+    const active = button.dataset.age === customerAge;
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-selected', String(active));
+  });
   const filters = isCustomer
     ? [{ value: 'all', label: '全部' }, { value: 'active', label: '未流失' }, { value: 'lost', label: '已流失' }]
-    : [{ value: 'all', label: '全部' }, { value: 'dissolved', label: '已解散' }];
+    : [{ value: 'active', label: '未解散' }, { value: 'all', label: '全部' }, { value: 'dissolved', label: '已解散' }];
   $('#contact-status-filters').setAttribute('aria-label', isCustomer ? '客户状态' : '群聊状态');
   $('#contact-status-filters').innerHTML = filters.map((filter) => `<button class="contact-status-filter ${filter.value === contactStatus ? 'active' : ''}" role="tab" aria-selected="${filter.value === contactStatus}" data-status="${filter.value}">${filter.label}</button>`).join('');
 }
@@ -297,13 +447,13 @@ function buildConversationHistory() {
 
 function updateEarliestTooltip() {
   const start = $('#start-date').value || '所选时间范围';
-  $('#earliest-tooltip').textContent = `最早消息为左上角所选时间范围的最早时间（${start} 00:00）；加载完成后将自动向上滑动`;
-}
-
-function updateLatestButton() {
-  const node = $('#messages');
-  const atLatest = node.scrollHeight - node.scrollTop - node.clientHeight < 18;
-  $('#jump-latest-button').classList.toggle('is-at-latest', atLatest);
+  const toEarliest = conversationJumpTarget === 'earliest';
+  $('#conversation-jump-label').textContent = toEarliest ? '切换至最早消息' : '切换至最晚消息';
+  $('#conversation-jump-icon').textContent = toEarliest ? '⇡' : '⇣';
+  $('#earliest-tooltip').textContent = toEarliest
+    ? `最早消息为左上角所选时间范围的最早时间（${start} 00:00）；加载完成后将自动向上滑动`
+    : '切换至当前已加载会话中的最晚消息';
+  $('#jump-earliest-button').setAttribute('aria-label', toEarliest ? '切换至最早消息' : '切换至最晚消息');
 }
 
 function renderConversation(options = {}) {
@@ -319,6 +469,7 @@ function renderConversation(options = {}) {
     conversationLoadState.loadedCount = Math.min(MESSAGE_BATCH_SIZE, source.length);
     conversationLoadState.isLoading = false;
     conversationLoadState.requestToken += 1;
+    conversationJumpTarget = 'earliest';
   }
   const loaded = source.slice(-conversationLoadState.loadedCount);
   const result = loaded.filter((message) => message.text.toLowerCase().includes(search));
@@ -344,7 +495,6 @@ function renderConversation(options = {}) {
       messagesNode.scrollTop = messagesNode.scrollHeight;
     }
     conversationLoadState.isAdjustingScroll = false;
-    updateLatestButton();
   });
 }
 
@@ -366,6 +516,7 @@ function loadOlderMessages(loadAll = false) {
     if (token !== conversationLoadState.requestToken) return;
     conversationLoadState.loadedCount = loadAll ? source.length : Math.min(source.length, conversationLoadState.loadedCount + MESSAGE_BATCH_SIZE);
     conversationLoadState.isLoading = false;
+    if (loadAll) conversationJumpTarget = 'latest';
     renderConversation(loadAll
       ? { scrollToTop: true }
       : { preserveViewport: true, previousScrollHeight, previousScrollTop });
@@ -376,7 +527,25 @@ function loadOlderMessages(loadAll = false) {
 function scrollToLatest() {
   const messagesNode = $('#messages');
   messagesNode.scrollTo({ top: messagesNode.scrollHeight, behavior: 'smooth' });
-  window.setTimeout(updateLatestButton, 280);
+  conversationJumpTarget = 'earliest';
+  updateEarliestTooltip();
+  toast('已切换至最晚消息');
+}
+
+function toggleConversationBoundary() {
+  if (conversationJumpTarget === 'latest') {
+    scrollToLatest();
+    return;
+  }
+  const source = buildConversationHistory();
+  if (conversationLoadState.loadedCount < source.length) {
+    loadOlderMessages(true);
+    return;
+  }
+  $('#messages').scrollTo({ top: 0, behavior: 'smooth' });
+  conversationJumpTarget = 'latest';
+  updateEarliestTooltip();
+  toast('已切换至最早消息');
 }
 
 function selectContact(id) {
@@ -399,6 +568,93 @@ function getCustomerTagLabels(customer) {
   });
 }
 
+function getAllCustomerExportFields() {
+  return customerExportFieldGroups.flatMap((group) => group.modules.flatMap((module) => module.fields));
+}
+
+function getCustomerExportModule(groupId, moduleId) {
+  return customerExportFieldGroups.find((group) => group.id === groupId)?.modules.find((module) => module.id === moduleId);
+}
+
+function getSelectedCustomerExportFields() {
+  return getAllCustomerExportFields().filter((field) => draftCustomerExportFields.has(field.id));
+}
+
+function renderCustomerFieldSelected() {
+  const selected = getSelectedCustomerExportFields();
+  const visible = selected.slice(0, 8);
+  $('#customer-field-count').textContent = `已选 ${selected.length} / ${getAllCustomerExportFields().length} 项`;
+  $('#customer-field-selected').innerHTML = selected.length
+    ? `<span class="customer-field-selected-label">已选字段</span>${visible.map((field) => `<span class="customer-field-chip">${escapeHtml(field.name)}</span>`).join('')}${selected.length > visible.length ? `<span class="customer-field-chip more">+${selected.length - visible.length}</span>` : ''}`
+    : '<span class="customer-field-selected-empty">暂未选择导出字段</span>';
+}
+
+function renderCustomerFieldTree() {
+  $('#customer-field-tree').innerHTML = customerExportFieldGroups.map((group) => {
+    const groupFieldIds = group.modules.flatMap((module) => module.fields.map((field) => field.id));
+    const groupSelected = groupFieldIds.filter((id) => draftCustomerExportFields.has(id)).length;
+    const groupExpanded = expandedCustomerFieldNodes.has(group.id);
+    const modules = group.modules.map((module) => {
+      const moduleKey = `${group.id}::${module.id}`;
+      const moduleFieldIds = module.fields.map((field) => field.id);
+      const moduleSelected = moduleFieldIds.filter((id) => draftCustomerExportFields.has(id)).length;
+      const moduleExpanded = expandedCustomerFieldNodes.has(moduleKey);
+      return `<div class="customer-field-module">
+        <div class="customer-field-module-head">
+          <button class="customer-field-expand small" type="button" data-customer-field-expand="${moduleKey}" aria-expanded="${moduleExpanded}" aria-label="${moduleExpanded ? '收起' : '展开'}${escapeHtml(module.name)}">${moduleExpanded ? '⌄' : '›'}</button>
+          <label><input type="checkbox" data-customer-field-module="${moduleKey}" /><span>${escapeHtml(module.name)}</span></label>
+          <span>${moduleSelected}/${moduleFieldIds.length}</span>
+        </div>
+        <div class="customer-field-options" ${moduleExpanded ? '' : 'hidden'}>${module.fields.map((field) => `<label class="customer-field-option"><input type="checkbox" data-customer-field-id="${field.id}" ${draftCustomerExportFields.has(field.id) ? 'checked' : ''} /><span class="customer-field-check">✓</span><span>${escapeHtml(field.name)}</span></label>`).join('')}</div>
+      </div>`;
+    }).join('');
+    return `<section class="customer-field-category">
+      <div class="customer-field-category-head">
+        <button class="customer-field-expand" type="button" data-customer-field-expand="${group.id}" aria-expanded="${groupExpanded}" aria-label="${groupExpanded ? '收起' : '展开'}${escapeHtml(group.name)}">${groupExpanded ? '⌄' : '›'}</button>
+        <label><input type="checkbox" data-customer-field-category="${group.id}" /><span><strong>${escapeHtml(group.name)}</strong><small>${escapeHtml(group.description)}</small></span></label>
+        <span class="customer-field-category-count">${groupSelected}/${groupFieldIds.length}</span>
+      </div>
+      <div class="customer-field-modules" ${groupExpanded ? '' : 'hidden'}>${modules}</div>
+    </section>`;
+  }).join('');
+
+  customerExportFieldGroups.forEach((group) => {
+    const groupIds = group.modules.flatMap((module) => module.fields.map((field) => field.id));
+    const groupCheckbox = document.querySelector(`[data-customer-field-category="${group.id}"]`);
+    const groupCount = groupIds.filter((id) => draftCustomerExportFields.has(id)).length;
+    groupCheckbox.checked = groupCount === groupIds.length;
+    groupCheckbox.indeterminate = groupCount > 0 && groupCount < groupIds.length;
+    group.modules.forEach((module) => {
+      const moduleIds = module.fields.map((field) => field.id);
+      const moduleCheckbox = document.querySelector(`[data-customer-field-module="${group.id}::${module.id}"]`);
+      const moduleCount = moduleIds.filter((id) => draftCustomerExportFields.has(id)).length;
+      moduleCheckbox.checked = moduleCount === moduleIds.length;
+      moduleCheckbox.indeterminate = moduleCount > 0 && moduleCount < moduleIds.length;
+    });
+  });
+  renderCustomerFieldSelected();
+}
+
+function openCustomerInfoExportDialog() {
+  draftCustomerExportFields = new Set(selectedCustomerExportFields);
+  $('#customer-info-export-employee').innerHTML = accounts.map((account) => `<option value="${escapeHtml(account.id)}" ${account.id === selectedAccount.id ? 'selected' : ''}>${escapeHtml(account.name)}（${escapeHtml(account.id)}）</option>`).join('');
+  $('#customer-info-export-start-date').value = $('#start-date').value;
+  $('#customer-info-export-end-date').value = $('#end-date').value;
+  document.querySelector('input[name="customer-info-export-scope"][value="all"]').checked = true;
+  customerInfoExportSelectedCustomerIds = new Set();
+  exportCustomerFilterTags = new Set();
+  updateCustomerInfoExportScopeDisplay();
+  renderCustomerFieldTree();
+  $('#customer-info-export-overlay').hidden = false;
+  window.requestAnimationFrame(() => $('#customer-info-export-employee').focus());
+}
+
+function closeCustomerInfoExportDialog(commit = false) {
+  if (commit) selectedCustomerExportFields = new Set(draftCustomerExportFields);
+  $('#customer-info-export-overlay').hidden = true;
+  $('#export-customer-info').focus();
+}
+
 function getExportEmployee() {
   return accounts.find((account) => account.id === $('#export-employee').value) || selectedAccount;
 }
@@ -415,6 +671,14 @@ function updateExportScopeDisplay() {
   $('#specified-customer-action').hidden = !specified;
   $('#selected-customer-summary').textContent = exportSelectedCustomerIds.size
     ? `已选择 ${exportSelectedCustomerIds.size} 位客户`
+    : '暂未选择客户';
+}
+
+function updateCustomerInfoExportScopeDisplay() {
+  const specified = document.querySelector('input[name="customer-info-export-scope"]:checked')?.value === 'specified';
+  $('#customer-info-specified-customer-action').hidden = !specified;
+  $('#customer-info-selected-customer-summary').textContent = customerInfoExportSelectedCustomerIds.size
+    ? `已选择 ${customerInfoExportSelectedCustomerIds.size} 位客户`
     : '暂未选择客户';
 }
 
@@ -525,7 +789,6 @@ function getFilteredExportCustomers() {
 
 function renderExportCustomerList() {
   const result = getFilteredExportCustomers();
-  const employee = getExportEmployee();
   $('#export-customer-list').innerHTML = result.map((customer) => {
     const index = customers.findIndex((item) => item.id === customer.id);
     const tags = getCustomerTagLabels(customer);
@@ -548,8 +811,10 @@ function renderExportCustomerList() {
   $('#selector-selected-count').textContent = `已选择 ${draftExportCustomerIds.size} 位客户`;
 }
 
-function openCustomerSelector() {
-  draftExportCustomerIds = new Set(exportSelectedCustomerIds);
+function openCustomerSelector(context = 'conversation') {
+  customerSelectorContext = context;
+  const selectedIds = context === 'customer-info' ? customerInfoExportSelectedCustomerIds : exportSelectedCustomerIds;
+  draftExportCustomerIds = new Set(selectedIds);
   $('#export-customer-search').value = '';
   renderExportTagTrigger();
   renderExportCustomerList();
@@ -558,15 +823,95 @@ function openCustomerSelector() {
 }
 
 function closeCustomerSelector(commit = false) {
-  if (commit) exportSelectedCustomerIds = new Set(draftExportCustomerIds);
+  if (commit) {
+    if (customerSelectorContext === 'customer-info') customerInfoExportSelectedCustomerIds = new Set(draftExportCustomerIds);
+    else exportSelectedCustomerIds = new Set(draftExportCustomerIds);
+  }
   $('#customer-selector-overlay').hidden = true;
   updateExportScopeDisplay();
-  $('#open-customer-selector').focus();
+  updateCustomerInfoExportScopeDisplay();
+  const returnButton = customerSelectorContext === 'customer-info' ? $('#open-customer-info-selector') : $('#open-customer-selector');
+  returnButton?.focus();
 }
 
 document.addEventListener('click', (event) => {
+  if (!event.target.closest('.sales-org-filter') && !$('#sales-org-popover').hidden) closeSalesOrgPopover();
+  if (event.target.closest('#sales-org-trigger')) {
+    const popover = $('#sales-org-popover');
+    const willOpen = popover.hidden;
+    if (willOpen) renderSalesOrgSelector();
+    popover.hidden = !willOpen;
+    $('#sales-org-trigger').setAttribute('aria-expanded', String(willOpen));
+    return;
+  }
+  const salesOrgToggle = event.target.closest('[data-sales-org-toggle]');
+  if (salesOrgToggle) {
+    const id = salesOrgToggle.dataset.salesOrgToggle;
+    if (expandedSalesOrgIds.has(id)) expandedSalesOrgIds.delete(id); else expandedSalesOrgIds.add(id);
+    $('#sales-org-tree').innerHTML = renderSalesOrgTree();
+    return;
+  }
+  const salesOrgOption = event.target.closest('[data-sales-org-id]');
+  if (salesOrgOption) {
+    selectedSalesOrgId = salesOrgOption.dataset.salesOrgId;
+    accountPage = 1;
+    $('#account-search').value = '';
+    const visibleAccounts = getAccountsForSelectedOrg();
+    if (!visibleAccounts.some((account) => account.id === selectedAccount.id) && visibleAccounts.length) selectedAccount = visibleAccounts[0];
+    renderSalesOrgSelector();
+    renderAccounts();
+    closeSalesOrgPopover();
+    const selectedNode = findSalesOrgNode(selectedSalesOrgId);
+    toast(`已筛选${selectedNode.type}：${selectedNode.name}`);
+    return;
+  }
   if (event.target.closest('#export-customer-info')) {
-    toast('导出客户信息的字段与范围待确认');
+    openCustomerInfoExportDialog();
+    return;
+  }
+  if (event.target.closest('#customer-info-export-close') || event.target.closest('#customer-info-export-cancel')) {
+    closeCustomerInfoExportDialog(false);
+    return;
+  }
+  if (event.target === $('#customer-info-export-overlay')) {
+    closeCustomerInfoExportDialog(false);
+    return;
+  }
+  const customerFieldExpand = event.target.closest('[data-customer-field-expand]');
+  if (customerFieldExpand) {
+    const key = customerFieldExpand.dataset.customerFieldExpand;
+    if (expandedCustomerFieldNodes.has(key)) expandedCustomerFieldNodes.delete(key); else expandedCustomerFieldNodes.add(key);
+    renderCustomerFieldTree();
+    return;
+  }
+  if (event.target.closest('#customer-field-select-all')) {
+    draftCustomerExportFields = new Set(getAllCustomerExportFields().map((field) => field.id));
+    renderCustomerFieldTree();
+    return;
+  }
+  if (event.target.closest('#customer-field-clear')) {
+    draftCustomerExportFields.clear();
+    renderCustomerFieldTree();
+    return;
+  }
+  if (event.target.closest('#customer-info-export-submit')) {
+    if (!draftCustomerExportFields.size) {
+      toast('请至少选择一个导出字段');
+      return;
+    }
+    if ($('#customer-info-export-start-date').value > $('#customer-info-export-end-date').value) {
+      toast('导出开始日期不能晚于结束日期');
+      return;
+    }
+    const customerInfoScope = document.querySelector('input[name="customer-info-export-scope"]:checked')?.value;
+    if (customerInfoScope === 'specified' && !customerInfoExportSelectedCustomerIds.size) {
+      toast('请先选择需要导出的客户');
+      openCustomerSelector('customer-info');
+      return;
+    }
+    const fieldCount = draftCustomerExportFields.size;
+    closeCustomerInfoExportDialog(true);
+    toast(`已创建客户信息导出任务，共 ${fieldCount} 个字段`);
     return;
   }
   if (event.target.closest('#open-export-dialog')) {
@@ -582,7 +927,11 @@ document.addEventListener('click', (event) => {
     return;
   }
   if (event.target.closest('#open-customer-selector')) {
-    openCustomerSelector();
+    openCustomerSelector('conversation');
+    return;
+  }
+  if (event.target.closest('#open-customer-info-selector')) {
+    openCustomerSelector('customer-info');
     return;
   }
   if (event.target.closest('#customer-selector-close') || event.target.closest('#customer-selector-cancel')) {
@@ -657,7 +1006,7 @@ document.addEventListener('click', (event) => {
     }
     if (scope === 'specified' && !exportSelectedCustomerIds.size) {
       toast('请先选择需要导出的客户');
-      openCustomerSelector();
+      openCustomerSelector('conversation');
       return;
     }
     const taskName = $('#export-task-name').value.trim();
@@ -732,6 +1081,7 @@ document.addEventListener('click', (event) => {
   if (contactKindButton) {
     contactKind = contactKindButton.dataset.kind;
     contactStatus = 'all';
+    if (contactKind === 'customer') customerAge = 'all';
     customerPage = 1;
     $('#customer-search').value = '';
     selectedContact = (contactKind === 'customer' ? customers : groups)[0];
@@ -779,11 +1129,7 @@ document.addEventListener('click', (event) => {
     return;
   }
   if (event.target.closest('#jump-earliest-button')) {
-    loadOlderMessages(true);
-    return;
-  }
-  if (event.target.closest('#jump-latest-button')) {
-    scrollToLatest();
+    toggleConversationBoundary();
     return;
   }
   if (event.target.closest('#favorite-button')) {
@@ -798,7 +1144,6 @@ $('#account-search').addEventListener('input', renderAccounts);
 $('#customer-search').addEventListener('input', () => { customerPage = 1; renderCustomers(); renderConversation(); });
 $('#message-search').addEventListener('input', renderConversation);
 $('#messages').addEventListener('scroll', () => {
-  updateLatestButton();
   if (!conversationLoadState.isAdjustingScroll && $('#messages').scrollTop <= 12) loadOlderMessages(false);
 });
 ['start-date', 'end-date'].forEach((id) => $(`#${id}`).addEventListener('change', () => {
@@ -814,10 +1159,34 @@ $('#export-tag-name-search').addEventListener('input', renderExportTagOptions);
 $('#export-employee').addEventListener('change', updateExportTaskName);
 ['export-start-date', 'export-end-date'].forEach((id) => $(`#${id}`).addEventListener('change', updateExportTaskName));
 document.addEventListener('change', (event) => {
+  if (event.target.matches('[data-customer-field-id]')) {
+    const id = event.target.dataset.customerFieldId;
+    if (event.target.checked) draftCustomerExportFields.add(id); else draftCustomerExportFields.delete(id);
+    renderCustomerFieldTree();
+    return;
+  }
+  if (event.target.matches('[data-customer-field-module]')) {
+    const [groupId, moduleId] = event.target.dataset.customerFieldModule.split('::');
+    const module = getCustomerExportModule(groupId, moduleId);
+    module?.fields.forEach((field) => {
+      if (event.target.checked) draftCustomerExportFields.add(field.id); else draftCustomerExportFields.delete(field.id);
+    });
+    renderCustomerFieldTree();
+    return;
+  }
+  if (event.target.matches('[data-customer-field-category]')) {
+    const group = customerExportFieldGroups.find((item) => item.id === event.target.dataset.customerFieldCategory);
+    group?.modules.flatMap((module) => module.fields).forEach((field) => {
+      if (event.target.checked) draftCustomerExportFields.add(field.id); else draftCustomerExportFields.delete(field.id);
+    });
+    renderCustomerFieldTree();
+    return;
+  }
   if (event.target.matches('input[name="export-format"]')) {
     document.querySelectorAll('.export-choice-card').forEach((card) => card.classList.toggle('active', card.querySelector('input').checked));
   }
   if (event.target.matches('input[name="export-scope"]')) updateExportScopeDisplay();
+  if (event.target.matches('input[name="customer-info-export-scope"]')) updateCustomerInfoExportScopeDisplay();
   if (event.target.matches('.export-customer-check')) {
     const id = event.target.dataset.customerId;
     if (event.target.checked) draftExportCustomerIds.add(id); else draftExportCustomerIds.delete(id);
@@ -834,14 +1203,17 @@ document.addEventListener('keydown', (event) => {
   if (event.key !== 'Escape') return;
   if (!$('#export-tag-filter-overlay').hidden) closeExportTagDialog(false);
   else if (!$('#customer-selector-overlay').hidden) closeCustomerSelector(false);
+  else if (!$('#customer-info-export-overlay').hidden) closeCustomerInfoExportDialog(false);
   else if (!$('#export-overlay').hidden) closeExportDialog();
   else if (!$('#tag-filter-overlay').hidden) closeTagDialog(false);
+  else if (!$('#sales-org-popover').hidden) closeSalesOrgPopover();
 });
 $('#account-prev').addEventListener('click', () => { if (accountPage > 1) { accountPage -= 1; renderAccounts(); toast(`已切换至第 ${accountPage} 页账号`); } });
-$('#account-next').addEventListener('click', () => { if (accountPage < accountPageTotal) { accountPage += 1; renderAccounts(); toast(`已切换至第 ${accountPage} 页账号`); } });
+$('#account-next').addEventListener('click', () => { const pageTotal = getAccountPageTotal(); if (accountPage < pageTotal) { accountPage += 1; renderAccounts(); toast(`已切换至第 ${accountPage} 页账号`); } });
 $('#customer-prev').addEventListener('click', () => { if (customerPage > 1) { customerPage -= 1; renderCustomers(); toast(`已切换至第 ${customerPage} 页${contactKind === 'customer' ? '客户' : '群聊'}`); } });
 $('#customer-next').addEventListener('click', () => { const pageTotal = Math.max(1, Math.ceil(getFilteredContacts().length / customerPageSize)); if (customerPage < pageTotal) { customerPage += 1; renderCustomers(); toast(`已切换至第 ${customerPage} 页${contactKind === 'customer' ? '客户' : '群聊'}`); } });
 
+renderSalesOrgSelector();
 renderAccounts();
 renderTagTrigger();
 refreshContactView();
