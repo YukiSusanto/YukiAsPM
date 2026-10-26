@@ -9,22 +9,6 @@
   </head>
   <body>
     <div class="app-shell">
-      <header class="topbar">
-        <div class="brand-block">
-          <div class="brand-mark" aria-hidden="true"><span>雪</span></div>
-          <span class="brand-name">雪梨英语管理系统</span>
-        </div>
-        <div class="breadcrumbs" aria-label="当前位置">
-          <span>AI销售</span>
-          <span class="crumb-separator">/</span>
-          <strong>AI会话质检</strong>
-        </div>
-        <div class="topbar-actions">
-          <button class="icon-button" aria-label="通知" title="通知"><span class="icon icon-bell"></span></button>
-          <button class="profile-button" title="个人中心"><span class="profile-dot">郑</span><span>郑舜杰</span><span class="chevron-down"></span></button>
-        </div>
-      </header>
-
       <aside class="sidebar" aria-label="主导航">
         <nav class="side-nav">
           <button class="side-nav-item" title="首页"><span class="icon icon-home"></span></button>
@@ -47,8 +31,6 @@
           </div>
           <div class="filter-bar-actions">
             <span class="refresh-state" id="refresh-state" role="status">已是最新</span>
-            <button class="export-button" id="open-export-dialog">导出会话</button>
-            <button class="export-button export-customer-info-button" id="export-customer-info">导出客户信息</button>
           </div>
         </div>
 
@@ -65,7 +47,8 @@
           <div class="age-filter" id="age-filter">
             <span class="age-filter-label">添加时间：</span>
             <div class="age-filter-buttons" role="tablist" aria-label="客户添加时间">
-              <button class="age-filter-button active" role="tab" aria-selected="true" aria-describedby="new-customer-tooltip" data-age="new">
+              <button class="age-filter-button active" role="tab" aria-selected="true" data-age="all">全部</button>
+              <button class="age-filter-button" role="tab" aria-selected="false" aria-describedby="new-customer-tooltip" data-age="new">
                 新客户
                 <span class="age-button-tooltip" id="new-customer-tooltip" role="tooltip">添加时间在所选会话时间内为新客户</span>
               </button>
@@ -90,11 +73,23 @@
             <div class="panel-header">
               <div>
                 <h2>销售企微账号</h2>
-                <p>共 80 个账号</p>
+                <p id="account-count">共 80 个账号</p>
               </div>
               <div class="panel-tools"><button class="plain-icon" aria-label="收藏账号" title="收藏账号"><span class="icon icon-star"></span></button><button class="plain-icon" aria-label="收起账号栏" title="收起账号栏"><span class="icon icon-chevron-left"></span></button></div>
             </div>
             <label class="search-box"><span class="icon icon-search"></span><input id="account-search" placeholder="搜索账号名称或企微ID" /></label>
+            <div class="sales-org-filter">
+              <span class="sales-org-label">销售区组</span>
+              <button class="sales-org-trigger" id="sales-org-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="sales-org-popover">
+                <span id="sales-org-current">全部团队</span>
+                <span class="sales-org-current-type" id="sales-org-current-type">全部</span>
+                <span class="chevron-down" aria-hidden="true"></span>
+              </button>
+              <div class="sales-org-popover" id="sales-org-popover" role="dialog" aria-label="选择销售区组" hidden>
+                <div class="sales-org-popover-header"><strong>选择销售区组</strong><span>团队 / 分区 / 小组</span></div>
+                <div class="sales-org-tree" id="sales-org-tree"></div>
+              </div>
+            </div>
             <div class="list-scroll" id="account-list"></div>
           </section>
 
@@ -117,11 +112,17 @@
 
           <section class="panel conversation-panel" aria-label="只读会话展示" aria-readonly="true">
             <div class="conversation-header">
-              <div class="conversation-identity"><div class="avatar avatar-large" id="conversation-avatar">墨</div><h2 id="conversation-title">墨言（邮政）</h2><span class="readonly-badge">只读</span></div>
+              <div class="conversation-identity">
+                <div class="avatar avatar-large" id="conversation-avatar">墨</div><h2 id="conversation-title">墨言（邮政）</h2>
+                <div class="conversation-export-actions" hidden>
+                  <button class="export-button conversation-export-button" id="open-export-dialog">导出会话</button>
+                  <button class="export-button export-customer-info-button conversation-export-button" id="export-customer-info">导出客户信息</button>
+                </div>
+              </div>
               <div class="conversation-actions">
                 <button class="outline-button" id="favorite-button"><span class="icon icon-star"></span><span id="favorite-label">收藏</span></button>
                 <button class="outline-button earliest-button" id="jump-earliest-button">
-                  <span class="earliest-icon" aria-hidden="true">⇡</span><span>切换至最早消息</span>
+                  <span class="earliest-icon" id="conversation-jump-icon" aria-hidden="true">⇡</span><span id="conversation-jump-label">切换至最早消息</span>
                   <span class="earliest-tooltip" id="earliest-tooltip" role="tooltip">最早消息为左上角所选时间范围的最早时间；加载完成后将自动向上滑动</span>
                 </button>
               </div>
@@ -129,7 +130,6 @@
             <label class="search-box conversation-search"><span class="icon icon-search"></span><input id="message-search" placeholder="搜索当前时间范围内的聊天内容" /></label>
             <div class="conversation-meta"><span id="message-page-label">已加载 50 条 · 上滑加载更早消息</span><button class="ghost-button">筛选</button></div>
             <div class="messages" id="messages" tabindex="0" aria-label="聊天记录，上滑加载更早消息"></div>
-            <button class="jump-latest-button is-at-latest" id="jump-latest-button" aria-label="回到最新消息" title="回到最新消息"><span aria-hidden="true">›››</span></button>
           </section>
 
           <footer class="workspace-footer" aria-label="翻页">
@@ -243,6 +243,54 @@
           <footer class="export-dialog-footer">
             <button class="dialog-button secondary" id="export-dialog-cancel">取消</button>
             <button class="dialog-button primary" id="export-dialog-submit">创建导出任务</button>
+          </footer>
+        </section>
+      </div>
+
+      <div class="export-overlay customer-info-export-overlay" id="customer-info-export-overlay" hidden>
+        <section class="customer-info-export-dialog" role="dialog" aria-modal="true" aria-labelledby="customer-info-export-title">
+          <header class="export-dialog-header">
+            <div><h2 id="customer-info-export-title">导出客户信息</h2><p>按用户画像结构选择需要导出的客户字段</p></div>
+            <button class="dialog-close" id="customer-info-export-close" aria-label="关闭导出客户信息">×</button>
+          </header>
+          <div class="customer-info-export-body">
+            <div class="customer-info-export-config">
+              <label class="export-field">
+                <span class="export-field-label"><b>*</b> 导出员工</span>
+                <select id="customer-info-export-employee" aria-label="客户信息导出员工"></select>
+                <small>默认使用当前页面所选员工，仅支持单选</small>
+              </label>
+              <div class="export-field">
+                <span class="export-field-label"><b>*</b> 选择时间范围</span>
+                <div class="export-date-range">
+                  <input id="customer-info-export-start-date" type="date" aria-label="客户信息导出开始日期" />
+                  <span>至</span>
+                  <input id="customer-info-export-end-date" type="date" aria-label="客户信息导出结束日期" />
+                </div>
+                <small>默认同步页面顶部所选的聊天记录时间范围</small>
+              </div>
+            </div>
+            <fieldset class="export-field customer-info-export-scope">
+              <legend class="export-field-label"><b>*</b> 选择导出客户</legend>
+              <div class="export-scope-options">
+                <label><input type="radio" name="customer-info-export-scope" value="all" checked /><span>全部客户</span><small>当前所选企微账号下的全部客户</small></label>
+                <label><input type="radio" name="customer-info-export-scope" value="specified" /><span>指定客户</span><small>从客户列表中选择一个或多个客户</small></label>
+              </div>
+              <div class="specified-customer-action" id="customer-info-specified-customer-action" hidden>
+                <button id="open-customer-info-selector" type="button">选择客户</button>
+                <span id="customer-info-selected-customer-summary">暂未选择客户</span>
+              </div>
+            </fieldset>
+            <div class="customer-field-toolbar">
+              <div><strong>选择导出字段</strong><span id="customer-field-count">已选 0 项</span></div>
+              <div><button type="button" id="customer-field-select-all">全选字段</button><button type="button" id="customer-field-clear">清空</button></div>
+            </div>
+            <div class="customer-field-selected" id="customer-field-selected"></div>
+            <div class="customer-field-tree" id="customer-field-tree"></div>
+          </div>
+          <footer class="export-dialog-footer">
+            <button class="dialog-button secondary" id="customer-info-export-cancel">取消</button>
+            <button class="dialog-button primary" id="customer-info-export-submit">创建导出任务</button>
           </footer>
         </section>
       </div>
