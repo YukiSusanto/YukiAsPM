@@ -27,6 +27,7 @@ jobs:
         run: |
           node --check "ai-sales-assistant-customer-dynamics-prototype/app.js"
           node --check "ai-sales-assistant-customer-dynamics-prototype/dynamics.js"
+          node "ai-sales-assistant-customer-dynamics-prototype/build-standalone.cjs"
       - name: Validate real conversation dataset
         run: node "dashboard/134期-handoff-dashboard/scripts/check-data.cjs"
       - name: Build existing SOP pages
@@ -41,5 +42,6 @@ jobs:
       - name: Verify sales assistant is included
         run: |
           test -f "_site/ai-sales-assistant-customer-dynamics-prototype/index.html"
+          test -f "_site/ai-sales-assistant-customer-dynamics-prototype/index-standalone.html"
           test -f "_site/ai-sales-assistant-customer-dynamics-prototype/dynamics.js"
           test -f "_site/ai-sales-assistant-customer-dynamics-prototype/screenshots/dynamics.jpg"

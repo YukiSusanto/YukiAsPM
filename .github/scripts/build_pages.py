@@ -38,7 +38,7 @@ def build(sources, output):
         if not source.is_file():
             raise FileNotFoundError(source)
     sales_source = sources / 'ai-sales-assistant-customer-dynamics-prototype'
-    sales_files = ('index.html', 'style.css', 'app.js', 'dynamics.css', 'dynamics.js', 'AI销售助手-侧边栏优化需求文档.md')
+    sales_files = ('index-standalone.html', 'index.html', 'style.css', 'app.js', 'dynamics.css', 'dynamics.js', 'AI销售助手-侧边栏优化需求文档.md')
     for filename in sales_files:
         source = sales_source / filename
         if not source.is_file():

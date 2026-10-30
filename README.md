@@ -67,3 +67,5 @@ Pages构建会先核验906次事件、746位客户和全部窗口消息，再复
 ## AI销售助手 · 客户动态
 
 `ai-sales-assistant-customer-dynamics-prototype/` 保存销售助手复刻原型、客户动态交互、Markdown需求文档及截图。使用静态 HTML/CSS/JavaScript，Pages构建会复制页面与文档资源，无需额外安装依赖。客户动态为参考原型的演示数据。
+
+- [AI销售助手客户动态 · 单文件离线版](https://yukisusanto.github.io/YukiAsPM/ai-sales-assistant-customer-dynamics-prototype/index-standalone.html)：保存该 HTML 后可离线打开，头像、样式与交互全部内嵌。
