@@ -15,11 +15,11 @@ const CustomerDynamics = (() => {
     {type:'打标签',time:'2026-10-29 16:03',platform:'微信自动同步',employee:'current',action:'打上企微标签【D3预约】'},
     {type:'删除标签',time:'2026-10-29 15:48',platform:'企业微信',employee:'support',action:'删除企微标签【待跟进】'},
     {type:'关注公众号',time:'2026-10-29 09:16',platform:'微信自动同步',action:'关注公众号【雪梨英语】'},
-    {type:'进入直播间',time:'2026-10-28 19:02',platform:'直播间',action:'进入【100篇阅读（新版）】直播间'},
+    {type:'进入直播间',time:'2026-10-28 19:02',platform:'直播间',employee:'current',action:'进入【100篇阅读（新版）】直播间'},
     {type:'成交记录',time:'2026-10-28 14:36',platform:'APP',employee:'current',action:'完成订单成交，实付金额 ¥399'},
     {type:'下单产品',time:'2026-10-28 14:30',platform:'APP',action:'下单产品【单词拼读王年度课程】'},
-    {type:'点击预约',time:'2026-10-28 10:26',platform:'APP',action:'点击三天家长直播课预约入口'},
-    {type:'加入群聊',time:'2026-10-27 11:20',platform:'微信自动同步',action:'加入群聊【四年级英语规划交流群】'},
+    {type:'点击预约',time:'2026-10-28 10:26',platform:'APP',employee:'current',action:'完成三天家长直播课预约'},
+    {type:'加入群聊',time:'2026-10-27 11:20',platform:'微信自动同步',employee:'support',action:'加入群聊【四年级英语规划交流群】'},
     {type:'退出群聊',time:'2026-10-26 20:14',platform:'微信自动同步',action:'退出群聊【自然拼读学习打卡群】'},
     {type:'添加好友',time:'2026-10-21 18:06',platform:'企业微信',employee:'current',action:'添加为企微好友并建立单聊关系'},
     {type:'客户流失',time:'2026-10-20 10:22',platform:'微信自动同步',employee:'support',action:'双向删除好友，客户状态变更为已流失'}
@@ -31,6 +31,8 @@ const CustomerDynamics = (() => {
   function sentence(item) {
     const customer = context.customer.name;
     const employee = context.employees.find(e=>e.id===item.employee)?.name;
+    if (employee && ['点击预约','进入直播间'].includes(item.type)) return `${customer}客户通过${employee}销售的链接${item.action}`;
+    if (employee && item.type==='加入群聊') return `${customer}客户通过${employee}销售的邀请${item.action}`;
     if (item.type==='转人工') return `${employee}销售的${customer}客户，因为${item.reason}触发转人工`;
     if (item.type==='AI接管') return `${employee}销售的${customer}客户重置为AI回复中`;
     return employee ? `${employee} 对客户 ${customer} ${item.action}` : `客户 ${customer} ${item.action}`;
