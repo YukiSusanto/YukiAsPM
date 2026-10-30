@@ -8,6 +8,7 @@
 | 社群 SOP | [原型](sop-prototype/社群SOP/原型/) | [需求文档](sop-prototype/社群SOP/需求文档/销转期建群与群聊sop需求.md) | [打开社群版](https://yukisusanto.github.io/YukiAsPM/social-chat-sop/) |
 | AI 会话质检 | [原型](conversation-quality-prototype/) | [需求文档](conversation-quality-prototype/需求文档/AI会话质检需求文档.md) | [打开会话质检](https://yukisusanto.github.io/YukiAsPM/conversation-quality-prototype/) |
 | 客户动态 | [原型](customer-dynamics-prototype/) | [需求文档](customer-dynamics-prototype/需求文档/AI会话质检需求文档.md) | [打开客户动态](https://yukisusanto.github.io/YukiAsPM/customer-dynamics-prototype/) |
+| AI销售助手 · 客户动态 | [原型](ai-sales-assistant-customer-dynamics-prototype/) | [需求文档](ai-sales-assistant-customer-dynamics-prototype/AI销售助手-侧边栏优化需求文档.md) | [打开销售助手客户动态](https://yukisusanto.github.io/YukiAsPM/ai-sales-assistant-customer-dynamics-prototype/) |
 | 134期转人工看板 | [代码与真实聊天数据](dashboard/134期-handoff-dashboard/) | [口径说明](dashboard/134期-handoff-dashboard/README.md) | [打开看板](https://yukisusanto.github.io/YukiAsPM/dashboard/134期-handoff-dashboard/) |
 
 ```text
@@ -62,3 +63,7 @@ Pages 设置继续使用 GitHub Actions，工作流仅允许 `main` 部署。会
 Pages构建会先核验906次事件、746位客户和全部窗口消息，再复制该目录的前端与数据。首页提供单独入口，原有站点与链接继续保留。数据库连接配置、“聊天记录数据获取分析”文件夹、分享ZIP和运行环境不纳入仓库或发布产物。
 
 原有SOP与会话质检是演示原型；134期看板使用实际业务数据。
+
+## AI销售助手 · 客户动态
+
+`ai-sales-assistant-customer-dynamics-prototype/` 保存销售助手复刻原型、客户动态交互、Markdown需求文档及截图。使用静态 HTML/CSS/JavaScript，Pages构建会复制页面与文档资源，无需额外安装依赖。客户动态为参考原型的演示数据。

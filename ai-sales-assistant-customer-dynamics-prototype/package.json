@@ -1,0 +1,1 @@
+{"name":"xueli-ai-sales-replica","version":"1.0.0","private":true,"scripts":{"dev":"node server.cjs","start":"node server.cjs","check":"node --check app.js && node --check dynamics.js"}}
