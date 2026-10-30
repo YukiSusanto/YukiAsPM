@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const dir=path.dirname(fileURLToPath(import.meta.url));
+const html=fs.readFileSync(path.join(dir,'index.html'),'utf8');
+const css=fs.readFileSync(path.join(dir,'styles.css'),'utf8');
+const js=fs.readFileSync(path.join(dir,'app.js'),'utf8');
+const output=html.replace('<link rel="stylesheet" href="./styles.css">',`<style>\n${css}\n</style>`).replace('<script src="./app.js"></script>',`<script>\n${js}\n</script>`);
+fs.writeFileSync(path.join(dir,'index-standalone.html'),output);
+console.log(`已生成无外部依赖版本：${path.join(dir,'index-standalone.html')}`);

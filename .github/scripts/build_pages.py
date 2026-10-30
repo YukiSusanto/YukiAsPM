@@ -31,6 +31,12 @@ def build(sources, output):
         source = quality_source / filename
         if not source.is_file():
             raise FileNotFoundError(source)
+    dynamics_source = sources / 'customer-dynamics-prototype'
+    dynamics_files = ('index.html', 'styles.css', 'app.js')
+    for filename in dynamics_files:
+        source = dynamics_source / filename
+        if not source.is_file():
+            raise FileNotFoundError(source)
     dashboard_source = sources / 'dashboard' / '134期-handoff-dashboard'
     dashboard_files = ('index.html', 'app.js', 'style.css')
     for filename in (*dashboard_files, 'data/catalog.json', 'data/classification.json'):
@@ -56,6 +62,10 @@ def build(sources, output):
     quality_output.mkdir(parents=True, exist_ok=True)
     for filename in quality_files:
         shutil.copyfile(quality_source / filename, quality_output / filename)
+    dynamics_output = output / 'customer-dynamics-prototype'
+    dynamics_output.mkdir(parents=True, exist_ok=True)
+    for filename in dynamics_files:
+        shutil.copyfile(dynamics_source / filename, dynamics_output / filename)
     dashboard_output = output / 'dashboard' / '134期-handoff-dashboard'
     dashboard_output.mkdir(parents=True, exist_ok=True)
     for filename in dashboard_files:
@@ -83,6 +93,7 @@ a.card{display:flex;flex-direction:column;align-items:flex-start;min-height:240p
 <div class="cards"><a class="card" href="./sop-prototype/固定SOP/原型/"><span class="badge">固定 SOP</span><h2>固定 SOP 版</h2><p>固定消息规则、时间节点配置与素材引用。</p><span class="open">打开原型 →</span></a>
 <a class="card" href="./sop-prototype/社群SOP/原型/"><span class="badge">社群 SOP</span><h2>社群 SOP 版</h2><p>社群消息、自动建群、群公告与群聊管理。</p><span class="open">打开原型 →</span></a>
 <a class="card" href="./conversation-quality-prototype/"><span class="badge">AI 销售</span><h2>AI 会话质检</h2><p>按销售企微账号和客户查看只读会话，支持日期、搜索、筛选与分页。</p><span class="open">打开原型 →</span></a>
+<a class="card" href="./customer-dynamics-prototype/"><span class="badge">客户运营</span><h2>客户动态</h2><p>查看客户关系、员工企微标签与跨平台行为时间线。</p><span class="open">打开原型 →</span></a>
 <a class="card" href="./dashboard/134期-handoff-dashboard/"><span class="badge">数据看板</span><h2>134期转人工分析</h2><p>两级原因图形钻取、客户筛选及真实前置聊天记录，支持按需加载。</p><span class="open">打开看板 →</span></a></div><footer>SOP与会话质检为演示原型；134期看板使用实际业务数据。</footer></main></body></html>'''
 
 

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>客户动态 | 雪梨英语管理系统</title>
+  <style>
+:root{--primary:#2f8cff;--line:#e3e8ef;--text:#26364d;--muted:#8b97a8;--bg:#f3f6fa}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:13px/1.5 system-ui,-apple-system,"Microsoft YaHei",sans-serif}button,input,select{font:inherit}button{border:0;cursor:pointer}.rail{position:fixed;inset:0 auto 0 0;z-index:3;display:flex;width:50px;align-items:center;flex-direction:column;gap:18px;border-right:1px solid var(--line);background:#fff}.rail .brand{display:grid;width:32px;height:32px;margin:12px 0 10px;place-items:center;border-radius:8px;color:#fff;background:linear-gradient(135deg,#ffb26b,#ff795f);font-weight:700}.rail button{width:50px;height:38px;color:#718096;background:transparent;font-size:18px}.rail button.active{color:var(--primary);border-left:2px solid var(--primary);background:#edf6ff}.page{min-height:100vh;margin-left:50px;padding:14px 16px}.page-header{display:flex;align-items:flex-start;justify-content:space-between;padding:0 2px 12px}.page-header h1{margin:0;font-size:24px}.page-header p{margin:3px 0 0;color:#94a0af;font-size:11px}.page-header p span{display:inline-block;width:7px;height:7px;margin-right:7px;border-radius:50%;background:#22bf65}.header-state{padding-top:9px;color:#8895a7;font-size:11px}.filter-bar{display:flex;min-height:64px;align-items:center;gap:9px;padding:11px 14px;border:1px solid var(--line);border-radius:8px;background:#fff}.filter-bar label{display:flex;align-items:center;gap:7px}.filter-bar label>span{color:#657386;font-size:11px;white-space:nowrap}.filter-bar input,.filter-bar select,.list-search input{height:34px;border:1px solid #dce3eb;border-radius:5px;outline:0;color:#526075;background:#fff}.filter-bar input{padding:0 9px}.filter-bar select{padding:0 26px 0 9px}.filter-bar .search{position:relative;flex:1;max-width:360px}.filter-bar .search input{width:100%;padding-left:32px}.search i,.list-search i{position:absolute;left:11px;color:#9da8b6;font-style:normal}.filter-bar b{color:#a0aab7;font-weight:400}.refresh{height:34px;padding:0 14px;border:1px solid #dce3eb;border-radius:5px;color:#647287;background:#fff}.refresh:hover{color:var(--primary);border-color:#9bc9ff}.workspace{display:grid;grid-template-columns:310px minmax(0,1fr);height:calc(100vh - 118px);min-height:620px;margin-top:12px;overflow:hidden;border:1px solid var(--line);border-radius:8px;background:#fff}.customer-panel{display:flex;min-width:0;flex-direction:column;border-right:1px solid var(--line)}.panel-title{padding:17px 17px 10px}.panel-title h2{margin:0;font-size:17px}.panel-title p{margin:2px 0 0;color:#8d99a9;font-size:10px}.list-search{position:relative;margin:0 16px 10px}.list-search input{width:100%;padding:0 10px 0 31px}.customer-list{flex:1;overflow:auto}.customer-item{display:flex;width:100%;min-height:68px;align-items:center;gap:10px;padding:10px 14px;border-left:3px solid transparent;border-bottom:1px solid #edf0f4;background:#fff;text-align:left}.customer-item:hover{background:#f7faff}.customer-item.active{border-left-color:var(--primary);background:#eaf4ff}.avatar{display:grid;flex:0 0 auto;width:36px;height:36px;place-items:center;border-radius:50%;color:#fff;font-weight:700}.avatar.large{width:52px;height:52px;font-size:17px}.warm{background:linear-gradient(135deg,#ffb36e,#ff8061)}.purple{background:linear-gradient(135deg,#cab2f1,#8769c4)}.blue{background:linear-gradient(135deg,#9cc8ff,#4c88d6)}.mint{background:linear-gradient(135deg,#9cded5,#43a79f)}.gray{background:linear-gradient(135deg,#cbd3da,#85919d)}.customer-item .info{min-width:0;flex:1}.customer-item strong,.customer-item small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.customer-item strong{font-size:12px}.customer-item small{margin-top:3px;color:#94a0af;font-size:10px}.mini-status{flex:0 0 auto;padding:2px 5px;border:1px solid #f3bbb4;border-radius:3px;color:#e55d50;background:#fff5f3;font-size:8px}.mini-status.active{border-color:#b7dfbf;color:#35a452;background:#f4fff6}.detail-panel{min-width:0;overflow:auto;padding:17px;background:#f8fafc}.customer-summary,.employee-card,.dynamics-card{border:1px solid var(--line);border-radius:8px;background:#fff;box-shadow:0 2px 9px rgba(34,55,80,.035)}.customer-summary{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px 18px}.customer-main{display:flex;align-items:center;gap:12px;min-width:0}.name-line{display:flex;align-items:center;gap:8px}.name-line h2{margin:0;font-size:18px}.customer-main p{margin:5px 0 0;color:#8e9aaa;font-size:10px}.customer-main p b{color:#5f6c7e;font-weight:500}.status{display:inline-flex;height:21px;align-items:center;padding:0 7px;border:1px solid #f2b6ae;border-radius:3px;color:#e65c4f;background:#fff5f3;font-size:9px;font-weight:600}.status.active{border-color:#a8ddb3;color:#35a452;background:#f3fff5}.profile-facts{display:grid;grid-template-columns:repeat(3,minmax(105px,1fr));gap:8px;margin:0}.profile-facts div{padding:7px 9px;border-radius:5px;background:#f7f9fc}.profile-facts dt{color:#99a4b2;font-size:8px}.profile-facts dd{margin:3px 0 0;color:#596679;font-size:10px}.employee-card,.dynamics-card{margin-top:12px;padding:14px 16px}.section-heading{display:flex;align-items:flex-start;justify-content:space-between}.section-heading h3{margin:0;font-size:14px}.section-heading p{margin:2px 0 0;color:#98a3b1;font-size:9px}.section-heading>strong{display:grid;min-width:25px;height:21px;place-items:center;border-radius:11px;color:var(--primary);background:#edf6ff;font-size:10px}.employee-options{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}.employee-option{display:flex;min-width:240px;align-items:center;gap:8px;padding:7px 10px;border:1px solid transparent;border-radius:6px;color:#536174;background:#f5f8fc}.employee-option:before{width:12px;height:12px;border:1px solid #bac5d2;border-radius:50%;background:#fff;content:""}.employee-option.selected{border-color:#91c3ff;color:#287edc;background:#f0f7ff}.employee-option.selected:before{border:4px solid var(--primary)}.employee-avatar{display:grid;width:25px;height:25px;place-items:center;border-radius:50%;color:#fff;background:#5b9cf1;font-size:9px;font-weight:700}.tag-row{display:flex;align-items:flex-start;gap:10px;margin-top:12px;padding-top:11px;border-top:1px solid #edf0f4}.tag-row>span{padding-top:3px;color:#8793a2;font-size:10px}.tag-row>div{display:flex;flex-wrap:wrap;gap:5px}.tag{padding:3px 7px;border:1px solid #b6d9ff;border-radius:3px;color:#277fdc;background:#f3f9ff;font-size:9px}.dynamic-filters{display:flex;gap:10px;margin-top:12px;padding:10px;border-radius:6px;background:#f7f9fc}.dynamic-filters label{display:flex;align-items:center;gap:7px}.dynamic-filters label span{color:#7f8c9d;font-size:10px}.dynamic-filters select{height:31px;min-width:170px;padding:0 8px;border:1px solid #dfe5ec;border-radius:4px;color:#596678;background:#fff;font-size:10px}.timeline{position:relative;margin:15px 0 0;padding-left:19px}.timeline:before{position:absolute;top:6px;bottom:6px;left:4px;width:1px;background:#dce8f6;content:""}.event{position:relative;padding:0 0 15px 10px}.event:before{position:absolute;top:4px;left:-18px;width:8px;height:8px;border:2px solid #fff;border-radius:50%;background:var(--primary);box-shadow:0 0 0 1px #95c6ff;content:""}.event-head{display:flex;align-items:baseline;gap:9px}.event-head strong{font-size:11px}.event-head time{color:#98a3b1;font-size:9px}.event-body{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px;padding:9px 11px;border-radius:5px;color:#5f6d7f;background:#f7f9fc;font-size:10px}.platform{flex:0 0 auto;padding:2px 6px;border:1px solid #a9d1ff;border-radius:3px;color:#247fe9;background:#f2f8ff;font-size:8px}.empty{padding:60px 10px;color:#9aa5b2;text-align:center}.toast{position:fixed;right:24px;bottom:24px;padding:9px 14px;border-radius:5px;color:#fff;background:#344154;opacity:0;transform:translateY(8px);transition:.2s;pointer-events:none}.toast.show{opacity:1;transform:none}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}@media(max-width:1050px){.workspace{grid-template-columns:270px minmax(0,1fr)}.customer-summary{align-items:flex-start;flex-direction:column}.profile-facts{width:100%}}@media(max-width:760px){.page{margin-left:0;padding:10px}.rail{display:none}.filter-bar{align-items:stretch;flex-wrap:wrap}.filter-bar .search{max-width:none;flex-basis:100%}.workspace{grid-template-columns:1fr;height:auto}.customer-panel{max-height:320px;border-right:0;border-bottom:1px solid var(--line)}.detail-panel{overflow:visible}.profile-facts{grid-template-columns:1fr}.dynamic-filters{align-items:stretch;flex-direction:column}.dynamic-filters label{justify-content:space-between}.employee-option{min-width:100%}}
+
+</style>
+</head>
+<body>
+  <aside class="rail" aria-label="主导航">
+    <div class="brand">雪</div>
+    <button>⌂</button><button>♙</button><button class="active">◷</button><button>☷</button><button>⚙</button>
+  </aside>
+  <main class="page">
+    <header class="page-header">
+      <div><h1>客户动态</h1><p><span></span>数据来自销售企微客户关系与行为记录</p></div>
+      <div class="header-state">已是最新</div>
+    </header>
+    <section class="filter-bar" aria-label="客户动态筛选">
+      <label class="search"><i>⌕</i><input id="global-search" placeholder="搜索客户名称、微信昵称或客户ID"></label>
+      <label><span>客户添加时间</span><input id="date-start" type="date" value="2026-10-01"></label>
+      <b>至</b>
+      <label><span class="sr-only">结束日期</span><input id="date-end" type="date" value="2026-10-30"></label>
+      <label><span>流失状态</span><select id="status-filter"><option value="all">全部状态</option><option value="active">未流失</option><option value="lost">已流失</option></select></label>
+      <button class="refresh" id="refresh">↻ 刷新</button>
+    </section>
+    <section class="workspace">
+      <aside class="customer-panel">
+        <div class="panel-title"><div><h2>客户</h2><p id="customer-count">共 6 位客户</p></div></div>
+        <label class="list-search"><i>⌕</i><input id="customer-search" placeholder="搜索客户名称或ID"></label>
+        <div class="customer-list" id="customer-list"></div>
+      </aside>
+      <section class="detail-panel">
+        <header class="customer-summary">
+          <div class="customer-main">
+            <div class="avatar large warm" id="customer-avatar">墨</div>
+            <div><div class="name-line"><h2 id="customer-name">墨言（邮政）</h2><span class="status active" id="customer-status">未流失</span></div><p>微信昵称：<b id="wechat-name">墨言（邮政）</b></p></div>
+          </div>
+          <dl class="profile-facts">
+            <div><dt>客户来源</dt><dd id="customer-source">扫码添加</dd></div>
+            <div><dt>添加时间</dt><dd id="added-at">2026-10-21 18:06</dd></div>
+            <div><dt>客户ID</dt><dd id="customer-id">C-1001</dd></div>
+          </dl>
+        </header>
+        <section class="employee-card">
+          <div class="section-heading"><div><h3>已添加员工</h3><p>选择员工后，展示该员工视角下的企微标签</p></div><strong id="employee-count">2</strong></div>
+          <div class="employee-options" id="employee-options" role="radiogroup" aria-label="选择已添加员工"></div>
+          <div class="tag-row"><span>企微标签</span><div id="tag-list"></div></div>
+        </section>
+        <section class="dynamics-card">
+          <div class="section-heading"><div><h3>客户动态</h3><p>汇总该客户下所有员工与平台产生的动作</p></div><strong id="record-count">11</strong></div>
+          <div class="dynamic-filters">
+            <label><span>操作平台</span><select id="platform-filter"><option value="all">全部</option><option value="企业微信">企业微信</option><option value="微信自动同步">微信自动同步</option><option value="APP">APP</option><option value="直播间">直播间</option><option value="pending" disabled>待技术确认：记录中能否区分操作平台</option></select></label>
+            <label><span>动态类型</span><select id="type-filter"><option value="all">全部动态</option><option value="tag-change">标签变动</option><option value="friend-change">好友关系变动</option><option value="group-change">群聊变动</option><option value="live-action">直播行为</option><option value="official-account">公众号行为</option><option value="transaction">交易记录</option></select></label>
+          </div>
+          <div class="timeline" id="timeline"></div>
+        </section>
+      </section>
+    </section>
+  </main>
+  <div class="toast" id="toast"></div>
+  <script>
+const employees=[{id:'WuBingBing01',name:'361-杜亚敏-免费-202505-至今',initial:'杜'},{id:'YinLiJuan',name:'19-殷丽娟-助理-202303-202305',initial:'殷'},{id:'LiaoZengZeng',name:'194-朱春花-助理-202411-至今',initial:'朱'}];
+const customers=[
+ {id:'C-1001',name:'墨言（邮政）',initial:'墨',tone:'warm',status:'active',source:'扫码添加',added:'2026-10-21 18:06',employees:['WuBingBing01','YinLiJuan'],tags:{WuBingBing01:['140期','ai135期-1025'],YinLiJuan:['【在群中】','螳螂127期-D1到课']}},
+ {id:'C-1002',name:'🍜泡面公主👸🏻',initial:'泡',tone:'purple',status:'active',source:'员工主动添加',added:'2026-10-21 18:18',employees:['WuBingBing01','LiaoZengZeng'],tags:{WuBingBing01:['140期','【未入群】'],LiaoZengZeng:['测试线135期图书','D3预约']}},
+ {id:'C-1003',name:'巩伟',initial:'巩',tone:'gray',status:'active',source:'扫码添加',added:'2026-10-20 09:15',employees:['YinLiJuan'],tags:{YinLiJuan:['139期','【在群中】']}},
+ {id:'C-1004',name:'真',initial:'真',tone:'blue',status:'active',source:'渠道活码',added:'2026-10-18 12:42',employees:['LiaoZengZeng'],tags:{LiaoZengZeng:['139期','D2已点链接']}},
+ {id:'C-1005',name:'恭喜恭喜',initial:'恭',tone:'mint',status:'active',source:'员工主动添加',added:'2026-10-15 17:30',employees:['WuBingBing01','LiaoZengZeng'],tags:{WuBingBing01:['138期'],LiaoZengZeng:['【在群中】','测试线135期图书']}},
+ {id:'C-1006',name:'袁兆腾',initial:'袁',tone:'gray',status:'lost',source:'扫码添加',added:'2026-10-08 10:22',employees:['YinLiJuan'],tags:{YinLiJuan:['138期','【已退群】']}}
+];
+const events=[
+ {type:'打标签',group:'tag-change',time:'2026-10-29 16:03',platform:'微信自动同步',employee:'WuBingBing01',action:'打上企微标签【D3预约】'},
+ {type:'删除标签',group:'tag-change',time:'2026-10-29 15:48',platform:'企业微信',employee:'YinLiJuan',action:'删除企微标签【待跟进】'},
+ {type:'关注公众号',group:'official-account',time:'2026-10-29 09:16',platform:'微信自动同步',action:'关注公众号【雪梨英语】'},
+ {type:'进入直播间',group:'live-action',time:'2026-10-28 19:02',platform:'直播间',action:'进入【100篇阅读（新版）】直播间'},
+ {type:'成交记录',group:'transaction',time:'2026-10-28 14:36',platform:'APP',employee:'WuBingBing01',action:'完成订单成交，实付金额 ¥399'},
+ {type:'下单产品',group:'transaction',time:'2026-10-28 14:30',platform:'APP',action:'下单产品【单词拼读王年度课程】'},
+ {type:'点击预约',group:'live-action',time:'2026-10-28 10:26',platform:'APP',action:'点击三天家长直播课预约入口'},
+ {type:'加入群聊',group:'group-change',time:'2026-10-27 11:20',platform:'微信自动同步',action:'加入群聊【四年级英语规划交流群】'},
+ {type:'退出群聊',group:'group-change',time:'2026-10-26 20:14',platform:'微信自动同步',action:'退出群聊【自然拼读学习打卡群】'},
+ {type:'添加好友',group:'friend-change',time:'2026-10-21 18:06',platform:'企业微信',employee:'WuBingBing01',action:'添加为企微好友并建立单聊关系'},
+ {type:'客户流失',group:'friend-change',time:'2026-10-20 10:22',platform:'微信自动同步',employee:'YinLiJuan',action:'双向删除好友，客户状态变更为已流失'}
+];
+let selectedCustomer=customers[0],selectedEmployeeId=customers[0].employees[0];
+const $=s=>document.querySelector(s);const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function employeeById(id){return employees.find(e=>e.id===id)}
+function visibleCustomers(){const q=$('#customer-search').value.trim().toLowerCase()||$('#global-search').value.trim().toLowerCase();const status=$('#status-filter').value,start=$('#date-start').value,end=$('#date-end').value;return customers.filter(c=>{const added=c.added.slice(0,10);return(status==='all'||c.status===status)&&(!start||added>=start)&&(!end||added<=end)&&(!q||`${c.name}${c.id}`.toLowerCase().includes(q))})}
+function renderCustomers(){const list=visibleCustomers();$('#customer-count').textContent=`共 ${list.length} 位客户`;$('#customer-list').innerHTML=list.map(c=>`<button class="customer-item${c.id===selectedCustomer.id?' active':''}" data-customer="${c.id}"><span class="avatar ${c.tone}">${esc(c.initial)}</span><span class="info"><strong>${esc(c.name)}</strong><small>${esc(c.id)} · 添加于 ${esc(c.added.slice(0,10))}</small></span><span class="mini-status${c.status==='active'?' active':''}">${c.status==='active'?'未流失':'已流失'}</span></button>`).join('')||'<div class="empty">没有符合条件的客户</div>'}
+function renderProfile(){if(!selectedCustomer.employees.includes(selectedEmployeeId))selectedEmployeeId=selectedCustomer.employees[0];$('#customer-avatar').className=`avatar large ${selectedCustomer.tone}`;$('#customer-avatar').textContent=selectedCustomer.initial;$('#customer-name').textContent=selectedCustomer.name;$('#wechat-name').textContent=selectedCustomer.name;$('#customer-source').textContent=selectedCustomer.source;$('#added-at').textContent=selectedCustomer.added;$('#customer-id').textContent=selectedCustomer.id;const active=selectedCustomer.status==='active';$('#customer-status').textContent=active?'未流失':'已流失';$('#customer-status').className=`status${active?' active':''}`;$('#employee-count').textContent=selectedCustomer.employees.length;$('#employee-options').innerHTML=selectedCustomer.employees.map(id=>{const e=employeeById(id),selected=id===selectedEmployeeId;return `<button class="employee-option${selected?' selected':''}" data-employee="${id}" role="radio" aria-checked="${selected}"><span class="employee-avatar">${esc(e.initial)}</span><span>${esc(e.name)}</span></button>`}).join('');const tags=selectedCustomer.tags[selectedEmployeeId]||[];$('#tag-list').innerHTML=tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')||'<span class="tag">暂无标签</span>'}
+function renderTimeline(){const platform=$('#platform-filter').value,type=$('#type-filter').value;const result=events.filter(e=>(platform==='all'||e.platform===platform)&&(type==='all'||e.group===type));$('#record-count').textContent=result.length;$('#timeline').innerHTML=result.map(e=>{const actor=e.employee?employeeById(e.employee).name:`客户 ${selectedCustomer.name}`;const sentence=e.employee?`${actor} 对客户 ${selectedCustomer.name} ${e.action}`:`${actor} ${e.action}`;return `<article class="event"><div class="event-head"><strong>${esc(e.type)}</strong><time>${esc(e.time)}</time></div><div class="event-body"><span>${esc(sentence)}</span><span class="platform">${esc(e.platform)}</span></div></article>`}).join('')||'<div class="empty">当前筛选条件下暂无客户动态</div>'}
+function render(){renderCustomers();renderProfile();renderTimeline()}
+document.addEventListener('click',e=>{const customer=e.target.closest('[data-customer]');if(customer){selectedCustomer=customers.find(c=>c.id===customer.dataset.customer);selectedEmployeeId=selectedCustomer.employees[0];render();return}const employee=e.target.closest('[data-employee]');if(employee){selectedEmployeeId=employee.dataset.employee;renderProfile();return}if(e.target.closest('#refresh')){const toast=$('#toast');toast.textContent='客户动态已刷新';toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1500)}});
+['customer-search','global-search'].forEach(id=>$(`#${id}`).addEventListener('input',renderCustomers));['status-filter','date-start','date-end'].forEach(id=>$(`#${id}`).addEventListener('change',renderCustomers));$('#platform-filter').addEventListener('change',renderTimeline);$('#type-filter').addEventListener('change',renderTimeline);render();
+
+</script>
+</body>
+</html>
