@@ -1,0 +1,25 @@
+/* 客户动态沿用参考原型的筛选与时间线，适配画像侧栏宽度。 */
+.profile-tabs{overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
+.profile-tabs::-webkit-scrollbar{display:none}
+.profile-tabs button{flex:1 0 auto;padding:0 9px;font-size:11px}
+.dynamics-records{padding:13px 12px 16px;border:1px solid #e3e8ef;border-radius:7px;background:#fff;min-width:0}
+.dynamics-section-title{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.dynamics-section-title h3{margin:0;color:#344154;font-size:14px}
+.dynamics-section-title>span{color:#99a4b2;font-size:10px;white-space:nowrap}
+.dynamics-filters{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:9px;margin-top:11px}
+.dynamics-filters label{min-width:0}
+.dynamics-employee-filter{grid-column:1/-1}
+.dynamics-filters label>span{display:block;margin-bottom:5px;color:#8d98a7;font-size:10px}
+.dynamics-filters select{width:100%;height:31px;padding:0 6px;border:1px solid #dfe5ec;border-radius:4px;outline:0;color:#596678;background:#fff;font:10px "Microsoft YaHei",sans-serif;text-overflow:ellipsis}
+.dynamics-filters select:focus{border-color:#91c3ff;box-shadow:0 0 0 2px #2f8cff12}
+.dynamics-timeline{position:relative;margin-top:16px;padding-left:17px}
+.dynamics-timeline::before{position:absolute;top:6px;bottom:6px;left:4px;width:1px;background:#dce8f6;content:""}
+.dynamics-event{position:relative;padding:0 0 15px 9px}
+.dynamics-event:last-child{padding-bottom:0}
+.dynamics-event::before{position:absolute;top:4px;left:-17px;width:7px;height:7px;border:2px solid #fff;border-radius:50%;background:#2f8cff;box-shadow:0 0 0 1px #95c6ff;content:"";box-sizing:content-box}
+.dynamics-event-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:3px 8px}
+.dynamics-event-head strong{color:#435064;font-size:11px}
+.dynamics-event-head time{color:#98a3b1;font-size:9px;white-space:nowrap}
+.dynamics-event-card{margin-top:6px;padding:9px 10px;border-radius:5px;color:#687486;background:#f8fafc;font-size:10px;line-height:1.65;overflow-wrap:anywhere}
+.dynamics-event-platform{display:inline-flex;margin-top:6px;padding:2px 6px;border:1px solid #a9d1ff;border-radius:3px;color:#247fe9;background:#f2f8ff;font-size:9px;line-height:1.5}
+.dynamics-empty{position:relative;margin-left:-17px;padding:30px 10px;background:#fff;color:#9aa5b2;text-align:center;font-size:11px}

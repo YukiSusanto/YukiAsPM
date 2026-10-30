@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'dashboard/**'
+      - 'ai-sales-assistant-customer-dynamics-prototype/**'
       - '.github/scripts/build_pages.py'
       - '.github/workflows/pages.yml'
       - '.github/workflows/validate-dashboard.yml'
@@ -22,6 +23,10 @@ jobs:
         run: |
           node --check "dashboard/134期-handoff-dashboard/app.js"
           node --check "dashboard/134期-handoff-dashboard/scripts/serve.cjs"
+      - name: Check sales assistant JavaScript
+        run: |
+          node --check "ai-sales-assistant-customer-dynamics-prototype/app.js"
+          node --check "ai-sales-assistant-customer-dynamics-prototype/dynamics.js"
       - name: Validate real conversation dataset
         run: node "dashboard/134期-handoff-dashboard/scripts/check-data.cjs"
       - name: Build existing SOP pages
@@ -32,3 +37,9 @@ jobs:
         run: python3 .github/scripts/build_pages.py . _site
       - name: Verify dashboard is included
         run: test -f "_site/dashboard/134期-handoff-dashboard/data/catalog.json"
+
+      - name: Verify sales assistant is included
+        run: |
+          test -f "_site/ai-sales-assistant-customer-dynamics-prototype/index.html"
+          test -f "_site/ai-sales-assistant-customer-dynamics-prototype/dynamics.js"
+          test -f "_site/ai-sales-assistant-customer-dynamics-prototype/screenshots/dynamics.jpg"
