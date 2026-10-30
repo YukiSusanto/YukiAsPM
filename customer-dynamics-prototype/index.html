@@ -152,8 +152,9 @@
                 <section class="dynamics-records" aria-label="客户动态记录">
                   <div class="dynamics-section-title"><h3>客户动态</h3><span id="dynamics-record-count">共 11 条</span></div>
                   <div class="dynamics-filters">
+                    <label class="dynamics-employee-filter"><span>员工</span><select id="dynamics-employee-filter"><option value="all">全部员工</option></select></label>
                     <label><span>操作平台</span><select id="dynamics-platform-filter"><option value="all">全部</option><option value="企业微信">企业微信</option><option value="微信自动同步">微信自动同步</option><option value="APP">APP</option><option value="直播间">直播间</option><option value="pending" disabled>待技术确认：记录中能否区分操作平台</option></select></label>
-                    <label><span>动态类型</span><select id="dynamics-type-filter"><option value="all">全部动态</option><option value="tag-change">标签变动</option><option value="friend-change">好友关系变动</option><option value="group-change">群聊变动</option><option value="live-action">直播行为</option><option value="official-account">公众号行为</option><option value="transaction">交易记录</option></select></label>
+                    <label><span>动态类型</span><select id="dynamics-type-filter"><option value="all">全部动态</option><option value="tag-change">标签变动</option><option value="friend-change">好友关系变动</option><option value="handoff-change">转人工变更</option><option value="group-change">群聊变动</option><option value="live-action">直播行为</option><option value="official-account">公众号行为</option><option value="transaction">交易记录</option></select></label>
                   </div>
                   <div class="dynamics-timeline" id="dynamics-timeline"></div>
                 </section>

@@ -191,14 +191,16 @@ const customerEmployeeAssignments = {
 };
 
 const customerDynamicEvents = [
+  { type: '转人工', time: '2026-10-29 16:18', platform: '企业微信', accountId: 'WuBingBing01', reason: '客户连续表达人工服务诉求' },
+  { type: 'AI接管', time: '2026-10-29 16:12', platform: '企业微信', accountId: 'WuBingBing01' },
   { type: '打标签', time: '2026-10-29 16:03', platform: '微信自动同步', accountId: 'WuBingBing01', action: '打上企微标签【D3预约】' },
   { type: '删除标签', time: '2026-10-29 15:48', platform: '企业微信', accountId: 'YinLiJuan', action: '删除企微标签【待跟进】' },
   { type: '关注公众号', time: '2026-10-29 09:16', platform: '微信自动同步', action: '关注公众号【雪梨英语】' },
-  { type: '进入直播间', time: '2026-10-28 19:02', platform: '直播间', action: '进入【100篇阅读（新版）】直播间' },
+  { type: '进入直播间', time: '2026-10-28 19:02', platform: '直播间', accountId: 'WuBingBing01', action: '通过销售链接进入【100篇阅读（新版）】直播间' },
   { type: '成交记录', time: '2026-10-28 14:36', platform: 'APP', accountId: 'WuBingBing01', action: '完成订单成交，实付金额 ¥399' },
   { type: '下单产品', time: '2026-10-28 14:30', platform: 'APP', action: '下单产品【单词拼读王年度课程】' },
-  { type: '点击预约', time: '2026-10-28 10:26', platform: 'APP', action: '点击三天家长直播课预约入口' },
-  { type: '加入群聊', time: '2026-10-27 11:20', platform: '微信自动同步', action: '加入群聊【四年级英语规划交流群】' },
+  { type: '点击预约', time: '2026-10-28 10:26', platform: 'APP', accountId: 'WuBingBing01', action: '通过销售链接完成三天家长直播课预约' },
+  { type: '加入群聊', time: '2026-10-27 11:20', platform: '微信自动同步', accountId: 'YinLiJuan', action: '通过销售邀请加入群聊【四年级英语规划交流群】' },
   { type: '退出群聊', time: '2026-10-26 20:14', platform: '微信自动同步', action: '退出群聊【自然拼读学习打卡群】' },
   { type: '添加好友', time: '2026-10-21 18:06', platform: '企业微信', accountId: 'WuBingBing01', action: '添加为企微好友并建立单聊关系' },
   { type: '客户流失', time: '2026-10-20 10:22', platform: '微信自动同步', accountId: 'YinLiJuan', action: '双向删除好友，客户状态变更为已流失' },
@@ -207,6 +209,7 @@ const customerDynamicEvents = [
 const customerDynamicTypeGroups = {
   'tag-change': ['打标签', '删除标签'],
   'friend-change': ['添加好友', '客户流失'],
+  'handoff-change': ['转人工', 'AI接管'],
   'group-change': ['加入群聊', '退出群聊'],
   'live-action': ['点击预约', '进入直播间'],
   'official-account': ['关注公众号'],
@@ -701,10 +704,15 @@ function renderCustomerDynamics() {
   $('#dynamics-tag-list').innerHTML = tags.length
     ? tags.map((tag) => `<span class="dynamics-tag">${escapeHtml(tag.tag)}</span>`).join('')
     : '<span class="dynamics-tag empty">暂无标签</span>';
+  const employeeFilter = $('#dynamics-employee-filter');
+  const previousEmployeeFilter = employeeFilter.value || 'all';
+  employeeFilter.innerHTML = `<option value="all">全部员工</option>${dynamicsEmployees.map((account) => `<option value="${escapeHtml(account.id)}">${escapeHtml(account.name)}</option>`).join('')}`;
+  employeeFilter.value = dynamicsEmployees.some((account) => account.id === previousEmployeeFilter) ? previousEmployeeFilter : 'all';
+  const recordEmployeeId = employeeFilter.value;
   const platform = $('#dynamics-platform-filter').value;
   const type = $('#dynamics-type-filter').value;
   const selectedTypes = customerDynamicTypeGroups[type] || [];
-  const result = customerDynamicEvents.filter((item) => (platform === 'all' || item.platform === platform) && (type === 'all' || selectedTypes.includes(item.type)));
+  const result = customerDynamicEvents.filter((item) => (recordEmployeeId === 'all' || item.accountId === recordEmployeeId) && (platform === 'all' || item.platform === platform) && (type === 'all' || selectedTypes.includes(item.type)));
   $('#dynamics-record-count').textContent = `共 ${result.length} 条`;
   $('#dynamics-timeline').innerHTML = result.length
     ? result.map((item) => `<article class="dynamics-event"><div class="dynamics-event-head"><strong>${escapeHtml(item.type)}</strong><time>${escapeHtml(item.time)}</time></div><div class="dynamics-event-card">${escapeHtml(formatCustomerDynamicSentence(item))}<br><span class="dynamics-event-platform">${escapeHtml(item.platform)}</span></div></article>`).join('')
@@ -728,6 +736,11 @@ function getDynamicsEmployeeTags(customer, employee) {
 function formatCustomerDynamicSentence(item) {
   if (item.accountId) {
     const employee = accounts.find((account) => account.id === item.accountId) || selectedAccount;
+    if (item.type === '转人工') return `${employee.name}销售的${selectedContact.name}客户，因为${item.reason}触发转人工`;
+    if (item.type === 'AI接管') return `${employee.name}销售的${selectedContact.name}客户重置为AI回复中`;
+    if (item.type === '点击预约') return `${selectedContact.name}客户通过${employee.name}销售的链接完成三天家长直播课预约`;
+    if (item.type === '进入直播间') return `${selectedContact.name}客户通过${employee.name}销售的链接进入【100篇阅读（新版）】直播间`;
+    if (item.type === '加入群聊') return `${selectedContact.name}客户通过${employee.name}销售的邀请加入群聊【四年级英语规划交流群】`;
     return `${employee.name} 对客户 ${selectedContact.name} ${item.action}`;
   }
   return `客户 ${selectedContact.name} ${item.action}`;
@@ -1359,6 +1372,7 @@ document.addEventListener('click', (event) => {
 $('#account-search').addEventListener('input', renderAccounts);
 $('#customer-search').addEventListener('input', () => { customerPage = 1; renderCustomers(); renderConversation(); });
 $('#message-search').addEventListener('input', renderConversation);
+$('#dynamics-employee-filter').addEventListener('change', renderCustomerDynamics);
 $('#dynamics-platform-filter').addEventListener('change', renderCustomerDynamics);
 $('#dynamics-type-filter').addEventListener('change', renderCustomerDynamics);
 $('#messages').addEventListener('scroll', () => {
