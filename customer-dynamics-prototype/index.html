@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>客户动态 | 雪梨英语管理系统</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <aside class="rail" aria-label="主导航">
+    <div class="brand">雪</div>
+    <button>⌂</button><button>♙</button><button class="active">◷</button><button>☷</button><button>⚙</button>
+  </aside>
+  <main class="page">
+    <header class="page-header">
+      <div><h1>客户动态</h1><p><span></span>数据来自销售企微客户关系与行为记录</p></div>
+      <div class="header-state">已是最新</div>
+    </header>
+    <section class="filter-bar" aria-label="客户动态筛选">
+      <label class="search"><i>⌕</i><input id="global-search" placeholder="搜索客户名称、微信昵称或客户ID"></label>
+      <label><span>客户添加时间</span><input id="date-start" type="date" value="2026-10-01"></label>
+      <b>至</b>
+      <label><span class="sr-only">结束日期</span><input id="date-end" type="date" value="2026-10-30"></label>
+      <label><span>流失状态</span><select id="status-filter"><option value="all">全部状态</option><option value="active">未流失</option><option value="lost">已流失</option></select></label>
+      <button class="refresh" id="refresh">↻ 刷新</button>
+    </section>
+    <section class="workspace">
+      <aside class="customer-panel">
+        <div class="panel-title"><div><h2>客户</h2><p id="customer-count">共 6 位客户</p></div></div>
+        <label class="list-search"><i>⌕</i><input id="customer-search" placeholder="搜索客户名称或ID"></label>
+        <div class="customer-list" id="customer-list"></div>
+      </aside>
+      <section class="detail-panel">
+        <header class="customer-summary">
+          <div class="customer-main">
+            <div class="avatar large warm" id="customer-avatar">墨</div>
+            <div><div class="name-line"><h2 id="customer-name">墨言（邮政）</h2><span class="status active" id="customer-status">未流失</span></div><p>微信昵称：<b id="wechat-name">墨言（邮政）</b></p></div>
+          </div>
+          <dl class="profile-facts">
+            <div><dt>客户来源</dt><dd id="customer-source">扫码添加</dd></div>
+            <div><dt>添加时间</dt><dd id="added-at">2026-10-21 18:06</dd></div>
+            <div><dt>客户ID</dt><dd id="customer-id">C-1001</dd></div>
+          </dl>
+        </header>
+        <section class="employee-card">
+          <div class="section-heading"><div><h3>已添加员工</h3><p>选择员工后，展示该员工视角下的企微标签</p></div><strong id="employee-count">2</strong></div>
+          <div class="employee-options" id="employee-options" role="radiogroup" aria-label="选择已添加员工"></div>
+          <div class="tag-row"><span>企微标签</span><div id="tag-list"></div></div>
+        </section>
+        <section class="dynamics-card">
+          <div class="section-heading"><div><h3>客户动态</h3><p>汇总该客户下所有员工与平台产生的动作</p></div><strong id="record-count">11</strong></div>
+          <div class="dynamic-filters">
+            <label><span>操作平台</span><select id="platform-filter"><option value="all">全部</option><option value="企业微信">企业微信</option><option value="微信自动同步">微信自动同步</option><option value="APP">APP</option><option value="直播间">直播间</option><option value="pending" disabled>待技术确认：记录中能否区分操作平台</option></select></label>
+            <label><span>动态类型</span><select id="type-filter"><option value="all">全部动态</option><option value="tag-change">标签变动</option><option value="friend-change">好友关系变动</option><option value="group-change">群聊变动</option><option value="live-action">直播行为</option><option value="official-account">公众号行为</option><option value="transaction">交易记录</option></select></label>
+          </div>
+          <div class="timeline" id="timeline"></div>
+        </section>
+      </section>
+    </section>
+  </main>
+  <div class="toast" id="toast"></div>
+  <script src="./app.js"></script>
+</body>
+</html>

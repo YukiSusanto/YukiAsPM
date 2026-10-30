@@ -59,21 +59,21 @@ const accountOrgAssignments = {
 };
 
 const customers = [
-  { name: '墨言（邮政）', preview: '四年级这个阶段挺关键的', time: '刚刚', initial: '墨', tone: 'warm', status: 'active', id: 'C-1001', account: '361-杜亚敏-免费-202505-至今' },
-  { name: '🍜泡面公主👸🏻', preview: '都不太会，会认识字母吧', time: '刚刚', initial: '泡', tone: 'purple', status: 'active', id: 'C-1002', account: '361-杜亚敏-免费-202505-至今' },
-  { name: '巩伟', preview: '有事随时喊我', time: '1 分钟前', initial: '巩', tone: 'gray', status: 'active', id: 'C-1003', account: '19-殷丽娟-助理-202303-202305' },
-  { name: '真', preview: '宝贝家长，给您赠送的3天直播课', time: '3 分钟前', initial: '真', tone: 'blue', status: 'active', id: 'C-1004', account: '194-朱春花-助理-202411-至今' },
-  { name: '恭喜恭喜', preview: '看完还找不到，您截个图给我', time: '5 分钟前', initial: '恭', tone: 'mint', status: 'active', id: 'C-1005', account: '176-张宁-免费-202410-至今' },
-  { name: '袁兆腾', preview: '找到订单自行处理', time: '7 分钟前', initial: '袁', tone: 'gray', status: 'lost', id: 'C-1006', account: '496-叶清林-免费-202507-至今' },
-  { name: 'baby', preview: '接下来的学习规划和雪梨老师的直播', time: '8 分钟前', initial: 'B', tone: 'warm', status: 'active', id: 'C-1007', account: '577-凌嘉敏-免费-202601-至今' },
-  { name: '🎀⃟何在王心ꦿ᭄᪲💞࿐', preview: '❤️【第一课】规划！3-15岁英语进阶攻略…', time: '12 分钟前', initial: '何', tone: 'purple', status: 'lost', id: 'C-1008', account: '495-胡仁龙-免费-202507-至今' },
-  { name: 'HLY', preview: '会生成计划', time: '12 分钟前', initial: 'H', tone: 'mint', status: 'active', id: 'C-1009', account: '79-廖增增-助理-202404-至今' },
-  { name: '崔の林栀鹿', preview: '👌', time: '15 分钟前', initial: '崔', tone: 'blue', status: 'active', id: 'C-1010', account: '576-李春雨-免费-202601-至今' },
-  { name: '丹', preview: '嗯嗯，没有实体教材哈', time: '16 分钟前', initial: '丹', tone: 'warm', status: 'active', id: 'C-1011', account: '206-徐磊-助理-202411-至今' },
-  { name: '巧霞', preview: '❤️【第一课】规划！3-15岁英语进阶攻略…', time: '19 分钟前', initial: '巧', tone: 'purple', status: 'lost', id: 'C-1012', account: '135-徐佳莹-免费-202409-至今' },
-  { name: '亚静', preview: '您先忙', time: '23 分钟前', initial: '亚', tone: 'gray', status: 'active', id: 'C-1013', account: '11-蔡刘伟-助理-202012-202102' },
-  { name: '大森', preview: '家长，给您赠送的3天直播课还没预约哈', time: '26 分钟前', initial: '森', tone: 'blue', status: 'active', id: 'C-1014', account: '578-孙培杰-助理-202404-至今' },
-  { name: '海风吹来', preview: '宝贝家长，给您赠送的3天直播课会讲方法', time: '29 分钟前', initial: '海', tone: 'mint', status: 'lost', id: 'C-1015', account: '611-朱瑞祥-免费-202606-至今' },
+  { name: '墨言（邮政）', preview: '四年级这个阶段挺关键的', time: '刚刚', initial: '墨', tone: 'warm', age: 'new', status: 'active', id: 'C-1001', account: '361-杜亚敏-免费-202505-至今' },
+  { name: '🍜泡面公主👸🏻', preview: '都不太会，会认识字母吧', time: '刚刚', initial: '泡', tone: 'purple', age: 'new', status: 'active', id: 'C-1002', account: '361-杜亚敏-免费-202505-至今' },
+  { name: '巩伟', preview: '有事随时喊我', time: '1 分钟前', initial: '巩', tone: 'gray', age: 'new', status: 'active', id: 'C-1003', account: '19-殷丽娟-助理-202303-202305' },
+  { name: '真', preview: '宝贝家长，给您赠送的3天直播课', time: '3 分钟前', initial: '真', tone: 'blue', age: 'new', status: 'active', id: 'C-1004', account: '194-朱春花-助理-202411-至今' },
+  { name: '恭喜恭喜', preview: '看完还找不到，您截个图给我', time: '5 分钟前', initial: '恭', tone: 'mint', age: 'new', status: 'active', id: 'C-1005', account: '176-张宁-免费-202410-至今' },
+  { name: '袁兆腾', preview: '找到订单自行处理', time: '7 分钟前', initial: '袁', tone: 'gray', age: 'new', status: 'lost', id: 'C-1006', account: '496-叶清林-免费-202507-至今' },
+  { name: 'baby', preview: '接下来的学习规划和雪梨老师的直播', time: '8 分钟前', initial: 'B', tone: 'warm', age: 'old', status: 'active', id: 'C-1007', account: '577-凌嘉敏-免费-202601-至今' },
+  { name: '🎀⃟何在王心ꦿ᭄᪲💞࿐', preview: '❤️【第一课】规划！3-15岁英语进阶攻略…', time: '12 分钟前', initial: '何', tone: 'purple', age: 'old', status: 'lost', id: 'C-1008', account: '495-胡仁龙-免费-202507-至今' },
+  { name: 'HLY', preview: '会生成计划', time: '12 分钟前', initial: 'H', tone: 'mint', age: 'old', status: 'active', id: 'C-1009', account: '79-廖增增-助理-202404-至今' },
+  { name: '崔の林栀鹿', preview: '👌', time: '15 分钟前', initial: '崔', tone: 'blue', age: 'old', status: 'active', id: 'C-1010', account: '576-李春雨-免费-202601-至今' },
+  { name: '丹', preview: '嗯嗯，没有实体教材哈', time: '16 分钟前', initial: '丹', tone: 'warm', age: 'old', status: 'active', id: 'C-1011', account: '206-徐磊-助理-202411-至今' },
+  { name: '巧霞', preview: '❤️【第一课】规划！3-15岁英语进阶攻略…', time: '19 分钟前', initial: '巧', tone: 'purple', age: 'old', status: 'lost', id: 'C-1012', account: '135-徐佳莹-免费-202409-至今' },
+  { name: '亚静', preview: '您先忙', time: '23 分钟前', initial: '亚', tone: 'gray', age: 'old', status: 'active', id: 'C-1013', account: '11-蔡刘伟-助理-202012-202102' },
+  { name: '大森', preview: '家长，给您赠送的3天直播课还没预约哈', time: '26 分钟前', initial: '森', tone: 'blue', age: 'old', status: 'active', id: 'C-1014', account: '578-孙培杰-助理-202404-至今' },
+  { name: '海风吹来', preview: '宝贝家长，给您赠送的3天直播课会讲方法', time: '29 分钟前', initial: '海', tone: 'mint', age: 'old', status: 'lost', id: 'C-1015', account: '611-朱瑞祥-免费-202606-至今' },
 ];
 
 const groups = [
@@ -83,13 +83,6 @@ const groups = [
   { name: '单词拼读王体验群', preview: '感谢各位家长参与体验', time: '1 小时前', initial: '词', tone: 'purple', status: 'dissolved', id: 'G-2004' },
   { name: '暑期英语启蒙训练营', preview: '本期训练营已结束', time: '3 天前', initial: '营', tone: 'gray', status: 'dissolved', id: 'G-2005' },
 ];
-
-const contactAddedDates = {
-  'C-1001': '2026-10-21', 'C-1002': '2026-10-21', 'C-1003': '2026-10-21', 'C-1004': '2026-10-21',
-  'C-1005': '2026-10-21', 'C-1006': '2026-10-21', 'C-1007': '2026-10-20', 'C-1008': '2026-10-20',
-  'C-1009': '2026-10-19', 'C-1010': '2026-10-18', 'C-1011': '2026-10-17', 'C-1012': '2026-10-16',
-  'C-1013': '2026-10-15', 'C-1014': '2026-10-08', 'C-1015': '2026-09-30',
-};
 
 const customerTagGroups = [
   { id: 'trial-period', name: '体验课-用户标签', tags: ['140期', '139期', '138期', '137期', '136期', '135期', '134期', '133期'] },
@@ -184,40 +177,11 @@ const conversations = {
   ],
 };
 
-const customerEmployeeAssignments = {
-  'C-1001': ['WuBingBing01', 'YinLiJuan'],
-  'C-1002': ['WuBingBing01', 'LiaoZengZeng'],
-  'C-1003': ['YinLiJuan', 'ZhangNing'],
-};
-
-const customerDynamicEvents = [
-  { type: '打标签', time: '2026-10-29 16:03', platform: '微信自动同步', accountId: 'WuBingBing01', action: '打上企微标签【D3预约】' },
-  { type: '删除标签', time: '2026-10-29 15:48', platform: '企业微信', accountId: 'YinLiJuan', action: '删除企微标签【待跟进】' },
-  { type: '关注公众号', time: '2026-10-29 09:16', platform: '微信自动同步', action: '关注公众号【雪梨英语】' },
-  { type: '进入直播间', time: '2026-10-28 19:02', platform: '直播间', action: '进入【100篇阅读（新版）】直播间' },
-  { type: '成交记录', time: '2026-10-28 14:36', platform: 'APP', accountId: 'WuBingBing01', action: '完成订单成交，实付金额 ¥399' },
-  { type: '下单产品', time: '2026-10-28 14:30', platform: 'APP', action: '下单产品【单词拼读王年度课程】' },
-  { type: '点击预约', time: '2026-10-28 10:26', platform: 'APP', action: '点击三天家长直播课预约入口' },
-  { type: '加入群聊', time: '2026-10-27 11:20', platform: '微信自动同步', action: '加入群聊【四年级英语规划交流群】' },
-  { type: '退出群聊', time: '2026-10-26 20:14', platform: '微信自动同步', action: '退出群聊【自然拼读学习打卡群】' },
-  { type: '添加好友', time: '2026-10-21 18:06', platform: '企业微信', accountId: 'WuBingBing01', action: '添加为企微好友并建立单聊关系' },
-  { type: '客户流失', time: '2026-10-20 10:22', platform: '微信自动同步', accountId: 'YinLiJuan', action: '双向删除好友，客户状态变更为已流失' },
-];
-
-const customerDynamicTypeGroups = {
-  'tag-change': ['打标签', '删除标签'],
-  'friend-change': ['添加好友', '客户流失'],
-  'group-change': ['加入群聊', '退出群聊'],
-  'live-action': ['点击预约', '进入直播间'],
-  'official-account': ['关注公众号'],
-  transaction: ['下单产品', '成交记录'],
-};
-
 let contactKind = 'customer';
 let contactStatus = 'all';
+let customerAge = 'all';
 let selectedAccount = accounts[0];
 let selectedContact = customers[0];
-let selectedDynamicsEmployeeId = null;
 let selectedCustomerTags = new Set();
 let draftCustomerTags = new Set();
 let activeTagGroupId = customerTagGroups[0].id;
@@ -238,7 +202,6 @@ let customerPage = 1;
 const customerPageSize = 6;
 const MESSAGE_BATCH_SIZE = 50;
 const conversationHistoryCache = new Map();
-const conversationRanges = new Map();
 const conversationLoadState = { contactId: null, loadedCount: MESSAGE_BATCH_SIZE, isLoading: false, isAdjustingScroll: false, requestToken: 0 };
 let conversationJumpTarget = 'earliest';
 
@@ -247,11 +210,6 @@ const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({ '&'
 const toast = (message) => { const node = $('#toast'); node.textContent = message; node.classList.add('show'); window.clearTimeout(toast.timer); toast.timer = window.setTimeout(() => node.classList.remove('show'), 1800); };
 const formatLocalDate = (date) => [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-');
 const tagKey = (groupId, tag) => `${groupId}::${tag}`;
-const defaultConversationRange = () => ({ start: '2026-10-21', end: '2026-10-21' });
-
-function getConversationRange(contactId = selectedContact.id) {
-  return conversationRanges.get(contactId) || defaultConversationRange();
-}
 
 function getSelectedTagDetails(selection) {
   return customerTagGroups.flatMap((group) => group.tags
@@ -411,23 +369,27 @@ function getFilteredContacts() {
   const query = $('#customer-search').value.trim().toLowerCase();
   const source = contactKind === 'customer' ? customers : groups;
   return source.filter((item) => {
-    const matchesKindFilter = contactStatus === 'all' || item.status === contactStatus;
+    const matchesKindFilter = contactKind === 'customer'
+      ? (customerAge === 'all' || item.age === customerAge) && (contactStatus === 'all' || item.status === contactStatus)
+      : contactStatus === 'all' || item.status === contactStatus;
     const matchesTags = contactKind !== 'customer' || matchesSelectedCustomerTags(item);
-    const addedAt = contactAddedDates[item.id];
-    const additionStart = $('#start-date').value;
-    const additionEnd = $('#end-date').value;
-    const matchesAdditionRange = contactKind !== 'customer' || !addedAt || ((!additionStart || addedAt >= additionStart) && (!additionEnd || addedAt <= additionEnd));
-    return matchesKindFilter && matchesTags && matchesAdditionRange && `${item.name}${item.preview}${item.id}`.toLowerCase().includes(query);
+    return matchesKindFilter && matchesTags && `${item.name}${item.preview}${item.id}`.toLowerCase().includes(query);
   });
 }
 
 function renderContactControls() {
   const isCustomer = contactKind === 'customer';
+  $('#age-filter').classList.toggle('is-hidden', !isCustomer);
   $('#tag-filter').classList.toggle('is-hidden', !isCustomer);
   $('#contact-count').textContent = isCustomer ? '客户数：67' : '群聊数：12';
   $('#customer-search').placeholder = isCustomer ? '搜索客户名称或ID' : '搜索群聊名称或ID';
   document.querySelectorAll('.contact-kind-tab').forEach((button) => {
     const active = button.dataset.kind === contactKind;
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-selected', String(active));
+  });
+  document.querySelectorAll('.age-filter-button').forEach((button) => {
+    const active = button.dataset.age === customerAge;
     button.classList.toggle('active', active);
     button.setAttribute('aria-selected', String(active));
   });
@@ -447,7 +409,6 @@ function renderCustomers() {
     const statusText = contactKind === 'group' && item.status === 'dissolved' ? ' · 已解散' : '';
     return `<button class="customer-item ${item.id === selectedContact.id ? 'active' : ''}" data-contact="${escapeHtml(item.id)}">${avatarMarkup(item)}<span class="item-copy"><span class="item-title">${escapeHtml(item.name)}</span><span class="item-subtitle">${escapeHtml(item.preview)}${statusText} · ${escapeHtml(item.time)}</span></span><span class="item-star icon icon-star"></span></button>`;
   }).join('') || `<div class="empty-state">没有找到匹配${contactKind === 'customer' ? '客户' : '群聊'}</div>`;
-  $('#contact-count').textContent = `${contactKind === 'customer' ? '客户' : '群聊'}数：${result.length}`;
   $('#customer-page').textContent = `${customerPage} / ${pageTotal}`;
   $('#customer-prev').disabled = customerPage <= 1;
   $('#customer-next').disabled = customerPage >= pageTotal;
@@ -485,12 +446,12 @@ function buildConversationHistory() {
 }
 
 function updateEarliestTooltip() {
-  const start = getConversationRange().start || '所选时间范围';
+  const start = $('#start-date').value || '所选时间范围';
   const toEarliest = conversationJumpTarget === 'earliest';
   $('#conversation-jump-label').textContent = toEarliest ? '切换至最早消息' : '切换至最晚消息';
   $('#conversation-jump-icon').textContent = toEarliest ? '⇡' : '⇣';
   $('#earliest-tooltip').textContent = toEarliest
-    ? `最早消息为当前用户会话时间范围的最早时间（${start} 00:00）；加载完成后将自动向上滑动`
+    ? `最早消息为左上角所选时间范围的最早时间（${start} 00:00）；加载完成后将自动向上滑动`
     : '切换至当前已加载会话中的最晚消息';
   $('#jump-earliest-button').setAttribute('aria-label', toEarliest ? '切换至最早消息' : '切换至最晚消息');
 }
@@ -500,26 +461,6 @@ function renderConversation(options = {}) {
   avatarNode.className = `avatar avatar-large ${selectedContact.tone}`;
   avatarNode.textContent = selectedContact.initial;
   $('#conversation-title').textContent = selectedContact.name;
-  const conversationLossStatus = $('#conversation-loss-status');
-  conversationLossStatus.hidden = contactKind !== 'customer';
-  if (contactKind === 'customer') {
-    const isLost = selectedContact.status === 'lost';
-    conversationLossStatus.textContent = isLost ? '已流失' : '未流失';
-    conversationLossStatus.classList.toggle('is-active', !isLost);
-  }
-  const conversationRange = getConversationRange();
-  $('#conversation-range-start').value = conversationRange.start;
-  $('#conversation-range-end').value = conversationRange.end;
-  const activeQuickRange = conversationRange.start === '2026-10-21' && conversationRange.end === '2026-10-21'
-    ? 'today'
-    : conversationRange.start === '2026-10-20' && conversationRange.end === '2026-10-20'
-      ? 'yesterday'
-      : conversationRange.start === '2026-10-15' && conversationRange.end === '2026-10-21' ? 'week' : null;
-  document.querySelectorAll('.conversation-quick-filter').forEach((button) => {
-    const active = button.dataset.conversationRange === activeQuickRange;
-    button.classList.toggle('active', active);
-    button.setAttribute('aria-selected', String(active));
-  });
   const search = $('#message-search').value.trim().toLowerCase();
   const source = buildConversationHistory();
   const isNewConversation = conversationLoadState.contactId !== selectedContact.id;
@@ -544,10 +485,6 @@ function renderConversation(options = {}) {
   $('#message-page-label').textContent = search ? `${loadedLabel} · 缓存内匹配 ${result.length} 条` : `${loadedLabel}${hasEarlier ? ' · 上滑加载更早消息' : ' · 已加载至最早消息'}`;
   $('#message-count').textContent = `${loadedLabel}${hasEarlier ? '，上滑加载更早消息' : '，已到最早消息'}`;
   $('#jump-earliest-button').disabled = conversationLoadState.isLoading;
-  const dynamicsButton = $('#open-customer-dynamics');
-  dynamicsButton.hidden = contactKind !== 'customer';
-  if (contactKind !== 'customer' && !$('#customer-dynamics-drawer').hidden) closeCustomerDynamics();
-  else if (!$('#customer-dynamics-drawer').hidden) renderCustomerDynamics();
   updateEarliestTooltip();
   window.requestAnimationFrame(() => {
     if (options.preserveViewport) {
@@ -618,34 +555,6 @@ function selectContact(id) {
   renderConversation();
 }
 
-function applyConversationQuickRange(rangeName) {
-  const today = new Date('2026-10-21T00:00:00');
-  const start = new Date(today);
-  const end = new Date(today);
-  if (rangeName === 'yesterday') {
-    start.setDate(start.getDate() - 1);
-    end.setDate(end.getDate() - 1);
-  }
-  if (rangeName === 'week') start.setDate(start.getDate() - 6);
-  $('#conversation-range-start').value = formatLocalDate(start);
-  $('#conversation-range-end').value = formatLocalDate(end);
-  saveConversationRange();
-}
-
-function saveConversationRange() {
-  const start = $('#conversation-range-start').value;
-  const end = $('#conversation-range-end').value;
-  if (!start || !end) { toast('请选择完整的会话时间范围'); return; }
-  if (start > end) { toast('会话开始日期不能晚于结束日期'); return; }
-  const contactId = selectedContact.id;
-  conversationRanges.set(contactId, { start, end });
-  conversationHistoryCache.delete(contactId);
-  conversationLoadState.contactId = null;
-  conversationLoadState.requestToken += 1;
-  renderConversation();
-  toast(`已更新会话时间范围：${start} 至 ${end}`);
-}
-
 function refreshContactView() {
   renderContactControls();
   renderCustomers();
@@ -657,113 +566,6 @@ function getCustomerTagLabels(customer) {
     const separator = key.indexOf('::');
     return { key, tag: key.slice(separator + 2) };
   });
-}
-
-function toggleWorkspacePanel(kind) {
-  const isAccount = kind === 'account';
-  const workspace = $('#conversation-workspace');
-  const panel = isAccount ? $('#account-panel') : $('#customer-panel');
-  const button = isAccount ? $('#toggle-account-panel') : $('#toggle-customer-panel');
-  const className = isAccount ? 'account-collapsed' : 'contact-collapsed';
-  const panelName = isAccount ? '销售企微账号' : '外部联系人';
-  const collapsed = !workspace.classList.contains(className);
-  workspace.classList.toggle(className, collapsed);
-  panel.classList.toggle('is-collapsed', collapsed);
-  button.setAttribute('aria-expanded', String(!collapsed));
-  button.setAttribute('aria-label', `${collapsed ? '展开' : '收起'}${panelName}`);
-  button.title = `${collapsed ? '展开' : '收起'}${panelName}`;
-  if (isAccount && !$('#sales-org-popover').hidden) closeSalesOrgPopover();
-  toast(`${panelName}已${collapsed ? '收起' : '展开'}`);
-}
-
-function renderCustomerDynamics() {
-  if (contactKind !== 'customer') return;
-  const dynamicsEmployees = getDynamicsEmployees(selectedContact);
-  if (!dynamicsEmployees.some((account) => account.id === selectedDynamicsEmployeeId)) selectedDynamicsEmployeeId = dynamicsEmployees[0]?.id || null;
-  const selectedDynamicsEmployee = dynamicsEmployees.find((account) => account.id === selectedDynamicsEmployeeId) || dynamicsEmployees[0];
-  const avatar = $('#dynamics-customer-avatar');
-  avatar.className = `avatar dynamics-customer-avatar ${selectedContact.tone}`;
-  avatar.textContent = selectedContact.initial;
-  $('#dynamics-customer-name').textContent = selectedContact.name;
-  $('#dynamics-wechat-name').textContent = selectedContact.name;
-  const dynamicsLossStatus = $('#dynamics-loss-status');
-  const isLost = selectedContact.status === 'lost';
-  dynamicsLossStatus.textContent = isLost ? '已流失' : '未流失';
-  dynamicsLossStatus.classList.toggle('is-active', !isLost);
-  $('#dynamics-customer-source').textContent = Number(selectedContact.id.slice(-1)) % 2 ? '扫码添加' : '员工主动添加';
-  $('#dynamics-added-at').textContent = `${contactAddedDates[selectedContact.id] || '2026-10-21'} 18:06`;
-  $('#dynamics-employee-count').textContent = dynamicsEmployees.length;
-  $('#dynamics-employee-options').innerHTML = dynamicsEmployees.map((account) => {
-    const selected = account.id === selectedDynamicsEmployeeId;
-    return `<button class="dynamics-employee-row${selected ? ' is-selected' : ''}" type="button" role="radio" aria-checked="${selected}" data-dynamics-employee-id="${escapeHtml(account.id)}"><span class="dynamics-employee-avatar">${escapeHtml(account.initial)}</span><span>${escapeHtml(account.name)}</span></button>`;
-  }).join('');
-  const tags = getDynamicsEmployeeTags(selectedContact, selectedDynamicsEmployee).slice(0, 5);
-  $('#dynamics-tag-list').innerHTML = tags.length
-    ? tags.map((tag) => `<span class="dynamics-tag">${escapeHtml(tag.tag)}</span>`).join('')
-    : '<span class="dynamics-tag empty">暂无标签</span>';
-  const platform = $('#dynamics-platform-filter').value;
-  const type = $('#dynamics-type-filter').value;
-  const selectedTypes = customerDynamicTypeGroups[type] || [];
-  const result = customerDynamicEvents.filter((item) => (platform === 'all' || item.platform === platform) && (type === 'all' || selectedTypes.includes(item.type)));
-  $('#dynamics-record-count').textContent = `共 ${result.length} 条`;
-  $('#dynamics-timeline').innerHTML = result.length
-    ? result.map((item) => `<article class="dynamics-event"><div class="dynamics-event-head"><strong>${escapeHtml(item.type)}</strong><time>${escapeHtml(item.time)}</time></div><div class="dynamics-event-card">${escapeHtml(formatCustomerDynamicSentence(item))}<br><span class="dynamics-event-platform">${escapeHtml(item.platform)}</span></div></article>`).join('')
-    : '<div class="dynamics-empty">当前筛选条件下暂无客户动态</div>';
-}
-
-function getDynamicsEmployees(customer) {
-  const assignedIds = customerEmployeeAssignments[customer.id] || [selectedAccount.id, accounts.find((account) => account.id !== selectedAccount.id)?.id];
-  return [...new Set(assignedIds)].map((id) => accounts.find((account) => account.id === id)).filter(Boolean);
-}
-
-function getDynamicsEmployeeTags(customer, employee) {
-  if (!employee) return [];
-  const employees = getDynamicsEmployees(customer);
-  const employeeIndex = Math.max(0, employees.findIndex((account) => account.id === employee.id));
-  const allTags = getCustomerTagLabels(customer);
-  const employeeTags = allTags.filter((tag, index) => index % employees.length === employeeIndex);
-  return employeeTags.length ? employeeTags : allTags.slice(employeeIndex, employeeIndex + 1);
-}
-
-function formatCustomerDynamicSentence(item) {
-  if (item.accountId) {
-    const employee = accounts.find((account) => account.id === item.accountId) || selectedAccount;
-    return `${employee.name} 对客户 ${selectedContact.name} ${item.action}`;
-  }
-  return `客户 ${selectedContact.name} ${item.action}`;
-}
-
-function openCustomerDynamics() {
-  if (contactKind !== 'customer') return;
-  renderCustomerDynamics();
-  const drawer = $('#customer-dynamics-drawer');
-  const backdrop = $('#customer-dynamics-backdrop');
-  window.clearTimeout(closeCustomerDynamics.timer);
-  drawer.hidden = false;
-  backdrop.hidden = true;
-  drawer.closest('.conversation-panel').classList.add('dynamics-open');
-  $('#open-customer-dynamics').classList.add('is-open');
-  $('#open-customer-dynamics').setAttribute('aria-expanded', 'true');
-  window.requestAnimationFrame(() => {
-    drawer.classList.add('is-open');
-    $('#close-customer-dynamics').focus();
-  });
-}
-
-function closeCustomerDynamics() {
-  const drawer = $('#customer-dynamics-drawer');
-  const backdrop = $('#customer-dynamics-backdrop');
-  drawer.classList.remove('is-open');
-  drawer.closest('.conversation-panel').classList.remove('dynamics-open');
-  $('#open-customer-dynamics').classList.remove('is-open');
-  $('#open-customer-dynamics').setAttribute('aria-expanded', 'false');
-  window.clearTimeout(closeCustomerDynamics.timer);
-  closeCustomerDynamics.timer = window.setTimeout(() => {
-    if (!drawer.classList.contains('is-open')) {
-      drawer.hidden = true;
-      backdrop.hidden = true;
-    }
-  }, 360);
 }
 
 function getAllCustomerExportFields() {
@@ -836,9 +638,8 @@ function renderCustomerFieldTree() {
 function openCustomerInfoExportDialog() {
   draftCustomerExportFields = new Set(selectedCustomerExportFields);
   $('#customer-info-export-employee').innerHTML = accounts.map((account) => `<option value="${escapeHtml(account.id)}" ${account.id === selectedAccount.id ? 'selected' : ''}>${escapeHtml(account.name)}（${escapeHtml(account.id)}）</option>`).join('');
-  const conversationRange = getConversationRange();
-  $('#customer-info-export-start-date').value = conversationRange.start;
-  $('#customer-info-export-end-date').value = conversationRange.end;
+  $('#customer-info-export-start-date').value = $('#start-date').value;
+  $('#customer-info-export-end-date').value = $('#end-date').value;
   document.querySelector('input[name="customer-info-export-scope"][value="all"]').checked = true;
   customerInfoExportSelectedCustomerIds = new Set();
   exportCustomerFilterTags = new Set();
@@ -883,9 +684,8 @@ function updateCustomerInfoExportScopeDisplay() {
 
 function openExportDialog() {
   $('#export-employee').innerHTML = accounts.map((account) => `<option value="${escapeHtml(account.id)}" ${account.id === selectedAccount.id ? 'selected' : ''}>${escapeHtml(account.name)}（${escapeHtml(account.id)}）</option>`).join('');
-  const conversationRange = getConversationRange();
-  $('#export-start-date').value = conversationRange.start;
-  $('#export-end-date').value = conversationRange.end;
+  $('#export-start-date').value = $('#start-date').value;
+  $('#export-end-date').value = $('#end-date').value;
   document.querySelector('input[name="export-format"][value="single"]').checked = true;
   document.querySelector('input[name="export-scope"][value="all"]').checked = true;
   exportSelectedCustomerIds = new Set();
@@ -1042,14 +842,6 @@ document.addEventListener('click', (event) => {
     if (willOpen) renderSalesOrgSelector();
     popover.hidden = !willOpen;
     $('#sales-org-trigger').setAttribute('aria-expanded', String(willOpen));
-    return;
-  }
-  if (event.target.closest('#toggle-account-panel')) {
-    toggleWorkspacePanel('account');
-    return;
-  }
-  if (event.target.closest('#toggle-customer-panel')) {
-    toggleWorkspacePanel('customer');
     return;
   }
   const salesOrgToggle = event.target.closest('[data-sales-org-toggle]');
@@ -1275,34 +1067,40 @@ document.addEventListener('click', (event) => {
     rangeButton.classList.add('active');
     const today = new Date('2026-10-21T00:00:00');
     const start = new Date(today);
-    const end = new Date(today);
-    if (rangeButton.dataset.range === 'yesterday') {
-      start.setDate(start.getDate() - 1);
-      end.setDate(end.getDate() - 1);
-    }
+    if (rangeButton.dataset.range === 'yesterday') start.setDate(start.getDate() - 1);
     if (rangeButton.dataset.range === 'week') start.setDate(start.getDate() - 6);
     $('#start-date').value = formatLocalDate(start);
-    $('#end-date').value = formatLocalDate(end);
-    customerPage = 1;
-    renderCustomers();
+    $('#end-date').value = formatLocalDate(today);
+    conversationLoadState.contactId = null;
+    conversationLoadState.requestToken += 1;
     renderConversation();
-    toast(`用户添加时间已切换至${rangeButton.textContent}`);
-    return;
-  }
-  const conversationQuickRange = event.target.closest('[data-conversation-range]');
-  if (conversationQuickRange) {
-    applyConversationQuickRange(conversationQuickRange.dataset.conversationRange);
+    toast(`已切换至${rangeButton.textContent}`);
     return;
   }
   const contactKindButton = event.target.closest('.contact-kind-tab');
   if (contactKindButton) {
     contactKind = contactKindButton.dataset.kind;
     contactStatus = 'all';
+    if (contactKind === 'customer') customerAge = 'all';
     customerPage = 1;
     $('#customer-search').value = '';
     selectedContact = (contactKind === 'customer' ? customers : groups)[0];
     refreshContactView();
     toast(`已切换至${contactKind === 'customer' ? '客户' : '群聊'}`);
+    return;
+  }
+  const ageFilterButton = event.target.closest('.age-filter-button');
+  if (ageFilterButton) {
+    customerAge = ageFilterButton.dataset.age;
+    customerPage = 1;
+    document.querySelectorAll('.age-filter-button').forEach((button) => {
+      const active = button === ageFilterButton;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-selected', String(active));
+    });
+    renderCustomers();
+    renderConversation();
+    toast(`已筛选${ageFilterButton.textContent}`);
     return;
   }
   const statusFilterButton = event.target.closest('.contact-status-filter');
@@ -1334,20 +1132,6 @@ document.addEventListener('click', (event) => {
     toggleConversationBoundary();
     return;
   }
-  const dynamicsEmployeeButton = event.target.closest('[data-dynamics-employee-id]');
-  if (dynamicsEmployeeButton) {
-    selectedDynamicsEmployeeId = dynamicsEmployeeButton.dataset.dynamicsEmployeeId;
-    renderCustomerDynamics();
-    return;
-  }
-  if (event.target.closest('#open-customer-dynamics')) {
-    if ($('#customer-dynamics-drawer').hidden) openCustomerDynamics(); else closeCustomerDynamics();
-    return;
-  }
-  if (event.target.closest('#close-customer-dynamics') || event.target === $('#customer-dynamics-backdrop')) {
-    closeCustomerDynamics();
-    return;
-  }
   if (event.target.closest('#favorite-button')) {
     const button = $('#favorite-button');
     button.classList.toggle('is-favorite');
@@ -1359,18 +1143,14 @@ document.addEventListener('click', (event) => {
 $('#account-search').addEventListener('input', renderAccounts);
 $('#customer-search').addEventListener('input', () => { customerPage = 1; renderCustomers(); renderConversation(); });
 $('#message-search').addEventListener('input', renderConversation);
-$('#dynamics-platform-filter').addEventListener('change', renderCustomerDynamics);
-$('#dynamics-type-filter').addEventListener('change', renderCustomerDynamics);
 $('#messages').addEventListener('scroll', () => {
   if (!conversationLoadState.isAdjustingScroll && $('#messages').scrollTop <= 12) loadOlderMessages(false);
 });
 ['start-date', 'end-date'].forEach((id) => $(`#${id}`).addEventListener('change', () => {
-  document.querySelectorAll('.quick-filter').forEach((button) => button.classList.remove('active'));
-  customerPage = 1;
-  renderCustomers();
+  conversationLoadState.contactId = null;
+  conversationLoadState.requestToken += 1;
   renderConversation();
 }));
-['conversation-range-start', 'conversation-range-end'].forEach((id) => $(`#${id}`).addEventListener('change', saveConversationRange));
 $('#tag-group-search').addEventListener('input', renderTagGroups);
 $('#tag-name-search').addEventListener('input', renderTagOptions);
 $('#export-customer-search').addEventListener('input', renderExportCustomerList);
@@ -1421,8 +1201,7 @@ document.addEventListener('change', (event) => {
 });
 document.addEventListener('keydown', (event) => {
   if (event.key !== 'Escape') return;
-  if (!$('#customer-dynamics-drawer').hidden) closeCustomerDynamics();
-  else if (!$('#export-tag-filter-overlay').hidden) closeExportTagDialog(false);
+  if (!$('#export-tag-filter-overlay').hidden) closeExportTagDialog(false);
   else if (!$('#customer-selector-overlay').hidden) closeCustomerSelector(false);
   else if (!$('#customer-info-export-overlay').hidden) closeCustomerInfoExportDialog(false);
   else if (!$('#export-overlay').hidden) closeExportDialog();
