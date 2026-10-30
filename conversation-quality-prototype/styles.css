@@ -55,23 +55,16 @@ button:disabled { cursor: default; }
 
 .filter-bar { height: 58px; display: flex; align-items: center; gap: 10px; padding: 9px 14px; margin-bottom: 14px; border: 1px solid var(--line); border-radius: 6px; background: #fff; box-shadow: var(--shadow); }
 .quick-filters { display: flex; align-items: center; padding: 2px; border: 1px solid #e7ebf0; border-radius: 5px; background: #f7f8fa; }
-.quick-filter { min-width: 54px; height: 30px; border-radius: 4px; font-size: 13px; color: #697486; }
-.quick-filter.active { color: var(--primary); background: #fff; box-shadow: 0 1px 4px rgba(53, 92, 128, .1); }
+.quick-filter, .conversation-quick-filter { min-width: 54px; height: 30px; border-radius: 4px; font-size: 13px; color: #697486; }
+.quick-filter.active, .conversation-quick-filter.active { color: var(--primary); background: #fff; box-shadow: 0 1px 4px rgba(53, 92, 128, .1); }
 .date-input { display: flex; align-items: center; gap: 7px; height: 32px; padding: 0 9px; border: 1px solid #e3e8ef; border-radius: 4px; background: #fff; color: #707b8a; }
 .date-input input { width: 104px; border: 0; outline: 0; color: #5e6978; background: transparent; font-size: 13px; }
 .date-input:first-of-type { margin-left: 1px; }
 .date-separator { margin: 0 -2px; color: #a0aaba; font-size: 13px; }
+.filter-range-label { flex: 0 0 auto; color: #657386; font-size: 12px; font-weight: 600; white-space: nowrap; }
 .refresh-button { display: inline-flex; align-items: center; gap: 7px; height: 32px; padding: 0 12px; border: 1px solid #dfe5eb; border-radius: 5px; color: #687486; font-size: 13px; }
 .refresh-button:hover { color: var(--primary); border-color: #b9d8ff; background: #f5faff; }
-.age-filter { display: flex; align-items: center; gap: 9px; min-width: 0; }
-.age-filter.is-hidden { display: none; }
-.age-filter-label { color: #728094; font-size: 12px; white-space: nowrap; }
-.age-filter-buttons { display: inline-flex; align-items: center; padding: 2px; border: 1px solid #e1e6ee; border-radius: 5px; background: #f7f8fa; }
-.age-filter-button { position: relative; min-width: 52px; height: 26px; border-radius: 3px; color: #728094; font-size: 12px; }
-.age-filter-button.active { color: var(--primary); background: #fff; box-shadow: 0 1px 4px rgba(53, 92, 128, .12); }
-.age-button-tooltip { position: absolute; left: 50%; bottom: calc(100% + 10px); z-index: 10; width: max-content; max-width: 250px; padding: 7px 10px; border-radius: 5px; color: #fff; background: rgba(38, 48, 64, .94); font-size: 11px; font-weight: 400; line-height: 1.5; white-space: normal; opacity: 0; pointer-events: none; transform: translate(-50%, 4px); transition: opacity .15s, transform .15s; box-shadow: 0 4px 12px rgba(31, 42, 61, .18); }
-.age-button-tooltip::after { content: ""; position: absolute; left: 50%; top: 100%; border: 5px solid transparent; border-top-color: rgba(38, 48, 64, .94); transform: translateX(-50%); }
-.age-filter-button:hover .age-button-tooltip, .age-filter-button:focus .age-button-tooltip { opacity: 1; transform: translate(-50%, 0); }
+.filter-refresh-button { flex: 0 0 auto; margin-left: auto; }
 .tag-filter { display: flex; align-items: center; gap: 7px; min-width: 0; }
 .tag-filter.is-hidden { display: none; }
 .tag-filter-label { flex: 0 0 auto; color: #728094; font-size: 12px; white-space: nowrap; }
@@ -158,6 +151,11 @@ button:disabled { cursor: default; }
 .conversation-header { display: flex; align-items: center; justify-content: space-between; min-height: 76px; padding: 14px 17px 10px; }
 .conversation-identity { display: flex; align-items: center; gap: 11px; min-width: 0; }
 .conversation-identity h2 { overflow: hidden; margin: 0; white-space: nowrap; text-overflow: ellipsis; }
+.conversation-inline-range { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.conversation-range-label { flex: 0 0 auto; color: #657386; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.conversation-inline-range .quick-filters { flex: 0 0 auto; }
+.conversation-inline-range .date-input { flex: 0 0 auto; }
+.conversation-inline-range .conversation-date-input input { width: 100px; }
 .conversation-actions { display: flex; align-items: center; gap: 8px; }
 .conversation-export-actions { display: flex; align-items: center; gap: 6px; min-width: 0; }
 .conversation-export-actions[hidden] { display: none; }
@@ -402,6 +400,13 @@ button:disabled { cursor: default; }
 .icon-search::after { right: 2px; bottom: 3px; width: 6px; height: 1.6px; border-radius: 2px; background: currentColor; transform: rotate(45deg); transform-origin: right center; }
 .icon-star::before { left: 2px; top: 2px; width: 13px; height: 13px; border: 1.5px solid currentColor; clip-path: polygon(50% 0, 62% 35%, 100% 35%, 70% 57%, 82% 100%, 50% 74%, 18% 100%, 30% 57%, 0 35%, 38% 35%); background: currentColor; }
 .icon-chevron-left::before { left: 6px; top: 4px; width: 8px; height: 8px; border-left: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); }
+
+@media (max-width: 1500px) {
+  .conversation-header { position: relative; min-height: 112px; align-items: flex-start; }
+  .conversation-identity { width: 100%; flex-wrap: wrap; padding-right: 210px; }
+  .conversation-inline-range { flex-basis: 100%; margin: 8px 0 0 47px; }
+  .conversation-actions { position: absolute; top: 14px; right: 17px; }
+}
 
 @media (max-width: 1120px) {
   body { min-width: 820px; }

@@ -59,22 +59,30 @@ const accountOrgAssignments = {
 };
 
 const customers = [
-  { name: '墨言（邮政）', preview: '四年级这个阶段挺关键的', time: '刚刚', initial: '墨', tone: 'warm', age: 'new', status: 'active', id: 'C-1001', account: '361-杜亚敏-免费-202505-至今' },
-  { name: '🍜泡面公主👸🏻', preview: '都不太会，会认识字母吧', time: '刚刚', initial: '泡', tone: 'purple', age: 'new', status: 'active', id: 'C-1002', account: '361-杜亚敏-免费-202505-至今' },
-  { name: '巩伟', preview: '有事随时喊我', time: '1 分钟前', initial: '巩', tone: 'gray', age: 'new', status: 'active', id: 'C-1003', account: '19-殷丽娟-助理-202303-202305' },
-  { name: '真', preview: '宝贝家长，给您赠送的3天直播课', time: '3 分钟前', initial: '真', tone: 'blue', age: 'new', status: 'active', id: 'C-1004', account: '194-朱春花-助理-202411-至今' },
-  { name: '恭喜恭喜', preview: '看完还找不到，您截个图给我', time: '5 分钟前', initial: '恭', tone: 'mint', age: 'new', status: 'active', id: 'C-1005', account: '176-张宁-免费-202410-至今' },
-  { name: '袁兆腾', preview: '找到订单自行处理', time: '7 分钟前', initial: '袁', tone: 'gray', age: 'new', status: 'lost', id: 'C-1006', account: '496-叶清林-免费-202507-至今' },
-  { name: 'baby', preview: '接下来的学习规划和雪梨老师的直播', time: '8 分钟前', initial: 'B', tone: 'warm', age: 'old', status: 'active', id: 'C-1007', account: '577-凌嘉敏-免费-202601-至今' },
-  { name: '🎀⃟何在王心ꦿ᭄᪲💞࿐', preview: '❤️【第一课】规划！3-15岁英语进阶攻略…', time: '12 分钟前', initial: '何', tone: 'purple', age: 'old', status: 'lost', id: 'C-1008', account: '495-胡仁龙-免费-202507-至今' },
-  { name: 'HLY', preview: '会生成计划', time: '12 分钟前', initial: 'H', tone: 'mint', age: 'old', status: 'active', id: 'C-1009', account: '79-廖增增-助理-202404-至今' },
-  { name: '崔の林栀鹿', preview: '👌', time: '15 分钟前', initial: '崔', tone: 'blue', age: 'old', status: 'active', id: 'C-1010', account: '576-李春雨-免费-202601-至今' },
-  { name: '丹', preview: '嗯嗯，没有实体教材哈', time: '16 分钟前', initial: '丹', tone: 'warm', age: 'old', status: 'active', id: 'C-1011', account: '206-徐磊-助理-202411-至今' },
-  { name: '巧霞', preview: '❤️【第一课】规划！3-15岁英语进阶攻略…', time: '19 分钟前', initial: '巧', tone: 'purple', age: 'old', status: 'lost', id: 'C-1012', account: '135-徐佳莹-免费-202409-至今' },
-  { name: '亚静', preview: '您先忙', time: '23 分钟前', initial: '亚', tone: 'gray', age: 'old', status: 'active', id: 'C-1013', account: '11-蔡刘伟-助理-202012-202102' },
-  { name: '大森', preview: '家长，给您赠送的3天直播课还没预约哈', time: '26 分钟前', initial: '森', tone: 'blue', age: 'old', status: 'active', id: 'C-1014', account: '578-孙培杰-助理-202404-至今' },
-  { name: '海风吹来', preview: '宝贝家长，给您赠送的3天直播课会讲方法', time: '29 分钟前', initial: '海', tone: 'mint', age: 'old', status: 'lost', id: 'C-1015', account: '611-朱瑞祥-免费-202606-至今' },
+  { name: '墨言（邮政）', preview: '四年级这个阶段挺关键的', time: '刚刚', initial: '墨', tone: 'warm', status: 'active', id: 'C-1001', account: '361-杜亚敏-免费-202505-至今' },
+  { name: '🍜泡面公主👸🏻', preview: '都不太会，会认识字母吧', time: '刚刚', initial: '泡', tone: 'purple', status: 'active', id: 'C-1002', account: '361-杜亚敏-免费-202505-至今' },
+  { name: '巩伟', preview: '有事随时喊我', time: '1 分钟前', initial: '巩', tone: 'gray', status: 'active', id: 'C-1003', account: '19-殷丽娟-助理-202303-202305' },
+  { name: '真', preview: '宝贝家长，给您赠送的3天直播课', time: '3 分钟前', initial: '真', tone: 'blue', status: 'active', id: 'C-1004', account: '194-朱春花-助理-202411-至今' },
+  { name: '恭喜恭喜', preview: '看完还找不到，您截个图给我', time: '5 分钟前', initial: '恭', tone: 'mint', status: 'active', id: 'C-1005', account: '176-张宁-免费-202410-至今' },
+  { name: '袁兆腾', preview: '找到订单自行处理', time: '7 分钟前', initial: '袁', tone: 'gray', status: 'lost', id: 'C-1006', account: '496-叶清林-免费-202507-至今' },
+  { name: 'baby', preview: '接下来的学习规划和雪梨老师的直播', time: '8 分钟前', initial: 'B', tone: 'warm', status: 'active', id: 'C-1007', account: '577-凌嘉敏-免费-202601-至今' },
+  { name: '🎀⃟何在王心ꦿ᭄᪲💞࿐', preview: '❤️【第一课】规划！3-15岁英语进阶攻略…', time: '12 分钟前', initial: '何', tone: 'purple', status: 'lost', id: 'C-1008', account: '495-胡仁龙-免费-202507-至今' },
+  { name: 'HLY', preview: '会生成计划', time: '12 分钟前', initial: 'H', tone: 'mint', status: 'active', id: 'C-1009', account: '79-廖增增-助理-202404-至今' },
+  { name: '崔の林栀鹿', preview: '👌', time: '15 分钟前', initial: '崔', tone: 'blue', status: 'active', id: 'C-1010', account: '576-李春雨-免费-202601-至今' },
+  { name: '丹', preview: '嗯嗯，没有实体教材哈', time: '16 分钟前', initial: '丹', tone: 'warm', status: 'active', id: 'C-1011', account: '206-徐磊-助理-202411-至今' },
+  { name: '巧霞', preview: '❤️【第一课】规划！3-15岁英语进阶攻略…', time: '19 分钟前', initial: '巧', tone: 'purple', status: 'lost', id: 'C-1012', account: '135-徐佳莹-免费-202409-至今' },
+  { name: '亚静', preview: '您先忙', time: '23 分钟前', initial: '亚', tone: 'gray', status: 'active', id: 'C-1013', account: '11-蔡刘伟-助理-202012-202102' },
+  { name: '大森', preview: '家长，给您赠送的3天直播课还没预约哈', time: '26 分钟前', initial: '森', tone: 'blue', status: 'active', id: 'C-1014', account: '578-孙培杰-助理-202404-至今' },
+  { name: '海风吹来', preview: '宝贝家长，给您赠送的3天直播课会讲方法', time: '29 分钟前', initial: '海', tone: 'mint', status: 'lost', id: 'C-1015', account: '611-朱瑞祥-免费-202606-至今' },
 ];
+
+const contactAddedDates = {
+  'C-1001': '2026-10-21', 'C-1002': '2026-10-21', 'C-1003': '2026-10-21',
+  'C-1004': '2026-10-21', 'C-1005': '2026-10-21', 'C-1006': '2026-10-21',
+  'C-1007': '2026-10-20', 'C-1008': '2026-10-20', 'C-1009': '2026-10-19',
+  'C-1010': '2026-10-18', 'C-1011': '2026-10-18', 'C-1012': '2026-10-17',
+  'C-1013': '2026-10-16', 'C-1014': '2026-10-15', 'C-1015': '2026-10-15',
+};
 
 const groups = [
   { name: '四年级英语规划交流群', preview: '今晚直播课记得提前 10 分钟进入', time: '刚刚', initial: '群', tone: 'blue', status: 'active', id: 'G-2001' },
@@ -179,7 +187,6 @@ const conversations = {
 
 let contactKind = 'customer';
 let contactStatus = 'all';
-let customerAge = 'all';
 let selectedAccount = accounts[0];
 let selectedContact = customers[0];
 let selectedCustomerTags = new Set();
@@ -202,6 +209,7 @@ let customerPage = 1;
 const customerPageSize = 6;
 const MESSAGE_BATCH_SIZE = 50;
 const conversationHistoryCache = new Map();
+const conversationRanges = new Map();
 const conversationLoadState = { contactId: null, loadedCount: MESSAGE_BATCH_SIZE, isLoading: false, isAdjustingScroll: false, requestToken: 0 };
 let conversationJumpTarget = 'earliest';
 
@@ -210,6 +218,11 @@ const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({ '&'
 const toast = (message) => { const node = $('#toast'); node.textContent = message; node.classList.add('show'); window.clearTimeout(toast.timer); toast.timer = window.setTimeout(() => node.classList.remove('show'), 1800); };
 const formatLocalDate = (date) => [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-');
 const tagKey = (groupId, tag) => `${groupId}::${tag}`;
+const defaultConversationRange = () => ({ start: '2026-10-21', end: '2026-10-21' });
+
+function getConversationRange(contactId = selectedContact.id) {
+  return conversationRanges.get(contactId) || defaultConversationRange();
+}
 
 function getSelectedTagDetails(selection) {
   return customerTagGroups.flatMap((group) => group.tags
@@ -369,27 +382,22 @@ function getFilteredContacts() {
   const query = $('#customer-search').value.trim().toLowerCase();
   const source = contactKind === 'customer' ? customers : groups;
   return source.filter((item) => {
-    const matchesKindFilter = contactKind === 'customer'
-      ? (customerAge === 'all' || item.age === customerAge) && (contactStatus === 'all' || item.status === contactStatus)
-      : contactStatus === 'all' || item.status === contactStatus;
+    const matchesKindFilter = contactStatus === 'all' || item.status === contactStatus;
     const matchesTags = contactKind !== 'customer' || matchesSelectedCustomerTags(item);
-    return matchesKindFilter && matchesTags && `${item.name}${item.preview}${item.id}`.toLowerCase().includes(query);
+    const addedAt = contactAddedDates[item.id];
+    const additionStart = $('#start-date').value;
+    const additionEnd = $('#end-date').value;
+    const matchesAdditionRange = contactKind !== 'customer' || !addedAt || ((!additionStart || addedAt >= additionStart) && (!additionEnd || addedAt <= additionEnd));
+    return matchesKindFilter && matchesTags && matchesAdditionRange && `${item.name}${item.preview}${item.id}`.toLowerCase().includes(query);
   });
 }
 
 function renderContactControls() {
   const isCustomer = contactKind === 'customer';
-  $('#age-filter').classList.toggle('is-hidden', !isCustomer);
   $('#tag-filter').classList.toggle('is-hidden', !isCustomer);
-  $('#contact-count').textContent = isCustomer ? '客户数：67' : '群聊数：12';
   $('#customer-search').placeholder = isCustomer ? '搜索客户名称或ID' : '搜索群聊名称或ID';
   document.querySelectorAll('.contact-kind-tab').forEach((button) => {
     const active = button.dataset.kind === contactKind;
-    button.classList.toggle('active', active);
-    button.setAttribute('aria-selected', String(active));
-  });
-  document.querySelectorAll('.age-filter-button').forEach((button) => {
-    const active = button.dataset.age === customerAge;
     button.classList.toggle('active', active);
     button.setAttribute('aria-selected', String(active));
   });
@@ -409,6 +417,7 @@ function renderCustomers() {
     const statusText = contactKind === 'group' && item.status === 'dissolved' ? ' · 已解散' : '';
     return `<button class="customer-item ${item.id === selectedContact.id ? 'active' : ''}" data-contact="${escapeHtml(item.id)}">${avatarMarkup(item)}<span class="item-copy"><span class="item-title">${escapeHtml(item.name)}</span><span class="item-subtitle">${escapeHtml(item.preview)}${statusText} · ${escapeHtml(item.time)}</span></span><span class="item-star icon icon-star"></span></button>`;
   }).join('') || `<div class="empty-state">没有找到匹配${contactKind === 'customer' ? '客户' : '群聊'}</div>`;
+  $('#contact-count').textContent = `${contactKind === 'customer' ? '客户' : '群聊'}数：${result.length}`;
   $('#customer-page').textContent = `${customerPage} / ${pageTotal}`;
   $('#customer-prev').disabled = customerPage <= 1;
   $('#customer-next').disabled = customerPage >= pageTotal;
@@ -446,12 +455,12 @@ function buildConversationHistory() {
 }
 
 function updateEarliestTooltip() {
-  const start = $('#start-date').value || '所选时间范围';
+  const start = getConversationRange().start || '所选时间范围';
   const toEarliest = conversationJumpTarget === 'earliest';
   $('#conversation-jump-label').textContent = toEarliest ? '切换至最早消息' : '切换至最晚消息';
   $('#conversation-jump-icon').textContent = toEarliest ? '⇡' : '⇣';
   $('#earliest-tooltip').textContent = toEarliest
-    ? `最早消息为左上角所选时间范围的最早时间（${start} 00:00）；加载完成后将自动向上滑动`
+    ? `最早消息为当前客户会话聊天时间范围的最早时间（${start} 00:00）；加载完成后将自动向上滑动`
     : '切换至当前已加载会话中的最晚消息';
   $('#jump-earliest-button').setAttribute('aria-label', toEarliest ? '切换至最早消息' : '切换至最晚消息');
 }
@@ -461,6 +470,19 @@ function renderConversation(options = {}) {
   avatarNode.className = `avatar avatar-large ${selectedContact.tone}`;
   avatarNode.textContent = selectedContact.initial;
   $('#conversation-title').textContent = selectedContact.name;
+  const conversationRange = getConversationRange();
+  $('#conversation-range-start').value = conversationRange.start;
+  $('#conversation-range-end').value = conversationRange.end;
+  const activeQuickRange = conversationRange.start === '2026-10-21' && conversationRange.end === '2026-10-21'
+    ? 'today'
+    : conversationRange.start === '2026-10-20' && conversationRange.end === '2026-10-20'
+      ? 'yesterday'
+      : conversationRange.start === '2026-10-15' && conversationRange.end === '2026-10-21' ? 'week' : null;
+  document.querySelectorAll('.conversation-quick-filter').forEach((button) => {
+    const active = button.dataset.conversationRange === activeQuickRange;
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-selected', String(active));
+  });
   const search = $('#message-search').value.trim().toLowerCase();
   const source = buildConversationHistory();
   const isNewConversation = conversationLoadState.contactId !== selectedContact.id;
@@ -555,6 +577,34 @@ function selectContact(id) {
   renderConversation();
 }
 
+function applyConversationQuickRange(rangeName) {
+  const today = new Date('2026-10-21T00:00:00');
+  const start = new Date(today);
+  const end = new Date(today);
+  if (rangeName === 'yesterday') {
+    start.setDate(start.getDate() - 1);
+    end.setDate(end.getDate() - 1);
+  }
+  if (rangeName === 'week') start.setDate(start.getDate() - 6);
+  $('#conversation-range-start').value = formatLocalDate(start);
+  $('#conversation-range-end').value = formatLocalDate(end);
+  saveConversationRange();
+}
+
+function saveConversationRange() {
+  const start = $('#conversation-range-start').value;
+  const end = $('#conversation-range-end').value;
+  if (!start || !end) { toast('请选择完整的会话聊天时间范围'); return; }
+  if (start > end) { toast('会话聊天开始日期不能晚于结束日期'); return; }
+  const contactId = selectedContact.id;
+  conversationRanges.set(contactId, { start, end });
+  conversationHistoryCache.delete(contactId);
+  conversationLoadState.contactId = null;
+  conversationLoadState.requestToken += 1;
+  renderConversation();
+  toast(`已更新会话聊天时间范围：${start} 至 ${end}`);
+}
+
 function refreshContactView() {
   renderContactControls();
   renderCustomers();
@@ -638,8 +688,9 @@ function renderCustomerFieldTree() {
 function openCustomerInfoExportDialog() {
   draftCustomerExportFields = new Set(selectedCustomerExportFields);
   $('#customer-info-export-employee').innerHTML = accounts.map((account) => `<option value="${escapeHtml(account.id)}" ${account.id === selectedAccount.id ? 'selected' : ''}>${escapeHtml(account.name)}（${escapeHtml(account.id)}）</option>`).join('');
-  $('#customer-info-export-start-date').value = $('#start-date').value;
-  $('#customer-info-export-end-date').value = $('#end-date').value;
+  const conversationRange = getConversationRange();
+  $('#customer-info-export-start-date').value = conversationRange.start;
+  $('#customer-info-export-end-date').value = conversationRange.end;
   document.querySelector('input[name="customer-info-export-scope"][value="all"]').checked = true;
   customerInfoExportSelectedCustomerIds = new Set();
   exportCustomerFilterTags = new Set();
@@ -684,8 +735,9 @@ function updateCustomerInfoExportScopeDisplay() {
 
 function openExportDialog() {
   $('#export-employee').innerHTML = accounts.map((account) => `<option value="${escapeHtml(account.id)}" ${account.id === selectedAccount.id ? 'selected' : ''}>${escapeHtml(account.name)}（${escapeHtml(account.id)}）</option>`).join('');
-  $('#export-start-date').value = $('#start-date').value;
-  $('#export-end-date').value = $('#end-date').value;
+  const conversationRange = getConversationRange();
+  $('#export-start-date').value = conversationRange.start;
+  $('#export-end-date').value = conversationRange.end;
   document.querySelector('input[name="export-format"][value="single"]').checked = true;
   document.querySelector('input[name="export-scope"][value="all"]').checked = true;
   exportSelectedCustomerIds = new Set();
@@ -1067,40 +1119,34 @@ document.addEventListener('click', (event) => {
     rangeButton.classList.add('active');
     const today = new Date('2026-10-21T00:00:00');
     const start = new Date(today);
-    if (rangeButton.dataset.range === 'yesterday') start.setDate(start.getDate() - 1);
+    const end = new Date(today);
+    if (rangeButton.dataset.range === 'yesterday') {
+      start.setDate(start.getDate() - 1);
+      end.setDate(end.getDate() - 1);
+    }
     if (rangeButton.dataset.range === 'week') start.setDate(start.getDate() - 6);
     $('#start-date').value = formatLocalDate(start);
-    $('#end-date').value = formatLocalDate(today);
-    conversationLoadState.contactId = null;
-    conversationLoadState.requestToken += 1;
+    $('#end-date').value = formatLocalDate(end);
+    customerPage = 1;
+    renderCustomers();
     renderConversation();
-    toast(`已切换至${rangeButton.textContent}`);
+    toast(`添加好友时间已切换至${rangeButton.textContent}`);
+    return;
+  }
+  const conversationQuickRange = event.target.closest('[data-conversation-range]');
+  if (conversationQuickRange) {
+    applyConversationQuickRange(conversationQuickRange.dataset.conversationRange);
     return;
   }
   const contactKindButton = event.target.closest('.contact-kind-tab');
   if (contactKindButton) {
     contactKind = contactKindButton.dataset.kind;
     contactStatus = 'all';
-    if (contactKind === 'customer') customerAge = 'all';
     customerPage = 1;
     $('#customer-search').value = '';
     selectedContact = (contactKind === 'customer' ? customers : groups)[0];
     refreshContactView();
     toast(`已切换至${contactKind === 'customer' ? '客户' : '群聊'}`);
-    return;
-  }
-  const ageFilterButton = event.target.closest('.age-filter-button');
-  if (ageFilterButton) {
-    customerAge = ageFilterButton.dataset.age;
-    customerPage = 1;
-    document.querySelectorAll('.age-filter-button').forEach((button) => {
-      const active = button === ageFilterButton;
-      button.classList.toggle('active', active);
-      button.setAttribute('aria-selected', String(active));
-    });
-    renderCustomers();
-    renderConversation();
-    toast(`已筛选${ageFilterButton.textContent}`);
     return;
   }
   const statusFilterButton = event.target.closest('.contact-status-filter');
@@ -1147,10 +1193,12 @@ $('#messages').addEventListener('scroll', () => {
   if (!conversationLoadState.isAdjustingScroll && $('#messages').scrollTop <= 12) loadOlderMessages(false);
 });
 ['start-date', 'end-date'].forEach((id) => $(`#${id}`).addEventListener('change', () => {
-  conversationLoadState.contactId = null;
-  conversationLoadState.requestToken += 1;
+  document.querySelectorAll('.quick-filter').forEach((button) => button.classList.remove('active'));
+  customerPage = 1;
+  renderCustomers();
   renderConversation();
 }));
+['conversation-range-start', 'conversation-range-end'].forEach((id) => $(`#${id}`).addEventListener('change', saveConversationRange));
 $('#tag-group-search').addEventListener('input', renderTagGroups);
 $('#tag-name-search').addEventListener('input', renderTagOptions);
 $('#export-customer-search').addEventListener('input', renderExportCustomerList);
