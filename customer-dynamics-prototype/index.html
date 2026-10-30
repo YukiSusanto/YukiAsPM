@@ -1,64 +1,391 @@
 <!doctype html>
 <html lang="zh-CN">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>客户动态 | 雪梨英语管理系统</title>
-  <link rel="stylesheet" href="./styles.css">
-</head>
-<body>
-  <aside class="rail" aria-label="主导航">
-    <div class="brand">雪</div>
-    <button>⌂</button><button>♙</button><button class="active">◷</button><button>☷</button><button>⚙</button>
-  </aside>
-  <main class="page">
-    <header class="page-header">
-      <div><h1>客户动态</h1><p><span></span>数据来自销售企微客户关系与行为记录</p></div>
-      <div class="header-state">已是最新</div>
-    </header>
-    <section class="filter-bar" aria-label="客户动态筛选">
-      <label class="search"><i>⌕</i><input id="global-search" placeholder="搜索客户名称、微信昵称或客户ID"></label>
-      <label><span>客户添加时间</span><input id="date-start" type="date" value="2026-10-01"></label>
-      <b>至</b>
-      <label><span class="sr-only">结束日期</span><input id="date-end" type="date" value="2026-10-30"></label>
-      <label><span>流失状态</span><select id="status-filter"><option value="all">全部状态</option><option value="active">未流失</option><option value="lost">已流失</option></select></label>
-      <button class="refresh" id="refresh">↻ 刷新</button>
-    </section>
-    <section class="workspace">
-      <aside class="customer-panel">
-        <div class="panel-title"><div><h2>客户</h2><p id="customer-count">共 6 位客户</p></div></div>
-        <label class="list-search"><i>⌕</i><input id="customer-search" placeholder="搜索客户名称或ID"></label>
-        <div class="customer-list" id="customer-list"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f7fa" />
+    <title>AI会话质检 | 雪梨英语管理系统</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="主导航">
+        <nav class="side-nav">
+          <button class="side-nav-item" title="首页"><span class="icon icon-home"></span></button>
+          <button class="side-nav-item" title="用户"><span class="icon icon-user"></span></button>
+          <button class="side-nav-item active" title="AI会话质检"><span class="icon icon-robot"></span></button>
+          <button class="side-nav-item" title="任务"><span class="icon icon-list"></span></button>
+          <button class="side-nav-item" title="视频"><span class="icon icon-video"></span></button>
+          <button class="side-nav-item" title="组织"><span class="icon icon-team"></span></button>
+          <button class="side-nav-item" title="设置"><span class="icon icon-setting"></span></button>
+        </nav>
+        <button class="sidebar-collapse" aria-label="收起侧边栏"><span class="icon icon-menu"></span></button>
       </aside>
-      <section class="detail-panel">
-        <header class="customer-summary">
-          <div class="customer-main">
-            <div class="avatar large warm" id="customer-avatar">墨</div>
-            <div><div class="name-line"><h2 id="customer-name">墨言（邮政）</h2><span class="status active" id="customer-status">未流失</span></div><p>微信昵称：<b id="wechat-name">墨言（邮政）</b></p></div>
+
+      <main class="main-content">
+        <div class="page-heading">
+          <div class="page-heading-copy">
+            <h1>AI会话质检</h1>
+            <p><span class="status-dot"></span>数据来自销售企微会话</p>
+            <p class="conversation-range-note"><span class="range-note-icon">i</span>用户添加时间范围：使用顶部日期筛选客户；会话时间范围：在右侧当前会话名称旁设置</p>
           </div>
-          <dl class="profile-facts">
-            <div><dt>客户来源</dt><dd id="customer-source">扫码添加</dd></div>
-            <div><dt>添加时间</dt><dd id="added-at">2026-10-21 18:06</dd></div>
-            <div><dt>客户ID</dt><dd id="customer-id">C-1001</dd></div>
-          </dl>
-        </header>
-        <section class="employee-card">
-          <div class="section-heading"><div><h3>已添加员工</h3><p>选择员工后，展示该员工视角下的企微标签</p></div><strong id="employee-count">2</strong></div>
-          <div class="employee-options" id="employee-options" role="radiogroup" aria-label="选择已添加员工"></div>
-          <div class="tag-row"><span>企微标签</span><div id="tag-list"></div></div>
-        </section>
-        <section class="dynamics-card">
-          <div class="section-heading"><div><h3>客户动态</h3><p>汇总该客户下所有员工与平台产生的动作</p></div><strong id="record-count">11</strong></div>
-          <div class="dynamic-filters">
-            <label><span>操作平台</span><select id="platform-filter"><option value="all">全部</option><option value="企业微信">企业微信</option><option value="微信自动同步">微信自动同步</option><option value="APP">APP</option><option value="直播间">直播间</option><option value="pending" disabled>待技术确认：记录中能否区分操作平台</option></select></label>
-            <label><span>动态类型</span><select id="type-filter"><option value="all">全部动态</option><option value="tag-change">标签变动</option><option value="friend-change">好友关系变动</option><option value="group-change">群聊变动</option><option value="live-action">直播行为</option><option value="official-account">公众号行为</option><option value="transaction">交易记录</option></select></label>
+          <div class="filter-bar-actions">
+            <span class="refresh-state" id="refresh-state" role="status">已是最新</span>
           </div>
-          <div class="timeline" id="timeline"></div>
+        </div>
+
+        <section class="filter-bar" aria-label="用户添加时间筛选">
+          <span class="filter-range-label">用户添加时间：</span>
+          <div class="quick-filters" role="tablist" aria-label="快捷用户添加时间">
+            <button class="quick-filter active" data-range="today">今天</button>
+            <button class="quick-filter" data-range="yesterday">昨天</button>
+            <button class="quick-filter" data-range="week">近7天</button>
+          </div>
+          <label class="date-input"><span class="icon icon-calendar"></span><input id="start-date" type="date" value="2026-10-21" aria-label="用户添加开始日期" /></label>
+          <span class="date-separator">至</span>
+          <label class="date-input"><input id="end-date" type="date" value="2026-10-21" aria-label="用户添加结束日期" /></label>
+          <div class="tag-filter" id="tag-filter">
+            <span class="tag-filter-label">客户标签：</span>
+            <button class="tag-filter-trigger" id="tag-filter-trigger" aria-haspopup="dialog" aria-controls="tag-filter-overlay">
+              <span class="tag-trigger-content" id="tag-trigger-content"><span class="tag-trigger-placeholder">请选择标签</span></span>
+              <span class="chevron-down" aria-hidden="true"></span>
+              <span class="tag-trigger-tooltip" id="tag-trigger-tooltip" role="tooltip" hidden></span>
+            </button>
+          </div>
+          <button class="refresh-button filter-refresh-button" id="refresh-button"><span class="icon icon-refresh"></span><span>刷新</span></button>
         </section>
-      </section>
-    </section>
-  </main>
-  <div class="toast" id="toast"></div>
-  <script src="./app.js"></script>
-</body>
+
+        <section class="workspace" id="conversation-workspace" aria-label="会话质检工作区">
+          <section class="panel account-panel" id="account-panel">
+            <div class="panel-header">
+              <div>
+                <h2>销售企微账号</h2>
+                <p id="account-count">共 80 个账号</p>
+              </div>
+              <div class="panel-tools"><button class="plain-icon" aria-label="收藏账号" title="收藏账号"><span class="icon icon-star"></span></button><button class="plain-icon panel-toggle" id="toggle-account-panel" aria-label="收起销售企微账号" title="收起销售企微账号" aria-expanded="true"><span class="icon icon-chevron-left"></span></button></div>
+            </div>
+            <label class="search-box"><span class="icon icon-search"></span><input id="account-search" placeholder="搜索账号名称或企微ID" /></label>
+            <div class="sales-org-filter">
+              <span class="sales-org-label">销售区组</span>
+              <button class="sales-org-trigger" id="sales-org-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="sales-org-popover">
+                <span id="sales-org-current">全部团队</span>
+                <span class="sales-org-current-type" id="sales-org-current-type">全部</span>
+                <span class="chevron-down" aria-hidden="true"></span>
+              </button>
+              <div class="sales-org-popover" id="sales-org-popover" role="dialog" aria-label="选择销售区组" hidden>
+                <div class="sales-org-popover-header"><strong>选择销售区组</strong><span>团队 / 分区 / 小组</span></div>
+                <div class="sales-org-tree" id="sales-org-tree"></div>
+              </div>
+            </div>
+            <div class="list-scroll" id="account-list"></div>
+          </section>
+
+          <section class="panel customer-panel" id="customer-panel">
+            <div class="panel-header">
+              <div>
+                <h2>外部联系人</h2>
+                <p id="contact-count">客户数：67</p>
+              </div>
+              <div class="panel-tools"><button class="plain-icon" aria-label="收藏客户" title="收藏客户"><span class="icon icon-star"></span></button><button class="plain-icon panel-toggle" id="toggle-customer-panel" aria-label="收起外部联系人" title="收起外部联系人" aria-expanded="true"><span class="icon icon-chevron-left"></span></button></div>
+            </div>
+            <div class="contact-kind-tabs" role="tablist" aria-label="外部联系人类型">
+              <button class="contact-kind-tab active" role="tab" aria-selected="true" data-kind="customer">客户</button>
+              <button class="contact-kind-tab" role="tab" aria-selected="false" data-kind="group">群聊</button>
+            </div>
+            <label class="search-box"><span class="icon icon-search"></span><input id="customer-search" placeholder="搜索客户名称或ID" /></label>
+            <div class="contact-status-filters" id="contact-status-filters" role="tablist" aria-label="客户状态"></div>
+            <div class="list-scroll customer-list" id="customer-list"></div>
+          </section>
+
+          <section class="panel conversation-panel" aria-label="只读会话展示" aria-readonly="true">
+            <div class="conversation-header">
+              <div class="conversation-identity">
+                <div class="avatar avatar-large" id="conversation-avatar">墨</div><h2 id="conversation-title">墨言（邮政）</h2><span class="customer-loss-status is-active" id="conversation-loss-status">未流失</span>
+                <div class="conversation-inline-range" aria-label="当前会话时间范围">
+                  <span class="conversation-range-label">会话时间：</span>
+                  <div class="quick-filters conversation-quick-filters" role="tablist" aria-label="快捷会话时间">
+                    <button class="conversation-quick-filter active" type="button" data-conversation-range="today">今天</button>
+                    <button class="conversation-quick-filter" type="button" data-conversation-range="yesterday">昨天</button>
+                    <button class="conversation-quick-filter" type="button" data-conversation-range="week">近7天</button>
+                  </div>
+                  <label class="date-input conversation-date-input"><span class="icon icon-calendar"></span><input id="conversation-range-start" type="date" value="2026-10-21" aria-label="会话开始日期" /></label>
+                  <span class="date-separator">至</span>
+                  <label class="date-input conversation-date-input"><input id="conversation-range-end" type="date" value="2026-10-21" aria-label="会话结束日期" /></label>
+                </div>
+                <div class="conversation-export-actions" hidden>
+                  <button class="export-button conversation-export-button" id="open-export-dialog">导出会话</button>
+                  <button class="export-button export-customer-info-button conversation-export-button" id="export-customer-info">导出客户信息</button>
+                </div>
+              </div>
+              <div class="conversation-actions">
+                <button class="outline-button" id="favorite-button"><span class="icon icon-star"></span><span id="favorite-label">收藏</span></button>
+                <button class="outline-button earliest-button" id="jump-earliest-button">
+                  <span class="earliest-icon" id="conversation-jump-icon" aria-hidden="true">⇡</span><span id="conversation-jump-label">切换至最早消息</span>
+                  <span class="earliest-tooltip" id="earliest-tooltip" role="tooltip">最早消息为当前用户会话时间范围的最早时间；加载完成后将自动向上滑动</span>
+                </button>
+                <button class="outline-button customer-dynamics-button" id="open-customer-dynamics" aria-haspopup="dialog" aria-controls="customer-dynamics-drawer" aria-expanded="false"><span class="dynamics-button-icon" aria-hidden="true">◷</span><span>客户动态</span></button>
+              </div>
+            </div>
+            <label class="search-box conversation-search"><span class="icon icon-search"></span><input id="message-search" placeholder="搜索当前时间范围内的聊天内容" /></label>
+            <div class="conversation-meta"><span id="message-page-label">已加载 50 条 · 上滑加载更早消息</span><button class="ghost-button">筛选</button></div>
+            <div class="messages" id="messages" tabindex="0" aria-label="聊天记录，上滑加载更早消息"></div>
+            <div class="customer-dynamics-backdrop" id="customer-dynamics-backdrop" hidden></div>
+            <aside class="customer-dynamics-drawer" id="customer-dynamics-drawer" role="dialog" aria-modal="false" aria-labelledby="customer-dynamics-title" hidden>
+              <button class="customer-dynamics-collapse" id="close-customer-dynamics" type="button" aria-label="收起客户动态"><span aria-hidden="true">›</span><span>收起</span></button>
+              <header class="customer-dynamics-header">
+                <div><h2 id="customer-dynamics-title">客户动态</h2><p>查看当前客户的企微关系与行为记录</p></div>
+              </header>
+              <div class="customer-dynamics-body">
+                <section class="dynamics-summary-card" aria-label="客户概要">
+                  <div class="dynamics-employee-count">已添加员工数：<strong id="dynamics-employee-count">1</strong><span>（选择员工查看其企微标签）</span></div>
+                  <div class="dynamics-employee-options" id="dynamics-employee-options" role="radiogroup" aria-label="选择已添加员工"></div>
+                  <div class="dynamics-profile-row">
+                    <div class="avatar dynamics-customer-avatar" id="dynamics-customer-avatar">墨</div>
+                    <div class="dynamics-profile-main"><div class="dynamics-profile-name"><strong id="dynamics-customer-name">墨言（邮政）</strong><span class="customer-loss-status is-active" id="dynamics-loss-status">未流失</span></div><span>微信昵称：<b id="dynamics-wechat-name">墨言（邮政）</b></span></div>
+                  </div>
+                  <dl class="dynamics-profile-details">
+                    <div><dt>客户来源</dt><dd id="dynamics-customer-source">扫码添加</dd></div>
+                    <div><dt>添加时间</dt><dd id="dynamics-added-at">2026-10-21 18:06</dd></div>
+                  </dl>
+                  <div class="dynamics-tags"><span class="dynamics-tags-label">企微标签</span><div id="dynamics-tag-list"></div></div>
+                </section>
+                <section class="dynamics-records" aria-label="客户动态记录">
+                  <div class="dynamics-section-title"><h3>客户动态</h3><span id="dynamics-record-count">共 11 条</span></div>
+                  <div class="dynamics-filters">
+                    <label><span>操作平台</span><select id="dynamics-platform-filter"><option value="all">全部</option><option value="企业微信">企业微信</option><option value="微信自动同步">微信自动同步</option><option value="APP">APP</option><option value="直播间">直播间</option><option value="pending" disabled>待技术确认：记录中能否区分操作平台</option></select></label>
+                    <label><span>动态类型</span><select id="dynamics-type-filter"><option value="all">全部动态</option><option value="tag-change">标签变动</option><option value="friend-change">好友关系变动</option><option value="group-change">群聊变动</option><option value="live-action">直播行为</option><option value="official-account">公众号行为</option><option value="transaction">交易记录</option></select></label>
+                  </div>
+                  <div class="dynamics-timeline" id="dynamics-timeline"></div>
+                </section>
+              </div>
+            </aside>
+          </section>
+
+          <footer class="workspace-footer" aria-label="翻页">
+            <div class="footer-pagination footer-pagination-left">
+              <button class="footer-arrow" id="account-prev" disabled aria-label="上一页账号">‹</button>
+              <span id="account-page">1 / 6</span>
+              <button class="footer-arrow" id="account-next" aria-label="下一页账号">›</button>
+            </div>
+            <div class="footer-pagination footer-pagination-center">
+              <button class="footer-arrow" id="customer-prev" disabled aria-label="上一页客户">‹</button>
+              <span id="customer-page">1 / 1</span>
+              <button class="footer-arrow" id="customer-next" disabled aria-label="下一页客户">›</button>
+            </div>
+            <div class="footer-pagination footer-pagination-right">
+              <span class="message-load-summary" id="message-count">已加载最新 50 条，上滑加载更早消息</span>
+            </div>
+          </footer>
+        </section>
+      </main>
+
+      <div class="tag-filter-overlay" id="tag-filter-overlay" hidden>
+        <section class="tag-filter-dialog" role="dialog" aria-modal="true" aria-labelledby="tag-dialog-title">
+          <header class="tag-dialog-header">
+            <div><h2 id="tag-dialog-title">筛选客户标签</h2><p>选择一个或多个客户标签</p></div>
+            <button class="tag-dialog-close" id="tag-dialog-close" aria-label="关闭标签筛选">×</button>
+          </header>
+          <div class="tag-selected-summary">
+            <span class="tag-summary-label">已选标签</span>
+            <div class="tag-selected-list" id="tag-selected-list"></div>
+          </div>
+          <div class="tag-dialog-body">
+            <aside class="tag-group-pane">
+              <h3>标签组 <small>共 90 个</small></h3>
+              <label class="tag-search"><span class="icon icon-search"></span><input id="tag-group-search" placeholder="搜索标签组" /></label>
+              <div class="tag-group-list" id="tag-group-list"></div>
+            </aside>
+            <section class="tag-option-pane">
+              <div class="tag-option-heading"><h3 id="tag-option-title">标签</h3><button class="tag-select-all" id="tag-select-all">全选</button></div>
+              <label class="tag-search"><span class="icon icon-search"></span><input id="tag-name-search" placeholder="搜索标签" /></label>
+              <div class="tag-option-list" id="tag-option-list"></div>
+            </section>
+          </div>
+          <footer class="tag-dialog-footer">
+            <button class="tag-dialog-button secondary" id="tag-dialog-cancel">取消</button>
+            <button class="tag-dialog-button primary" id="tag-dialog-confirm">确认</button>
+          </footer>
+        </section>
+      </div>
+
+      <div class="export-overlay" id="export-overlay" hidden>
+        <section class="export-dialog" role="dialog" aria-modal="true" aria-labelledby="export-dialog-title">
+          <header class="export-dialog-header">
+            <div><h2 id="export-dialog-title">导出会话</h2><p>配置会话导出任务，导出内容范围以所选聊天记录时间为准</p></div>
+            <button class="dialog-close" id="export-dialog-close" aria-label="关闭导出会话">×</button>
+          </header>
+          <div class="export-dialog-body">
+            <label class="export-field">
+              <span class="export-field-label"><b>*</b> 导出员工</span>
+              <select id="export-employee" aria-label="导出员工"></select>
+              <small>默认使用当前界面所选员工，仅支持单选</small>
+            </label>
+            <div class="export-field">
+              <span class="export-field-label"><b>*</b> 选择时间范围</span>
+              <div class="export-date-range">
+                <input id="export-start-date" type="date" aria-label="导出开始日期" />
+                <span>至</span>
+                <input id="export-end-date" type="date" aria-label="导出结束日期" />
+              </div>
+              <small>默认同步当前用户单独设置的会话时间范围</small>
+            </div>
+            <label class="export-field">
+              <span class="export-field-label"><b>*</b> 导出任务名称</span>
+              <input id="export-task-name" type="text" aria-label="导出任务名称" />
+            </label>
+            <fieldset class="export-field">
+              <legend class="export-field-label"><b>*</b> 导出格式</legend>
+              <div class="export-choice-grid" id="export-format-options">
+                <label class="export-choice-card active"><input type="radio" name="export-format" value="single" checked /><span><strong>导出到一个表格</strong><small>全部客户会话汇总至同一个表格</small></span></label>
+                <label class="export-choice-card"><input type="radio" name="export-format" value="per-customer" /><span><strong>每个客户一个表格</strong><small>按客户分别生成独立表格</small></span></label>
+              </div>
+            </fieldset>
+            <fieldset class="export-field">
+              <legend class="export-field-label"><b>*</b> 选择导出客户</legend>
+              <div class="export-scope-options" id="export-scope-options">
+                <label><input type="radio" name="export-scope" value="all" checked /><span>全部客户</span><small>当前所选企微账号下的全部客户</small></label>
+                <label><input type="radio" name="export-scope" value="specified" /><span>指定客户</span><small>从客户列表中选择一个或多个客户</small></label>
+              </div>
+              <div class="specified-customer-action" id="specified-customer-action" hidden>
+                <button id="open-customer-selector" type="button">选择客户</button>
+                <span id="selected-customer-summary">暂未选择客户</span>
+              </div>
+            </fieldset>
+            <details class="export-columns-preview">
+              <summary><span>导出字段</span><small>固定 11 列</small><span class="columns-summary-arrow" aria-hidden="true"></span></summary>
+              <ol class="export-column-list">
+                <li title="仅员工发送的消息填写：APP / AI / SOP / 人工">发送途径</li>
+                <li title="销售名称 + 导出时间 + 客户名称">会话信息</li>
+                <li title="按消息方向填写销售企微名称或客户名称">发送人</li>
+                <li title="客户 / 员工">发送人身份</li>
+                <li title="单条聊天消息的完整内容">会话内容</li>
+                <li title="按消息方向填写客户名称或销售企微名称">接收人</li>
+                <li title="客户 / 员工">接收人身份</li>
+                <li>客户手机号</li>
+                <li>客户备注名</li>
+                <li>发送时间</li>
+                <li title="客户添加销售企微好友的时间">添加时间</li>
+              </ol>
+              <p>发送途径仅员工消息填写，取值为 APP、AI、SOP、人工；添加时间指客户添加销售企微好友的时间。</p>
+            </details>
+          </div>
+          <footer class="export-dialog-footer">
+            <button class="dialog-button secondary" id="export-dialog-cancel">取消</button>
+            <button class="dialog-button primary" id="export-dialog-submit">创建导出任务</button>
+          </footer>
+        </section>
+      </div>
+
+      <div class="export-overlay customer-info-export-overlay" id="customer-info-export-overlay" hidden>
+        <section class="customer-info-export-dialog" role="dialog" aria-modal="true" aria-labelledby="customer-info-export-title">
+          <header class="export-dialog-header">
+            <div><h2 id="customer-info-export-title">导出客户信息</h2><p>按用户画像结构选择需要导出的客户字段</p></div>
+            <button class="dialog-close" id="customer-info-export-close" aria-label="关闭导出客户信息">×</button>
+          </header>
+          <div class="customer-info-export-body">
+            <div class="customer-info-export-config">
+              <label class="export-field">
+                <span class="export-field-label"><b>*</b> 导出员工</span>
+                <select id="customer-info-export-employee" aria-label="客户信息导出员工"></select>
+                <small>默认使用当前页面所选员工，仅支持单选</small>
+              </label>
+              <div class="export-field">
+                <span class="export-field-label"><b>*</b> 选择时间范围</span>
+                <div class="export-date-range">
+                  <input id="customer-info-export-start-date" type="date" aria-label="客户信息导出开始日期" />
+                  <span>至</span>
+                  <input id="customer-info-export-end-date" type="date" aria-label="客户信息导出结束日期" />
+                </div>
+                <small>默认同步当前用户单独设置的会话时间范围</small>
+              </div>
+            </div>
+            <fieldset class="export-field customer-info-export-scope">
+              <legend class="export-field-label"><b>*</b> 选择导出客户</legend>
+              <div class="export-scope-options">
+                <label><input type="radio" name="customer-info-export-scope" value="all" checked /><span>全部客户</span><small>当前所选企微账号下的全部客户</small></label>
+                <label><input type="radio" name="customer-info-export-scope" value="specified" /><span>指定客户</span><small>从客户列表中选择一个或多个客户</small></label>
+              </div>
+              <div class="specified-customer-action" id="customer-info-specified-customer-action" hidden>
+                <button id="open-customer-info-selector" type="button">选择客户</button>
+                <span id="customer-info-selected-customer-summary">暂未选择客户</span>
+              </div>
+            </fieldset>
+            <div class="customer-field-toolbar">
+              <div><strong>选择导出字段</strong><span id="customer-field-count">已选 0 项</span></div>
+              <div><button type="button" id="customer-field-select-all">全选字段</button><button type="button" id="customer-field-clear">清空</button></div>
+            </div>
+            <div class="customer-field-selected" id="customer-field-selected"></div>
+            <div class="customer-field-tree" id="customer-field-tree"></div>
+          </div>
+          <footer class="export-dialog-footer">
+            <button class="dialog-button secondary" id="customer-info-export-cancel">取消</button>
+            <button class="dialog-button primary" id="customer-info-export-submit">创建导出任务</button>
+          </footer>
+        </section>
+      </div>
+
+      <div class="export-overlay customer-selector-overlay" id="customer-selector-overlay" hidden>
+        <section class="customer-selector-dialog" role="dialog" aria-modal="true" aria-labelledby="customer-selector-title">
+          <header class="export-dialog-header">
+            <div><h2 id="customer-selector-title">选择客户</h2><p>可按客户名称或标签筛选后批量选择</p></div>
+            <button class="dialog-close" id="customer-selector-close" aria-label="关闭选择客户">×</button>
+          </header>
+          <div class="customer-selector-toolbar">
+            <label class="selector-search"><span class="icon icon-search"></span><input id="export-customer-search" placeholder="搜索客户名称或ID" /></label>
+            <div class="selector-tag-filter">
+              <span>客户标签</span>
+              <button class="tag-filter-trigger export-tag-trigger" id="export-tag-filter-trigger" type="button" aria-haspopup="dialog" aria-controls="export-tag-filter-overlay">
+                <span class="tag-trigger-content" id="export-tag-trigger-content"><span class="tag-trigger-placeholder">请选择标签</span></span>
+                <span class="chevron-down" aria-hidden="true"></span>
+                <span class="tag-trigger-tooltip" id="export-tag-trigger-tooltip" role="tooltip" hidden></span>
+              </button>
+            </div>
+            <span class="selector-result-count" id="selector-result-count"></span>
+          </div>
+          <div class="customer-table-wrap">
+            <table class="customer-select-table">
+              <thead><tr><th class="check-column"><input id="export-select-all" type="checkbox" aria-label="全选当前客户" /></th><th>客户</th><th>标签</th><th>添加人</th><th>添加时间</th></tr></thead>
+              <tbody id="export-customer-list"></tbody>
+            </table>
+          </div>
+          <footer class="export-dialog-footer customer-selector-footer">
+            <span id="selector-selected-count">已选择 0 位客户</span>
+            <div><button class="dialog-button secondary" id="customer-selector-cancel">取消</button><button class="dialog-button primary" id="customer-selector-confirm">确认选择</button></div>
+          </footer>
+        </section>
+      </div>
+
+      <div class="tag-filter-overlay export-tag-filter-overlay" id="export-tag-filter-overlay" hidden>
+        <section class="tag-filter-dialog" role="dialog" aria-modal="true" aria-labelledby="export-tag-dialog-title">
+          <header class="tag-dialog-header">
+            <div><h2 id="export-tag-dialog-title">筛选客户标签</h2><p>选择一个或多个客户标签</p></div>
+            <button class="tag-dialog-close" id="export-tag-dialog-close" aria-label="关闭标签筛选">×</button>
+          </header>
+          <div class="tag-selected-summary">
+            <span class="tag-summary-label">已选标签</span>
+            <div class="tag-selected-list" id="export-tag-selected-list"></div>
+          </div>
+          <div class="tag-dialog-body">
+            <aside class="tag-group-pane">
+              <h3>标签组 <small>共 90 个</small></h3>
+              <label class="tag-search"><span class="icon icon-search"></span><input id="export-tag-group-search" placeholder="搜索标签组" /></label>
+              <div class="tag-group-list" id="export-tag-group-list"></div>
+            </aside>
+            <section class="tag-option-pane">
+              <div class="tag-option-heading"><h3 id="export-tag-option-title">标签</h3><button class="tag-select-all" id="export-tag-select-all">全选</button></div>
+              <label class="tag-search"><span class="icon icon-search"></span><input id="export-tag-name-search" placeholder="搜索标签" /></label>
+              <div class="tag-option-list" id="export-tag-option-list"></div>
+            </section>
+          </div>
+          <footer class="tag-dialog-footer">
+            <button class="tag-dialog-button secondary" id="export-tag-dialog-cancel">取消</button>
+            <button class="tag-dialog-button primary" id="export-tag-dialog-confirm">确认</button>
+          </footer>
+        </section>
+      </div>
+
+      <div class="toast" id="toast" role="status"></div>
+    </div>
+    <script src="app.js"></script>
+  </body>
 </html>

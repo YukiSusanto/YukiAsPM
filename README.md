@@ -7,7 +7,7 @@
 | 固定 SOP | [原型](sop-prototype/固定SOP/原型/) | [需求文档](sop-prototype/固定SOP/需求文档/固定SOP需求文档.md) | [打开固定版](https://yukisusanto.github.io/YukiAsPM/stubborn-sop/) |
 | 社群 SOP | [原型](sop-prototype/社群SOP/原型/) | [需求文档](sop-prototype/社群SOP/需求文档/销转期建群与群聊sop需求.md) | [打开社群版](https://yukisusanto.github.io/YukiAsPM/social-chat-sop/) |
 | AI 会话质检 | [原型](conversation-quality-prototype/) | [需求文档](conversation-quality-prototype/需求文档/AI会话质检需求文档.md) | [打开会话质检](https://yukisusanto.github.io/YukiAsPM/conversation-quality-prototype/) |
-| 客户动态 | [原型](customer-dynamics-prototype/) | [需求文档](customer-dynamics-prototype/需求文档/客户动态需求文档.md) | [打开客户动态](https://yukisusanto.github.io/YukiAsPM/customer-dynamics-prototype/) |
+| 客户动态 | [原型](customer-dynamics-prototype/) | [需求文档](customer-dynamics-prototype/需求文档/AI会话质检需求文档.md) | [打开客户动态](https://yukisusanto.github.io/YukiAsPM/customer-dynamics-prototype/) |
 | 134期转人工看板 | [代码与真实聊天数据](dashboard/134期-handoff-dashboard/) | [口径说明](dashboard/134期-handoff-dashboard/README.md) | [打开看板](https://yukisusanto.github.io/YukiAsPM/dashboard/134期-handoff-dashboard/) |
 
 ```text
@@ -29,7 +29,7 @@ customer-dynamics-prototype/
 ├── styles.css       # 页面样式
 ├── app.js           # 演示数据与交互
 ├── index-standalone.html # 无外部依赖单文件版本
-└── 需求文档/        # 客户动态需求文档
+└── 需求文档/        # 基于会话质检原型维护的客户动态需求文档
 ```
 
 ## 构建与发布
