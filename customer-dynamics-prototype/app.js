@@ -195,7 +195,6 @@ const customerDynamicEvents = [
   { type: 'AI接管', time: '2026-10-29 16:12', platform: '企业微信', accountId: 'WuBingBing01' },
   { type: '打标签', time: '2026-10-29 16:03', platform: '微信自动同步', accountId: 'WuBingBing01', action: '打上企微标签【D3预约】' },
   { type: '删除标签', time: '2026-10-29 15:48', platform: '企业微信', accountId: 'YinLiJuan', action: '删除企微标签【待跟进】' },
-  { type: '关注公众号', time: '2026-10-29 09:16', platform: '微信自动同步', action: '关注公众号【雪梨英语】' },
   { type: '进入直播间', time: '2026-10-28 19:02', platform: '直播间', accountId: 'WuBingBing01', watchDuration: '36分18秒', action: '通过销售链接进入【100篇阅读（新版）】直播间' },
   { type: '直播间发送内容', time: '2026-10-28 19:08', platform: '直播间', accountId: 'WuBingBing01', content: '课程适合四年级的孩子吗？' },
   { type: '点击直播间商品链接', time: '2026-10-28 19:12', platform: '直播间', accountId: 'WuBingBing01', product: '单词拼读王年度课程' },
@@ -215,7 +214,6 @@ const customerDynamicTypeGroups = {
   'handoff-change': ['转人工', 'AI接管'],
   'group-change': ['加入群聊', '退出群聊'],
   'live-action': ['点击预约', '进入直播间', '点击直播间商品链接', '退出直播间', '直播间发送内容'],
-  'official-account': ['关注公众号'],
   transaction: ['下单产品', '成交记录'],
 };
 
@@ -225,7 +223,6 @@ const customerDynamicTypeLabels = {
   'handoff-change': '转人工变更',
   'group-change': '群聊变动',
   'live-action': '直播行为',
-  'official-account': '公众号行为',
   transaction: '交易记录',
 };
 
