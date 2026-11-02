@@ -7,11 +7,27 @@
 .dynamics-section-title h3{margin:0;color:#344154;font-size:14px}
 .dynamics-section-title>span{color:#99a4b2;font-size:10px;white-space:nowrap}
 .dynamics-filters{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:9px;margin-top:11px}
-.dynamics-filters label{min-width:0}
+.dynamics-filter-field{min-width:0}
 .dynamics-employee-filter{grid-column:1/-1}
-.dynamics-filters label>span{display:block;margin-bottom:5px;color:#8d98a7;font-size:10px}
-.dynamics-filters select{width:100%;height:31px;padding:0 6px;border:1px solid #dfe5ec;border-radius:4px;outline:0;color:#596678;background:#fff;font:10px "Microsoft YaHei",sans-serif;text-overflow:ellipsis}
-.dynamics-filters select:focus{border-color:#91c3ff;box-shadow:0 0 0 2px #2f8cff12}
+.dynamics-filter-label{display:block;margin-bottom:5px;color:#8d98a7;font-size:10px}
+.dynamics-multiselect{position:relative;min-width:0}
+.dynamics-multiselect[open]{z-index:8}
+.dynamics-multiselect summary{display:flex;align-items:center;justify-content:space-between;gap:6px;height:31px;padding:0 8px;border:1px solid #dfe5ec;border-radius:4px;color:#596678;background:#fff;font-size:10px;cursor:pointer;list-style:none}
+.dynamics-multiselect summary::-webkit-details-marker{display:none}
+.dynamics-multiselect summary:focus-visible,.dynamics-multiselect[open] summary{outline:0;border-color:#91c3ff;box-shadow:0 0 0 2px #2f8cff12}
+.dynamics-selection-text{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;min-width:0}
+.dynamics-select-arrow{color:#96a1af;flex:none}
+.dynamics-multiselect[open] .dynamics-select-arrow{transform:rotate(180deg)}
+.dynamics-filter-menu{position:absolute;top:calc(100% + 5px);left:0;width:max(100%,210px);max-width:280px;max-height:255px;overflow:auto;padding:5px;border:1px solid #dfe5ec;border-radius:6px;background:#fff;box-shadow:0 5px 20px #20365224}
+[data-filter-key="type"] .dynamics-filter-menu{left:auto;right:0}
+.dynamics-employee-filter .dynamics-filter-menu{width:100%;max-width:none}
+.dynamics-filter-hint{padding:5px 7px 7px;color:#9aa5b2;font-size:10px;border-bottom:1px solid #edf0f5;margin-bottom:3px}
+.dynamics-filter-option{display:flex;align-items:center;gap:7px;padding:8px 7px;border-radius:4px;cursor:pointer;min-height:32px;line-height:1.5}
+.dynamics-filter-option:hover{background:#f0f7ff}
+.dynamics-filter-option input{width:13px;height:13px;margin:0;flex:none;accent-color:#3978ee}
+.dynamics-filter-option span{font-size:11px;color:#596678;overflow-wrap:anywhere;min-width:0}
+.dynamics-filter-option:has(input:checked){background:#eff6ff}
+.dynamics-filter-option:has(input:checked) span{color:#317bd7}
 .dynamics-timeline{position:relative;margin-top:16px;padding-left:17px}
 .dynamics-timeline::before{position:absolute;top:6px;bottom:6px;left:4px;width:1px;background:#dce8f6;content:""}
 .dynamics-event{position:relative;padding:0 0 15px 9px}
