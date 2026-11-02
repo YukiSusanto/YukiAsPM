@@ -133,31 +133,53 @@
             <aside class="customer-dynamics-drawer" id="customer-dynamics-drawer" role="dialog" aria-modal="false" aria-labelledby="customer-dynamics-title" hidden>
               <button class="customer-dynamics-collapse" id="close-customer-dynamics" type="button" aria-label="收起客户动态"><span aria-hidden="true">›</span><span>收起</span></button>
               <header class="customer-dynamics-header">
-                <div><h2 id="customer-dynamics-title">客户动态</h2><p>查看当前客户的企微关系与行为记录</p></div>
+                <div><h2 id="customer-dynamics-title">客户画像</h2><p>只读查看客户资料、动态、订单与学习情况</p></div>
               </header>
               <div class="customer-dynamics-body">
-                <section class="dynamics-summary-card" aria-label="客户概要">
-                  <div class="dynamics-employee-count">已添加员工数：<strong id="dynamics-employee-count">1</strong><span>（选择员工查看其企微标签）</span></div>
-                  <div class="dynamics-employee-options" id="dynamics-employee-options" role="radiogroup" aria-label="选择已添加员工"></div>
-                  <div class="dynamics-profile-row">
-                    <div class="avatar dynamics-customer-avatar" id="dynamics-customer-avatar">墨</div>
-                    <div class="dynamics-profile-main"><div class="dynamics-profile-name"><strong id="dynamics-customer-name">墨言（邮政）</strong><span class="customer-loss-status is-active" id="dynamics-loss-status">未流失</span></div><span>微信昵称：<b id="dynamics-wechat-name">墨言（邮政）</b></span></div>
+                <section class="customer-profile-hero" aria-label="客户画像概要">
+                  <div class="avatar customer-profile-avatar" id="customer-profile-avatar">墨</div>
+                  <div class="customer-profile-hero-main">
+                    <div><strong id="customer-profile-name">墨言（邮政）</strong><span class="customer-loss-status is-active" id="customer-profile-status">未流失</span></div>
+                    <span>客户意向度：<b>中</b></span>
+                    <div class="customer-intent-track" aria-label="客户意向度中"><i></i><i></i><i class="active"></i><i></i><i></i></div>
                   </div>
-                  <dl class="dynamics-profile-details">
-                    <div><dt>客户来源</dt><dd id="dynamics-customer-source">扫码添加</dd></div>
-                    <div><dt>添加时间</dt><dd id="dynamics-added-at">2026-10-21 18:06</dd></div>
-                  </dl>
-                  <div class="dynamics-tags"><span class="dynamics-tags-label">企微标签</span><div id="dynamics-tag-list"></div></div>
                 </section>
-                <section class="dynamics-records" aria-label="客户动态记录">
-                  <div class="dynamics-section-title"><h3>客户动态</h3><span id="dynamics-record-count">共 11 条</span></div>
-                  <div class="dynamics-filters">
-                    <label class="dynamics-employee-filter"><span>员工</span><select id="dynamics-employee-filter"><option value="all">全部员工</option></select></label>
-                    <label><span>操作平台</span><select id="dynamics-platform-filter"><option value="all">全部</option><option value="企业微信">企业微信</option><option value="微信自动同步">微信自动同步</option><option value="APP">APP</option><option value="直播间">直播间</option><option value="pending" disabled>待技术确认：记录中能否区分操作平台</option></select></label>
-                    <label><span>动态类型</span><select id="dynamics-type-filter"><option value="all">全部动态</option><option value="tag-change">标签变动</option><option value="friend-change">好友关系变动</option><option value="handoff-change">转人工变更</option><option value="group-change">群聊变动</option><option value="live-action">直播行为</option><option value="official-account">公众号行为</option><option value="transaction">交易记录</option></select></label>
-                  </div>
-                  <div class="dynamics-timeline" id="dynamics-timeline"></div>
-                </section>
+                <nav class="customer-profile-tabs" role="tablist" aria-label="客户画像内容">
+                  <button type="button" role="tab" data-customer-profile-tab="info">资料</button>
+                  <button type="button" role="tab" data-customer-profile-tab="analysis">用户分析</button>
+                  <button class="active" type="button" role="tab" data-customer-profile-tab="dynamics">客户动态</button>
+                  <button type="button" role="tab" data-customer-profile-tab="orders">订单记录</button>
+                  <button type="button" role="tab" data-customer-profile-tab="learning">学习情况</button>
+                </nav>
+                <div class="customer-profile-panel" id="customer-profile-info" data-customer-profile-panel="info" hidden></div>
+                <div class="customer-profile-panel" id="customer-profile-analysis" data-customer-profile-panel="analysis" hidden></div>
+                <div class="customer-profile-panel" data-customer-profile-panel="dynamics">
+                  <section class="dynamics-summary-card" aria-label="客户概要">
+                    <div class="dynamics-employee-count">已添加员工数：<strong id="dynamics-employee-count">1</strong><span>（选择员工查看其企微标签）</span></div>
+                    <div class="dynamics-employee-options" id="dynamics-employee-options" role="radiogroup" aria-label="选择已添加员工"></div>
+                    <div class="dynamics-profile-row">
+                      <div class="avatar dynamics-customer-avatar" id="dynamics-customer-avatar">墨</div>
+                      <div class="dynamics-profile-main"><div class="dynamics-profile-name"><strong id="dynamics-customer-name">墨言（邮政）</strong><span class="customer-loss-status is-active" id="dynamics-loss-status">未流失</span></div><span>微信昵称：<b id="dynamics-wechat-name">墨言（邮政）</b></span></div>
+                    </div>
+                    <dl class="dynamics-profile-details">
+                      <div><dt>客户来源</dt><dd id="dynamics-customer-source">扫码添加</dd></div>
+                      <div><dt>添加时间</dt><dd id="dynamics-added-at">2026-10-21 18:06</dd></div>
+                    </dl>
+                    <div class="dynamics-tags"><span class="dynamics-tags-label">企微标签</span><div id="dynamics-tag-list"></div></div>
+                  </section>
+                  <section class="dynamics-records" aria-label="客户动态记录">
+                    <div class="dynamics-section-title"><h3>客户动态</h3><span id="dynamics-record-count">共 11 条</span></div>
+                    <div class="dynamics-filters">
+                      <div class="dynamics-multiselect dynamics-employee-filter"><span>员工</span><details><summary id="dynamics-employee-filter-summary">全部员工</summary><div class="dynamics-filter-menu" id="dynamics-employee-filter-options"></div></details></div>
+                      <div class="dynamics-multiselect"><span>操作平台</span><details><summary id="dynamics-platform-filter-summary">全部平台</summary><div class="dynamics-filter-menu" id="dynamics-platform-filter-options"></div></details></div>
+                      <div class="dynamics-multiselect"><span>动态类型</span><details><summary id="dynamics-type-filter-summary">全部动态</summary><div class="dynamics-filter-menu" id="dynamics-type-filter-options"></div></details></div>
+                    </div>
+                    <p class="dynamics-platform-note">操作平台能否准确区分，待技术确认。</p>
+                    <div class="dynamics-timeline" id="dynamics-timeline"></div>
+                  </section>
+                </div>
+                <div class="customer-profile-panel" id="customer-profile-orders" data-customer-profile-panel="orders" hidden></div>
+                <div class="customer-profile-panel" id="customer-profile-learning" data-customer-profile-panel="learning" hidden></div>
               </div>
             </aside>
           </section>

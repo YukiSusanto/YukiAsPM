@@ -169,9 +169,10 @@ button:disabled { cursor: default; }
 .conversation-header { display: flex; align-items: center; justify-content: space-between; min-height: 76px; padding: 14px 17px 10px; }
 .conversation-header, .conversation-search, .conversation-meta, .messages { transition: margin-right .34s cubic-bezier(.22, 1, .36, 1); }
 .conversation-panel.dynamics-open > .conversation-header, .conversation-panel.dynamics-open > .conversation-search, .conversation-panel.dynamics-open > .conversation-meta, .conversation-panel.dynamics-open > .messages { margin-right: calc(var(--dynamics-drawer-width) + 16px); }
-.conversation-panel.dynamics-open .conversation-header { align-items: flex-start; }
+.conversation-panel.dynamics-open .conversation-header { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; align-items: flex-start; gap: 8px; }
 .conversation-panel.dynamics-open .conversation-identity { flex-wrap: wrap; }
 .conversation-panel.dynamics-open .conversation-inline-range { order: 3; width: 100%; }
+.conversation-panel.dynamics-open .conversation-actions { justify-content: flex-end; flex-wrap: wrap; }
 .conversation-identity { display: flex; align-items: center; gap: 11px; min-width: 0; }
 .conversation-identity h2 { overflow: hidden; margin: 0; white-space: nowrap; text-overflow: ellipsis; }
 .customer-loss-status { display: inline-flex; flex: 0 0 auto; align-items: center; height: 20px; padding: 0 7px; border: 1px solid #f2b6ae; border-radius: 3px; color: #e65c4f; background: #fff5f3; font-size: 9px; font-weight: 600; white-space: nowrap; }
@@ -226,6 +227,73 @@ button:disabled { cursor: default; }
 .customer-dynamics-header h2 { margin: 0; color: #2f3c50; font-size: 17px; }
 .customer-dynamics-header p { margin: 4px 0 0; color: #96a1af; font-size: 10px; }
 .customer-dynamics-body { flex: 1; min-height: 0; overflow: auto; padding: 13px 15px 20px; border-radius: 0 0 9px 9px; background: #f7f9fc; scrollbar-width: thin; }
+.customer-profile-hero { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1px solid #e3e8ef; border-radius: 7px; background: #fff; }
+.customer-profile-avatar { width: 44px; height: 44px; border-radius: 6px; font-size: 15px; }
+.customer-profile-hero-main { flex: 1; min-width: 0; }
+.customer-profile-hero-main > div:first-child { display: flex; align-items: center; gap: 7px; min-width: 0; }
+.customer-profile-hero-main strong { overflow: hidden; color: #344154; font-size: 14px; text-overflow: ellipsis; white-space: nowrap; }
+.customer-profile-hero-main > span { display: block; margin-top: 6px; color: #98a3b1; font-size: 9px; }
+.customer-profile-hero-main > span b { color: #657386; font-weight: 600; }
+.customer-intent-track { display: flex; gap: 3px; margin-top: 5px; }
+.customer-intent-track i { flex: 1; height: 5px; border-radius: 4px; background: #e8ecf1; }
+.customer-intent-track i.active { background: #f0c96e; }
+.customer-profile-tabs { position: sticky; top: -13px; z-index: 4; display: flex; overflow-x: auto; margin: 10px -15px 0; padding: 0 10px; border-bottom: 1px solid #e1e6ed; background: #fff; scrollbar-width: none; }
+.customer-profile-tabs::-webkit-scrollbar { display: none; }
+.customer-profile-tabs button { flex: 1 0 auto; min-height: 39px; padding: 0 9px; border-bottom: 2px solid transparent; color: #7c8796; font-size: 10px; }
+.customer-profile-tabs button.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 600; }
+.customer-profile-panel { padding-top: 10px; }
+.customer-profile-section { overflow: hidden; margin-bottom: 9px; border: 1px solid #e3e8ef; border-radius: 7px; background: #fff; }
+.customer-profile-section h3 { display: flex; align-items: center; min-height: 36px; margin: 0; padding: 0 11px; border-bottom: 1px solid #edf0f4; color: #3f4c5e; background: #fbfcfe; font-size: 11px; }
+.customer-profile-section h3::before { width: 2px; height: 14px; margin-right: 6px; border-radius: 2px; background: var(--primary); content: ''; }
+.readonly-info-grid { display: grid; grid-template-columns: 1fr 1fr; }
+.readonly-info-cell { min-width: 0; padding: 10px; border-bottom: 1px solid #f0f2f5; }
+.readonly-info-cell:nth-child(odd) { border-right: 1px solid #f0f2f5; }
+.readonly-label { margin-bottom: 5px; color: #9aa4b1; font-size: 9px; }
+.readonly-value { overflow-wrap: anywhere; color: #536073; font-size: 11px; font-weight: 600; line-height: 1.5; }
+.readonly-remark { padding: 10px; }
+.readonly-remark small { display: block; margin-top: 5px; color: #9ca6b3; font-size: 9px; }
+.readonly-staff-card, .readonly-group-card, .readonly-order-card, .readonly-learning-card, .readonly-analysis-card { margin: 9px; padding: 10px; border: 1px solid #e8ecf1; border-radius: 6px; background: #fff; }
+.readonly-staff-head, .readonly-group-card, .readonly-learning-head { display: flex; align-items: center; gap: 8px; }
+.readonly-staff-copy, .readonly-learning-copy { flex: 1; min-width: 0; }
+.readonly-staff-copy strong, .readonly-learning-copy strong, .readonly-order-card strong { display: block; overflow: hidden; color: #465366; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.readonly-staff-copy small, .readonly-learning-copy small, .readonly-group-card small { display: block; margin-top: 3px; color: #9ca6b2; font-size: 8px; }
+.readonly-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 9px; }
+.readonly-tag { padding: 2px 5px; border: 1px solid #dfeaf8; border-radius: 3px; color: #627b9c; background: #f1f6fc; font-size: 9px; }
+.readonly-stats { display: grid; grid-template-columns: repeat(3, 1fr); margin-bottom: 9px; border: 1px solid #e3e8ef; border-radius: 7px; background: #fff; text-align: center; }
+.readonly-stats > div { padding: 12px 4px; border-right: 1px solid #edf0f4; }
+.readonly-stats > div:last-child { border-right: 0; }
+.readonly-stats strong { display: block; color: #485568; font-size: 13px; }
+.readonly-stats small { color: #98a3b1; font-size: 8px; }
+.readonly-empty { padding: 34px 10px; color: #9ca6b2; text-align: center; font-size: 11px; }
+.readonly-analysis-card p, .readonly-order-card p { margin: 5px 0 0; color: #7c8795; font-size: 9px; line-height: 1.55; }
+.readonly-analysis-score { display: flex; justify-content: space-between; color: #536173; font-size: 10px; }
+.readonly-analysis-score b { color: var(--primary); }
+.profile-analysis-section { overflow: hidden; margin-bottom: 9px; border: 1px solid #e1e7ef; border-radius: 6px; background: #fff; }
+.profile-analysis-section > header, .profile-analysis-child-title { display: flex; min-height: 34px; align-items: center; justify-content: space-between; padding: 0 10px; border-bottom: 1px solid #e8edf3; background: #fbfcfe; }
+.profile-analysis-section > header h3, .profile-analysis-child-title h3 { display: flex; align-items: center; margin: 0; color: #26364c; font-size: 11px; }
+.profile-analysis-section > header h3::before, .profile-analysis-child-title h3::before { width: 3px; height: 14px; margin-right: 6px; border-radius: 2px; background: var(--primary); content: ''; }
+.profile-analysis-section > header span { color: #8c98a8; font-size: 8px; }
+.profile-analysis-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.profile-analysis-field { min-width: 0; min-height: 50px; padding: 8px 10px; border-right: 1px solid #e9edf2; border-bottom: 1px solid #e9edf2; }
+.profile-analysis-field:nth-child(even) { border-right: 0; }
+.profile-analysis-field:nth-last-child(-n+2) { border-bottom: 0; }
+.profile-analysis-field span { display: block; overflow: hidden; color: #8e9aaa; font-size: 8px; line-height: 1.35; text-overflow: ellipsis; white-space: nowrap; }
+.profile-analysis-field b { display: block; overflow-wrap: anywhere; margin-top: 5px; color: #8793a3; font-size: 10px; font-weight: 500; line-height: 1.35; }
+.profile-analysis-field b.is-highlighted { color: #27384f; font-weight: 700; }
+.profile-child-selector { margin: 2px 0 8px; }
+.profile-child-selector span { display: inline-flex; height: 23px; align-items: center; padding: 0 10px; border-radius: 999px; color: #fff; background: var(--primary); font-size: 9px; font-weight: 600; }
+.profile-analysis-child-card { overflow: hidden; margin-bottom: 9px; border: 1px solid #dfe6ee; border-radius: 6px; background: #fff; }
+.profile-analysis-child-card > .profile-analysis-section { margin: 0; border: 0; border-bottom: 1px solid #e5eaf0; border-radius: 0; }
+.profile-analysis-child-card > .profile-analysis-section:last-child { border-bottom: 0; }
+.profile-analysis-child-card > .profile-analysis-section > header { background: #fff; }
+.profile-analysis-note { display: flex; flex-direction: column; gap: 4px; margin-bottom: 9px; padding: 9px 10px; border: 1px dashed #bcd9ff; border-radius: 6px; color: #68778b; background: #f8fbff; font-size: 9px; line-height: 1.5; }
+.profile-analysis-note strong { color: #3977bd; font-size: 9px; }
+.readonly-order-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.readonly-order-price { color: #3e4b5e; font-size: 11px; }
+.readonly-order-meta, .readonly-learning-meta { display: grid; gap: 5px; margin-top: 8px; padding-top: 7px; border-top: 1px dashed #e7ebf0; color: #7f8a98; font-size: 9px; }
+.readonly-order-meta span, .readonly-learning-meta span { display: flex; justify-content: space-between; gap: 8px; }
+.readonly-learning-icon { display: grid; flex: 0 0 auto; place-items: center; width: 42px; height: 32px; border-radius: 4px; color: #fff; background: #e5c875; font-size: 14px; font-weight: 700; }
+.readonly-learning-status { color: #4e9b82; font-size: 9px; }
 .dynamics-summary-card { padding: 13px 14px; border: 1px solid #e3e8ef; border-radius: 7px; background: #fff; box-shadow: 0 2px 8px rgba(34, 55, 80, .035); }
 .dynamics-employee-count { color: #667386; font-size: 11px; }
 .dynamics-employee-count strong { color: var(--primary); }
@@ -258,9 +326,17 @@ button:disabled { cursor: default; }
 .dynamics-section-title span { color: #99a4b2; font-size: 10px; }
 .dynamics-filters { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 11px; }
 .dynamics-employee-filter { grid-column: 1 / -1; }
-.dynamics-filters label > span { display: block; margin-bottom: 5px; color: #8d98a7; font-size: 9px; }
-.dynamics-filters select { width: 100%; height: 31px; padding: 0 8px; border: 1px solid #dfe5ec; border-radius: 4px; outline: 0; color: #596678; background: #fff; font-size: 10px; }
-.dynamics-filters select:focus { border-color: #91c3ff; box-shadow: 0 0 0 2px rgba(47, 140, 255, .07); }
+.dynamics-multiselect > span { display: block; margin-bottom: 5px; color: #8d98a7; font-size: 9px; }
+.dynamics-multiselect details { position: relative; }
+.dynamics-multiselect summary { display: flex; height: 31px; align-items: center; justify-content: space-between; padding: 0 8px; border: 1px solid #dfe5ec; border-radius: 4px; color: #596678; background: #fff; cursor: pointer; font-size: 10px; list-style: none; }
+.dynamics-multiselect summary::-webkit-details-marker { display: none; }
+.dynamics-multiselect summary::after { color: #98a3b1; content: '⌄'; }
+.dynamics-multiselect details[open] summary { border-color: #91c3ff; box-shadow: 0 0 0 2px rgba(47, 140, 255, .07); }
+.dynamics-filter-menu { position: static; max-height: 190px; overflow: auto; margin-top: 5px; padding: 5px; border: 1px solid #dfe5ec; border-radius: 5px; background: #fff; box-shadow: 0 7px 20px rgba(38, 55, 78, .10); }
+.dynamics-filter-option { display: flex; align-items: flex-start; gap: 7px; padding: 6px 5px; color: #637083; cursor: pointer; font-size: 9px; line-height: 1.35; }
+.dynamics-filter-option:hover { background: #f3f8ff; }
+.dynamics-filter-option input { flex: 0 0 auto; width: 13px; height: 13px; margin: 0; accent-color: var(--primary); }
+.dynamics-platform-note { margin: 8px 0 0; color: #9ba5b2; font-size: 8px; }
 .dynamics-timeline { position: relative; margin-top: 14px; padding-left: 17px; }
 .dynamics-timeline::before { position: absolute; top: 6px; bottom: 6px; left: 4px; width: 1px; background: #dce8f6; content: ''; }
 .dynamics-event { position: relative; padding: 0 0 15px 9px; }
@@ -270,6 +346,7 @@ button:disabled { cursor: default; }
 .dynamics-event-head strong { color: #435064; font-size: 11px; }
 .dynamics-event-head time { color: #98a3b1; font-size: 9px; }
 .dynamics-event-card { margin-top: 6px; padding: 9px 10px; border-radius: 5px; color: #687486; background: #f8fafc; font-size: 10px; line-height: 1.55; }
+.dynamics-event-meta { display: block; margin-top: 5px; color: #8c98a7; font-size: 8px; }
 .dynamics-event-platform { display: inline-flex; margin-top: 6px; padding: 2px 6px; border: 1px solid #a9d1ff; border-radius: 3px; color: #247fe9; background: #f2f8ff; font-size: 8px; }
 .dynamics-empty { padding: 30px 10px; color: #9aa5b2; text-align: center; font-size: 11px; }
 .message-score { display: inline-flex; align-items: center; margin-top: 5px; padding: 1px 5px; border-radius: 3px; color: #ee9133; background: #fff4e6; font-size: 10px; }
@@ -624,31 +701,53 @@ button:disabled { cursor: default; }
             <aside class="customer-dynamics-drawer" id="customer-dynamics-drawer" role="dialog" aria-modal="false" aria-labelledby="customer-dynamics-title" hidden>
               <button class="customer-dynamics-collapse" id="close-customer-dynamics" type="button" aria-label="收起客户动态"><span aria-hidden="true">›</span><span>收起</span></button>
               <header class="customer-dynamics-header">
-                <div><h2 id="customer-dynamics-title">客户动态</h2><p>查看当前客户的企微关系与行为记录</p></div>
+                <div><h2 id="customer-dynamics-title">客户画像</h2><p>只读查看客户资料、动态、订单与学习情况</p></div>
               </header>
               <div class="customer-dynamics-body">
-                <section class="dynamics-summary-card" aria-label="客户概要">
-                  <div class="dynamics-employee-count">已添加员工数：<strong id="dynamics-employee-count">1</strong><span>（选择员工查看其企微标签）</span></div>
-                  <div class="dynamics-employee-options" id="dynamics-employee-options" role="radiogroup" aria-label="选择已添加员工"></div>
-                  <div class="dynamics-profile-row">
-                    <div class="avatar dynamics-customer-avatar" id="dynamics-customer-avatar">墨</div>
-                    <div class="dynamics-profile-main"><div class="dynamics-profile-name"><strong id="dynamics-customer-name">墨言（邮政）</strong><span class="customer-loss-status is-active" id="dynamics-loss-status">未流失</span></div><span>微信昵称：<b id="dynamics-wechat-name">墨言（邮政）</b></span></div>
+                <section class="customer-profile-hero" aria-label="客户画像概要">
+                  <div class="avatar customer-profile-avatar" id="customer-profile-avatar">墨</div>
+                  <div class="customer-profile-hero-main">
+                    <div><strong id="customer-profile-name">墨言（邮政）</strong><span class="customer-loss-status is-active" id="customer-profile-status">未流失</span></div>
+                    <span>客户意向度：<b>中</b></span>
+                    <div class="customer-intent-track" aria-label="客户意向度中"><i></i><i></i><i class="active"></i><i></i><i></i></div>
                   </div>
-                  <dl class="dynamics-profile-details">
-                    <div><dt>客户来源</dt><dd id="dynamics-customer-source">扫码添加</dd></div>
-                    <div><dt>添加时间</dt><dd id="dynamics-added-at">2026-10-21 18:06</dd></div>
-                  </dl>
-                  <div class="dynamics-tags"><span class="dynamics-tags-label">企微标签</span><div id="dynamics-tag-list"></div></div>
                 </section>
-                <section class="dynamics-records" aria-label="客户动态记录">
-                  <div class="dynamics-section-title"><h3>客户动态</h3><span id="dynamics-record-count">共 11 条</span></div>
-                  <div class="dynamics-filters">
-                    <label class="dynamics-employee-filter"><span>员工</span><select id="dynamics-employee-filter"><option value="all">全部员工</option></select></label>
-                    <label><span>操作平台</span><select id="dynamics-platform-filter"><option value="all">全部</option><option value="企业微信">企业微信</option><option value="微信自动同步">微信自动同步</option><option value="APP">APP</option><option value="直播间">直播间</option><option value="pending" disabled>待技术确认：记录中能否区分操作平台</option></select></label>
-                    <label><span>动态类型</span><select id="dynamics-type-filter"><option value="all">全部动态</option><option value="tag-change">标签变动</option><option value="friend-change">好友关系变动</option><option value="handoff-change">转人工变更</option><option value="group-change">群聊变动</option><option value="live-action">直播行为</option><option value="official-account">公众号行为</option><option value="transaction">交易记录</option></select></label>
-                  </div>
-                  <div class="dynamics-timeline" id="dynamics-timeline"></div>
-                </section>
+                <nav class="customer-profile-tabs" role="tablist" aria-label="客户画像内容">
+                  <button type="button" role="tab" data-customer-profile-tab="info">资料</button>
+                  <button type="button" role="tab" data-customer-profile-tab="analysis">用户分析</button>
+                  <button class="active" type="button" role="tab" data-customer-profile-tab="dynamics">客户动态</button>
+                  <button type="button" role="tab" data-customer-profile-tab="orders">订单记录</button>
+                  <button type="button" role="tab" data-customer-profile-tab="learning">学习情况</button>
+                </nav>
+                <div class="customer-profile-panel" id="customer-profile-info" data-customer-profile-panel="info" hidden></div>
+                <div class="customer-profile-panel" id="customer-profile-analysis" data-customer-profile-panel="analysis" hidden></div>
+                <div class="customer-profile-panel" data-customer-profile-panel="dynamics">
+                  <section class="dynamics-summary-card" aria-label="客户概要">
+                    <div class="dynamics-employee-count">已添加员工数：<strong id="dynamics-employee-count">1</strong><span>（选择员工查看其企微标签）</span></div>
+                    <div class="dynamics-employee-options" id="dynamics-employee-options" role="radiogroup" aria-label="选择已添加员工"></div>
+                    <div class="dynamics-profile-row">
+                      <div class="avatar dynamics-customer-avatar" id="dynamics-customer-avatar">墨</div>
+                      <div class="dynamics-profile-main"><div class="dynamics-profile-name"><strong id="dynamics-customer-name">墨言（邮政）</strong><span class="customer-loss-status is-active" id="dynamics-loss-status">未流失</span></div><span>微信昵称：<b id="dynamics-wechat-name">墨言（邮政）</b></span></div>
+                    </div>
+                    <dl class="dynamics-profile-details">
+                      <div><dt>客户来源</dt><dd id="dynamics-customer-source">扫码添加</dd></div>
+                      <div><dt>添加时间</dt><dd id="dynamics-added-at">2026-10-21 18:06</dd></div>
+                    </dl>
+                    <div class="dynamics-tags"><span class="dynamics-tags-label">企微标签</span><div id="dynamics-tag-list"></div></div>
+                  </section>
+                  <section class="dynamics-records" aria-label="客户动态记录">
+                    <div class="dynamics-section-title"><h3>客户动态</h3><span id="dynamics-record-count">共 11 条</span></div>
+                    <div class="dynamics-filters">
+                      <div class="dynamics-multiselect dynamics-employee-filter"><span>员工</span><details><summary id="dynamics-employee-filter-summary">全部员工</summary><div class="dynamics-filter-menu" id="dynamics-employee-filter-options"></div></details></div>
+                      <div class="dynamics-multiselect"><span>操作平台</span><details><summary id="dynamics-platform-filter-summary">全部平台</summary><div class="dynamics-filter-menu" id="dynamics-platform-filter-options"></div></details></div>
+                      <div class="dynamics-multiselect"><span>动态类型</span><details><summary id="dynamics-type-filter-summary">全部动态</summary><div class="dynamics-filter-menu" id="dynamics-type-filter-options"></div></details></div>
+                    </div>
+                    <p class="dynamics-platform-note">操作平台能否准确区分，待技术确认。</p>
+                    <div class="dynamics-timeline" id="dynamics-timeline"></div>
+                  </section>
+                </div>
+                <div class="customer-profile-panel" id="customer-profile-orders" data-customer-profile-panel="orders" hidden></div>
+                <div class="customer-profile-panel" id="customer-profile-learning" data-customer-profile-panel="learning" hidden></div>
               </div>
             </aside>
           </section>
@@ -1077,7 +1176,10 @@ const customerDynamicEvents = [
   { type: '打标签', time: '2026-10-29 16:03', platform: '微信自动同步', accountId: 'WuBingBing01', action: '打上企微标签【D3预约】' },
   { type: '删除标签', time: '2026-10-29 15:48', platform: '企业微信', accountId: 'YinLiJuan', action: '删除企微标签【待跟进】' },
   { type: '关注公众号', time: '2026-10-29 09:16', platform: '微信自动同步', action: '关注公众号【雪梨英语】' },
-  { type: '进入直播间', time: '2026-10-28 19:02', platform: '直播间', accountId: 'WuBingBing01', action: '通过销售链接进入【100篇阅读（新版）】直播间' },
+  { type: '进入直播间', time: '2026-10-28 19:02', platform: '直播间', accountId: 'WuBingBing01', watchDuration: '36分18秒', action: '通过销售链接进入【100篇阅读（新版）】直播间' },
+  { type: '直播间发送内容', time: '2026-10-28 19:08', platform: '直播间', accountId: 'WuBingBing01', content: '课程适合四年级的孩子吗？' },
+  { type: '点击直播间商品链接', time: '2026-10-28 19:12', platform: '直播间', accountId: 'WuBingBing01', product: '单词拼读王年度课程' },
+  { type: '退出直播间', time: '2026-10-28 19:38', platform: '直播间', accountId: 'WuBingBing01' },
   { type: '成交记录', time: '2026-10-28 14:36', platform: 'APP', accountId: 'WuBingBing01', action: '完成订单成交，实付金额 ¥399' },
   { type: '下单产品', time: '2026-10-28 14:30', platform: 'APP', action: '下单产品【单词拼读王年度课程】' },
   { type: '点击预约', time: '2026-10-28 10:26', platform: 'APP', accountId: 'WuBingBing01', action: '通过销售链接完成三天家长直播课预约' },
@@ -1092,16 +1194,42 @@ const customerDynamicTypeGroups = {
   'friend-change': ['添加好友', '客户流失'],
   'handoff-change': ['转人工', 'AI接管'],
   'group-change': ['加入群聊', '退出群聊'],
-  'live-action': ['点击预约', '进入直播间'],
+  'live-action': ['点击预约', '进入直播间', '点击直播间商品链接', '退出直播间', '直播间发送内容'],
   'official-account': ['关注公众号'],
   transaction: ['下单产品', '成交记录'],
 };
+
+const customerDynamicTypeLabels = {
+  'tag-change': '标签变动',
+  'friend-change': '好友关系变动',
+  'handoff-change': '转人工变更',
+  'group-change': '群聊变动',
+  'live-action': '直播行为',
+  'official-account': '公众号行为',
+  transaction: '交易记录',
+};
+
+const customerProfileOrders = [
+  { id: '6948339114231797598', status: '待发货', course: '1500词（付费）3.0', product: '自然拼读+趣味音标·小初1500词', source: '抖音小店', price: 37.43, date: '2026-10-20 14:51:45' },
+  { id: '260432666765197312', status: '已支付', course: '趣味音标2.0', product: '趣味音标系统课程', source: '雪梨英语', price: 0, date: '2026-10-20 15:05:45' },
+  { id: '260432666759954432', status: '已支付', course: '1500词电子书', product: '1500词点读资料', source: '雪梨英语', price: 0, date: '2026-10-20 15:05:45' },
+];
+
+const customerProfileLearning = [
+  { title: '自然拼读动画 — A', kind: '视频', duration: '5分钟40秒', progress: '20%', latest: '2026-10-21 22:39:34', finished: false },
+  { title: 'Hello Song', kind: '视频', duration: '4分钟28秒', progress: '100%', latest: '2026-10-20 13:22:54', finished: true },
+  { title: '3-15岁英语进阶攻略', kind: '直播', duration: '44分钟46秒', progress: '100%', latest: '2026-10-19 20:17:38', finished: true },
+];
 
 let contactKind = 'customer';
 let contactStatus = 'all';
 let selectedAccount = accounts[0];
 let selectedContact = customers[0];
 let selectedDynamicsEmployeeId = null;
+let activeCustomerProfileTab = 'dynamics';
+const selectedDynamicsRecordEmployeeIds = new Set();
+const selectedDynamicsPlatforms = new Set();
+const selectedDynamicsTypeGroups = new Set();
 let selectedCustomerTags = new Set();
 let draftCustomerTags = new Set();
 let activeTagGroupId = customerTagGroups[0].id;
@@ -1565,6 +1693,8 @@ function renderCustomerDynamics() {
   const dynamicsEmployees = getDynamicsEmployees(selectedContact);
   if (!dynamicsEmployees.some((account) => account.id === selectedDynamicsEmployeeId)) selectedDynamicsEmployeeId = dynamicsEmployees[0]?.id || null;
   const selectedDynamicsEmployee = dynamicsEmployees.find((account) => account.id === selectedDynamicsEmployeeId) || dynamicsEmployees[0];
+  renderReadOnlyCustomerProfile(dynamicsEmployees);
+  renderCustomerProfileTabs();
   const avatar = $('#dynamics-customer-avatar');
   avatar.className = `avatar dynamics-customer-avatar ${selectedContact.tone}`;
   avatar.textContent = selectedContact.initial;
@@ -1585,19 +1715,86 @@ function renderCustomerDynamics() {
   $('#dynamics-tag-list').innerHTML = tags.length
     ? tags.map((tag) => `<span class="dynamics-tag">${escapeHtml(tag.tag)}</span>`).join('')
     : '<span class="dynamics-tag empty">暂无标签</span>';
-  const employeeFilter = $('#dynamics-employee-filter');
-  const previousEmployeeFilter = employeeFilter.value || 'all';
-  employeeFilter.innerHTML = `<option value="all">全部员工</option>${dynamicsEmployees.map((account) => `<option value="${escapeHtml(account.id)}">${escapeHtml(account.name)}</option>`).join('')}`;
-  employeeFilter.value = dynamicsEmployees.some((account) => account.id === previousEmployeeFilter) ? previousEmployeeFilter : 'all';
-  const recordEmployeeId = employeeFilter.value;
-  const platform = $('#dynamics-platform-filter').value;
-  const type = $('#dynamics-type-filter').value;
-  const selectedTypes = customerDynamicTypeGroups[type] || [];
-  const result = customerDynamicEvents.filter((item) => (recordEmployeeId === 'all' || item.accountId === recordEmployeeId) && (platform === 'all' || item.platform === platform) && (type === 'all' || selectedTypes.includes(item.type)));
+  const validEmployeeIds = new Set(dynamicsEmployees.map((account) => account.id));
+  [...selectedDynamicsRecordEmployeeIds].forEach((id) => { if (!validEmployeeIds.has(id)) selectedDynamicsRecordEmployeeIds.delete(id); });
+  renderDynamicsMultiFilter('employee', dynamicsEmployees.map((account) => ({ value: account.id, label: account.name })), selectedDynamicsRecordEmployeeIds, '全部员工');
+  renderDynamicsMultiFilter('platform', ['企业微信', '微信自动同步', 'APP', '直播间'].map((value) => ({ value, label: value })), selectedDynamicsPlatforms, '全部平台');
+  renderDynamicsMultiFilter('type', Object.entries(customerDynamicTypeLabels).map(([value, label]) => ({ value, label })), selectedDynamicsTypeGroups, '全部动态');
+  const selectedTypes = new Set([...selectedDynamicsTypeGroups].flatMap((group) => customerDynamicTypeGroups[group] || []));
+  const result = customerDynamicEvents.filter((item) => (
+    (!selectedDynamicsRecordEmployeeIds.size || selectedDynamicsRecordEmployeeIds.has(item.accountId))
+    && (!selectedDynamicsPlatforms.size || selectedDynamicsPlatforms.has(item.platform))
+    && (!selectedDynamicsTypeGroups.size || selectedTypes.has(item.type))
+  ));
   $('#dynamics-record-count').textContent = `共 ${result.length} 条`;
   $('#dynamics-timeline').innerHTML = result.length
-    ? result.map((item) => `<article class="dynamics-event"><div class="dynamics-event-head"><strong>${escapeHtml(item.type)}</strong><time>${escapeHtml(item.time)}</time></div><div class="dynamics-event-card">${escapeHtml(formatCustomerDynamicSentence(item))}<br><span class="dynamics-event-platform">${escapeHtml(item.platform)}</span></div></article>`).join('')
+    ? result.map((item) => {
+      const watchDuration = item.type === '进入直播间' ? `<small class="dynamics-event-meta">观看直播时间：${escapeHtml(item.watchDuration || 0)}</small>` : '';
+      return `<article class="dynamics-event"><div class="dynamics-event-head"><strong>${escapeHtml(item.type)}</strong><time>${escapeHtml(item.time)}</time></div><div class="dynamics-event-card">${escapeHtml(formatCustomerDynamicSentence(item))}${watchDuration}<span class="dynamics-event-platform">${escapeHtml(item.platform)}</span></div></article>`;
+    }).join('')
     : '<div class="dynamics-empty">当前筛选条件下暂无客户动态</div>';
+}
+
+function renderCustomerProfileTabs() {
+  document.querySelectorAll('[data-customer-profile-tab]').forEach((button) => {
+    const active = button.dataset.customerProfileTab === activeCustomerProfileTab;
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-selected', String(active));
+  });
+  document.querySelectorAll('[data-customer-profile-panel]').forEach((panel) => {
+    panel.hidden = panel.dataset.customerProfilePanel !== activeCustomerProfileTab;
+  });
+}
+
+function renderReadOnlyCustomerProfile(dynamicsEmployees) {
+  const isLost = selectedContact.status === 'lost';
+  const avatar = $('#customer-profile-avatar');
+  avatar.className = `avatar customer-profile-avatar ${selectedContact.tone}`;
+  avatar.textContent = selectedContact.initial;
+  $('#customer-profile-name').textContent = selectedContact.name;
+  $('#customer-profile-status').textContent = isLost ? '已流失' : '未流失';
+  $('#customer-profile-status').classList.toggle('is-active', !isLost);
+  const addedAt = `${contactAddedDates[selectedContact.id] || '2026-10-21'} 18:06`;
+  const allTags = getCustomerTagLabels(selectedContact).slice(0, 8);
+  const staffCards = dynamicsEmployees.map((account) => `<article class="readonly-staff-card"><div class="readonly-staff-head"><span class="dynamics-employee-avatar">${escapeHtml(account.initial)}</span><div class="readonly-staff-copy"><strong>${escapeHtml(account.name)}</strong><small>${escapeHtml(addedAt)} 添加</small></div><span class="readonly-tag">正常</span></div><div class="readonly-tags">${getDynamicsEmployeeTags(selectedContact, account).map((tag) => `<span class="readonly-tag">${escapeHtml(tag.tag)}</span>`).join('') || '<span class="readonly-tag">暂无标签</span>'}</div></article>`).join('');
+  $('#customer-profile-info').innerHTML = `
+    <section class="customer-profile-section"><h3>基本信息</h3><div class="readonly-info-grid">
+      ${[['昵称', selectedContact.name], ['手机号', `138****${selectedContact.id.slice(-4)}`], ['添加时间', addedAt], ['推广员', '马晶琳']].map(([label, value]) => `<div class="readonly-info-cell"><div class="readonly-label">${label}</div><div class="readonly-value">${escapeHtml(value)}</div></div>`).join('')}
+    </div><div class="readonly-remark"><div class="readonly-label">企微备注</div><div class="readonly-value">${escapeHtml(selectedContact.name)}</div><small>只读信息，不支持在质检页面编辑</small></div></section>
+    <section class="customer-profile-section"><h3>服务员工与标签</h3>${staffCards}</section>
+    <section class="customer-profile-section"><h3>所在社群</h3><div class="readonly-group-card"><span class="avatar">群</span><div><strong>四年级英语规划交流群</strong><small>2026-10-21 18:33:16 加入</small></div></div></section>
+    <div class="readonly-stats"><div><strong>¥399</strong><small>消费总额</small></div><div><strong>3</strong><small>消费次数</small></div><div><strong>10-28</strong><small>最近消费</small></div></div>
+    <section class="customer-profile-section"><h3>企微标签</h3><div class="readonly-tags" style="padding:10px;margin-top:0">${allTags.map((tag) => `<span class="readonly-tag">${escapeHtml(tag.tag)}</span>`).join('') || '<span class="readonly-tag">暂无标签</span>'}</div></section>`;
+  const analysisGrid = (fields) => `<div class="profile-analysis-grid">${fields.map(([label, value, highlighted]) => `<div class="profile-analysis-field"><span>${escapeHtml(label)}</span><b class="${highlighted ? 'is-highlighted' : ''}">${escapeHtml(value)}</b></div>`).join('')}</div>`;
+  const analysisSection = (title, fields, collapsible = false) => `<section class="profile-analysis-section"><header><h3>${escapeHtml(title)}</h3>${collapsible ? '<span>收起</span>' : ''}</header>${analysisGrid(fields)}</section>`;
+  $('#customer-profile-analysis').innerHTML = `
+    ${analysisSection('家庭概况 · 1个已识别孩子', [
+      ['家长身份', '未提取到'], ['孩子数量', '1 个', true], ['数量口径', '至少', true], ['家庭学习时间', '未提取到'],
+      ['家长辅导能力', '未提取到'], ['决策人', '未提取到'], ['价格敏感度', '未提取到'], ['预算', '未提取到'], ['特殊需求', '未提取到'],
+    ])}
+    <div class="profile-child-selector"><span>孩子1</span></div>
+    <section class="profile-analysis-child-card">
+      <header class="profile-analysis-child-title"><h3>孩子1</h3></header>
+      ${analysisSection('基本信息', [['稳定称谓', '未提取到'], ['性别', '未提取到'], ['年龄', '未提取到']], true)}
+      ${analysisSection('上学情况', [['学段', '未提取到'], ['当前年级', '未提取到'], ['即将升入', '未提取到'], ['地区教材', '未提取到'], ['校内英语起点', '未提取到']], true)}
+      ${analysisSection('英语学习情况', [['自述水平', '未提取到'], ['成绩或等级', '未提取到'], ['学习痛点', '未提取到'], ['学习目标', '未提取到']], true)}
+      ${analysisSection('课程情况', [['学习经历', '未提取到'], ['校外课程', '未提取到'], ['已购或已学产品', '读记单词、自然拼读', true], ['当前意向产品', '未提取到'], ['可学习时间', '未提取到']], true)}
+    </section>
+    <aside class="profile-analysis-note"><strong>当前兼容快照</strong><span>富平李安对应 孩子1，供旧页面和旧 Agent 使用。</span></aside>
+    ${analysisSection('基本情况', [['学期现状', '未提取到'], ['家长身份', '未提取到'], ['年级 / 学龄', '未提取到'], ['痛点', '未提取到'], ['英语水平自评', '未提取到'], ['地域教材版本', '未提取到']])}
+    ${analysisSection('学习经历', [['已购已学产品', '读记单词、自然拼读', true], ['校内英语起点', '未提取到'], ['校外机构经历', '未提取到']])}
+    ${analysisSection('家庭学习情况', [['可投入时间', '未提取到'], ['家长辅导能力', '未提取到'], ['多孩', '否', true]])}
+    ${analysisSection('购买决策', [['预算敏感度', '未提取到'], ['决策人/结构', '未提取到']])}`;
+  $('#customer-profile-orders').innerHTML = customerProfileOrders.map((order) => `<article class="readonly-order-card"><div class="readonly-order-head"><strong>${escapeHtml(order.course)}</strong><span class="readonly-order-price">¥${order.price.toFixed(2)}</span></div><p>${escapeHtml(order.product)}</p><div class="readonly-order-meta"><span><i>状态</i><b>${escapeHtml(order.status)}</b></span><span><i>订单编号</i><b>${escapeHtml(order.id)}</b></span><span><i>下单时间</i><b>${escapeHtml(order.date)}</b></span><span><i>来源</i><b>${escapeHtml(order.source)}</b></span></div></article>`).join('');
+  $('#customer-profile-learning').innerHTML = `<section class="customer-profile-section"><h3>小课学习详情</h3>${customerProfileLearning.map((record, index) => `<article class="readonly-learning-card"><div class="readonly-learning-head"><span class="readonly-learning-icon">${index === 1 ? '♫' : 'Aa'}</span><div class="readonly-learning-copy"><strong>${escapeHtml(record.title)}</strong><small>${escapeHtml(record.kind)}</small></div><span class="readonly-learning-status">${record.finished ? '已完成' : '未完成'}</span></div><div class="readonly-learning-meta"><span><i>学习时长</i><b>${escapeHtml(record.duration)}</b></span><span><i>学习进度</i><b>${escapeHtml(record.progress)}</b></span><span><i>最近学习时间</i><b>${escapeHtml(record.latest)}</b></span></div></article>`).join('')}</section>`;
+}
+
+function renderDynamicsMultiFilter(filterName, options, selectedValues, allLabel) {
+  const summary = $(`#dynamics-${filterName}-filter-summary`);
+  const menu = $(`#dynamics-${filterName}-filter-options`);
+  const optionLabels = new Map(options.map((option) => [option.value, option.label]));
+  summary.textContent = selectedValues.size === 0 ? allLabel : selectedValues.size === 1 ? optionLabels.get([...selectedValues][0]) : `已选 ${selectedValues.size} 项`;
+  menu.innerHTML = `<label class="dynamics-filter-option"><input type="checkbox" data-dynamics-multi-filter="${filterName}" value="all" ${selectedValues.size === 0 ? 'checked' : ''}>${allLabel}</label>${options.map((option) => `<label class="dynamics-filter-option"><input type="checkbox" data-dynamics-multi-filter="${filterName}" value="${escapeHtml(option.value)}" ${selectedValues.has(option.value) ? 'checked' : ''}>${escapeHtml(option.label)}</label>`).join('')}`;
 }
 
 function getDynamicsEmployees(customer) {
@@ -1621,6 +1818,9 @@ function formatCustomerDynamicSentence(item) {
     if (item.type === 'AI接管') return `${employee.name}销售的${selectedContact.name}客户重置为AI回复中`;
     if (item.type === '点击预约') return `${selectedContact.name}客户通过${employee.name}销售的链接完成三天家长直播课预约`;
     if (item.type === '进入直播间') return `${selectedContact.name}客户通过${employee.name}销售的链接进入【100篇阅读（新版）】直播间`;
+    if (item.type === '点击直播间商品链接') return `${selectedContact.name}客户通过${employee.name}销售的直播间商品链接查看【${item.product}】`;
+    if (item.type === '退出直播间') return `${selectedContact.name}客户退出${employee.name}销售关联的直播间`;
+    if (item.type === '直播间发送内容') return `${selectedContact.name}客户在${employee.name}销售关联的直播间发送内容：“${item.content}”`;
     if (item.type === '加入群聊') return `${selectedContact.name}客户通过${employee.name}销售的邀请加入群聊【四年级英语规划交流群】`;
     return `${employee.name} 对客户 ${selectedContact.name} ${item.action}`;
   }
@@ -2228,6 +2428,12 @@ document.addEventListener('click', (event) => {
     toggleConversationBoundary();
     return;
   }
+  const customerProfileTab = event.target.closest('[data-customer-profile-tab]');
+  if (customerProfileTab) {
+    activeCustomerProfileTab = customerProfileTab.dataset.customerProfileTab;
+    renderCustomerProfileTabs();
+    return;
+  }
   const dynamicsEmployeeButton = event.target.closest('[data-dynamics-employee-id]');
   if (dynamicsEmployeeButton) {
     selectedDynamicsEmployeeId = dynamicsEmployeeButton.dataset.dynamicsEmployeeId;
@@ -2253,9 +2459,28 @@ document.addEventListener('click', (event) => {
 $('#account-search').addEventListener('input', renderAccounts);
 $('#customer-search').addEventListener('input', () => { customerPage = 1; renderCustomers(); renderConversation(); });
 $('#message-search').addEventListener('input', renderConversation);
-$('#dynamics-employee-filter').addEventListener('change', renderCustomerDynamics);
-$('#dynamics-platform-filter').addEventListener('change', renderCustomerDynamics);
-$('#dynamics-type-filter').addEventListener('change', renderCustomerDynamics);
+document.addEventListener('change', (event) => {
+  const filterControl = event.target.closest('[data-dynamics-multi-filter]');
+  if (!filterControl) return;
+  const filterSets = {
+    employee: selectedDynamicsRecordEmployeeIds,
+    platform: selectedDynamicsPlatforms,
+    type: selectedDynamicsTypeGroups,
+  };
+  const selectedSet = filterSets[filterControl.dataset.dynamicsMultiFilter];
+  if (!selectedSet) return;
+  if (filterControl.value === 'all') selectedSet.clear();
+  else if (filterControl.checked) selectedSet.add(filterControl.value);
+  else selectedSet.delete(filterControl.value);
+  renderCustomerDynamics();
+});
+document.addEventListener('toggle', (event) => {
+  const openedFilter = event.target.closest?.('.dynamics-multiselect details');
+  if (!openedFilter?.open) return;
+  document.querySelectorAll('.dynamics-multiselect details[open]').forEach((filter) => {
+    if (filter !== openedFilter) filter.open = false;
+  });
+}, true);
 $('#messages').addEventListener('scroll', () => {
   if (!conversationLoadState.isAdjustingScroll && $('#messages').scrollTop <= 12) loadOlderMessages(false);
 });
