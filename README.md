@@ -1,6 +1,6 @@
-# YukiAsPM · 产品原型与需求
+# YukiAsPM · 产品原型、需求与 Agent
 
-`main` 保存验收后的完整成果，并作为 GitHub Pages 的唯一发布来源。
+`main` 保存验收后的产品原型、需求文档和 Agent 项目，并作为 GitHub Pages 的唯一发布来源。原型与看板按现有配置发布；Agent 保存源码与测试，在配置好的本地环境中独立运行。
 
 | 版本 | 原型与源码 | 需求文档 | 在线预览 |
 |---|---|---|---|
@@ -32,6 +32,34 @@ customer-dynamics-prototype/
 ├── index-standalone.html # 无外部依赖单文件版本
 └── 需求文档/        # 基于会话质检原型维护的客户动态需求文档
 ```
+
+## Agent 项目
+
+| 项目 | 入口与说明 | 来源 |
+|---|---|---|
+| 飞书销售话术收集 Agent | [Agent 目录与同步说明](Agent/README.md) · [项目原始说明](Agent/feishu-sales-script-agent/README.md) | [feishu-sales-script-agent](https://github.com/YukiSusanto/feishu-sales-script-agent/tree/semantic-batch-window) 的 `semantic-batch-window` 分支 |
+
+```text
+Agent/
+├── README.md
+└── feishu-sales-script-agent/
+    ├── README.md
+    ├── agent.mjs
+    ├── analyzer.mjs
+    ├── message-window.mjs
+    ├── daily-report.mjs
+    └── ...
+```
+
+Agent 通过 `git subtree --squash` 纳入本仓库，保留独立项目目录。来源仓库更新后不会自动同步；在本仓库根目录执行：
+
+```sh
+# 新克隆的仓库需要先添加来源；已有 sales-agent 时跳过这一行。
+git remote add sales-agent https://github.com/YukiSusanto/feishu-sales-script-agent.git
+git subtree pull --prefix=Agent/feishu-sales-script-agent sales-agent semantic-batch-window --squash
+```
+
+拉取会产生本地提交；检查通过后推送本仓库才会更新远程。建议在基于最新 `main` 的功能分支上同步、验证，再通过 PR 合入 `main`。远程别名保存在本机 Git 配置中，不会随克隆自动复制。运行环境与完整同步流程见 [Agent/README.md](Agent/README.md)。
 
 ## 构建与发布
 
