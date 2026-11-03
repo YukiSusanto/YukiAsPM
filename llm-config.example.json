@@ -1,0 +1,7 @@
+{
+  "baseUrl": "https://nai.xuelilaoshi.cn/v1",
+  "apiKey": "",
+  "model": "deepseek-flash",
+  "timeoutMs": 12000,
+  "responseFormat": "json_schema"
+}

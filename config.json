@@ -1,0 +1,35 @@
+{
+  "chatId": "oc_a128be8f7ab4b12398ed9cae0f81e3b4",
+  "baseToken": "KzLUb8UrzaA71gsamwtc4STTnre",
+  "tableId": "tbltdMGCE6eI7A9V",
+  "live": true,
+  "reviewMode": "ignore",
+  "messageBatchWindowSeconds": 5,
+  "salesSenderIds": [
+    "ou_63f767e10b21934ef61a1b3ee6eb9be9",
+    "ou_dcf6f92f4e190405350c20a5b3dee795",
+    "ou_8cfb9ee5c5741f69fd9b2566e306145b",
+    "ou_27d6281a8603acf757580df8a55d8080",
+    "ou_775f4353f271eb4171b471d4c629eda6",
+    "ou_eba915ad361c3b2c49519953c86bc7da",
+    "ou_cc876c94ce289c27951db34cea756c05",
+    "ou_deaf018d50667b1dd8df0aab6ed33a64"
+  ],
+  "dailyReport": {
+    "enabled": true,
+    "time": "18:00",
+    "chatId": "",
+    "baseUrl": "https://flhoep6pcq.feishu.cn/wiki/Av60wbYfPii0Yskk0MMcDbMBnVf?table=tbltdMGCE6eI7A9V&view=vewC6D2Pvc"
+  },
+  "fields": {
+    "type": "类型",
+    "message": "原始消息",
+    "messageImage": "原始消息图片",
+    "suggestion": "修改建议",
+    "proposer": "提议人",
+    "submittedAt": "提出时间",
+    "completed": "是否完成",
+    "messageId": "",
+    "messageLink": "原始消息链接"
+  }
+}
