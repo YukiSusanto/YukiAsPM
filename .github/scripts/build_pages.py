@@ -43,6 +43,12 @@ def build(sources, output):
         source = sales_source / filename
         if not source.is_file():
             raise FileNotFoundError(source)
+    timeline_source = sources / 'ai-sales-assistant-sop-timeline'
+    timeline_files = ('index-standalone.html', 'index.html', 'style.css', 'app.js', 'AI销售助手-SOP轨迹需求文档.md')
+    for filename in timeline_files:
+        source = timeline_source / filename
+        if not source.is_file():
+            raise FileNotFoundError(source)
     dashboard_source = sources / 'dashboard' / '134期-handoff-dashboard'
     dashboard_files = ('index.html', 'app.js', 'style.css')
     for filename in (*dashboard_files, 'data/catalog.json', 'data/classification.json'):
@@ -77,6 +83,10 @@ def build(sources, output):
     for filename in sales_files:
         shutil.copyfile(sales_source / filename, sales_output / filename)
     shutil.copytree(sales_source / 'screenshots', sales_output / 'screenshots', dirs_exist_ok=True)
+    timeline_output = output / timeline_source.name
+    timeline_output.mkdir(parents=True, exist_ok=True)
+    for filename in timeline_files:
+        shutil.copyfile(timeline_source / filename, timeline_output / filename)
     dashboard_output = output / 'dashboard' / '134期-handoff-dashboard'
     dashboard_output.mkdir(parents=True, exist_ok=True)
     for filename in dashboard_files:
@@ -106,6 +116,7 @@ a.card{display:flex;flex-direction:column;align-items:flex-start;min-height:240p
 <a class="card" href="./conversation-quality-prototype/"><span class="badge">AI 销售</span><h2>AI 会话质检</h2><p>按销售企微账号和客户查看只读会话，支持日期、搜索、筛选与分页。</p><span class="open">打开原型 →</span></a>
 <a class="card" href="./customer-dynamics-prototype/"><span class="badge">客户运营</span><h2>客户动态</h2><p>查看客户关系、员工企微标签与跨平台行为时间线。</p><span class="open">打开原型 →</span></a>
 <a class="card" href="./ai-sales-assistant-customer-dynamics-prototype/"><span class="badge">AI 销售</span><h2>AI销售助手 · 客户动态</h2><p>销售助手客户画像侧栏，支持动态时间线及员工、平台、事件类型筛选。</p><span class="open">打开原型 →</span></a>
+<a class="card" href="./ai-sales-assistant-sop-timeline/"><span class="badge">AI 销售</span><h2>AI销售助手 · SOP 轨迹</h2><p>查看客户的预触达计划、实际发送记录及消息详情。</p><span class="open">打开原型 →</span></a>
 <a class="card" href="./dashboard/134期-handoff-dashboard/"><span class="badge">数据看板</span><h2>134期转人工分析</h2><p>两级原因图形钻取、客户筛选及真实前置聊天记录，支持按需加载。</p><span class="open">打开看板 →</span></a></div><footer>SOP与会话质检为演示原型；134期看板使用实际业务数据。</footer></main></body></html>'''
 
 

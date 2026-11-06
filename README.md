@@ -9,7 +9,10 @@
 | AI 会话质检 | [原型](conversation-quality-prototype/) | [需求文档](conversation-quality-prototype/需求文档/AI会话质检需求文档.md) | [打开会话质检](https://yukisusanto.github.io/YukiAsPM/conversation-quality-prototype/) |
 | 客户动态 | [原型](customer-dynamics-prototype/) | [需求文档](customer-dynamics-prototype/需求文档/AI会话质检需求文档.md) | [打开客户动态](https://yukisusanto.github.io/YukiAsPM/customer-dynamics-prototype/) |
 | AI销售助手 · 客户动态 | [原型](ai-sales-assistant-customer-dynamics-prototype/) | [需求文档](ai-sales-assistant-customer-dynamics-prototype/AI销售助手-侧边栏优化需求文档.md) | [打开销售助手客户动态](https://yukisusanto.github.io/YukiAsPM/ai-sales-assistant-customer-dynamics-prototype/) |
+| AI销售助手 · SOP 轨迹 | [原型](ai-sales-assistant-sop-timeline/) | [需求文档](ai-sales-assistant-sop-timeline/AI销售助手-SOP轨迹需求文档.md) | [发布后打开 SOP 轨迹](https://yukisusanto.github.io/YukiAsPM/ai-sales-assistant-sop-timeline/) |
 | 134期转人工看板 | [代码与真实聊天数据](dashboard/134期-handoff-dashboard/) | [口径说明](dashboard/134期-handoff-dashboard/README.md) | [打开看板](https://yukisusanto.github.io/YukiAsPM/dashboard/134期-handoff-dashboard/) |
+
+开发基于 AI 销售助手侧边栏基线的新原型时，从 `AI销售助手侧边栏-基线分支` 创建功能分支，将基线内容复制到该原型的独立目录。验收后通过 PR 将原型目录、首页入口和 Pages 构建配置合入 `main`，每个原型使用自己的访问路径。
 
 ```text
 sop-prototype/
