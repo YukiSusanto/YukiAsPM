@@ -15,23 +15,25 @@
 .sop-filters button[aria-pressed="true"] { background: #fff; color: #2459c4; font-weight: 700; box-shadow: 0 1px 4px #22385a1a; }
 .sop-filters button span { margin-left: 2px; font-variant-numeric: tabular-nums; }
 .sop-timeline { flex: 1; min-height: 0; overflow: auto; padding: 12px; }
-.sop-group { --sop-ink: #2459a6; --sop-wash: #eaf2ff; --sop-dot: #4784e5; }
-.sop-group[data-status="已触达"] { --sop-ink: #22604b; --sop-wash: #e8f6ef; --sop-dot: #3b9877; }
-.sop-group + .sop-group { margin-top: 18px; }
-.sop-group h3 { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 4px; margin: 0 0 8px; font-size: 14px; color: #24324a; }
-.sop-group h3 span { font-size: 11px; color: #606d80; font-weight: 400; }
-.sop-date { color: #58677c; font-size: 12px; font-variant-numeric: tabular-nums; margin: 7px 0 5px; }
-.sop-group ol { list-style: none; margin: 0; padding-left: 10px; }
-.sop-event { position: relative; border-left: 1px solid #d7dfeb; padding: 0 0 10px 12px; }
+.sop-events { list-style: none; margin: 0; padding-left: 6px; }
+.sop-event {
+  --sop-ink: #2459a6;
+  --sop-wash: #eaf2ff;
+  --sop-dot: #4784e5;
+  position: relative;
+  border-left: 1px solid #d7dfeb;
+  padding: 0 0 12px 12px;
+}
+.sop-event[data-status="已触达"] { --sop-ink: #22604b; --sop-wash: #e8f6ef; --sop-dot: #3b9877; }
+.sop-event:last-child { border-left-color: transparent; padding-bottom: 0; }
 .sop-event::before { content: ""; position: absolute; left: -5px; top: 4px; width: 9px; height: 9px; border-radius: 50%; background: var(--sop-dot); outline: 2px solid #f6f8fb; }
 .sop-event-time { display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px; font-size: 11px; color: #5f6d81; }
 .sop-event-time time { font-size: 13px; font-weight: 700; color: #33425a; font-variant-numeric: tabular-nums; }
 .sop-card { padding: 9px 10px; border: 1px solid #e2e8f1; border-radius: 8px; background: #fff; }
 .sop-card-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; }
-.sop-card-heading h4 { margin: 0; font-size: 13px; color: #25324a; overflow-wrap: anywhere; }
+.sop-card-heading h3 { margin: 0; font-size: 13px; color: #25324a; overflow-wrap: anywhere; }
 .sop-badge { flex: none; padding: 2px 5px; border-radius: 4px; background: var(--sop-wash); color: var(--sop-ink); font-size: 11px; }
 .sop-meta { margin-top: 5px; font-size: 11px; line-height: 1.5; color: #55657b; }
-.sop-meta span { padding: 0 2px; }
 .sop-preview { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; overflow-wrap: anywhere; margin: 6px 0; color: #3c4b61; line-height: 1.55; font-size: 12px; }
 .sop-details summary { width: fit-content; padding: 4px 0; color: #2459a6; font-size: 12px; cursor: pointer; }
 .sop-details dl { margin: 5px 0 0; padding: 7px 9px; border-radius: 6px; background: #f6f8fb; }

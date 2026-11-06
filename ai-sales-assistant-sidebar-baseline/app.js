@@ -50,7 +50,7 @@ function renderHistory(){const c=customers[state.customer];$('#history-content')
 const sopRecords = {
   5: [
     {
-      title: '直播开课提醒', period: '演示 136 期', stage: 'D2 · 直播当天', code: 'W1-D2',
+      period: '演示 136 期', stage: '直播当天', code: 'W1-D2',
       action: '私信1V1', planned: '2026-11-06 19:15:00', timing: '相对直播开始前 15 分钟',
       message: '家长您好，今晚的自然拼读直播还有 15 分钟开始。请提前进入教室，准备好纸笔。',
       material: '直播入场指引（图片）', include: 'D2 已预约', exclude: '勿扰、D2 已到课，任一满足即排除',
@@ -58,20 +58,20 @@ const sopRecords = {
       note: '开课时间调整时随直播场次更新。'
     },
     {
-      title: '课后练习提醒', period: '演示 136 期', stage: 'D3 · 课后巩固', code: 'W1-D3',
+      period: '演示 136 期', stage: '课后巩固', code: 'W1-D3',
       action: '私信1V1', planned: '2026-11-07 12:00:00', timing: '固定时间 12:00',
       message: '家长您好，昨天课上的拼读练习已经准备好啦。今天可以陪孩子读一遍练习卡。',
       material: '拼读练习卡（图片）', include: 'D2 到课满 30 分钟', exclude: '勿扰',
       match: '等待直播到课标签更新。发送前按最新标签确认是否命中。'
     },
     {
-      title: '课前准备提示', period: '演示 136 期', stage: 'D2 · 直播当天', code: 'W1-D2',
+      period: '演示 136 期', stage: '直播当天', code: 'W1-D2',
       action: '私信1V1', planned: '2026-11-06 10:00:00', actual: '2026-11-06 10:02:18',
       timing: '固定时间 10:00', message: '家长您好，今晚的直播会带孩子练习字母发音，可以提前准备好纸笔。',
       include: 'D2 已预约', exclude: '勿扰', match: '发送时命中 D2 已预约，未命中排除标签。'
     },
     {
-      title: '首节直播预约邀请', period: '演示 136 期', stage: 'D1 · 直播前', code: 'W1-D1',
+      period: '演示 136 期', stage: '直播前', code: 'W1-D1',
       action: '私信1V1', planned: '2026-11-05 14:30:00', actual: '2026-11-05 14:30:07',
       timing: '固定时间 14:30', message: '家长您好，明晚有一节自然拼读直播课。可以先预约，开课前我会再提醒您。',
       include: '未配置', exclude: '勿扰、D2 已预约，任一满足即排除',
@@ -80,7 +80,7 @@ const sopRecords = {
   ],
   6: [
     {
-      title: '入群学习指引', period: '演示 136 期', stage: 'D1 · 直播前', code: 'W1-D1',
+      period: '演示 136 期', stage: '直播前', code: 'W1-D1',
       action: '群聊消息', planned: '2026-11-05 18:00:00', actual: '2026-11-05 18:00:23',
       timing: '固定时间 18:00', message: '各位家长晚上好，本期课程安排和学习资料已整理，欢迎大家先查看群公告。',
       material: '本期学习安排（图片）', include: '演示学习群成员', exclude: '未配置',
@@ -91,8 +91,7 @@ const sopRecords = {
 const sopFilters = ['全部', '预触达', '已触达'];
 const sopFilterByCustomer = {};
 
-function renderSopCard(record, status) {
-  const time = record.actual || record.planned;
+function renderSopCard({ record, status, time }) {
   const detailFields = [
     ['阶段编码', record.code],
     ['时间规则', record.timing],
@@ -105,12 +104,12 @@ function renderSopCard(record, status) {
     ['匹配说明', record.match]
   ];
   if (record.note) detailFields.push(['运营备注', record.note]);
-  return `<li class="sop-event">
-    <div class="sop-event-time"><time datetime="${esc(time.replace(' ', 'T'))}+08:00">${esc(time.slice(11, 16))}</time>
+  return `<li class="sop-event" data-status="${status}">
+    <div class="sop-event-time"><time datetime="${esc(time.replace(' ', 'T'))}+08:00">${esc(time.slice(0, 16))}</time>
       <span>${record.actual ? '实际触达' : '计划触达'}</span></div>
     <article class="sop-card">
-      <div class="sop-card-heading"><h4>${esc(record.title)}</h4><span class="sop-badge">${status}</span></div>
-      <div class="sop-meta">${esc(record.period)} <span>·</span> ${esc(record.stage)} <span>·</span> ${esc(record.action)}</div>
+      <div class="sop-card-heading"><h3>${esc(record.action)}</h3><span class="sop-badge">${status}</span></div>
+      <div class="sop-meta">${esc(record.period)} · ${esc(record.code)} ${esc(record.stage)}</div>
       <p class="sop-preview">${esc(record.message)}</p>
       <details class="sop-details"><summary>触达详情</summary><dl>
         ${detailFields.map(([label, value]) => `<div><dt>${label}</dt><dd>${esc(value)}</dd></div>`).join('')}
@@ -120,35 +119,25 @@ function renderSopCard(record, status) {
 }
 
 function renderSopTimeline() {
-  const records = sopRecords[state.customer] || [];
+  const events = (sopRecords[state.customer] || []).map(record => ({
+    record,
+    status: record.actual ? '已触达' : '预触达',
+    time: record.actual || record.planned
+  }));
   const selected = sopFilterByCustomer[state.customer] || '全部';
-  const groups = {
-    '预触达': records.filter(record => !record.actual).sort((a, b) => a.planned.localeCompare(b.planned)),
-    '已触达': records.filter(record => record.actual).sort((a, b) => b.actual.localeCompare(a.actual))
-  };
   $('#sop-customer').textContent = customers[state.customer].name;
   $$('[data-sop-filter]').forEach(button => {
     const filter = button.dataset.sopFilter;
-    const count = filter === '全部' ? records.length : groups[filter].length;
+    const count = filter === '全部' ? events.length : events.filter(event => event.status === filter).length;
     button.setAttribute('aria-pressed', filter === selected);
     button.querySelector('span').textContent = count;
   });
-  const visibleGroups = Object.entries(groups).filter(([status, items]) =>
-    items.length && (selected === '全部' || selected === status));
+  const visibleEvents = events.filter(event => selected === '全部' || event.status === selected)
+    .sort((a, b) => b.time.localeCompare(a.time));
   const timeline = $('#sop-timeline');
-  timeline.innerHTML = visibleGroups.map(([status, items]) => {
-    const byDate = new Map();
-    for (const record of items) {
-      const date = (record.actual || record.planned).slice(0, 10);
-      if (!byDate.has(date)) byDate.set(date, []);
-      byDate.get(date).push(record);
-    }
-    return `<section class="sop-group" data-status="${status}">
-      <h3>${status}<span>${status === '预触达' ? '按计划时间由近到远' : '按实际时间由新到旧'}</span></h3>
-      ${[...byDate].map(([date, events]) => `<div class="sop-date">${date.replaceAll('-', '.')}</div>
-        <ol>${events.map(record => renderSopCard(record, status)).join('')}</ol>`).join('')}
-    </section>`;
-  }).join('') || `<p class="empty sop-empty">${records.length ? '当前筛选下暂无' + selected + '记录' : '该客户暂无 SOP 轨迹'}</p>`;
+  timeline.innerHTML = visibleEvents.length
+    ? `<ol class="sop-events">${visibleEvents.map(renderSopCard).join('')}</ol>`
+    : `<p class="empty sop-empty">${events.length ? '当前筛选下暂无' + selected + '记录' : '该客户暂无 SOP 轨迹'}</p>`;
   timeline.scrollTop = 0;
 }
 
