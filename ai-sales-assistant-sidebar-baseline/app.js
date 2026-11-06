@@ -50,7 +50,7 @@ function renderHistory(){const c=customers[state.customer];$('#history-content')
 const sopRecords = {
   5: [
     {
-      period: '演示 136 期', stage: '直播当天', code: 'W1-D2',
+      period: '演示 136 期', code: 'W1-D2',
       action: '私信1V1', planned: '2026-11-06 19:15:00', timing: '相对直播开始前 15 分钟',
       message: '家长您好，今晚的自然拼读直播还有 15 分钟开始。请提前进入教室，准备好纸笔。',
       material: '直播入场指引（图片）', include: 'D2 已预约', exclude: '勿扰、D2 已到课，任一满足即排除',
@@ -58,20 +58,20 @@ const sopRecords = {
       note: '开课时间调整时随直播场次更新。'
     },
     {
-      period: '演示 136 期', stage: '课后巩固', code: 'W1-D3',
+      period: '演示 136 期', code: 'W1-D3',
       action: '私信1V1', planned: '2026-11-07 12:00:00', timing: '固定时间 12:00',
       message: '家长您好，昨天课上的拼读练习已经准备好啦。今天可以陪孩子读一遍练习卡。',
       material: '拼读练习卡（图片）', include: 'D2 到课满 30 分钟', exclude: '勿扰',
       match: '等待直播到课标签更新。发送前按最新标签确认是否命中。'
     },
     {
-      period: '演示 136 期', stage: '直播当天', code: 'W1-D2',
+      period: '演示 136 期', code: 'W1-D2',
       action: '私信1V1', planned: '2026-11-06 10:00:00', actual: '2026-11-06 10:02:18',
       timing: '固定时间 10:00', message: '家长您好，今晚的直播会带孩子练习字母发音，可以提前准备好纸笔。',
       include: 'D2 已预约', exclude: '勿扰', match: '发送时命中 D2 已预约，未命中排除标签。'
     },
     {
-      period: '演示 136 期', stage: '直播前', code: 'W1-D1',
+      period: '演示 136 期', code: 'W1-D1',
       action: '私信1V1', planned: '2026-11-05 14:30:00', actual: '2026-11-05 14:30:07',
       timing: '固定时间 14:30', message: '家长您好，明晚有一节自然拼读直播课。可以先预约，开课前我会再提醒您。',
       include: '未配置', exclude: '勿扰、D2 已预约，任一满足即排除',
@@ -80,7 +80,7 @@ const sopRecords = {
   ],
   6: [
     {
-      period: '演示 136 期', stage: '直播前', code: 'W1-D1',
+      period: '演示 136 期', code: 'W1-D1',
       action: '群聊消息', planned: '2026-11-05 18:00:00', actual: '2026-11-05 18:00:23',
       timing: '固定时间 18:00', message: '各位家长晚上好，本期课程安排和学习资料已整理，欢迎大家先查看群公告。',
       material: '本期学习安排（图片）', include: '演示学习群成员', exclude: '未配置',
@@ -109,7 +109,7 @@ function renderSopCard({ record, status, time }) {
       <span>${record.actual ? '实际触达' : '计划触达'}</span></div>
     <article class="sop-card">
       <div class="sop-card-heading"><h3>${esc(record.action)}</h3><span class="sop-badge">${status}</span></div>
-      <div class="sop-meta">${esc(record.period)} · ${esc(record.code)} ${esc(record.stage)}</div>
+      <div class="sop-meta">${esc(record.period)} · ${esc(record.code)}</div>
       <p class="sop-preview">${esc(record.message)}</p>
       <details class="sop-details"><summary>触达详情</summary><dl>
         ${detailFields.map(([label, value]) => `<div><dt>${label}</dt><dd>${esc(value)}</dd></div>`).join('')}
