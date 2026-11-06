@@ -14,6 +14,10 @@
 .sop-filters button { flex: 1; min-width: 0; padding: 6px 2px; border-radius: 6px; color: #516076; font-size: 12px; white-space: nowrap; }
 .sop-filters button[aria-pressed="true"] { background: #fff; color: #2459c4; font-weight: 700; box-shadow: 0 1px 4px #22385a1a; }
 .sop-filters button span { margin-left: 2px; font-variant-numeric: tabular-nums; }
+.sop-date-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-top: 8px; color: #516076; font-size: 12px; }
+.sop-date-filter input { min-width: 0; padding: 4px 6px; border: 1px solid #d7dfeb; border-radius: 5px; color: #33425a; font: inherit; }
+.sop-date-filter button { padding: 4px 0; color: #2459a6; font-size: 12px; }
+.sop-date-filter button:disabled { color: #7a8698; cursor: default; }
 .sop-timeline { flex: 1; min-height: 0; overflow: auto; padding: 12px; }
 .sop-events { list-style: none; margin: 0; padding-left: 6px; }
 .sop-event {

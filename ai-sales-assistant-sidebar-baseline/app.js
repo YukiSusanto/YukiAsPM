@@ -119,13 +119,16 @@ function renderSopCard({ record, status, time }) {
 }
 
 function renderSopTimeline() {
-  const events = (sopRecords[state.customer] || []).map(record => ({
+  const records = sopRecords[state.customer] || [];
+  const { status: selected = '全部', date = '' } = sopFilterByCustomer[state.customer] || {};
+  const events = records.map(record => ({
     record,
     status: record.actual ? '已触达' : '预触达',
     time: record.actual || record.planned
-  }));
-  const selected = sopFilterByCustomer[state.customer] || '全部';
+  })).filter(event => !date || event.time.slice(0, 10) === date);
   $('#sop-customer').textContent = customers[state.customer].name;
+  $('#sop-date').value = date;
+  $('#sop-clear-date').disabled = !date;
   $$('[data-sop-filter]').forEach(button => {
     const filter = button.dataset.sopFilter;
     const count = filter === '全部' ? events.length : events.filter(event => event.status === filter).length;
@@ -137,15 +140,26 @@ function renderSopTimeline() {
   const timeline = $('#sop-timeline');
   timeline.innerHTML = visibleEvents.length
     ? `<ol class="sop-events">${visibleEvents.map(renderSopCard).join('')}</ol>`
-    : `<p class="empty sop-empty">${events.length ? '当前筛选下暂无' + selected + '记录' : '该客户暂无 SOP 轨迹'}</p>`;
+    : `<p class="empty sop-empty">${records.length ? '当前筛选下暂无 SOP 轨迹' : '该客户暂无 SOP 轨迹'}</p>`;
   timeline.scrollTop = 0;
 }
 
 $('#sop-filters').addEventListener('click', event => {
   const button = event.target.closest('[data-sop-filter]');
   if (!button || !sopFilters.includes(button.dataset.sopFilter)) return;
-  sopFilterByCustomer[state.customer] = button.dataset.sopFilter;
+  (sopFilterByCustomer[state.customer] ??= {}).status = button.dataset.sopFilter;
   renderSopTimeline();
+});
+
+$('#sop-date').addEventListener('change', event => {
+  (sopFilterByCustomer[state.customer] ??= {}).date = event.target.value;
+  renderSopTimeline();
+});
+
+$('#sop-clear-date').addEventListener('click', () => {
+  sopFilterByCustomer[state.customer].date = '';
+  renderSopTimeline();
+  $('#sop-date').focus();
 });
 
 function setMainTab(value) {
