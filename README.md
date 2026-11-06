@@ -9,6 +9,7 @@
 | AI 会话质检 | [原型](conversation-quality-prototype/) | [需求文档](conversation-quality-prototype/需求文档/AI会话质检需求文档.md) | [打开会话质检](https://yukisusanto.github.io/YukiAsPM/conversation-quality-prototype/) |
 | 客户动态 | [原型](customer-dynamics-prototype/) | [需求文档](customer-dynamics-prototype/需求文档/AI会话质检需求文档.md) | [打开客户动态](https://yukisusanto.github.io/YukiAsPM/customer-dynamics-prototype/) |
 | AI销售助手 · 客户动态 | [原型](ai-sales-assistant-customer-dynamics-prototype/) | [需求文档](ai-sales-assistant-customer-dynamics-prototype/AI销售助手-侧边栏优化需求文档.md) | [打开销售助手客户动态](https://yukisusanto.github.io/YukiAsPM/ai-sales-assistant-customer-dynamics-prototype/) |
+| AI销售助手 · SOP 轨迹 | [原型](ai-sales-assistant-sidebar-baseline/) | [需求文档](ai-sales-assistant-sidebar-baseline/AI销售助手-SOP轨迹需求文档.md) | [发布后打开 SOP 轨迹](https://yukisusanto.github.io/YukiAsPM/ai-sales-assistant-sop-timeline/) |
 | 134期转人工看板 | [代码与真实聊天数据](dashboard/134期-handoff-dashboard/) | [口径说明](dashboard/134期-handoff-dashboard/README.md) | [打开看板](https://yukisusanto.github.io/YukiAsPM/dashboard/134期-handoff-dashboard/) |
 
 ```text
