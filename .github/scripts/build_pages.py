@@ -43,7 +43,7 @@ def build(sources, output):
         source = sales_source / filename
         if not source.is_file():
             raise FileNotFoundError(source)
-    timeline_source = sources / 'ai-sales-assistant-sidebar-baseline'
+    timeline_source = sources / 'ai-sales-assistant-sop-timeline'
     timeline_files = ('index-standalone.html', 'index.html', 'style.css', 'app.js', 'AI销售助手-SOP轨迹需求文档.md')
     for filename in timeline_files:
         source = timeline_source / filename
@@ -83,7 +83,7 @@ def build(sources, output):
     for filename in sales_files:
         shutil.copyfile(sales_source / filename, sales_output / filename)
     shutil.copytree(sales_source / 'screenshots', sales_output / 'screenshots', dirs_exist_ok=True)
-    timeline_output = output / 'ai-sales-assistant-sop-timeline'
+    timeline_output = output / timeline_source.name
     timeline_output.mkdir(parents=True, exist_ok=True)
     for filename in timeline_files:
         shutil.copyfile(timeline_source / filename, timeline_output / filename)
