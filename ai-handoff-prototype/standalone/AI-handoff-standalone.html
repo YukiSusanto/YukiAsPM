@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI转人工记录 | 雪梨英语管理系统</title>
+<style>
+:root{--blue:#409eff;--green:#67c23a;--red:#f56c6c;--border:#e4e7ed;--muted:#909399;--ink:#303133;--background:#f0f2f5;--light:#f5f7fa}
+*{box-sizing:border-box}
+body{margin:0;background:var(--background);color:var(--ink);font:14px/1.5 Arial,"Microsoft YaHei","PingFang SC",sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer;color:#606266;border:1px solid #dcdfe6;background:white;border-radius:4px;min-height:32px;padding:0 14px;white-space:nowrap}
+button:hover:not(:disabled){color:var(--blue);border-color:#c6e2ff;background:#ecf5ff}
+button:disabled{opacity:.55;cursor:not-allowed}
+button:focus-visible,summary:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+button.primary,button.success,button.danger{color:white;background:var(--button);border-color:var(--button)}
+button.primary{--button:var(--blue)}button.success{--button:var(--green)}button.danger{--button:var(--red)}
+button.primary:hover:not(:disabled),button.success:hover:not(:disabled),button.danger:hover:not(:disabled){color:white;background:var(--button);border-color:var(--button);filter:brightness(1.08)}
+.top{position:sticky;top:0;z-index:4;height:48px;display:flex;align-items:center;gap:18px;padding:0 9px;background:white;box-shadow:0 1px 3px #17263a13}
+.brand{display:flex;align-items:center;gap:11px;font-size:18px;font-weight:bold;color:#18191b}
+.logo{height:32px;width:32px;display:grid;place-items:center;background:#fdeaaa;font-size:23px}
+.top-right{margin-left:auto;display:flex;align-items:center;gap:20px}
+button.icon{border:0;background:transparent;padding:0;width:26px;color:#262930;font-size:20px}
+.icon svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;vertical-align:middle}
+.bell{position:relative}.bell b{position:absolute;right:-4px;top:0;min-width:16px;border-radius:10px;color:white;background:var(--red);font:11px/16px Arial}
+.top-pop{position:absolute;top:47px;background:white;border:1px solid var(--border);border-radius:6px;padding:12px;box-shadow:0 5px 16px #0002}
+main{padding:24px;display:grid;gap:12px}
+.panel{background:white;border:1px solid var(--border);border-radius:8px;min-width:0}
+.tabs{padding:0 17px;display:flex;gap:39px;overflow:auto;min-height:48px;align-items:stretch}
+.tabs button{border:0;border-radius:0;background:none;padding:0;border-bottom:2px solid transparent;color:var(--ink);font-weight:600}
+.tabs button[aria-selected=true]{border-color:var(--blue);color:var(--blue)}
+.filters{padding:12px;border-radius:4px;display:flex;align-items:center;flex-wrap:wrap;gap:11px 14px}
+.filters label{display:flex;align-items:center;gap:12px;white-space:nowrap;font-weight:600;color:#606266}
+input,select{min-width:0;height:40px;padding:0 11px;border:1px solid #dcdfe6;border-radius:4px;background:white;color:#606266;font-weight:normal}
+input::placeholder{color:#a8abb2}input:focus,select:focus{outline:1px solid var(--blue);border-color:var(--blue)}
+.filters input{width:178px}.filters input[type=datetime-local]{width:215px}.filters select{width:150px}
+.form-actions,#batch,.card-actions{display:flex;align-items:center;gap:10px}
+.form-actions button,#batch button{height:40px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.stats[hidden]{display:none}.metric{padding:14px 16px 15px;background:white;border:1px solid #dcdfe6;border-radius:8px;color:#606b79;font-size:12px}
+.metric strong{display:block;font-size:25px;line-height:1.35;margin:8px 0 7px;color:var(--metric)}
+.metric small{font-size:11px}
+.records{padding:12px}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#606b79;margin-bottom:16px;min-height:40px;flex-wrap:wrap}
+#batch{gap:18px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(290px,100%),1fr));gap:14px}
+.card{display:flex;flex-direction:column;min-width:0;border:1px solid var(--border);border-radius:12px;padding:15px;box-shadow:0 1px 4px #17263a08;transition:border-color .16s,box-shadow .16s}
+.card:hover,.card.selected{border-color:#a9c2f3;box-shadow:0 3px 12px #19469c13}.card.selected{background:#fcfdff}
+.card-head{display:flex;align-items:center;gap:8px;margin-bottom:12px;min-width:0}
+.card-head input{appearance:none;width:14px;height:14px;margin:0 2px 0 0;padding:0;flex:none;cursor:pointer}
+.card-head input:checked{background:var(--blue);border-color:var(--blue)}.card-head input:checked:after{content:'✓';color:#fff;font:12px Arial;display:block;text-align:center}
+.avatar{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#6ba3df;color:white;font-weight:bold}
+.identity{flex:1;min-width:0}.identity strong,.identity small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.identity strong{color:#172033;font-size:15px}.identity small,.team{font-size:11px;color:#7c8693}
+.pill{display:inline-block;font-size:11px;padding:2px 7px;border-radius:4px;background:#eef1f5;color:#5e6878;white-space:nowrap}
+.badge{align-self:flex-start}.waiting{background:#fff6e6;color:#bc7a20}.approved{background:#e9f8ee;color:#26885a}.ignored{background:#f2f3f5;color:#737b88}
+.tags{display:flex;flex-wrap:wrap;gap:4px 6px}.tags .pill:first-child{color:#2573b2;background:#edf6ff}.tags .pill:last-child{color:#335fa9;background:#eef4ff}
+.summary{margin:12px 0 13px;background:#f7f8fa;border:1px solid #eef0f4;border-radius:9px;padding:9px;flex:1;min-height:137px}
+.summary h3{margin:0 0 5px;color:#7c8798;font-size:11px;font-weight:500}.summary-line{display:flex;align-items:center;gap:7px;min-width:0;font-size:11px;margin-top:5px;color:#394455}
+.summary-line>div{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2}.summary time,.message time{color:#8490a0;font-size:10px;margin-left:5px;white-space:nowrap}
+.role{display:inline-grid;place-items:center;flex:none;min-width:22px;height:21px;border-radius:12px;background:#e9edf3;color:#536174;font-size:10px;font-weight:bold}
+.role.ai{background:#deebff;color:#325ba5}.role.human{background:#dcf6e8;color:#25845c}
+.card-footer{display:flex;align-items:center;justify-content:space-between;gap:4px;margin-top:auto}.card-footer code{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:#8a94a4}.card-actions{gap:3px}
+button.link{border:0;background:transparent;color:var(--blue);padding:4px 8px}.link.good{color:var(--green)}.link.bad{color:var(--red)}
+.pages{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:6px;margin-top:16px;color:#606266}.pages button{border:0;padding:0 9px;min-width:28px}.pages select{height:32px}.pages [aria-current=page]{color:var(--blue);font-weight:bold}.empty{grid-column:1/-1;padding:62px 0;text-align:center;color:#909399}.empty span{display:block;color:#b9c8da;font-size:38px}
+.to-top{position:fixed;z-index:2;bottom:38px;right:38px;min-width:40px;height:40px;padding:0;border-radius:50%;font-size:20px;box-shadow:0 2px 10px #0001}
+dialog{border:0;border-radius:12px;padding:0;color:var(--ink);box-shadow:0 12px 40px #0003}dialog::backdrop{background:#0008}
+.detail{width:min(1260px,calc(100% - 16px));max-width:none;max-height:calc(100dvh - 16px);overflow:auto}
+.dialog-header{display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:2;background:#f8fafc;border-bottom:1px solid var(--border);padding:15px 18px}.dialog-header h2{margin:0;font-size:18px;font-weight:500}
+.detail-layout{display:grid;grid-template-columns:minmax(260px,1fr) minmax(360px,1.25fr);gap:16px;padding:14px 18px;min-width:660px;align-items:start}
+.section-box{border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:12px;background:white}
+.section-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:10px;font-weight:bold}
+.chat{background:#f0f4fb;padding:12px;border-radius:8px;max-height:62vh;overflow:auto}
+.message{display:flex;align-items:flex-start;gap:6px;margin:0 0 10px}.message .role{width:30px;height:30px;border-radius:50%}.message>div{background:#fff;border:1px solid #e4e8ee;border-radius:9px;padding:7px 9px;max-width:85%;overflow-wrap:anywhere}
+.message.ai>div{background:#e7f0ff;border-color:#d1e0f7}.message.human{flex-direction:row-reverse}.message.human>div{background:#eaf8ef;border-color:#ccebd7}.message time{display:block;margin:5px 0 0}
+.field{display:grid;grid-template-columns:100px 1fr;gap:6px;background:#f8fafc;border:1px solid #edf0f4;border-radius:7px;padding:7px 9px;margin:7px 0;font-size:12px}.field span{color:#687588}.field strong{font-weight:500}
+.analysis-tabs{display:flex;gap:3px;background:#f0f3f8;border-radius:7px;padding:3px}.analysis-tabs button{padding:0 7px;min-height:27px;border:0;background:transparent;font-size:12px}.analysis-tabs button[aria-selected=true]{background:white;color:#315fbb}
+.analysis-card{background:#f6f9ff;padding:10px;margin-top:10px;border-radius:8px}.analysis-card p{margin:8px 0}.analysis-card blockquote{margin:8px 0;border-left:3px solid #93baf6;padding:7px 10px;background:white}.analysis-card small,.section-box small{color:#707d90}.analysis-card pre,pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f4f6fa;padding:12px;border-radius:7px}
+details{margin-top:10px;padding:10px;border:1px solid #e5e9f0;border-radius:8px}summary{cursor:pointer;font-weight:bold}
+.dialog-footer{display:flex;justify-content:flex-end;gap:8px;padding:10px 18px;background:white;border-top:1px solid var(--border);position:sticky;bottom:0}
+.confirm{width:min(430px,calc(100% - 32px));padding:14px 16px}.confirm header,.confirm footer{display:flex;align-items:center;justify-content:space-between}.confirm footer{justify-content:flex-end;gap:8px}.confirm p{color:#606266;margin:10px 0 20px}
+#toast{position:fixed;z-index:9;top:62px;left:50%;transform:translateX(-50%);padding:10px 16px;border:1px solid #d5ecd7;border-radius:5px;background:#f0f9eb;color:#37834c;box-shadow:0 2px 8px #0001}
+@media(max-width:900px){.filters label{width:100%}.filters input{flex:1;width:0}.filters input[type=datetime-local]{flex:1;width:0}}
+@media(max-width:540px){main{padding:12px}.tabs{gap:20px}.stats{gap:6px}.metric{padding:9px}.metric strong{font-size:21px}#batch{gap:6px}.toolbar button{padding:0 8px}.to-top{right:15px;bottom:16px}}
+</style>
+</head>
+<body>
+<header class="top"><button class="icon" id="menu" aria-label="打开菜单" aria-expanded="false">☷</button><div class="brand"><span class="logo" aria-hidden="true">👩🏻</span>雪梨英语管理系统</div><div class="top-right"><button class="icon bell" id="notice" aria-label="通知"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 8-3 8h18s-3-1-3-8M10 20h4"/></svg><b>1</b></button><button class="icon" id="account" aria-label="演示账号"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="3"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg></button></div><div class="top-pop" id="top-pop" hidden></div></header>
+<main>
+<div class="tabs panel" id="business" role="tablist" aria-label="业务分类"></div>
+<form class="panel filters" id="filters">
+<label>客户昵称<input name="customer" placeholder="请输入客户昵称"></label>
+<label>服务员工 ID<input name="employee" placeholder="企业微信 userid"></label>
+<label>转人工开始时间<input name="start" type="datetime-local" step="1" aria-label="转人工开始时间"></label>
+<label>转人工结束时间<input name="end" type="datetime-local" step="1" aria-label="转人工结束时间"></label>
+<label id="status-field">状态<select name="status"><option value="">全部</option><option>待分析</option><option>待审核</option><option>已通过</option></select></label>
+<label>场景<input name="scene" placeholder="scenarioType"></label>
+<div class="form-actions"><button class="primary" type="submit">查询</button><button type="reset">重置</button></div>
+</form>
+<div class="tabs panel" id="views" role="tablist" aria-label="记录类型"></div>
+<section class="stats" id="stats" aria-label="审核概览"></section>
+<section class="panel records">
+<div class="toolbar"><div id="total"></div><div id="batch"></div></div>
+<div class="grid" id="cards"></div>
+<nav id="pages" class="pages" aria-label="分页"></nav>
+</section>
+</main>
+<button class="to-top" id="to-top" aria-label="回到顶部">♧</button>
+<dialog class="detail" id="detail" aria-labelledby="detail-title"><div id="detail-content"></div></dialog>
+<dialog class="confirm" id="confirm" aria-labelledby="confirm-title"><form method="dialog"><header><strong id="confirm-title"></strong><button class="icon" value="cancel" aria-label="关闭">×</button></header><p id="confirm-text"></p><footer><button value="cancel">取消</button><button class="primary" value="ok" id="confirm-ok">确定</button></footer></form></dialog>
+<div id="toast" role="status" hidden></div>
+<script>
+'use strict';
+
+const businessNames = ['一转销售', '复洗AI客服', '复洗AI销售', '雪梨智学'];
+const scenarios = [
+  {
+    key: 'agent_request', category: '账号权限', intent: 'activation_status',
+    description: '客户反馈学习账号激活后仍无法使用，需要人工核对订单。',
+    question: '课程显示未激活怎么办？',
+    answer: '请先确认使用购课账号登录。若课程仍未显示，可以提供脱敏的订单编号供客服核对。',
+    next: '请客户重新登录并确认课程状态，如仍异常则继续人工跟进。',
+    messages: [
+      ['客户', '老师好，想问一下课程怎么激活？'],
+      ['AI', '您好，可以先用购课时的账号登录，然后在个人中心查看课程。'],
+      ['客户', '登录了，还是显示没有激活。'],
+      ['人工', '我帮您核对一下订单的激活状态。'],
+      ['人工', '核对完成，请用购课账号重新登录试一下。'],
+      ['客户', '好的，我再试一下。'],
+      ['人工', '[表情]']
+    ]
+  },
+  {
+    key: 'knowledge_support', category: '学习指导', intent: 'learning_plan',
+    description: '客户询问学习计划和教材选择，需要人工补充指导。',
+    question: '如何给孩子安排每日单词练习？',
+    answer: '在学习计划里选择对应的年级和教材，每天安排少量新词，并复习前一天的内容。',
+    next: '确认教材版本后，给客户发一份学习计划示例。',
+    messages: [
+      ['客户', '想问一下怎么设置学习计划？'],
+      ['AI', '您好，可以根据目前的学习进度选择教材。'],
+      ['AI', '您可以先告诉我孩子的年级和希望练习的内容。'],
+      ['客户', '四年级，想加强单词和阅读。'],
+      ['人工', '可以先从课本同步的单词开始，设置每天的复习任务。']
+    ]
+  },
+  {
+    key: 'customer_refusal', category: '客户异议', intent: 'cancel_request',
+    description: '客户表示暂时不需要课程，希望了解订单处理流程。',
+    question: '暂时不想继续学习，怎么处理订单？',
+    answer: '您可以在购课平台的订单详情里查看可用的售后选项，有问题可以继续联系老师。',
+    next: '确认客户已找到订单入口，按平台提示完成操作。',
+    messages: [
+      ['AI', '您好，今天的课程安排可以在学习主页查看。'],
+      ['客户', '最近没有时间学习。'],
+      ['客户', '可以先处理一下订单吗？'],
+      ['人工', '您可以在订单详情里查看售后入口，需要帮助的话可以给我留言。']
+    ]
+  }
+];
+
+const nicknames = ['晨光', '云朵', '小满', '橙子妈妈', '晴空', '小海星', '山茶', '薄荷', '星河', '蓝鲸', '月白', '小风铃', '初夏', '青禾', '雨点', '向日葵', '远山', '白露', '柚子', '松果'];
+const firstPageApproved = [3, 4, 5, 6, 7, 8, 9, 10, 11];
+const formatTime = stamp => new Date(stamp + 8 * 3600000).toISOString().slice(0, 19).replace('T', ' ');
+const records = [741, 28, 44, 31].flatMap((count, business) => Array.from({ length: count }, (_, index) => {
+  const scenario = scenarios[index % 7 === 1 ? 1 : index % 7 === 6 ? 2 : 0];
+  const stamp = Date.UTC(2026, 10, 10, 2, 37, 59) - index * (53 + business * 7) * 60000;
+  const employee = (Math.floor(index / 2) % 8) + 1;
+  const status = business === 0 && index >= 248 || business !== 0 && index % 9 === 8 ? '已忽略' :
+    index < 20 && business === 0 ? (firstPageApproved.includes(index) ? '已通过' : '待审核') :
+    index % 11 === 0 ? '待分析' : index % 3 === 0 ? '已通过' : '待审核';
+  return {
+    id: 'demo-' + (business + 1) + '-' + String(index + 1).padStart(4, '0'),
+    customer: nicknames[index % nicknames.length] + (index >= 20 ? ' ' + (Math.floor(index / 20) + 1) : ''),
+    business, employee: 'DemoSales' + String(employee).padStart(2, '0'),
+    team: '销售团队 / 教辅' + 'DACB'[employee % 4] + '区 / 教辅' + employee + '组',
+    start: formatTime(stamp), end: formatTime(stamp + 3900000),
+    updated: formatTime(stamp + 3910000), requested: '',
+    status, scenario, version: status === '待分析' ? 0 : 1,
+    messages: scenario.messages.map(([role, body], number) => ({
+      role, body, time: formatTime(stamp + (number - 2) * 70000)
+    }))
+  };
+}));
+</script>
+<script>
+'use strict';
+
+const byId = id => document.getElementById(id);
+const form = byId('filters');
+const detail = byId('detail');
+const confirm = byId('confirm');
+const storageKey = 'handoff-demo-state-v1';
+const views = ['人工记录', '已忽略记录'];
+let business = 0, view = 0, page = 1, size = 20, filters = {};
+let activeId = '', analysisView = 0, confirmAction, toastTimer;
+const selected = new Set();
+const running = new Set();
+const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, char => ({
+  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+}[char]));
+
+function getChanges() {
+  try { return JSON.parse(localStorage.getItem(storageKey)) || {}; }
+  catch { return {}; }
+}
+const changes = getChanges();
+records.forEach(record => Object.assign(record, changes[record.id]));
+function save(record, patch) {
+  Object.assign(record, patch);
+  changes[record.id] = { ...changes[record.id], ...patch };
+  try { localStorage.setItem(storageKey, JSON.stringify(changes)); } catch {}
+}
+function notify(message) {
+  const toast = byId('toast');
+  const target = detail.open ? detail : document.body;
+  target.append(toast);
+  toast.textContent = message;
+  toast.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { toast.hidden = true; }, 2200);
+}
+function filteredRows() {
+  const contains = (value, key) => !filters[key] || value.toLowerCase().includes(filters[key].toLowerCase());
+  return records.filter(record => record.business === business &&
+    (record.status === '已忽略') === Boolean(view) &&
+    (view || !filters.status || record.status === filters.status) &&
+    contains(record.customer, 'customer') && contains(record.employee, 'employee') &&
+    contains(record.scenario.key, 'scene') &&
+    (!filters.start || record.start >= filters.start) && (!filters.end || record.start <= filters.end));
+}
+function tabs(labels, index, group) {
+  return labels.map((label, number) =>
+    `<button type="button" role="tab" aria-selected="${number === index}" tabindex="${number === index ? 0 : -1}" data-${group}="${number}">${label}</button>`
+  ).join('');
+}
+function roleClass(role) {
+  return role === 'AI' ? 'ai' : role === '人工' ? 'human' : 'customer';
+}
+function badge(status) {
+  const cls = status === '已通过' ? 'approved' : status === '已忽略' ? 'ignored' : 'waiting';
+  return `<span class="pill badge ${cls}">${status}</span>`;
+}
+function messageHTML(message, summary) {
+  const role = roleClass(message.role);
+  return `<div class="${summary ? 'summary-line' : 'message'} ${role}">
+    <span class="role ${role}">${message.role}</span><div>${escapeHtml(message.body)}<time>${message.time}</time></div>
+  </div>`;
+}
+function card(record) {
+  const { id, customer, employee, start, status, scenario, version, team } = record;
+  const checked = selected.has(id);
+  const reviewable = status === '待审核';
+  return `<article class="card${checked ? ' selected' : ''}">
+    <div class="card-head">
+      ${reviewable ? `<input type="checkbox" data-select="${id}" aria-label="选择 ${escapeHtml(customer)}"${checked ? ' checked' : ''}>` : ''}
+      <span class="avatar">${escapeHtml(customer[0])}</span>
+      <div class="identity"><strong>${escapeHtml(customer)}</strong><small title="企业微信 · ${employee} · ${start}">企业微信 · ${employee} · ${start}</small></div>
+      ${badge(status)}
+    </div>
+    <div class="tags"><span class="pill">${businessNames[business]}</span><span class="pill">${scenario.key}</span><span class="pill">人工前 20 分钟</span><span class="pill">${version ? '分析 v' + version : '待分析'}</span></div>
+    <div class="team">${team}</div>
+    <div class="summary"><h3>会话摘要</h3>${record.messages.slice(-4).map(message => messageHTML(message, true)).join('')}</div>
+    <div class="card-footer"><code title="${id}">${id}</code><div class="card-actions">
+      <button class="link" data-detail="${id}">查看详情</button>
+      ${reviewable ? `<button class="link good" data-review="已通过" data-id="${id}">通过</button><button class="link bad" data-review="已忽略" data-id="${id}">忽略</button>` : ''}
+    </div></div>
+  </article>`;
+}
+function pagination(total, last) {
+  const visible = last <= 7 ? Array.from({ length: last }, (_, index) => index + 1) :
+    [1, ...(page > 4 ? ['back'] : []),
+      ...Array.from({ length: 5 }, (_, index) => Math.min(Math.max(page - 2, 2), last - 5) + index),
+      ...(page < last - 3 ? ['forward'] : []), last];
+  const item = (label, destination, attributes = '') =>
+    `<button data-page="${destination}" ${attributes}>${label}</button>`;
+  return `<span>共 ${total} 条</span><select id="size" aria-label="每页条数">
+    ${[10, 20, 50, 100].map(value => `<option value="${value}"${size === value ? ' selected' : ''}>${value}条/页</option>`).join('')}
+    </select>${item('‹', page - 1, 'aria-label="上一页"' + (page === 1 ? ' disabled' : ''))}
+    ${visible.map(number => number === 'back' ? item('•••', Math.max(page - 5, 1), 'aria-label="向前 5 页"') :
+      number === 'forward' ? item('•••', Math.min(page + 5, last), 'aria-label="向后 5 页"') :
+      item(number, number, `aria-label="第 ${number} 页"${number === page ? ' aria-current="page"' : ''}`)).join('')}
+    ${item('›', page + 1, 'aria-label="下一页"' + (page === last ? ' disabled' : ''))}`;
+}
+let currentRows = [];
+function render() {
+  const rows = filteredRows();
+  const last = Math.max(1, Math.ceil(rows.length / size));
+  page = Math.max(1, Math.min(page, last));
+  currentRows = rows.slice((page - 1) * size, page * size);
+  const ready = currentRows.filter(record => record.status === '待审核');
+  for (const id of selected) if (!ready.some(record => record.id === id)) selected.delete(id);
+  byId('business').innerHTML = tabs(businessNames, business, 'business');
+  byId('views').innerHTML = tabs(views, view, 'view');
+  byId('status-field').style.display = view ? 'none' : '';
+  byId('stats').hidden = Boolean(view);
+  byId('stats').innerHTML = [
+    ['待分析会话', '待分析', '#c68122', '当前页等待分析的记录'],
+    ['待审核会话', '待审核', '#3464cf', '当前页已完成 AI 分析，可批量审核'],
+    ['已完成审核', '已通过', '#209461', '当前页已审核通过的转人工记录']
+  ].map(([label, status, color, hint]) => `<div class="metric" style="--metric:${color}">${label}<strong>${currentRows.filter(record => record.status === status).length}</strong><small>${hint}</small></div>`).join('');
+  byId('total').textContent = '共 ' + rows.length + ' 条记录' + (selected.size ? '　已选 ' + selected.size + ' 条' : '');
+  byId('batch').innerHTML = view ? '' : `
+    <button data-select-all ${ready.length ? '' : 'disabled'}>${ready.length && selected.size === ready.length ? '取消全选' : '全选已分析'}</button>
+    <button class="success" data-review="已通过" ${selected.size ? '' : 'disabled'}>批量通过</button>
+    <button class="danger" data-review="已忽略" ${selected.size ? '' : 'disabled'}>批量忽略</button>`;
+  byId('cards').innerHTML = currentRows.length ? currentRows.map(card).join('') : '<div class="empty"><span aria-hidden="true">▤</span>暂无数据</div>';
+  byId('pages').innerHTML = pagination(rows.length, last);
+}
+function resetPage() {
+  page = 1;
+  selected.clear();
+  render();
+}
+function readFilters() {
+  const values = Object.fromEntries(new FormData(form));
+  for (const key of Object.keys(values)) values[key] = values[key].trim();
+  for (const key of ['start', 'end']) {
+    values[key] = values[key].replace('T', ' ');
+    if (values[key].length === 16) values[key] += key === 'start' ? ':00' : ':59';
+  }
+  return values;
+}
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  const values = readFilters();
+  if (values.start && values.end && values.start > values.end) {
+    notify('开始时间不能晚于结束时间');
+    return;
+  }
+  filters = values;
+  resetPage();
+});
+form.addEventListener('reset', () => { filters = {}; resetPage(); });
+
+function field(label, value) {
+  return `<div class="field"><span>${label}</span><strong>${escapeHtml(value || '-')}</strong></div>`;
+}
+function analysis(record) {
+  const { scenario, status, version } = record;
+  if (!version) return '<div class="analysis-card">暂无分析结果</div>';
+  if (analysisView) {
+    const payload = {
+      version: 'sales_handoff_v2', question_category: scenario.category,
+      customer_intent: scenario.intent, confidence: 0.72, retrieval_queries: [scenario.question],
+      suggested_reply: scenario.answer, next_action: scenario.next, review_status: status
+    };
+    return `<pre>${escapeHtml(JSON.stringify(payload, null, 2))}</pre>`;
+  }
+  return `${field('问题分类', scenario.category)}${field('客户意图', scenario.intent)}${field('分析版本', 'sales_handoff_v2')}${field('整体置信度', '72%')}
+    <div class="analysis-card"><strong>v2 意图与检索</strong>${field('产品线', '英语学习')}${field('场景', scenario.category)}${field('检索决策', '需追问')}${field('证据分', '73%')}<small>检索问句</small><p>${scenario.question}</p></div>
+    <div class="analysis-card"><strong>AI 解决方案</strong><p>${scenario.description}</p><small>${scenario.next}</small></div>
+    <div class="analysis-card"><div class="section-head"><strong>分析出的有效话术</strong><button class="link" data-copy>复制话术</button></div><blockquote>${scenario.answer}</blockquote><small>仅供本次会话参考 · 话术来源 人工原话 · 复用置信度 88%</small></div>
+    <div class="analysis-card"><strong>建议下一步</strong><p>${scenario.next}</p><small>置信度 72%</small></div>
+    <details><summary>查看完整分析与复用边界</summary><small>客户问题、异议、限制条件和审核信息</small>
+      ${field('客户问题', scenario.question)}${field('客户异议', scenario.description)}${field('知识复用边界', '须确认客户情况，涉及订单时先核对后台记录。')}
+      <strong>Agent 审核信息</strong>${field('审核状态', status)}${field('审核人', record.reviewer)}${field('审核意见', record.reviewNote)}
+    </details>`;
+}
+function renderDetail() {
+  const record = records.find(item => item.id === activeId);
+  const { customer, status, scenario, employee, start, end, team, version, updated, requested, messages } = record;
+  byId('detail-content').innerHTML = `
+    <header class="dialog-header"><h2 id="detail-title">${escapeHtml(customer)} · 会话记录详情</h2><button class="icon" aria-label="关闭此对话框" data-close>×</button></header>
+    <div class="detail-layout">
+      <section class="section-box"><div class="section-head">完整会话记录 <small>人工处理区间 · ${messages.length} 条消息</small></div><div class="chat">${messages.map(message => messageHTML(message, false)).join('')}</div></section>
+      <aside><section class="section-box"><div class="section-head">场景信息 ${badge(status)}</div>
+        ${field('业务分类', businessNames[record.business])}${field('当前所属区组', team)}${field('客户', customer)}
+        ${field('服务员工', employee)}${field('转人工场景', scenario.key)}${field('转人工时间', start)}
+        ${field('结束时间', end)}${field('分析版本', version)}${field('分析更新时间', version ? updated : '')}${field('最近发起分析', requested)}
+        <small>场景说明</small><p>${scenario.description}</p></section>
+      <section class="section-box"><div class="section-head"><span>Agent 结构化分析</span>
+        <button data-analyze ${running.has(record.id) ? 'disabled' : ''}>${running.has(record.id) ? '分析中…' : version ? '重新发起分析' : '发起分析'}</button>
+        <div role="tablist" aria-label="结构化分析展示方式" class="analysis-tabs">${tabs(['重点视图', '原始 JSON'], analysisView, 'analysis')}</div>
+      </div><div id="analysis-content">${analysis(record)}</div></section></aside>
+    </div>
+    ${status === '待审核' ? `<footer class="dialog-footer"><button class="danger" data-review="已忽略" data-id="${record.id}">忽略</button><button class="success" data-review="已通过" data-id="${record.id}">通过</button></footer>` : ''}`;
+}
+function ask(title, message, action, danger = false) {
+  byId('confirm-title').textContent = title;
+  byId('confirm-text').textContent = message;
+  byId('confirm-ok').className = danger ? 'danger' : 'primary';
+  confirmAction = action;
+  confirm.returnValue = 'cancel';
+  confirm.showModal();
+}
+confirm.addEventListener('close', () => {
+  const action = confirmAction;
+  confirmAction = undefined;
+  if (confirm.returnValue === 'ok' && action) action();
+});
+function review(status, id) {
+  const ids = id ? [id] : [...selected];
+  const action = status === '已通过' ? '通过' : '忽略';
+  const title = (id ? '' : '批量') + action;
+  ask(title, '确定' + action + '选中的 ' + ids.length + ' 条记录吗？' + (status === '已忽略' ? '记录将移至已忽略记录。' : ''), () => {
+    for (const record of records) {
+      if (ids.includes(record.id) && record.status === '待审核') {
+        save(record, { status, reviewer: '演示管理员', reviewNote: action });
+      }
+    }
+    selected.clear();
+    if (detail.open) detail.close();
+    render();
+    notify(title + '成功');
+  }, status === '已忽略');
+}
+function analyze(record) {
+  const label = record.version ? '重新发起分析' : '发起分析';
+  ask(label, '确定' + label + '？演示版将生成一份模拟分析结果。', () => {
+    running.add(record.id);
+    save(record, { requested: formatTime(Date.now()) });
+    if (detail.open && activeId === record.id) renderDetail();
+    setTimeout(() => {
+      const status = record.status === '待分析' ? '待审核' : record.status;
+      save(record, { status, version: record.version + 1, updated: formatTime(Date.now()) });
+      running.delete(record.id);
+      render();
+      if (detail.open && activeId === record.id) renderDetail();
+      notify('模拟分析已完成');
+    }, 750);
+  });
+}
+async function copyReply(value) {
+  try {
+    await navigator.clipboard.writeText(value);
+  } catch {
+    const input = document.createElement('textarea');
+    input.value = value;
+    detail.append(input);
+    input.select();
+    const copied = document.execCommand('copy');
+    input.remove();
+    if (!copied) { notify('复制失败，请手动选中话术复制'); return; }
+  }
+  notify('话术已复制');
+}
+document.addEventListener('change', event => {
+  const { dataset, checked, id, value } = event.target;
+  if (dataset.select) {
+    if (checked) selected.add(dataset.select);
+    else selected.delete(dataset.select);
+    render();
+    document.querySelector('[data-select="' + dataset.select + '"]')?.focus({ preventScroll: true });
+  } else if (id === 'size') {
+    size = Number(value);
+    resetPage();
+  }
+});
+document.addEventListener('click', event => {
+  const button = event.target.closest('button');
+  const pop = byId('top-pop');
+  if (!event.target.closest('.top') || button && !['menu', 'notice', 'account'].includes(button.id)) {
+    pop.hidden = true;
+    byId('menu').setAttribute('aria-expanded', 'false');
+  }
+  if (!button) {
+    if (event.target === detail) {
+      const rect = detail.getBoundingClientRect();
+      if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) detail.close();
+    }
+    return;
+  }
+  const data = button.dataset;
+  if (data.business !== undefined || data.view !== undefined) {
+    if (data.business !== undefined) business = Number(data.business);
+    else view = Number(data.view);
+    resetPage();
+    const key = data.business !== undefined ? 'business' : 'view';
+    document.querySelector('[data-' + key + '="' + data[key] + '"]').focus({ preventScroll: true });
+  } else if (data.page !== undefined) {
+    page = Number(data.page);
+    selected.clear();
+    render();
+    byId('views').scrollIntoView({ block: 'start' });
+  } else if (data.selectAll !== undefined) {
+    const ready = currentRows.filter(record => record.status === '待审核');
+    if (selected.size === ready.length) selected.clear();
+    else ready.forEach(record => selected.add(record.id));
+    render();
+    document.querySelector('[data-select-all]').focus({ preventScroll: true });
+  } else if (data.detail) {
+    activeId = data.detail;
+    analysisView = 0;
+    renderDetail();
+    detail.showModal();
+    detail.scrollTop = 0;
+  } else if (data.close !== undefined) detail.close();
+  else if (data.review) review(data.review, data.id);
+  else if (data.analysis !== undefined) {
+    analysisView = Number(data.analysis);
+    button.parentElement.innerHTML = tabs(['重点视图', '原始 JSON'], analysisView, 'analysis');
+    byId('analysis-content').innerHTML = analysis(records.find(record => record.id === activeId));
+    document.querySelector('[data-analysis="' + analysisView + '"]').focus({ preventScroll: true });
+  } else if (data.copy !== undefined) copyReply(records.find(record => record.id === activeId).scenario.answer);
+  else if (data.analyze !== undefined) analyze(records.find(record => record.id === activeId));
+  else if (button.id === 'to-top') window.scrollTo({ top: 0, behavior: 'smooth' });
+  else if (['menu', 'notice', 'account'].includes(button.id)) {
+    pop.hidden = pop.dataset.owner === button.id && !pop.hidden;
+    pop.dataset.owner = button.id;
+    byId('menu').setAttribute('aria-expanded', String(button.id === 'menu' && !pop.hidden));
+    pop.style.left = button.id === 'menu' ? '10px' : 'auto';
+    pop.style.right = button.id === 'menu' ? 'auto' : '10px';
+    pop.textContent = { menu: '销售管理 / AI转人工记录', notice: '演示通知 · 转人工审核', account: '演示管理员' }[button.id];
+  }
+});
+document.addEventListener('keydown', event => {
+  if (event.target.getAttribute('role') !== 'tab') return;
+  const buttons = [...event.target.parentElement.querySelectorAll('[role=tab]')];
+  const index = buttons.indexOf(event.target);
+  const destinations = { ArrowLeft: (index + buttons.length - 1) % buttons.length, ArrowRight: (index + 1) % buttons.length, Home: 0, End: buttons.length - 1 };
+  if (event.key in destinations) {
+    event.preventDefault();
+    buttons[destinations[event.key]].click();
+  }
+});
+render();
+</script>
+</body>
+</html>

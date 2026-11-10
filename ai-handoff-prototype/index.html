@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI转人工记录 | 雪梨英语管理系统</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><button class="icon" id="menu" aria-label="打开菜单" aria-expanded="false">☷</button><div class="brand"><span class="logo" aria-hidden="true">👩🏻</span>雪梨英语管理系统</div><div class="top-right"><button class="icon bell" id="notice" aria-label="通知"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 8-3 8h18s-3-1-3-8M10 20h4"/></svg><b>1</b></button><button class="icon" id="account" aria-label="演示账号"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="3"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg></button></div><div class="top-pop" id="top-pop" hidden></div></header>
+<main>
+<div class="tabs panel" id="business" role="tablist" aria-label="业务分类"></div>
+<form class="panel filters" id="filters">
+<label>客户昵称<input name="customer" placeholder="请输入客户昵称"></label>
+<label>服务员工 ID<input name="employee" placeholder="企业微信 userid"></label>
+<label>转人工开始时间<input name="start" type="datetime-local" step="1" aria-label="转人工开始时间"></label>
+<label>转人工结束时间<input name="end" type="datetime-local" step="1" aria-label="转人工结束时间"></label>
+<label id="status-field">状态<select name="status"><option value="">全部</option><option>待分析</option><option>待审核</option><option>已通过</option></select></label>
+<label>场景<input name="scene" placeholder="scenarioType"></label>
+<div class="form-actions"><button class="primary" type="submit">查询</button><button type="reset">重置</button></div>
+</form>
+<div class="tabs panel" id="views" role="tablist" aria-label="记录类型"></div>
+<section class="stats" id="stats" aria-label="审核概览"></section>
+<section class="panel records">
+<div class="toolbar"><div id="total"></div><div id="batch"></div></div>
+<div class="grid" id="cards"></div>
+<nav id="pages" class="pages" aria-label="分页"></nav>
+</section>
+</main>
+<button class="to-top" id="to-top" aria-label="回到顶部">♧</button>
+<dialog class="detail" id="detail" aria-labelledby="detail-title"><div id="detail-content"></div></dialog>
+<dialog class="confirm" id="confirm" aria-labelledby="confirm-title"><form method="dialog"><header><strong id="confirm-title"></strong><button class="icon" value="cancel" aria-label="关闭">×</button></header><p id="confirm-text"></p><footer><button value="cancel">取消</button><button class="primary" value="ok" id="confirm-ok">确定</button></footer></form></dialog>
+<div id="toast" role="status" hidden></div>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
